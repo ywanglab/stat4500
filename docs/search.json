@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "stat4500notes",
+    "section": "",
+    "text": "Preface\nThis is a Lecture note book written for the course STAT 4500: Machine Learning offered at Auburn University at Montgomery.\nThis is a book wrtieen by Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "intro.html#on-your-own-computer",
+    "href": "intro.html#on-your-own-computer",
+    "title": "1  Setting up Python Computing Environment",
+    "section": "1.1 on Your own computer",
+    "text": "1.1 on Your own computer\n\nyou can either git clone or download a zipped file containing the codes from the site: https://github.com/intro-stat-learning/ISLP_labs/tree/stable. If downloaded a zipped file of the codes, unzipped the file to a folder, for example, named islp. If git clone (preferred, you need to have Git installed on your computer, check this link for how to install Git https://ywanglab.github.io/stat1010/git.html), do git clone https://github.com/intro-stat-learning/ISLP_labs.git\nDownload and install the following software:\n\nAnaconda: Download anaconda and install using default installation options\nVisual Studio Code (VSC): Download VSC and install\nstart VSC and install VSC extensions in VSC: Python, Jupyter, intellicode\n(optional) Quarto for authoring: Download Quarto and install\n\nCreate a virtual environment named islp for Python. Start an anaconda terminal.\n  conda create -n islp python==3.10\n  conda activate islp\n  conda install pip ipykernel\n  pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2.1.2/requirements.txt\nYou are ready to run the codes using VSC or jupyter lab.\n\nActivate the venv: conda activate islp\nStart a Anaconda terminal, navigate to the folder using the command cd path/to/islp, where path/to/islp means the file path to the folder islp, such as \\Users\\ywang2\\islp. Start VSC by typing code . in the anaconda terminal.\nopen/create a .ipynb or .py file.\nSelect the kernel islp\nRun a code cell by pressing Shift+Enter or click the triangular play button.\nContinue to run other cells.\nAfter finishing using VSC, close the VSC, and deactivate the virtual environment in a conda terminal: conda deactivate",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting up Python Computing Environment</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#use-google-colab",
+    "href": "intro.html#use-google-colab",
+    "title": "1  Setting up Python Computing Environment",
+    "section": "1.2 Use Google Colab",
+    "text": "1.2 Use Google Colab\nAll you need is a Google account. Sign in your Google account in a browser, and navigate to Google Colab. Google Colab supports both Python and R. Python is the default engine. Change the engine to R in Connect-&gt;change runtime type. Then you are all set. Your file will be saved to your Google Drive or you can choose to send it to your GitHub account (recommended).\n\n1.2.1 How to run a project file from your Google Drive?\nMany times, when you run a python file in Colab, it needs to access other files, such as data files in a subdirectory. In this case, it would be convenient to have the same file structure in the Google Colab user home directory. To do this, you can use Google Drive to store your project folder, and then mount the Google Drive in Colab.\nLet’s assume the project folder name, islp/.Here are the steps:\n\ngit clone the project folder (example: git clone https://github.com/intro-stat-learning/ISLP_labs.git) to your local folder. This step is only needed when you want to clone some remote repo from GitHub.\nUpload the folder (ex: islp) to Google Drive.\nOpen the file using Colab. In Google Drive, double click on the ipynb file, example, ch06.ipynb (or click on the three dots on the right end, and choose open with, then Google Colaborotary), the file will be opened by Google Colab.\nMount the Google Drive. In Google Colab, with the specific file (example, ch06.ipynb) being opened, move your cursor to the first code cell, and then click on the folder icon (this should be the fourth icon) on the upper left border in the Colab browser. This will open the file explorer pane. Typically you would see a folder named sample_data shown. On the top of the pane, click on the Google Drive icon to mount the Google Drive. Google Colab will insert the following code below the cursor in your opened ipynb file:\nfrom google.colab import drive\ndrive.mount('/content/drive')\nRun this code cell by pressing SHIFT+ENTER, and follow the prompts to complete the authentication. Wait for ~10 seconds, your Google Drive will be mounted in Colab, and it will be displayed as a folder named drive in the file explorer pane. You might need to click on the Refresh folder icon to see the folder drive.\nOpen a new code cell below the above code cell, and type the code\n  %cd /content/drive/MyDrive/islp/\nThis is to change the directory to the project directory on the Google Drive. Run this code cell, and you are ready to run the file ch06.ipynb from the folder islp on your personal Google Drive, just like it’s on your local computer.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Setting up Python Computing Environment</span>"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+    ]
+  }
+]

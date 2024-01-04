@@ -1,0 +1,12 @@
+# Setting up Computing Environment
+
+1. you can either `git clone` or download a zipped file containing the codes from the site: <https://github.com/intro-stat-learning/ISLP_labs/tree/stable>. If downloaded a zipped file of the codes, unzipped the file to a folder.  If `git clone` (preferred, you need to have Git installed on your computer), do 
+`git clone https://github.com/intro-stat-learning/ISLP_labs.git`
+2. Create a virtual environment named `islp` for Python. 
+  `conda create -n islp`
+  `conda activate islp`
+  `conda install pip ipykernel`
+  `pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2.1.2/requirements.txt`
+3. You are ready to run the codes using `VSC` or `jupyter lab`. 
+
+

@@ -1,0 +1,50 @@
+{
+    "sources": [
+        {
+            "DOI": "",
+            "ISSN": "",
+            "URL": "https://hastie.su.domains/ISLP/ISLP_website.pdf",
+            "author": [
+                {
+                    "family": "James",
+                    "given": "G."
+                },
+                {
+                    "family": "Witten",
+                    "given": "D."
+                },
+                {
+                    "family": "Hastie",
+                    "given": "T."
+                },
+                {
+                    "family": "Tibshirani",
+                    "given": "R."
+                },
+                {
+                    "family": "Taylor",
+                    "given": "J."
+                }
+            ],
+            "collection-number": "",
+            "container-title": "",
+            "id": "thrt23",
+            "issued": {
+                "date-parts": [
+                    [
+                        2003
+                    ]
+                ]
+            },
+            "page": "",
+            "publisher": "Springer",
+            "publisher-place": "USA",
+            "title": "An introduction to statistical learning",
+            "type": "book",
+            "volume": ""
+        }
+    ],
+    "project_biblios": [
+        "references.bib"
+    ]
+}
