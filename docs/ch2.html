@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ch2</title>
+<title>stat4500notes - 2&nbsp; Chapter 2: Statistical Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,35 +23,201 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="ch2_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ch2_files/libs/quarto-html/quarto.js"></script>
-<script src="ch2_files/libs/quarto-html/popper.min.js"></script>
-<script src="ch2_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="ch2_files/libs/quarto-html/anchor.min.js"></script>
-<link href="ch2_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ch2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ch2_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="ch2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ch2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ch3.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">stat4500notes</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.docx">
+              <i class="bi bi-bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3: Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-statistical-learning" id="toc-what-is-statistical-learning" class="nav-link active" data-scroll-target="#what-is-statistical-learning"><span class="header-section-number">2.1</span> What is statistical learning?</a></li>
+  <li><a href="#why-estimate-f" id="toc-why-estimate-f" class="nav-link" data-scroll-target="#why-estimate-f"><span class="header-section-number">2.2</span> Why estimate <span class="math inline">\(f\)</span>?</a></li>
+  <li><a href="#how-to-estimate-f" id="toc-how-to-estimate-f" class="nav-link" data-scroll-target="#how-to-estimate-f"><span class="header-section-number">2.3</span> How to estimate <span class="math inline">\(f\)</span></a></li>
+  <li><a href="#how-to-assess-model-accuracy" id="toc-how-to-assess-model-accuracy" class="nav-link" data-scroll-target="#how-to-assess-model-accuracy"><span class="header-section-number">2.4</span> How to assess model accuracy</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">2.5</span> Model Selection:</a>
+  <ul class="collapse">
+  <li><a href="#trade-off-between-model-flexibility-and-model-interpretability" id="toc-trade-off-between-model-flexibility-and-model-interpretability" class="nav-link" data-scroll-target="#trade-off-between-model-flexibility-and-model-interpretability"><span class="header-section-number">2.5.1</span> Trade-off between Model flexibility and Model Interpretability</a></li>
+  <li><a href="#model-selection-the-bias-variance-trade-off" id="toc-model-selection-the-bias-variance-trade-off" class="nav-link" data-scroll-target="#model-selection-the-bias-variance-trade-off"><span class="header-section-number">2.5.2</span> Model Selection: the Bias-Variance Trade-off</a></li>
+  </ul></li>
+  <li><a href="#bayes-classifier" id="toc-bayes-classifier" class="nav-link" data-scroll-target="#bayes-classifier"><span class="header-section-number">2.6</span> Bayes Classifier</a></li>
+  <li><a href="#homework-indicates-optional" id="toc-homework-indicates-optional" class="nav-link" data-scroll-target="#homework-indicates-optional"><span class="header-section-number">2.7</span> Homework (* indicates optional):</a></li>
+  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">2.8</span> Code Gist</a>
+  <ul class="collapse">
+  <li><a href="#os" id="toc-os" class="nav-link" data-scroll-target="#os"><span class="header-section-number">2.8.1</span> OS</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">2.8.2</span> Python:</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">2.8.3</span> Numpy</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">2.8.4</span> Graphics</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">2.8.5</span> Pandas</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></h1>
+</div>
 
 
 
-<section id="chapter-2-statistical-learning" class="level1">
-<h1>Chapter 2: Statistical Learning</h1>
-<section id="what-is-statistical-learning" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-statistical-learning">What is statistical learning?</h2>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-statistical-learning" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="what-is-statistical-learning"><span class="header-section-number">2.1</span> What is statistical learning?</h2>
 <p>For the input variable <span class="math inline">\(X\in \mathbb{R}^p\)</span> and response variable <span class="math inline">\(Y\in \mathbb{R}\)</span>, assume that <span class="math display">\[Y=f(X) + \epsilon, \]</span> where <span class="math inline">\(\epsilon\)</span> is the random variable representing <strong>irreducible error</strong>. We assume <span class="math inline">\(\epsilon\)</span> is <em>independent</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(E[x]=0\)</span>. <span class="math inline">\(\epsilon\)</span> may include <em>unmeasured variables</em> or <em>unmeasurable variation</em>.</p>
 <p>Statistical learning is to estimate <span class="math inline">\(f\)</span> using various methods. Denote the estimate by <span class="math inline">\(\hat{f}\)</span>.</p>
 <ul>
@@ -66,8 +232,8 @@ ul.task-list li input[type="checkbox"] {
 <li>reinforcement learning: learn a state-action policy function for an agent to interacting with an environment.</li>
 </ul>
 </section>
-<section id="why-estimate-f" class="level2">
-<h2 class="anchored" data-anchor-id="why-estimate-f">Why estimate <span class="math inline">\(f\)</span>?</h2>
+<section id="why-estimate-f" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="why-estimate-f"><span class="header-section-number">2.2</span> Why estimate <span class="math inline">\(f\)</span>?</h2>
 <p>We can use estimated <span class="math inline">\(\hat{f}\)</span> to</p>
 <ul>
 <li>make predictions for a new <span class="math inline">\(X\)</span>, <span class="math display">\[\hat{Y} =\hat{f}(X). \]</span> The prediction error may be quantified as <span class="math display">\[E[(Y-\hat{Y})^2] = (f(X)-\hat{f})^2 +\text{Var}[\epsilon].\]</span> The first term of the error is <em>reducible</em> by trying to improve <span class="math inline">\(\hat{f}\)</span>, where we assume <span class="math inline">\(f\)</span>, <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are fixed.</li>
@@ -79,8 +245,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="how-to-estimate-f" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-estimate-f">How to estimate <span class="math inline">\(f\)</span></h2>
+<section id="how-to-estimate-f" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="how-to-estimate-f"><span class="header-section-number">2.3</span> How to estimate <span class="math inline">\(f\)</span></h2>
 <p>We use obtained observations called <strong>training data</strong> <span class="math inline">\(\{(x_k, y_k): k \in \mathbb{Z}_n \}\)</span> to train an algorithm to obtain the estimate <span class="math inline">\(\hat{f}\)</span>.</p>
 <ul>
 <li><p>Parametric methods: first assume there is a function form (shape) with some parameters. For example, a linear regression model with two parameters. Then use the <em>training data</em> to <strong>train</strong> or <strong>fit</strong> the model to determine the values of the parameters.</p>
@@ -92,8 +258,8 @@ ul.task-list li input[type="checkbox"] {
 <p>Example: KNN (breakdown for higher dimention. Typically only for <span class="math inline">\(p\le 4\)</span>), spline fit.</p></li>
 </ul>
 </section>
-<section id="how-to-assess-model-accuracy" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-assess-model-accuracy">How to assess model accuracy</h2>
+<section id="how-to-assess-model-accuracy" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="how-to-assess-model-accuracy"><span class="header-section-number">2.4</span> How to assess model accuracy</h2>
 <p>For repression problems, the most commonly used measure is the <em>mean squared error</em> (MSE), given by <span class="math display">\[
 MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
 \]</span> For classification problems, typically the following <strong>error rate</strong> (classifications error) is calculated: <span class="math display">\[
@@ -101,20 +267,20 @@ MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
 \]</span> The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. Since we are in general interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set.</p>
 <p>Flexible models tend to overfit the data, which essentially means they follow the error or <em>noise</em> too closely in the training set, therefore cannot be generalized to <em>unseen cases</em> (test set).</p>
 </section>
-<section id="model-selection" class="level2">
-<h2 class="anchored" data-anchor-id="model-selection">Model Selection:</h2>
+<section id="model-selection" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">2.5</span> Model Selection:</h2>
 <p><strong>No free lunch theorem</strong></p>
 <p>There is no single best method for all data sets, which means some method works better than other methods for a particular dataset. Therefore, one needs to perform model selections. Here are some principles.</p>
-<section id="trade-off-between-model-flexibility-and-model-interpretability" class="level3">
-<h3 class="anchored" data-anchor-id="trade-off-between-model-flexibility-and-model-interpretability">Trade-off between Model flexibility and Model Interpretability</h3>
+<section id="trade-off-between-model-flexibility-and-model-interpretability" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="trade-off-between-model-flexibility-and-model-interpretability"><span class="header-section-number">2.5.1</span> Trade-off between Model flexibility and Model Interpretability</h3>
 <p>More flexible models have higher <em>degree of freedom</em> and are less interpretable because it’s difficult to interpret the relationship between a predictor and the response.</p>
 <p>LASSO is less flexible than linear regression. GAM allows some non-linearity. Full non-linear models have higher flexibility, such as <em>bagging, boosting, SVM</em>, etc.</p>
 <p>When <em>inference</em> is the goal, then there are advantages to using simple and less flexible models for interpretability.</p>
 <p>When <em>prediction</em> is the main goal, more flexible model may be a choice. But sometimes, we obtain more accurate prediction using a simpler model because the underlying dataset has a simpler structure. Therefore, it is not necessarily true that a more flexible model has a higher prediction accuracy.</p>
 <p><strong>Occam’s Razor</strong>: Among competing hypotheses that perform equally well, the one with the fewest assumptions should be selected.</p>
 </section>
-<section id="model-selection-the-bias-variance-trade-off" class="level3">
-<h3 class="anchored" data-anchor-id="model-selection-the-bias-variance-trade-off">Model Selection: the Bias-Variance Trade-off</h3>
+<section id="model-selection-the-bias-variance-trade-off" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="model-selection-the-bias-variance-trade-off"><span class="header-section-number">2.5.2</span> Model Selection: the Bias-Variance Trade-off</h3>
 <p>As the model flexibility increases, the training MSE (or error rate for classificiton) will decrease, but the test MSE (error rate) in general will not and will show a characteristic <strong>U-shape</strong>. This is because when evaluated at a test point <span class="math inline">\(x_0\)</span>, the expected test MSE can be decomposed into <span class="math display">\[
 E\left[ (y_0-\hat{f}(x_0))^2 \right] = \text{Var}[\hat{f}(x_0)] + (\text{Bias}(\hat{f}(x_0)))^2+\text{Var}[\epsilon]
 \]</span> where the expectation is over different <span class="math inline">\(\hat{f}\)</span> on a different training set or on a different training step if the training process is stochastic, and <span class="math display">\[
@@ -122,8 +288,8 @@ E\left[ (y_0-\hat{f}(x_0))^2 \right] = \text{Var}[\hat{f}(x_0)] + (\text{Bias}(\
 \]</span> To obtain the least test MSE, one must trade off between variance and bias. Less flexible model tendes to have higher bias, and more flexible models tend to have higher variance. An optimal flexibility for the least test MSE varies with different data sets. Non-linear data tends to require higher optimal flexibility.</p>
 </section>
 </section>
-<section id="bayes-classifier" class="level2">
-<h2 class="anchored" data-anchor-id="bayes-classifier">Bayes Classifier</h2>
+<section id="bayes-classifier" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="bayes-classifier"><span class="header-section-number">2.6</span> Bayes Classifier</h2>
 <p>It can be shown that Bayes Classifier minimizes the classification test error <span class="math display">\[
 \text{Ave}(I(y_0\ne \hat{y}_0)).
 \]</span> A Bayes Classifier assigns a test observation with predictor <span class="math inline">\(x_0\)</span> to the class for which <span class="math display">\[
@@ -134,22 +300,22 @@ E\left[ (y_0-\hat{f}(x_0))^2 \right] = \text{Var}[\hat{f}(x_0)] + (\text{Bias}(\
 <p>where the expectation is over <span class="math inline">\(X\)</span>. The Bayes error is analogous to the irreducible error <span class="math inline">\(\epsilon\)</span>.</p>
 <p>Bayes Classifier is not attainable as we do not know <span class="math inline">\(\text{Pr}(Y|X)\)</span>. We only can estimate <span class="math inline">\(\text{Pr}(Y|X)\)</span>. One way to do this is by KNN. KNN estimate the conditional probability simply with a majority vote. The flexibility of KNN increases as <span class="math inline">\(1/K\)</span> increases with <span class="math inline">\(K=1\)</span> being the most flexible KNN. The training error is 0 for <span class="math inline">\(K=1\)</span>. A suitable <span class="math inline">\(K\)</span> should be chosen for an appropriate trade off between bias and variance. The KNN classifier will classify the test point <span class="math inline">\(x_0\)</span> based on the probability calculated from the <span class="math inline">\(k\)</span> nearest points. KNN regression on the other hand will assign the test point <span class="math inline">\(x_0\)</span> the average value of the <span class="math inline">\(k\)</span> nearest neighbors.</p>
 </section>
-<section id="homework-indicates-optional" class="level2">
-<h2 class="anchored" data-anchor-id="homework-indicates-optional">Homework (* indicates optional):</h2>
+<section id="homework-indicates-optional" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="homework-indicates-optional"><span class="header-section-number">2.7</span> Homework (* indicates optional):</h2>
 <ul>
 <li>Conceptual: 1,2,3,4*,5,6,7</li>
 <li>Applied: 8, 9*, 10*</li>
 </ul>
 </section>
-<section id="code-gist" class="level2">
-<h2 class="anchored" data-anchor-id="code-gist">Code Gist</h2>
-<section id="os" class="level3">
-<h3 class="anchored" data-anchor-id="os">OS</h3>
+<section id="code-gist" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">2.8</span> Code Gist</h2>
+<section id="os" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="os"><span class="header-section-number">2.8.1</span> OS</h3>
 <pre><code>import os
 os.chdir(path) # change dir</code></pre>
 </section>
-<section id="python" class="level3">
-<h3 class="anchored" data-anchor-id="python">Python:</h3>
+<section id="python" class="level3" data-number="2.8.2">
+<h3 data-number="2.8.2" class="anchored" data-anchor-id="python"><span class="header-section-number">2.8.2</span> Python:</h3>
 <p>Concatenation using <code>+</code></p>
 <pre><code>"hello" + " " + "world"  # 'hello world'
 [3,4,5] + [4,9,7] # [3,4,5, 4,9,7]
@@ -163,10 +329,10 @@ os.chdir(path) # change dir</code></pre>
     total += weight * value
 </code></pre>
 </section>
-<section id="numpy" class="level3">
-<h3 class="anchored" data-anchor-id="numpy">Numpy</h3>
-<section id="numpy-functions" class="level4">
-<h4 class="anchored" data-anchor-id="numpy-functions">Numpy functions:</h4>
+<section id="numpy" class="level3" data-number="2.8.3">
+<h3 data-number="2.8.3" class="anchored" data-anchor-id="numpy"><span class="header-section-number">2.8.3</span> Numpy</h3>
+<section id="numpy-functions" class="level4" data-number="2.8.3.1">
+<h4 data-number="2.8.3.1" class="anchored" data-anchor-id="numpy-functions"><span class="header-section-number">2.8.3.1</span> Numpy functions:</h4>
 <p><code>np.sum(x)</code>, <code>np.sqrt(x)</code> (entry wise). <code>x**2</code> (entry wise power), <code>np.corrcoef(x,y)</code> (find the correlation coefficient of array <code>x</code> and array <code>y</code>)</p>
 <p><code>np.mean(axis=None)</code>: axis could be <code>None</code> (all entries), <code>0</code>(along row), <code>1</code>(along column)</p>
 <p><code>np.var(x, ddof=0)</code>, <code>np.std(x, ddof=0)</code>, # Note both <code>np.var</code> and <code>np.std</code> accepts an argument <code>ddof</code>, the divisor is <code>N-ddof</code>.</p>
@@ -177,8 +343,8 @@ os.chdir(path) # change dir</code></pre>
 <p><code>np.all(x)</code>, <code>np.any(x)</code>: check if all or any entry of <code>x</code> is true.</p>
 <p><code>np.unique(x)</code>: find unique values in <code>x</code>. <code>np.isnan(x)</code>: return a boolean array of <code>len(x)</code>. <code>np.isnan(x).mean()</code>: find the percentage of <code>np.nan</code> values in <code>x</code>.</p>
 </section>
-<section id="array-slicing-and-indexing" class="level4">
-<h4 class="anchored" data-anchor-id="array-slicing-and-indexing">Array Slicing and indexing</h4>
+<section id="array-slicing-and-indexing" class="level4" data-number="2.8.3.2">
+<h4 data-number="2.8.3.2" class="anchored" data-anchor-id="array-slicing-and-indexing"><span class="header-section-number">2.8.3.2</span> Array Slicing and indexing</h4>
 <p><code>np.arange</code>(start, stop, step)<code># numpy version of</code>range`</p>
 <p><code>x[slice(3:6)]</code> # equivalent to <code>x[3:6]</code></p>
 <p>Using <code>[row, col]</code> format. If <code>col</code> is missing, then index the entire rows. <code>len(row)</code> must be equal to <code>len(col)</code>. Otherwise use iterative indexing or use <code>np.ix_(x_idx, y_idx)</code> function, or use Boolean indexing, see below.</p>
@@ -194,8 +360,8 @@ A[np.ix_([1,3],[0,2,3])] # use .ix_ function to create an index mesh
 A[keep_rows, keep_cols] # keep_rows, keep_cols are boolean arrays of the same length of rows or cols, respectively
 A[np.ix_([1,3],keep_cols)] # np.ix_()can be applied to mixture of integer array and boolean array</code></pre>
 </section>
-<section id="random-numbers-and-generators" class="level4">
-<h4 class="anchored" data-anchor-id="random-numbers-and-generators">Random numbers and generators</h4>
+<section id="random-numbers-and-generators" class="level4" data-number="2.8.3.3">
+<h4 data-number="2.8.3.3" class="anchored" data-anchor-id="random-numbers-and-generators"><span class="header-section-number">2.8.3.3</span> Random numbers and generators</h4>
 <pre><code>np.random.normal(loc=0.0, scale=1.0,size=None) # size can be an integer or a tuple.
 # 
 rng = np.random.default_rng(1303) # set random generator seed
@@ -203,37 +369,42 @@ rng.normal(loc=0, scale=5, size=2) #
 rng.standard_normal(10) # standard normal distribution of size 10
 rng.choice([0, np.nan], p=[0.8,0.2], size=A.shape)</code></pre>
 </section>
-<section id="numpy-array-atributes" class="level4">
-<h4 class="anchored" data-anchor-id="numpy-array-atributes">Numpy array atributes</h4>
+<section id="numpy-array-atributes" class="level4" data-number="2.8.3.4">
+<h4 data-number="2.8.3.4" class="anchored" data-anchor-id="numpy-array-atributes"><span class="header-section-number">2.8.3.4</span> Numpy array atributes</h4>
 <p><code>.dtype</code>, <code>.ndim</code>, <code>.shape</code></p>
 </section>
-<section id="numpy-array-methods" class="level4">
-<h4 class="anchored" data-anchor-id="numpy-array-methods">Numpy array methods</h4>
+<section id="numpy-array-methods" class="level4" data-number="2.8.3.5">
+<h4 data-number="2.8.3.5" class="anchored" data-anchor-id="numpy-array-methods"><span class="header-section-number">2.8.3.5</span> Numpy array methods</h4>
 <p><code>x.sum(axis=None)</code> (equivalent to <code>np.sum(x)</code>), <code>x.T</code> (transpose),</p>
 <p><code>x.reshape((2,3))</code> # x.reshape() is a reference to x.</p>
 <p><code>x.min()</code>, <code>x.max()</code></p>
 </section>
 </section>
-<section id="graphics" class="level3">
-<h3 class="anchored" data-anchor-id="graphics">Graphics</h3>
-<section id="d-figure" class="level4">
-<h4 class="anchored" data-anchor-id="d-figure">2-D figure</h4>
+<section id="graphics" class="level3" data-number="2.8.4">
+<h3 data-number="2.8.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">2.8.4</span> Graphics</h3>
+<section id="d-figure" class="level4" data-number="2.8.4.1">
+<h4 data-number="2.8.4.1" class="anchored" data-anchor-id="d-figure"><span class="header-section-number">2.8.4.1</span> 2-D figure</h4>
 <pre><code># Using the subplots + ax methods
 fig, ax = subplots(nrows=2, ncols=3, figsize=(8, 8)) 
+# explicitly name each axis in the grid 
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
+
 ax[0,1].plot(x, y,marker='o', 'r--', linewidth=3); #line plot. `;` suppresses the text output. pick ax[0,1] when there are  multiple axes
+ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
 ax.scatter(x, y, marker='o'); #scatter plot
+ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
 ax.set_xlabel("this is the x-axis")
 ax.set_ylabel("this is the y-axis")
 ax.set_title("Plot of X vs Y");
 axes[0,1].set_xlim([-1,1]) # set x_lim. similarly `set_ylim()`
 
 fig = ax.figure  # get the figure object from an axes object
-fig.set_size_inches(12,3) # access the fig object to change fig size
+fig.set_size_inches(12,3) # access the fig object to change fig size (width, height)
 fig # re-render the figure
 fig.savefig("Figure.pdf", dpi=200); #save a figure into pdf. Other formats: .jpg, .png, etc</code></pre>
 </section>
-<section id="contour-and-image" class="level4">
-<h4 class="anchored" data-anchor-id="contour-and-image">Contour and image</h4>
+<section id="contour-and-image" class="level4" data-number="2.8.4.2">
+<h4 data-number="2.8.4.2" class="anchored" data-anchor-id="contour-and-image"><span class="header-section-number">2.8.4.2</span> Contour and image</h4>
 <pre><code>fig, ax = subplots(figsize=(8, 8))
 x = np.linspace(-np.pi, np.pi, 50)
 y = x
@@ -242,10 +413,10 @@ ax.contour(x, y, f, levels=None); # numbre of levels. if None, automatically cho
 ax.imshow(f); # heatmap colorcoded by f</code></pre>
 </section>
 </section>
-<section id="pandas" class="level3">
-<h3 class="anchored" data-anchor-id="pandas">Pandas</h3>
-<section id="loading-data" class="level4">
-<h4 class="anchored" data-anchor-id="loading-data">loading data</h4>
+<section id="pandas" class="level3" data-number="2.8.5">
+<h3 data-number="2.8.5" class="anchored" data-anchor-id="pandas"><span class="header-section-number">2.8.5</span> Pandas</h3>
+<section id="loading-data" class="level4" data-number="2.8.5.1">
+<h4 data-number="2.8.5.1" class="anchored" data-anchor-id="loading-data"><span class="header-section-number">2.8.5.1</span> loading data</h4>
 <pre><code>pd.read_csv('Auto.csv') # read csv
 pd.read_csv('Auto.data', 
             na_values =['?'], #specifying the na_values in the datafile. 
@@ -253,14 +424,20 @@ pd.read_csv('Auto.data',
 pd.read_csv('College.csv', index_col=0) # use column `0` as teh row labels 
 </code></pre>
 </section>
-<section id="pandas-dataframe-attributes-and-methods" class="level4">
-<h4 class="anchored" data-anchor-id="pandas-dataframe-attributes-and-methods">Pandas Dataframe attributes and methods</h4>
+<section id="pandas-dataframe-attributes-and-methods" class="level4" data-number="2.8.5.2">
+<h4 data-number="2.8.5.2" class="anchored" data-anchor-id="pandas-dataframe-attributes-and-methods"><span class="header-section-number">2.8.5.2</span> Pandas Dataframe attributes and methods</h4>
 <pre><code>Auto.shape
 Auto.columns # gets the list of column names
 Auto.index #return the index (labels) objects
 Auto['horsepower'].to_numpy() # convert to numpy array
 Auto['horsepower'].sum()
+
 Auto.dropna() # drop the rows containing na values. 
+df.drop('B', axis=1, inplace=True) # drop a column 'B' inplace. 
+#equivalent to df.drop(columns=['B'], inplace=True)
+df.drop(index=['Ohio','Colorado']) #eqivalent to: df.drop(['Ohio','Colorado'], axis=0)
+auto_df.drop(auto_df.index[10:86]) # drop rows with index[10:86] not including 86
+
 Auto.set_index('name')# rename the index using the column 'name'.
 
 pd.Series(Auto.cylinders, dtype='category') # convert the column `cylinders` to 'category` dtype
@@ -268,17 +445,22 @@ pd.Series(Auto.cylinders, dtype='category') # convert the column `cylinders` to 
 Auto.cylinders.astype('category')
 Auto.describe() # statistics summary of all columns
 Auto['mpg'].describe() # for selected columns
-college.rename({'Unnamed: 0': 'College'}, axis=1): # change column name
+
+college.rename({'Unnamed: 0': 'College'}, axis=1): # change column name, 
+# alternavie way
+college_df.rename(columns={college_df.columns[0] : "College"}, inplace=True) #
+
 college['Elite'] = pd.cut(college['Top10perc'],  # binning a column
                           [0,0.5,1],  #bin edges
                           labels=['No', 'Yes']
                           right=True,# True: right-inclusive for each bin ( ]; False:rigth-exclusive 
                           )   # bin labels (names)
 college['Elite'].value_counts() # frequency counts
+auto.columns.tolist() # or  auto.columns.format() (rarely used way)
 </code></pre>
 </section>
-<section id="selecting-rows-and-columns" class="level4">
-<h4 class="anchored" data-anchor-id="selecting-rows-and-columns">Selecting rows and columns</h4>
+<section id="selecting-rows-and-columns" class="level4" data-number="2.8.5.3">
+<h4 data-number="2.8.5.3" class="anchored" data-anchor-id="selecting-rows-and-columns"><span class="header-section-number">2.8.5.3</span> Selecting rows and columns</h4>
 <p>Select Rows:</p>
 <pre><code>Auto[:3] # the first 3 rows. 
 Auto[Auto['year'] &gt; 80] # select rows with boolean array
@@ -287,7 +469,8 @@ Auto_re.iloc[[3,4]] #integer-based row seleciton: rows 3 and 4 (index starting f
 <p>Select Columns</p>
 <pre><code>Auto['horsepower'] # select the column 'horsepower', resulting a pd.Series.
 Auto[['horsepower']] #obtain a dataframe of the column 'horsepower'. 
-Auto_re.iloc[:,[0,2,3]] # intger-based selection</code></pre>
+Auto_re.iloc[:,[0,2,3]] # intger-based selection
+auto_df.select_dtypes(include=['int16','int32']) # select columns by dtype</code></pre>
 <p>Select a subset</p>
 <pre><code>Auto_re.iloc[[3,4],[0,2,3]] # integer-basd 
 Auto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based 
@@ -297,14 +480,16 @@ Auto_re.loc[lambda df: (df['year'] &gt; 80) &amp; (df['mpg'] &gt; 30),
             ['weight', 'origin']
            ]  # using labmda function with loc[]</code></pre>
 </section>
-<section id="pandas-graphics" class="level4">
-<h4 class="anchored" data-anchor-id="pandas-graphics">Pandas graphics</h4>
+<section id="pandas-graphics" class="level4" data-number="2.8.5.4">
+<h4 data-number="2.8.5.4" class="anchored" data-anchor-id="pandas-graphics"><span class="header-section-number">2.8.5.4</span> Pandas graphics</h4>
 <p>Without using <code>subplots</code> to get axes and figure objects</p>
 <pre><code>ax = Auto.plot.scatter('horsepower', 'mpg') #scatter plot of 'horsepower' vs 'mpg' from the dataframe Auto
 ax.set_title('Horsepower vs. MPG');
 fig = ax.figure
 fig.savefig('horsepower_mpg.png');
-</code></pre>
+
+plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95) #in percentage of the figure size. 
+ax1.fig.suptitle('College Scatter Matrix', fontsize=35)</code></pre>
 <p>Using <code>subplots</code></p>
 <pre><code>fig, axes = subplots(  ncols=3, figsize=(15, 5))
 Auto.plot.scatter('horsepower', 'mpg', ax=axes[1]);
@@ -318,14 +503,26 @@ Auto.boxplot('mpg', by='cylinders', ax=ax);</code></pre>
 <pre><code>pd.plotting.scatter_matrix(Auto); # all columns
 pd.plotting.scatter_matrix(Auto[['mpg',
                                  'displacement',
-                                 'weight']]);  # selected columns</code></pre>
-</section>
+                                 'weight']]);  # selected columns
+                                 
+                                 
+#Alternatively with sns.pairplot
+
+</code></pre>
+<p>Sns Graphic</p>
+<pre><code># Scatter matrix
+ax1 = sns.pairplot(college_df[college_df.columns[0:11]])
+
+# Boxplot
+sns.boxplot(ax=ax, x="Private", y="Outstate", data=college_df)
+</code></pre>
+
+
 </section>
 </section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -716,6 +913,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ch3.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3: Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

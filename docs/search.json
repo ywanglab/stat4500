@@ -30,13 +30,203 @@
     ]
   },
   {
+    "objectID": "ch2.html#what-is-statistical-learning",
+    "href": "ch2.html#what-is-statistical-learning",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.1 What is statistical learning?",
+    "text": "2.1 What is statistical learning?\nFor the input variable \\(X\\in \\mathbb{R}^p\\) and response variable \\(Y\\in \\mathbb{R}\\), assume that \\[Y=f(X) + \\epsilon, \\] where \\(\\epsilon\\) is the random variable representing irreducible error. We assume \\(\\epsilon\\) is independent of \\(X\\) and \\(E[x]=0\\). \\(\\epsilon\\) may include unmeasured variables or unmeasurable variation.\nStatistical learning is to estimate \\(f\\) using various methods. Denote the estimate by \\(\\hat{f}\\).\n\nregression problem: when \\(Y\\) is a continuous variable (quantitative). In this case \\(f(x)=E(Y|X=x)\\) is the regression function, that is, regression finds a conditional expectation of \\(Y\\).\nclassification problem: when \\(Y\\) only takes small number of discrete values, i.e., qualitative (categorical).\n\nLogistic regression is a classification problem, but since it estimates class probability, it may be considered as a regression problem.\n\nsupervised learning: training data \\(\\mathcal{Tr}=\\{(x_i, y_i):i\\in \\mathbb{Z}_n\\}\\): linear regression, logistic regression\nunsupervised learning: when only \\(x_i\\) are available. clustering analysis, PCA\nsemi-supervised learning: some data with labels (\\(y_i\\)), some do not.\nreinforcement learning: learn a state-action policy function for an agent to interacting with an environment.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#why-estimate-f",
+    "href": "ch2.html#why-estimate-f",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.2 Why estimate \\(f\\)?",
+    "text": "2.2 Why estimate \\(f\\)?\nWe can use estimated \\(\\hat{f}\\) to\n\nmake predictions for a new \\(X\\), \\[\\hat{Y} =\\hat{f}(X). \\] The prediction error may be quantified as \\[E[(Y-\\hat{Y})^2] = (f(X)-\\hat{f})^2 +\\text{Var}[\\epsilon].\\] The first term of the error is reducible by trying to improve \\(\\hat{f}\\), where we assume \\(f\\), \\(\\hat{f}\\) and \\(X\\) are fixed.\nmake inference:\n\nWhich predictors are associated with the response?\nwhich is the relationship between the response and each predictor?\nis the assumed relationship adequate? (linear or more complicated?)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#how-to-estimate-f",
+    "href": "ch2.html#how-to-estimate-f",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.3 How to estimate \\(f\\)",
+    "text": "2.3 How to estimate \\(f\\)\nWe use obtained observations called training data \\(\\{(x_k, y_k): k \\in \\mathbb{Z}_n \\}\\) to train an algorithm to obtain the estimate \\(\\hat{f}\\).\n\nParametric methods: first assume there is a function form (shape) with some parameters. For example, a linear regression model with two parameters. Then use the training data to train or fit the model to determine the values of the parameters.\nAdvantages: simplify the problem of fit an arbitrary function to estimate a set of parameters.\nDisadvantages: may not be flexible unless with large number of parameters and/or complex function shapes.\nExample: linear regression,\nNon-parametric methods: Do not explicitly assume a function form of \\(f\\). They seek to estimate \\(f\\) directly using data points, can be quite flexible and accurate.\n**Disadvantage: need large number of data points\nExample: KNN (breakdown for higher dimention. Typically only for \\(p\\le 4\\)), spline fit.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#how-to-assess-model-accuracy",
+    "href": "ch2.html#how-to-assess-model-accuracy",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.4 How to assess model accuracy",
+    "text": "2.4 How to assess model accuracy\nFor repression problems, the most commonly used measure is the mean squared error (MSE), given by \\[\nMSE = \\frac{1}{n}\\sum_{i=1}^n (y_i-\\hat{f}(x_i))^2\n\\] For classification problems, typically the following error rate (classifications error) is calculated: \\[\n\\frac{1}{n} \\sum_{i=1}^{n} I(y_i\\ne \\hat{y}_i)\n\\] The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. Since we are in general interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set.\nFlexible models tend to overfit the data, which essentially means they follow the error or noise too closely in the training set, therefore cannot be generalized to unseen cases (test set).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#model-selection",
+    "href": "ch2.html#model-selection",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.5 Model Selection:",
+    "text": "2.5 Model Selection:\nNo free lunch theorem\nThere is no single best method for all data sets, which means some method works better than other methods for a particular dataset. Therefore, one needs to perform model selections. Here are some principles.\n\n2.5.1 Trade-off between Model flexibility and Model Interpretability\nMore flexible models have higher degree of freedom and are less interpretable because it’s difficult to interpret the relationship between a predictor and the response.\nLASSO is less flexible than linear regression. GAM allows some non-linearity. Full non-linear models have higher flexibility, such as bagging, boosting, SVM, etc.\nWhen inference is the goal, then there are advantages to using simple and less flexible models for interpretability.\nWhen prediction is the main goal, more flexible model may be a choice. But sometimes, we obtain more accurate prediction using a simpler model because the underlying dataset has a simpler structure. Therefore, it is not necessarily true that a more flexible model has a higher prediction accuracy.\nOccam’s Razor: Among competing hypotheses that perform equally well, the one with the fewest assumptions should be selected.\n\n\n2.5.2 Model Selection: the Bias-Variance Trade-off\nAs the model flexibility increases, the training MSE (or error rate for classificiton) will decrease, but the test MSE (error rate) in general will not and will show a characteristic U-shape. This is because when evaluated at a test point \\(x_0\\), the expected test MSE can be decomposed into \\[\nE\\left[ (y_0-\\hat{f}(x_0))^2 \\right] = \\text{Var}[\\hat{f}(x_0)] + (\\text{Bias}(\\hat{f}(x_0)))^2+\\text{Var}[\\epsilon]\n\\] where the expectation is over different \\(\\hat{f}\\) on a different training set or on a different training step if the training process is stochastic, and \\[\n\\text{Bias}(\\hat{f}(x_0))= E[\\hat{f}(x_0)]-f(x_0)\n\\] To obtain the least test MSE, one must trade off between variance and bias. Less flexible model tendes to have higher bias, and more flexible models tend to have higher variance. An optimal flexibility for the least test MSE varies with different data sets. Non-linear data tends to require higher optimal flexibility.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#bayes-classifier",
+    "href": "ch2.html#bayes-classifier",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.6 Bayes Classifier",
+    "text": "2.6 Bayes Classifier\nIt can be shown that Bayes Classifier minimizes the classification test error \\[\n\\text{Ave}(I(y_0\\ne \\hat{y}_0)).\n\\] A Bayes Classifier assigns a test observation with predictor \\(x_0\\) to the class for which \\[\n\\text{Pr}(Y=j|X=x_0)\n\\] is largest. It’s error rate is given by \\[\n1-E[\\max_{j} \\text{Pr}(Y=j|X)]\n\\]\nwhere the expectation is over \\(X\\). The Bayes error is analogous to the irreducible error \\(\\epsilon\\).\nBayes Classifier is not attainable as we do not know \\(\\text{Pr}(Y|X)\\). We only can estimate \\(\\text{Pr}(Y|X)\\). One way to do this is by KNN. KNN estimate the conditional probability simply with a majority vote. The flexibility of KNN increases as \\(1/K\\) increases with \\(K=1\\) being the most flexible KNN. The training error is 0 for \\(K=1\\). A suitable \\(K\\) should be chosen for an appropriate trade off between bias and variance. The KNN classifier will classify the test point \\(x_0\\) based on the probability calculated from the \\(k\\) nearest points. KNN regression on the other hand will assign the test point \\(x_0\\) the average value of the \\(k\\) nearest neighbors.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#homework-indicates-optional",
+    "href": "ch2.html#homework-indicates-optional",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.7 Homework (* indicates optional):",
+    "text": "2.7 Homework (* indicates optional):\n\nConceptual: 1,2,3,4*,5,6,7\nApplied: 8, 9*, 10*",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch2.html#code-gist",
+    "href": "ch2.html#code-gist",
+    "title": "2  Chapter 2: Statistical Learning",
+    "section": "2.8 Code Gist",
+    "text": "2.8 Code Gist\n\n2.8.1 OS\nimport os\nos.chdir(path) # change dir\n\n\n2.8.2 Python:\nConcatenation using +\n\"hello\" + \" \" + \"world\"  # 'hello world'\n[3,4,5] + [4,9,7] # [3,4,5, 4,9,7]\n\nString formatting\nprint('Total is: {0}'.format(total))\n\nzip to loop over a sequence of tuples\nfor value, weight in zip([2,3,19],\n                         [0.2,0.3,0.5]):\n    total += weight * value\n\n\n\n2.8.3 Numpy\n\n2.8.3.1 Numpy functions:\nnp.sum(x), np.sqrt(x) (entry wise). x**2 (entry wise power), np.corrcoef(x,y) (find the correlation coefficient of array x and array y)\nnp.mean(axis=None): axis could be None (all entries), 0(along row), 1(along column)\nnp.var(x, ddof=0), np.std(x, ddof=0), # Note both np.var and np.std accepts an argument ddof, the divisor is N-ddof.\nnp.linspace(-np.pi, np.pi, 50) # start, end, number of points 50\nnp.multiply.outer(row,col) # calculate the product over the mesh with vectors row and col.\nnp.zeros(shape or int, dtype) #eg: np.zeros(5,bool)\nnp.ones(Boston.shape[0])\nnp.all(x), np.any(x): check if all or any entry of x is true.\nnp.unique(x): find unique values in x. np.isnan(x): return a boolean array of len(x). np.isnan(x).mean(): find the percentage of np.nan values in x.\n\n\n2.8.3.2 Array Slicing and indexing\nnp.arange(start, stop, step)# numpy version ofrange`\nx[slice(3:6)] # equivalent to x[3:6]\nUsing [row, col] format. If col is missing, then index the entire rows. len(row) must be equal to len(col). Otherwise use iterative indexing or use np.ix_(x_idx, y_idx) function, or use Boolean indexing, see below.\nA[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)\nA[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. \nA[:,[0,2]] # cols 0 and 2\nA[[1,3], [0,2]] # entry A[1,0] and A[3,2]\nA[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2\nA[[1,3], [0,2,3]] # syntax error\n# instead one can use the following two methods \nA[[1,3]][:,[0,2]] # iterative subsetting\nA[np.ix_([1,3],[0,2,3])] # use .ix_ function to create an index mesh\nA[keep_rows, keep_cols] # keep_rows, keep_cols are boolean arrays of the same length of rows or cols, respectively\nA[np.ix_([1,3],keep_cols)] # np.ix_()can be applied to mixture of integer array and boolean array\n\n\n2.8.3.3 Random numbers and generators\nnp.random.normal(loc=0.0, scale=1.0,size=None) # size can be an integer or a tuple.\n# \nrng = np.random.default_rng(1303) # set random generator seed\nrng.normal(loc=0, scale=5, size=2) # \nrng.standard_normal(10) # standard normal distribution of size 10\nrng.choice([0, np.nan], p=[0.8,0.2], size=A.shape)\n\n\n2.8.3.4 Numpy array atributes\n.dtype, .ndim, .shape\n\n\n2.8.3.5 Numpy array methods\nx.sum(axis=None) (equivalent to np.sum(x)), x.T (transpose),\nx.reshape((2,3)) # x.reshape() is a reference to x.\nx.min(), x.max()\n\n\n\n2.8.4 Graphics\n\n2.8.4.1 2-D figure\n# Using the subplots + ax methods\nfig, ax = subplots(nrows=2, ncols=3, figsize=(8, 8)) \n# explicitly name each axis in the grid \nfig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))\n\nax[0,1].plot(x, y,marker='o', 'r--', linewidth=3); #line plot. `;` suppresses the text output. pick ax[0,1] when there are  multiple axes\nax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)\nax.scatter(x, y, marker='o'); #scatter plot\nax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')\nax.set_xlabel(\"this is the x-axis\")\nax.set_ylabel(\"this is the y-axis\")\nax.set_title(\"Plot of X vs Y\");\naxes[0,1].set_xlim([-1,1]) # set x_lim. similarly `set_ylim()`\n\nfig = ax.figure  # get the figure object from an axes object\nfig.set_size_inches(12,3) # access the fig object to change fig size (width, height)\nfig # re-render the figure\nfig.savefig(\"Figure.pdf\", dpi=200); #save a figure into pdf. Other formats: .jpg, .png, etc\n\n\n2.8.4.2 Contour and image\nfig, ax = subplots(figsize=(8, 8))\nx = np.linspace(-np.pi, np.pi, 50)\ny = x\nf = np.multiply.outer(np.cos(y), 1 / (1 + x**2))\nax.contour(x, y, f, levels=None); # numbre of levels. if None, automatically choose\nax.imshow(f); # heatmap colorcoded by f\n\n\n\n2.8.5 Pandas\n\n2.8.5.1 loading data\npd.read_csv('Auto.csv') # read csv\npd.read_csv('Auto.data', \n            na_values =['?'], #specifying the na_values in the datafile. \n            delim_whitespace=True) # read whitespaced text file\npd.read_csv('College.csv', index_col=0) # use column `0` as teh row labels \n\n\n\n2.8.5.2 Pandas Dataframe attributes and methods\nAuto.shape\nAuto.columns # gets the list of column names\nAuto.index #return the index (labels) objects\nAuto['horsepower'].to_numpy() # convert to numpy array\nAuto['horsepower'].sum()\n\nAuto.dropna() # drop the rows containing na values. \ndf.drop('B', axis=1, inplace=True) # drop a column 'B' inplace. \n#equivalent to df.drop(columns=['B'], inplace=True)\ndf.drop(index=['Ohio','Colorado']) #eqivalent to: df.drop(['Ohio','Colorado'], axis=0)\nauto_df.drop(auto_df.index[10:86]) # drop rows with index[10:86] not including 86\n\nAuto.set_index('name')# rename the index using the column 'name'.\n\npd.Series(Auto.cylinders, dtype='category') # convert the column `cylinders` to 'category` dtype\n# the convertison can be done using `astype()` method\nAuto.cylinders.astype('category')\nAuto.describe() # statistics summary of all columns\nAuto['mpg'].describe() # for selected columns\n\ncollege.rename({'Unnamed: 0': 'College'}, axis=1): # change column name, \n# alternavie way\ncollege_df.rename(columns={college_df.columns[0] : \"College\"}, inplace=True) #\n\ncollege['Elite'] = pd.cut(college['Top10perc'],  # binning a column\n                          [0,0.5,1],  #bin edges\n                          labels=['No', 'Yes']\n                          right=True,# True: right-inclusive for each bin ( ]; False:rigth-exclusive \n                          )   # bin labels (names)\ncollege['Elite'].value_counts() # frequency counts\nauto.columns.tolist() # or  auto.columns.format() (rarely used way)\n\n\n\n2.8.5.3 Selecting rows and columns\nSelect Rows:\nAuto[:3] # the first 3 rows. \nAuto[Auto['year'] &gt; 80] # select rows with boolean array\nAuto_re.loc[['amc rebel sst', 'ford torino']] #label_based row selection\nAuto_re.iloc[[3,4]] #integer-based row seleciton: rows 3 and 4 (index starting from 0)\nSelect Columns\nAuto['horsepower'] # select the column 'horsepower', resulting a pd.Series.\nAuto[['horsepower']] #obtain a dataframe of the column 'horsepower'. \nAuto_re.iloc[:,[0,2,3]] # intger-based selection\nauto_df.select_dtypes(include=['int16','int32']) # select columns by dtype\nSelect a subset\nAuto_re.iloc[[3,4],[0,2,3]] # integer-basd \nAuto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based \nAuto_re.loc[Auto_re['year'] &gt; 80, ['weight', 'origin']] # mix bolean indexing with labels\n\nAuto_re.loc[lambda df: (df['year'] &gt; 80) & (df['mpg'] &gt; 30),\n            ['weight', 'origin']\n           ]  # using labmda function with loc[]\n\n\n2.8.5.4 Pandas graphics\nWithout using subplots to get axes and figure objects\nax = Auto.plot.scatter('horsepower', 'mpg') #scatter plot of 'horsepower' vs 'mpg' from the dataframe Auto\nax.set_title('Horsepower vs. MPG');\nfig = ax.figure\nfig.savefig('horsepower_mpg.png');\n\nplt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95) #in percentage of the figure size. \nax1.fig.suptitle('College Scatter Matrix', fontsize=35)\nUsing subplots\nfig, axes = subplots(  ncols=3, figsize=(15, 5))\nAuto.plot.scatter('horsepower', 'mpg', ax=axes[1]);\nAuto.hist('mpg', ax=ax);\nAuto.hist('mpg', color='red', bins=12, ax=ax); # more customized \nBoxplot using subplots\nAuto.cylinders = pd.Series(Auto.cylinders, dtype='category') # needs to convert the `cylinders` column to categorical dtype\nfig, ax = subplots(figsize=(8, 8))\nAuto.boxplot('mpg', by='cylinders', ax=ax);\nScatter matrix\npd.plotting.scatter_matrix(Auto); # all columns\npd.plotting.scatter_matrix(Auto[['mpg',\n                                 'displacement',\n                                 'weight']]);  # selected columns\n                                 \n                                 \n#Alternatively with sns.pairplot\n\n\nSns Graphic\n# Scatter matrix\nax1 = sns.pairplot(college_df[college_df.columns[0:11]])\n\n# Boxplot\nsns.boxplot(ax=ax, x=\"Private\", y=\"Outstate\", data=college_df)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Chapter 2: Statistical Learning</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#simple-linear-regression",
+    "href": "ch3.html#simple-linear-regression",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.1 Simple Linear Regression",
+    "text": "3.1 Simple Linear Regression\nAssumes the model \\[\nY = \\beta_0 + \\beta_1 X +\\epsilon.\n\\] After training using the training data, we can obtain the parameter estimates \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\). The we can obtain the prediction fro \\(x\\) as \\[\n\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x\n\\] The error at a data point \\(x_i\\) is given by \\(e_i = y_i -\\hat{y}_i\\), and the residual sum of squares (RSS) is \\[\n\\text{RSS} =e_1^2+\\cdots +e_n^2.\n\\] One can use the least square approach to minimize RSS to obtain \\[\n\\hat{\\beta}_1 =\\frac{(x_i-\\bar{x})(y_i-\\bar{y})}{\\sum_{i=1}^n(x_i-\\bar{x})^2}=r_{xy}\\frac{\\sigma_y}{\\sigma_x}\n\\] \\[\n\\hat{\\beta}_0= \\bar{y}-\\hat{\\beta}_1 \\bar{x}\n\\] where, \\(\\bar{y}=\\frac{1}{n}\\sum_{i=1}^n y_i\\) and \\(\\bar{x}=\\frac{1}{n}\\sum_{i=1}^n x_i\\), and the correlation \\[\nr_{xy} = \\frac{\\text{cov(x,y)}}{\\sigma_x\\sigma_y}=\\frac{(x_i-\\bar{x})(y_i-\\bar{y})}{\\sqrt{\\sum_{i=1}^n(x_i-\\bar{x})^2}\\sqrt{\\sum_{i=1}^n(y_i-\\bar{y})^2}}.\n\\] Note \\(-1\\le r_{xy} \\le 1\\). When there is no intercept, that is \\(\\beta_0=0\\), then \\[\n\\hat{y}_i=x_i \\hat{\\beta}=\\sum_{i=1}^n a_i y_i\n\\] where, \\[\n\\hat{\\beta} =\\frac{\\sum_{i=1}^n x_iy_i}{ \\sum_{i=1}^{n} x_i^2}\n\\] That is, the fitted values are linear combinations of the response values when there is no intercept. ### Assessing the accuracy of the coefficients Let \\(\\sigma^2=\\text{Var}(\\epsilon)\\). Then the standard errors under repeated sampling \\[\n(\\text{SE}[\\hat{\\beta}_1])^2 = \\frac{1}{\\sigma^2_x}\\cdot \\frac{\\sigma^2}{n}\n\\] \\[\n(\\text{SE}[\\hat{\\beta}_0])^2 = \\left[1+ \\frac{\\bar{x}^2}{\\sigma^2_x} \\right]\\cdot \\frac{\\sigma^2}{n}\n\\] Using the estimated \\(\\hat{beta}_0\\) or \\(\\hat{beta}_1\\) or one can construct the CI as \\[\n\\hat{\\beta}_j = [\\hat{\\beta}_j- t_{0.975,n-p-1}\\cdot \\text{SE}[\\hat{\\beta}_j], \\hat{\\beta}_j+ t_{0.975,n-p-1} \\cdot \\text{SE}[\\hat{\\beta}_j]  ]\n\\] Where \\(j=0, 1\\). When \\(n\\) is sufficient large, \\(t_{0.975,n-p-1} \\approx 2\\). With the standard errors of the coefficients, one can also perform hypothesis test on the coefficients. For \\(j=0,1\\),\n\\[H_0: \\beta_j=0\\] \\[H_A: \\beta+j\\ne 0\\] The \\(t\\)-statistic of degree \\(n-p-1\\), is given by \\[\nt = \\frac{\\hat{\\beta}_j - 0}{\\text{SE}[\\hat{\\beta}_j]}\n\\] One can then compute the \\(p\\)-value corresponding to this \\(t\\) and test the hypothesis.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#multiple-linear-regression",
+    "href": "ch3.html#multiple-linear-regression",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.2 Multiple Linear Regression",
+    "text": "3.2 Multiple Linear Regression\n\\[\nY= \\beta_0 + \\beta_1X_1 +\\cdots + \\beta_pX_p + \\epsilon.\n\\] The estimate of the coefficients \\(\\hat{\\beta_j}\\), \\(j\\in \\mathbb{Z}_{p+1}\\) are found by using the same least square method to minimize RSS. we interpret \\(\\beta_j\\) as the expected (average) effect on \\(Y\\) on one unit increase in \\(X_j\\), holding all other predictors fixed. This interpretation is based on the assumptions that the predictors are uncorrelated, so each predictor can be estimated and tested separately. Where there are correlations among predictors, the variance of all coefficients tends to increase, sometimes dramatically, and the previous interpretation becomes hazardous because when \\(X_j\\) changes, everything else changes.\nClaims of causality should be avoided for observational data.\n\n3.2.1 Assess the accuracy of the future prediciton\n\nprediction interval: predict an individual response \\(Y=f(X)+\\epsilon\\). Always wide than the confidence interval, because it includes \\(\\epsilon\\).\nconfidence interval: predict an average response \\(f(X)\\), doesnot include \\(\\epsilon\\)\n\n\n\n3.2.2 Assessing the overall accuracy of the model\nTo this end, first define the Residual Standard Error \\[\n\\text{RSE} = \\sqrt{\\frac{1}{n-p-1}\\text{RSS}} = \\sqrt{\\frac{1}{n-p-1}\\sum_{i=1}^n(y_i-\\hat{y}_i)^2} \\approx \\sigma=\\sqrt{\\text{Var}(\\epsilon)}\n\\] We will use two approaches:\n\nApproach 1: Using R-squared (fraction of variance explained): \\[\nR^2 =\\frac{\\text{TSS}-\\text{RSS}}{\\text{TSS}} = 1-\\frac{\\text{RSS}}{\\text{TSS}}\n\\] where, \\(TSS=\\sum_{i=1}^n(y_i- \\bar{y})\\).\nApproach 2: test Hypothesis \\[\nH_0: \\beta_1=\\beta_2=\\cdots = \\beta_p\n\\] \\[\nH_a: \\text{at least one } \\beta_j \\text{ is non-zero.}\n\\] using \\(F\\)-statistic \\[\nF=\\frac{\\text{SSB/df(B)}}{\\text{SSW/df(W)}}=\\frac{(\\text{TSS}-\\text{RSS})/p}{\\text{RSS}/(n-p-1)}\\sim F_{p,n-p-1}\n\\] If \\(H_0\\) is true, \\(F\\approx 1\\), if \\(H_a\\) is true, \\(F&gt;&gt;1\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#model-selectionvariable-selections-balance-training-errors-with-model-size",
+    "href": "ch3.html#model-selectionvariable-selections-balance-training-errors-with-model-size",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.3 Model Selection/Variable Selections: balance training errors with model size",
+    "text": "3.3 Model Selection/Variable Selections: balance training errors with model size\n\nAll subsets (best subsets) regression: compute the least square fit for all \\(2^p\\) possible subsets and then choose among them based on certain criterion that balance training error and model size\nForward selection: Start from the null model that only contains \\(\\beta_0\\). Then find the best model containing one predictor that minimizing RSS. Denote the variable by \\(\\beta_1\\). Then continue to find the best model with the lowest RSS by adding one variable from the remaining predictors, and so on. Continue until some stopping rule is met: e.g., when all remaining variables have a \\(p\\)-value greater than some threshold.\nBackward selection: start with all variables in the model. Remove the variable with the largest \\(p\\)-value (least statistically significant). The new \\((p-1)\\) model is fit, and remove the variable with the largest \\(p\\)-value. Continue until a stopping rule is satisfied, e.g., all remaining variables have \\(p\\)-value less than some threshold.\nothers: including Mallow’s \\(C_p\\), AIC (Akaike Informaton Criterion), BIC, adjusted \\(R^2\\), Cross-validation, test set performance.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#handle-categorical-variables-factor-variables",
+    "href": "ch3.html#handle-categorical-variables-factor-variables",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.4 Handle categorical variables (factor variables)",
+    "text": "3.4 Handle categorical variables (factor variables)\nFor a categorical variable \\(X_i\\) with \\(m\\) levels, create one fewer dummy variables (\\(x_ij, 1\\le j \\le m-1\\))&gt;. The level with no dummy variable is called the baseline. The coefficient corresponding to a dummy variable is the expected difference in change in \\(Y\\) when compared to the baseline, while holding other predictors fixed.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#adding-non-linearity-to-polynomial-regression",
+    "href": "ch3.html#adding-non-linearity-to-polynomial-regression",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.5 Adding non-linearity (to Polynomial Regression)",
+    "text": "3.5 Adding non-linearity (to Polynomial Regression)\n\n3.5.1 Modeling interactions (synergy)\nWhen two variables have interaction, then their product \\(X_iX_j\\) can be added into the regression model, and the product maybe considered as a single variable for inference, for example, compute its SE, \\(t\\)-statistics, \\(p\\)-value, Hypothesis test, etc.\nIf we include an interaction in a model, then the Hierarchy principle should be followed: always include the main effects, even if the \\(p\\)-values associated with their coefficients are not significant. This is because without the main effects, the interactions are hard to interpret, as they would also contain the main effect.\n\n\n3.5.2 Adding higher power of a predictor\nAdd a term involving \\(X_i^k\\) for some \\(k&gt;1\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#outliers-unusual-y_i",
+    "href": "ch3.html#outliers-unusual-y_i",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.6 Outliers (Unusual \\(y_i\\))",
+    "text": "3.6 Outliers (Unusual \\(y_i\\))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#non-constant-variance-of-error-terms",
+    "href": "ch3.html#non-constant-variance-of-error-terms",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.7 Non-constant variance of error terms",
+    "text": "3.7 Non-constant variance of error terms",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#high-leverage-points-unusual-x_i",
+    "href": "ch3.html#high-leverage-points-unusual-x_i",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.8 High leverage points (unusual \\(x_i\\))",
+    "text": "3.8 High leverage points (unusual \\(x_i\\))\nTo quantify the observation’s leverage, one needs to compute the leverage statistic. A large value of this statistic indicates an observation with high leverage.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#colinearity",
+    "href": "ch3.html#colinearity",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.9 Colinearity",
+    "text": "3.9 Colinearity\nVariance inflection factors (VIF) is useful to assess the effect of colinearity. VIF exceeds 5 or 10 indicates a problematic amount of colinearity.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#homework-indicates-optional",
+    "href": "ch3.html#homework-indicates-optional",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.10 Homework (* indicates optional):",
+    "text": "3.10 Homework (* indicates optional):\n\nConceptual: 1–6\nApplied: 8–15. at least one.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
+    "objectID": "ch3.html#code-gist",
+    "href": "ch3.html#code-gist",
+    "title": "3  Chapter 3: Linear Regression",
+    "section": "3.11 Code Gist",
+    "text": "3.11 Code Gist\n\n3.11.1 Python\ndir() # provides a list of objects at the top level name space\ndir(A) # display addtributes and methods for the object A\n' + '.join(X.columns) # form a string by joining the list of column names by \"+\"\n\n\n3.11.2 Numpy\nnp.argmax(x) # identify the location of the largest element\nnp.concatenate([x,y],axis=0) # concatenate two arrays x and y. \n\n\n\n3.11.3 Pandas\nX = pd.DataFrame(data=X, columns=['a','b'])\n\npd.DataFrame({'intercept': np.ones(Boston.shape[0]),\n                  'lstat': Boston['lstat']}) # make a dataframe using a dictionary\nBoston.columns.drop('medv','age') # drop the elements 'medv' and 'age' from the list of column names\n\npd.DataFrame({'vif':vals},\n                   index=X.columns[1:]) # form a df by specifying index labels\n\nX.values  # Convert dataframe X to numpy array\nX.to_numpy() # recommended to replace the above method\nDataFrame.corr() # correlations between columns \nx.sort_values(ascending=False)\npd.to_numeric(auto_df['horsepower'], errors='coerce') # if error, denote it by \"NaN\".\nauto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in subset, otherwise, all columns\n\nauto_df.drop('name', axis=1, inplace=True)\n\n\n3.11.4 Graphics\nxlim = ax.get_xlim() # get the x_limit values xlim[0], xlim[1]\nax.axline() # add a line to a plot\nax.axhline(0, c='k', ls='--'); # horizontal line\nline, = ax.plot(x,y,label=\"line 1\") # \"line 1\" is the legend\n# alternatively the label can be set by \nline.set_label(\"line 1\")\nax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')\nax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)\nax.legend(loc=\"upper left\", fontsize=25) # adding legendes\nax.annotate(i,xy=(fitted[i],residuals[i])) # annote at the xy position with i. \n\n\nplt.style.use('seaborn') # pretty matplotlib plots\nplt.rcParams.update({'font.size': 16})\nplt.rcParams[\"figure.figsize\"] = (8,7)\n\nplt.rc('font', size=10)\nplt.rc('figure', titlesize=13)\nplt.rc('axes', labelsize=10)\nplt.rc('axes', titlesize=13)\nplt.rc('legend', fontsize=8) # adjust legend globally\n    \n\n\n3.11.5 Using Sklearn\nfrom sklearn.linear_model import LinearRegression\n## Set the target and predictors\nX = auto_df['horsepower']\n\n### To get polynomial features\npoly = PolynomialFeatures(interaction_only=True,include_bias = False)\nX = poly.fit_transform(X)\n\ny = auto_df['mpg']\n\n## Reshape the columns in the required dimensions for sklearn\nlength = X.values.shape[0]\nX = X.values.reshape(length, 1) #both X and y needs to be 2-D\ny = y.values.reshape(length, 1)\n\n## Initiate the linear regressor and fit it to data using sklearn\nregr = LinearRegression()\nregr.fit(X, y)\nregr.intercept_\nregr.coef_\n\npred_y = regr.predict(X)\n\n\n3.11.6 Using statsmodels and ISLP\nfrom ISLP import load_data\nfrom ISLP.models import (ModelSpec as MS,\n                         summarize,\n                         poly)\n                         \nimport statsmodels.api as sm\nimport statsmodels.formula.api as smf\nfrom statsmodels.stats.outliers_influence \\\n     import variance_inflation_factor as VIF\nfrom statsmodels.stats.anova import anova_lm\n\n#Training\nBoston = load_data(\"Boston\") \n#hand-craft the design matrix X\nX = pd.DataFrame({'intercept': np.ones(Boston.shape[0]), #design matrix. intercept column\n                  'lstat': Boston['lstat']}) \n#the following is the preferred method to create X\ndesign = MS(['lstat']) # specifying the model variables. Automatically add an intercept, adding \"intercept=False\" if no intercept. \ndesign = design.fit(Boston) # do intial computation as specified in the model object design by MS(), such as means or sd. This attached some statistics to the `design` object, and need to be applied to the new data for prediciton\n\nX = design.transform(Boston) # apply the fitted transformation to the data to create X\n#alternatiely, \nX = design.fit_transform(Boston) # this combines the .fit() and .transform() two lines\n\ny = Boston['medv']\nmodel = sm.OLS(y, X) # setup the model\nmodel = smf.ols('mpg ~ horsepower', data=auto_df) # alternatively use smf formula, y~x\n\nresults = model.fit() # results is a dictionary:.summary(), .params \n\nresults.summary()\nresults.params # coefficients\nresults.resid # reisdual array\nresults.rsquared # R^2\nnp.sqrt(results.scale) # RSE\nresults.fittedvalues # fitted \\hat(y)_i at x_i in the traning set\n\n\nsummarize(results) # summzrize() is from ISLP to show the esstial results from model.fit()\n\n# Makding prediciton \nnew_df = pd.DataFrame({'lstat':[5, 10, 15]})  # new test-set containing data where to make predicitons\nnewX = design.transform(new_df) # apply the same transform to the test-set\nnew_predictions = results.get_prediction(newX);\nnew_predictions.predicted_mean #predicted values\nnew_predictions.conf_int(alpha=0.05) #for the predicted values\n\nnew_predictions.conf_int(obs=True, alpha=0.05) # prediction intervals by setting obs=True\n\n# Including an interaction term\nX = MS(['lstat',\n        'age',\n        ('lstat', 'age')]).fit_transform(Boston) #interaction term ('lstat', 'age')\n\n# Adding a polynomial term of higher degree\nX = MS([poly('lstat', degree=2), 'age']).fit_transform(Boston) # Note poly is from ISLP, # adding deg1 and deg2 terms. by default poly creates ortho. poly. not including an intercept. \n# Given a qualitative variable, `ModelSpec()` generates dummy\nvariables automatically, to avoid collinearity with an intercept, the first column is dropped in the design matrix generated by 'ModelSpec()` by default.\n\n# Compare nested models using ANOVA\nanova_lm(results1, results3) # result1 is the result of linear model, an result3 is the result of a larger model\n\n# Identify high leverage x\ninfl = results.get_influence() \n# hat_matrix_diag calculate the leverate statistics\nnp.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage\n\n# Calculate VIF\nvals = [VIF(X, i)\n        for i in range(1, X.shape[1])] #excluding column 0 because it's all 1's in X.\nvif = pd.DataFrame({'vif':vals},\n                   index=X.columns[1:])\nvif # VIF exceeds 5 or 10 indicates a problematic amount of colinearity\n\nUseful Code Snippets\ndef abline(ax, b, m, *args, **kwargs):\n    \"Add a line with slope m and intercept b to ax\"\n    xlim = ax.get_xlim()\n    ylim = [m * xlim[0] + b, m * xlim[1] + b]\n    ax.plot(xlim, ylim, *args, **kwargs)\n# Plot scatter plot with a regression line\nax = Boston.plot.scatter('lstat', 'medv')\nabline(ax,\n       results.params[0],\n       results.params[1],\n       'r--',\n       linewidth=3)\n# Plot residuals vs. fitted values (note, not vs x, therefore works for multiple regression)\nax = subplots(figsize=(8,8))[1]\nax.scatter(results.fittedvalues, results.resid)\nax.set_xlabel('Fitted value')\nax.set_ylabel('Residual')\nax.axhline(0, c='k', ls='--');\n\n# Alternatively\nsns.residplot(x=X, y=y, lowess=True, color=\"g\", ax=ax)\n\n# Plot the smoothed residuals~fitted by LOWESS\nfrom statsmodels.nonparametric.smoothers_lowess import lowess\nsmoothed = lowess(residuals,fitted) # Note the order (y,x)\nax.plot(smoothed[:,0],smoothed[:,1],color = 'r')\n\n# QQ plot for the residuas (obtain studentized residuals)\nimport scipy.stats as stats\nsorted_student_residuals = pd.Series(smf_model.get_influence().resid_studentized_internal)\nsorted_student_residuals.index = smf_model.resid.index\nsorted_student_residuals = sorted_student_residuals.sort_values(ascending = True)\ndf = pd.DataFrame(sorted_student_residuals)\ndf.columns = ['sorted_student_residuals']\n\n#stats.probplot() assess whether a dataset follows a specified distribution\ndf['theoretical_quantiles'] = stats.probplot(df['sorted_student_residuals'], dist = 'norm', fit = False)[0] \n    \nx = df['theoretical_quantiles']\ny = df['sorted_student_residuals']\nax.scatter(x,y, edgecolor = 'k',facecolor = 'none')\n\n# Plot leverage statistics\ninfl = results.get_influence()\nax = subplots(figsize=(8,8))[1]\nax.scatter(np.arange(X.shape[0]), infl.hat_matrix_diag)\nax.set_xlabel('Index')\nax.set_ylabel('Leverage')\nnp.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Chapter 3: Linear Regression</span>"
+    ]
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "2  Summary",
+    "title": "4  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Summary</span>"
     ]
   }
 ]
