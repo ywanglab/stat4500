@@ -1,0 +1,359 @@
+# Chapter 3: Linear Regression
+
+Linear regression is a simple supervised learning assuming a linear relation between $Y$ and $X$. When there is only one predictor, it's a **simple linear regression**. When there are more than one predictors, it's called **multiple linear regression**. 
+
+## Simple Linear Regression
+Assumes the model 
+$$
+Y = \beta_0 + \beta_1 X +\epsilon.
+$$
+After training using the training data, we can obtain the parameter estimates $\hat{\beta}_0$ and $\hat{\beta}_1$. The we can obtain the prediction fro $x$ as 
+$$
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+$$
+The error at a data point $x_i$ is given by $e_i = y_i -\hat{y}_i$, and the *residual sum of squares* (RSS) is 
+$$
+\text{RSS} =e_1^2+\cdots +e_n^2. 
+$$
+One can use the least square approach to minimize RSS to obtain 
+$$
+\hat{\beta}_1 =\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}=r_{xy}\frac{\sigma_y}{\sigma_x}
+$$
+$$
+\hat{\beta}_0= \bar{y}-\hat{\beta}_1 \bar{x}
+$$
+where, $\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$, and the correlation 
+$$
+r_{xy} = \frac{\text{cov(x,y)}}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
+$$
+Note $-1\le r_{xy} \le 1$. When there is no intercept, that is $\beta_0=0$, then 
+$$
+\hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
+$$
+where, 
+$$
+\hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
+$$
+That is, the fitted values are linear combinations of the response values when there is no intercept. 
+### Assessing the accuracy of the coefficients
+Let $\sigma^2=\text{Var}(\epsilon)$. Then the standard errors under repeated sampling
+$$
+(\text{SE}[\hat{\beta}_1])^2 = \frac{1}{\sigma^2_x}\cdot \frac{\sigma^2}{n}
+$$
+$$
+(\text{SE}[\hat{\beta}_0])^2 = \left[1+ \frac{\bar{x}^2}{\sigma^2_x} \right]\cdot \frac{\sigma^2}{n}
+$$
+Using the estimated $\hat{beta}_0$ or $\hat{beta}_1$ or one can construct the CI as 
+$$
+\hat{\beta}_j = [\hat{\beta}_j- t_{0.975,n-p-1}\cdot \text{SE}[\hat{\beta}_j], \hat{\beta}_j+ t_{0.975,n-p-1} \cdot \text{SE}[\hat{\beta}_j]  ]
+$$
+Where $j=0, 1$. When $n$ is sufficient large, $t_{0.975,n-p-1} \approx 2$. With the standard errors of the coefficients, one can also perform **hypothesis test** on the coefficients. For $j=0,1$, 
+
+$$H_0: \beta_j=0$$
+$$H_A: \beta+j\ne 0$$
+The $t$-statistic of degree $n-p-1$, is given by 
+$$
+t = \frac{\hat{\beta}_j - 0}{\text{SE}[\hat{\beta}_j]}
+$$
+One can then compute the $p$-value corresponding to this $t$ and test the hypothesis. 
+
+## Multiple Linear Regression
+$$
+Y= \beta_0 + \beta_1X_1 +\cdots + \beta_pX_p + \epsilon.
+$$
+The estimate of the coefficients $\hat{\beta_j}$, $j\in \mathbb{Z}_{p+1}$ are found by using the same least square method to minimize RSS. 
+we interpret $\beta_j$ as the *expected* (average)  effect on $Y$ on one unit increase in $X_j$, **holding all other predictors fixed**. This interpretation is based on the assumptions that *the predictors are uncorrelated*, so *each predictor can be estimated and tested separately*. Where there are correlations among predictors, the variance of all coefficients tends to increase, sometimes dramatically, and the previous interpretation becomes hazardous because when $X_j$ changes, everything else changes.
+
+**Claims of causality should be avoided for observational data**. 
+
+### Assess the accuracy of the future prediciton
+- prediction interval: predict an individual response $Y=f(X)+\epsilon$. Always wide than the confidence interval, because it includes $\epsilon$.
+- confidence interval: predict an average response $f(X)$, doesnot include $\epsilon$
+
+
+### Assessing the overall accuracy of the model 
+To this end, first define the *Residual Standard Error*
+$$
+\text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
+$$
+We will use two approaches: 
+
+- Approach 1: Using *R-squared* (fraction of variance explained):
+  $$
+  R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
+  $$
+where, $TSS=\sum_{i=1}^n(y_i- \bar{y})$. 
+- Approach 2: test Hypothesis 
+$$
+H_0: \beta_1=\beta_2=\cdots = \beta_p
+$$
+$$
+H_a: \text{at least one } \beta_j \text{ is non-zero.}
+$$
+using $F$-statistic
+$$
+F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\text{RSS}/(n-p-1)}\sim F_{p,n-p-1}
+$$
+If $H_0$ is true, $F\approx 1$, if $H_a$ is true, $F>>1$. 
+
+
+
+## Model Selection/Variable Selections: balance training errors with model size
+- **All subsets (best subsets) regression**: compute the least square fit for all $2^p$ possible subsets  and then choose among them based on certain criterion that balance training error and model size 
+- **Forward selection**: Start from the *null model* that only contains $\beta_0$. Then find the best model containing one predictor that minimizing RSS. Denote the variable by $\beta_1$. Then continue to find the best model with the lowest RSS by adding one variable from the remaining predictors, and so on. Continue until some stopping rule is met: e.g., when all remaining variables have a $p$-value greater than some threshold. 
+- **Backward selection**: start with all variables in the model. Remove the variable with the largest $p$-value (least statistically significant).  The new $(p-1)$ model is fit, and remove the variable with the largest $p$-value. Continue until a stopping rule is satisfied, e.g., all remaining variables have $p$-value less than some threshold. 
+- **others**: including Mallow's $C_p$, AIC (Akaike Informaton Criterion), BIC, adjusted $R^2$, Cross-validation, test set performance. 
+
+## Handle categorical variables (factor variables)
+For a categorical variable $X_i$ with $m$ levels, create one fewer dummy variables ($x_ij, 1\le j \le m-1$)>. The level with no dummy variable is called the *baseline*. The coefficient corresponding to a dummy variable is the expected difference in change in $Y$ when compared to the baseline, while holding other predictors fixed. 
+
+## Adding non-linearity (to Polynomial Regression)
+### Modeling interactions (synergy)
+When two variables have interaction, then their product $X_iX_j$ can be added into the regression model, and the product maybe considered as a single variable for inference, for example,  compute its SE, $t$-statistics, $p$-value, Hypothesis test, etc. 
+
+If we include an interaction in a model, then the **Hierarchy principle** should be followed: always include the main effects, even if the $p$-values associated with their coefficients are not significant. This is because without the main effects, the interactions are hard to interpret, as they would also contain the main effect. 
+
+### Adding higher power of a predictor 
+Add a term involving $X_i^k$ for some $k>1$. 
+
+## Outliers (Unusual $y_i$)
+
+## Non-constant variance of error terms
+
+## High leverage points (unusual $x_i$)
+To quantify the observation's leverage, one needs to compute the **leverage statistic**. A large value of this statistic indicates an observation with high leverage. 
+
+## Colinearity
+Variance inflection factors (VIF) is useful to assess the effect of colinearity. VIF exceeds 5 or 10 indicates a problematic amount of colinearity. 
+
+## Homework (\* indicates optional): 
+
+- Conceptual: 1--6
+- Applied: 8--15. at least one. 
+
+## Code Gist
+### Python
+```
+dir() # provides a list of objects at the top level name space
+dir(A) # display addtributes and methods for the object A
+' + '.join(X.columns) # form a string by joining the list of column names by "+"
+```
+### Numpy
+```
+np.argmax(x) # identify the location of the largest element
+np.concatenate([x,y],axis=0) # concatenate two arrays x and y. 
+
+```
+### Pandas
+```
+X = pd.DataFrame(data=X, columns=['a','b'])
+
+pd.DataFrame({'intercept': np.ones(Boston.shape[0]),
+                  'lstat': Boston['lstat']}) # make a dataframe using a dictionary
+Boston.columns.drop('medv','age') # drop the elements 'medv' and 'age' from the list of column names
+
+pd.DataFrame({'vif':vals},
+                   index=X.columns[1:]) # form a df by specifying index labels
+
+X.values  # Convert dataframe X to numpy array
+X.to_numpy() # recommended to replace the above method
+DataFrame.corr() # correlations between columns 
+x.sort_values(ascending=False)
+pd.to_numeric(auto_df['horsepower'], errors='coerce') # if error, denote it by "NaN".
+auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in subset, otherwise, all columns
+
+auto_df.drop('name', axis=1, inplace=True)
+```
+### Graphics
+```
+xlim = ax.get_xlim() # get the x_limit values xlim[0], xlim[1]
+ax.axline() # add a line to a plot
+ax.axhline(0, c='k', ls='--'); # horizontal line
+line, = ax.plot(x,y,label="line 1") # "line 1" is the legend
+# alternatively the label can be set by 
+line.set_label("line 1")
+ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
+ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
+ax.legend(loc="upper left", fontsize=25) # adding legendes
+ax.annotate(i,xy=(fitted[i],residuals[i])) # annote at the xy position with i. 
+
+
+plt.style.use('seaborn') # pretty matplotlib plots
+plt.rcParams.update({'font.size': 16})
+plt.rcParams["figure.figsize"] = (8,7)
+
+plt.rc('font', size=10)
+plt.rc('figure', titlesize=13)
+plt.rc('axes', labelsize=10)
+plt.rc('axes', titlesize=13)
+plt.rc('legend', fontsize=8) # adjust legend globally
+    
+```
+
+### Using Sklearn 
+```
+from sklearn.linear_model import LinearRegression
+## Set the target and predictors
+X = auto_df['horsepower']
+
+### To get polynomial features
+poly = PolynomialFeatures(interaction_only=True,include_bias = False)
+X = poly.fit_transform(X)
+
+y = auto_df['mpg']
+
+## Reshape the columns in the required dimensions for sklearn
+length = X.values.shape[0]
+X = X.values.reshape(length, 1) #both X and y needs to be 2-D
+y = y.values.reshape(length, 1)
+
+## Initiate the linear regressor and fit it to data using sklearn
+regr = LinearRegression()
+regr.fit(X, y)
+regr.intercept_
+regr.coef_
+
+pred_y = regr.predict(X)
+```
+
+
+### Using  statsmodels and ISLP
+```
+from ISLP import load_data
+from ISLP.models import (ModelSpec as MS,
+                         summarize,
+                         poly)
+                         
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from statsmodels.stats.outliers_influence \
+     import variance_inflation_factor as VIF
+from statsmodels.stats.anova import anova_lm
+
+#Training
+Boston = load_data("Boston") 
+#hand-craft the design matrix X
+X = pd.DataFrame({'intercept': np.ones(Boston.shape[0]), #design matrix. intercept column
+                  'lstat': Boston['lstat']}) 
+#the following is the preferred method to create X
+design = MS(['lstat']) # specifying the model variables. Automatically add an intercept, adding "intercept=False" if no intercept. 
+design = design.fit(Boston) # do intial computation as specified in the model object design by MS(), such as means or sd. This attached some statistics to the `design` object, and need to be applied to the new data for prediciton
+
+X = design.transform(Boston) # apply the fitted transformation to the data to create X
+#alternatiely, 
+X = design.fit_transform(Boston) # this combines the .fit() and .transform() two lines
+
+y = Boston['medv']
+model = sm.OLS(y, X) # setup the model
+model = smf.ols('mpg ~ horsepower', data=auto_df) # alternatively use smf formula, y~x
+
+results = model.fit() # results is a dictionary:.summary(), .params 
+
+results.summary()
+results.params # coefficients
+results.resid # reisdual array
+results.rsquared # R^2
+np.sqrt(results.scale) # RSE
+results.fittedvalues # fitted \hat(y)_i at x_i in the traning set
+
+
+summarize(results) # summzrize() is from ISLP to show the esstial results from model.fit()
+
+# Makding prediciton 
+new_df = pd.DataFrame({'lstat':[5, 10, 15]})  # new test-set containing data where to make predicitons
+newX = design.transform(new_df) # apply the same transform to the test-set
+new_predictions = results.get_prediction(newX);
+new_predictions.predicted_mean #predicted values
+new_predictions.conf_int(alpha=0.05) #for the predicted values
+
+new_predictions.conf_int(obs=True, alpha=0.05) # prediction intervals by setting obs=True
+
+# Including an interaction term
+X = MS(['lstat',
+        'age',
+        ('lstat', 'age')]).fit_transform(Boston) #interaction term ('lstat', 'age')
+
+# Adding a polynomial term of higher degree
+X = MS([poly('lstat', degree=2), 'age']).fit_transform(Boston) # Note poly is from ISLP, # adding deg1 and deg2 terms. by default poly creates ortho. poly. not including an intercept. 
+# Given a qualitative variable, `ModelSpec()` generates dummy
+variables automatically, to avoid collinearity with an intercept, the first column is dropped in the design matrix generated by 'ModelSpec()` by default.
+
+# Compare nested models using ANOVA
+anova_lm(results1, results3) # result1 is the result of linear model, an result3 is the result of a larger model
+
+# Identify high leverage x
+infl = results.get_influence() 
+# hat_matrix_diag calculate the leverate statistics
+np.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage
+
+# Calculate VIF
+vals = [VIF(X, i)
+        for i in range(1, X.shape[1])] #excluding column 0 because it's all 1's in X.
+vif = pd.DataFrame({'vif':vals},
+                   index=X.columns[1:])
+vif # VIF exceeds 5 or 10 indicates a problematic amount of colinearity
+
+```
+
+Useful Code Snippets
+```
+def abline(ax, b, m, *args, **kwargs):
+    "Add a line with slope m and intercept b to ax"
+    xlim = ax.get_xlim()
+    ylim = [m * xlim[0] + b, m * xlim[1] + b]
+    ax.plot(xlim, ylim, *args, **kwargs)
+```
+```
+# Plot scatter plot with a regression line
+ax = Boston.plot.scatter('lstat', 'medv')
+abline(ax,
+       results.params[0],
+       results.params[1],
+       'r--',
+       linewidth=3)
+```
+
+```
+# Plot residuals vs. fitted values (note, not vs x, therefore works for multiple regression)
+ax = subplots(figsize=(8,8))[1]
+ax.scatter(results.fittedvalues, results.resid)
+ax.set_xlabel('Fitted value')
+ax.set_ylabel('Residual')
+ax.axhline(0, c='k', ls='--');
+
+# Alternatively
+sns.residplot(x=X, y=y, lowess=True, color="g", ax=ax)
+
+# Plot the smoothed residuals~fitted by LOWESS
+from statsmodels.nonparametric.smoothers_lowess import lowess
+smoothed = lowess(residuals,fitted) # Note the order (y,x)
+ax.plot(smoothed[:,0],smoothed[:,1],color = 'r')
+
+# QQ plot for the residuas (obtain studentized residuals)
+import scipy.stats as stats
+sorted_student_residuals = pd.Series(smf_model.get_influence().resid_studentized_internal)
+sorted_student_residuals.index = smf_model.resid.index
+sorted_student_residuals = sorted_student_residuals.sort_values(ascending = True)
+df = pd.DataFrame(sorted_student_residuals)
+df.columns = ['sorted_student_residuals']
+
+#stats.probplot() assess whether a dataset follows a specified distribution
+df['theoretical_quantiles'] = stats.probplot(df['sorted_student_residuals'], dist = 'norm', fit = False)[0] 
+    
+x = df['theoretical_quantiles']
+y = df['sorted_student_residuals']
+ax.scatter(x,y, edgecolor = 'k',facecolor = 'none')
+
+```
+
+```
+# Plot leverage statistics
+infl = results.get_influence()
+ax = subplots(figsize=(8,8))[1]
+ax.scatter(np.arange(X.shape[0]), infl.hat_matrix_diag)
+ax.set_xlabel('Index')
+ax.set_ylabel('Leverage')
+np.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage
+```
+
+

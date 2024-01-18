@@ -1,0 +1,376 @@
+# Chapter 2: Statistical Learning
+## What is statistical learning? 
+
+  For the input variable $X\in \mathbb{R}^p$ and response variable $Y\in \mathbb{R}$, assume that 
+  $$Y=f(X) + \epsilon, $$
+  where $\epsilon$ is the random variable representing **irreducible error**. We assume $\epsilon$ is *independent* of $X$ and $E[x]=0$. $\epsilon$ may include *unmeasured variables* or *unmeasurable variation*. 
+  
+  Statistical learning is to estimate $f$ using various methods. Denote the estimate by $\hat{f}$. 
+  
+  - regression problem: when $Y$ is a continuous variable (quantitative). In this case $f(x)=E(Y|X=x)$ is the *regression* function, that is, regression finds a conditional expectation of $Y$. 
+  - classification problem: when $Y$ only takes small number of discrete values, i.e., qualitative (categorical). 
+  
+  **Logistic regression** is a classification problem, but since it estimates class probability, it may be considered as a regression problem. 
+  
+
+- supervised learning: training data $\mathcal{Tr}=\{(x_i, y_i):i\in \mathbb{Z}_n\}$: linear regression, logistic regression
+- unsupervised learning: when only $x_i$ are available. clustering analysis, PCA
+- semi-supervised learning: some data with labels ($y_i$), some do not. 
+- reinforcement learning: learn a state-action policy function for an agent to interacting with an environment. 
+  
+## Why estimate $f$? 
+We can use estimated $\hat{f}$ to 
+
+  * make predictions for a new $X$, 
+    $$\hat{Y} =\hat{f}(X). $$
+    The prediction error may be quantified as 
+    $$E[(Y-\hat{Y})^2] = (f(X)-\hat{f})^2 +\text{Var}[\epsilon].$$
+    The first term of the error is *reducible* by trying to improve $\hat{f}$, where we assume $f$, $\hat{f}$ and $X$ are fixed. 
+  * make inference: 
+    - Which predictors are associated with the response?
+    - which is the relationship between the response and each predictor?
+    - is the assumed relationship adequate? (linear or more complicated?)
+  
+## How to estimate $f$
+We use obtained observations called **training data** $\{(x_k, y_k): k \in \mathbb{Z}_n \}$ to train an algorithm to obtain the estimate $\hat{f}$. 
+
+  * Parametric methods: first assume there is a function form (shape) with some parameters. For example, a linear regression model with two parameters. Then use the *training data* to **train** or **fit** the model to determine the values of the parameters. 
+  
+      **Advantages**: simplify the problem of fit an arbitrary function to estimate a set of parameters.
+  
+      **Disadvantages**: may not be flexible unless with large number of parameters and/or complex function shapes. 
+  
+      Example: linear regression, 
+  
+   
+  * Non-parametric methods: Do not explicitly assume a function form of $f$. They seek to estimate $f$ directly using data points, can be quite flexible and accurate. 
+  
+    **Disadvantage: need large number of data points 
+  
+    Example: KNN (breakdown for higher dimention. Typically only for $p\le 4$), spline fit. 
+  
+## How to assess model accuracy
+For repression problems, the most commonly used measure is the *mean squared error* (MSE), given by 
+$$
+MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
+$$
+For classification problems, typically the following **error rate** (classifications error) is calculated:
+$$
+\frac{1}{n} \sum_{i=1}^{n} I(y_i\ne \hat{y}_i)
+$$
+The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. 
+Since we are in general  interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set. 
+
+Flexible models tend to overfit the data, which essentially means they follow the error or *noise* too closely in the training set, therefore cannot be generalized to *unseen cases* (test set). 
+
+
+
+## Model Selection: 
+
+**No free lunch theorem**
+
+There is no single best method for all data sets, which means some method works better than other methods for a particular dataset. Therefore, one needs to perform model selections. Here are some principles. 
+
+### Trade-off between Model flexibility and Model Interpretability
+More flexible models have higher *degree of freedom* and are less interpretable because it's difficult to interpret the relationship between a predictor and the response.
+
+LASSO is less flexible than linear regression. GAM allows some non-linearity. Full non-linear models have higher flexibility, such as *bagging, boosting, SVM*, etc. 
+
+When *inference* is the goal, then there are advantages to using simple and less flexible models for interpretability. 
+
+When *prediction* is the main goal, more flexible model may be a choice. But sometimes, we obtain more accurate prediction using a simpler model because the underlying dataset has a simpler structure. Therefore, it is not necessarily true that a more flexible model has a higher prediction accuracy. 
+
+**Occam's Razor**: Among competing hypotheses that perform equally well, the one with the fewest assumptions should be selected. 
+
+###  Model Selection: the Bias-Variance Trade-off
+As the model flexibility increases, the training MSE (or error rate for classificiton) will decrease, but the test MSE (error rate) in general will not and will show a characteristic **U-shape**. This is because 
+when evaluated at a test point $x_0$, the expected test MSE can be decomposed into
+$$
+E\left[ (y_0-\hat{f}(x_0))^2 \right] = \text{Var}[\hat{f}(x_0)] + (\text{Bias}(\hat{f}(x_0)))^2+\text{Var}[\epsilon]
+$$
+where the expectation is over different $\hat{f}$ on a different training set or on a different training step if the training process is stochastic, and 
+$$
+\text{Bias}(\hat{f}(x_0))= E[\hat{f}(x_0)]-f(x_0)
+$$
+To obtain the least test MSE, one must trade off between variance and bias. Less flexible model tendes to have higher bias, and more flexible models tend to have higher variance. An optimal flexibility for the least test MSE varies with different data sets. Non-linear data tends to require higher optimal flexibility. 
+
+## Bayes Classifier
+It can be shown that Bayes Classifier minimizes the classification test error
+$$
+\text{Ave}(I(y_0\ne \hat{y}_0)).
+$$
+A Bayes Classifier assigns a test observation with predictor $x_0$ to the class for which 
+$$
+\text{Pr}(Y=j|X=x_0)
+$$
+is largest. It's error rate is given by 
+$$
+1-E[\max_{j} \text{Pr}(Y=j|X)]
+$$
+
+where the  expectation is over $X$. The Bayes error is analogous to the irreducible error $\epsilon$. 
+
+Bayes Classifier is not attainable as we do not know $\text{Pr}(Y|X)$. We only can estimate $\text{Pr}(Y|X)$. One way to do this is by KNN. 
+KNN estimate the conditional probability simply with a majority vote. 
+The flexibility of KNN increases as $1/K$ increases with $K=1$ being the most flexible KNN. The training error is 0 for $K=1$.  A suitable $K$ should be chosen for an appropriate trade off between bias and variance. The KNN classifier will classify the test point $x_0$
+ based on the probability calculated from the $k$
+ nearest points. KNN regression on the other hand will assign the test point $x_0$
+ the average value of the $k$
+ nearest neighbors.
+
+## Homework (\* indicates optional): 
+
+- Conceptual: 1,2,3,4\*,5,6,7
+- Applied: 8, 9\*, 10\*
+
+## Code Gist
+
+### OS
+```
+import os
+os.chdir(path) # change dir
+```
+
+
+### Python: 
+Concatenation using `+`
+```
+"hello" + " " + "world"  # 'hello world'
+[3,4,5] + [4,9,7] # [3,4,5, 4,9,7]
+
+```
+String formatting
+```
+print('Total is: {0}'.format(total))
+
+```
+
+`zip` to loop over a sequence of tuples
+```
+for value, weight in zip([2,3,19],
+                         [0.2,0.3,0.5]):
+    total += weight * value
+
+```
+
+
+
+### Numpy
+#### Numpy functions:
+`np.sum(x)`, `np.sqrt(x)` (entry wise). `x**2` (entry wise power), `np.corrcoef(x,y)` (find the correlation coefficient of array `x` and array `y`)
+
+`np.mean(axis=None)`: axis could be `None` (all entries), `0`(along row), `1`(along column)
+
+`np.var(x, ddof=0)`, 
+`np.std(x, ddof=0)`, # Note both `np.var` and `np.std` accepts an argument `ddof`, the divisor is `N-ddof`.  
+
+`np.linspace(-np.pi, np.pi, 50)` # start, end, number of points 50
+
+`np.multiply.outer(row,col)` # calculate the product over the mesh with vectors `row` and `col`.
+
+`np.zeros(shape or int, dtype)` #eg: `np.zeros(5,bool)`
+
+`np.ones(Boston.shape[0])`
+
+`np.all(x)`, `np.any(x)`: check if all or any entry of `x` is true. 
+
+`np.unique(x)`: find unique values in `x`. 
+`np.isnan(x)`: return a boolean array of `len(x)`. 
+`np.isnan(x).mean()`: find the percentage of `np.nan` values in `x`. 
+
+#### Array Slicing and indexing
+`np.arange`(start, stop, step)` # numpy version of `range`
+
+`x[slice(3:6)]` # equivalent to `x[3:6]`
+
+
+Using `[row, col]` format. If `col` is missing, then index the entire rows. `len(row)` must be equal to `len(col)`. Otherwise use iterative indexing or use `np.ix_(x_idx, y_idx)` function, or use Boolean indexing, see below. 
+```
+A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
+A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
+A[:,[0,2]] # cols 0 and 2
+A[[1,3], [0,2]] # entry A[1,0] and A[3,2]
+A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
+A[[1,3], [0,2,3]] # syntax error
+# instead one can use the following two methods 
+A[[1,3]][:,[0,2]] # iterative subsetting
+A[np.ix_([1,3],[0,2,3])] # use .ix_ function to create an index mesh
+A[keep_rows, keep_cols] # keep_rows, keep_cols are boolean arrays of the same length of rows or cols, respectively
+A[np.ix_([1,3],keep_cols)] # np.ix_()can be applied to mixture of integer array and boolean array
+```
+
+
+#### Random numbers and generators
+```
+np.random.normal(loc=0.0, scale=1.0,size=None) # size can be an integer or a tuple.
+# 
+rng = np.random.default_rng(1303) # set random generator seed
+rng.normal(loc=0, scale=5, size=2) # 
+rng.standard_normal(10) # standard normal distribution of size 10
+rng.choice([0, np.nan], p=[0.8,0.2], size=A.shape)
+```
+
+#### Numpy array atributes 
+`.dtype`, `.ndim`, `.shape`
+
+#### Numpy array methods
+`x.sum(axis=None)` (equivalent to `np.sum(x)`), `x.T` (transpose), 
+
+`x.reshape((2,3))` #  x.reshape() is a reference to x. 
+
+`x.min()`, `x.max()`
+
+### Graphics
+#### 2-D figure
+```
+# Using the subplots + ax methods
+fig, ax = subplots(nrows=2, ncols=3, figsize=(8, 8)) 
+# explicitly name each axis in the grid 
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
+
+ax[0,1].plot(x, y,marker='o', 'r--', linewidth=3); #line plot. `;` suppresses the text output. pick ax[0,1] when there are  multiple axes
+ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
+ax.scatter(x, y, marker='o'); #scatter plot
+ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
+ax.set_xlabel("this is the x-axis")
+ax.set_ylabel("this is the y-axis")
+ax.set_title("Plot of X vs Y");
+axes[0,1].set_xlim([-1,1]) # set x_lim. similarly `set_ylim()`
+
+fig = ax.figure  # get the figure object from an axes object
+fig.set_size_inches(12,3) # access the fig object to change fig size (width, height)
+fig # re-render the figure
+fig.savefig("Figure.pdf", dpi=200); #save a figure into pdf. Other formats: .jpg, .png, etc
+```
+#### Contour and image
+```
+fig, ax = subplots(figsize=(8, 8))
+x = np.linspace(-np.pi, np.pi, 50)
+y = x
+f = np.multiply.outer(np.cos(y), 1 / (1 + x**2))
+ax.contour(x, y, f, levels=None); # numbre of levels. if None, automatically choose
+ax.imshow(f); # heatmap colorcoded by f
+```
+
+### Pandas
+#### loading data
+```
+pd.read_csv('Auto.csv') # read csv
+pd.read_csv('Auto.data', 
+            na_values =['?'], #specifying the na_values in the datafile. 
+            delim_whitespace=True) # read whitespaced text file
+pd.read_csv('College.csv', index_col=0) # use column `0` as teh row labels 
+
+```
+
+#### Pandas Dataframe attributes and methods
+```
+Auto.shape
+Auto.columns # gets the list of column names
+Auto.index #return the index (labels) objects
+Auto['horsepower'].to_numpy() # convert to numpy array
+Auto['horsepower'].sum()
+
+Auto.dropna() # drop the rows containing na values. 
+df.drop('B', axis=1, inplace=True) # drop a column 'B' inplace. 
+#equivalent to df.drop(columns=['B'], inplace=True)
+df.drop(index=['Ohio','Colorado']) #eqivalent to: df.drop(['Ohio','Colorado'], axis=0)
+auto_df.drop(auto_df.index[10:86]) # drop rows with index[10:86] not including 86
+
+Auto.set_index('name')# rename the index using the column 'name'.
+
+pd.Series(Auto.cylinders, dtype='category') # convert the column `cylinders` to 'category` dtype
+# the convertison can be done using `astype()` method
+Auto.cylinders.astype('category')
+Auto.describe() # statistics summary of all columns
+Auto['mpg'].describe() # for selected columns
+
+college.rename({'Unnamed: 0': 'College'}, axis=1): # change column name, 
+# alternavie way
+college_df.rename(columns={college_df.columns[0] : "College"}, inplace=True) #
+
+college['Elite'] = pd.cut(college['Top10perc'],  # binning a column
+                          [0,0.5,1],  #bin edges
+                          labels=['No', 'Yes']
+                          right=True,# True: right-inclusive for each bin ( ]; False:rigth-exclusive 
+                          )   # bin labels (names)
+college['Elite'].value_counts() # frequency counts
+auto.columns.tolist() # or  auto.columns.format() (rarely used way)
+
+```
+
+
+#### Selecting rows and columns
+Select Rows:
+```
+Auto[:3] # the first 3 rows. 
+Auto[Auto['year'] > 80] # select rows with boolean array
+Auto_re.loc[['amc rebel sst', 'ford torino']] #label_based row selection
+Auto_re.iloc[[3,4]] #integer-based row seleciton: rows 3 and 4 (index starting from 0)
+```
+Select Columns
+```
+Auto['horsepower'] # select the column 'horsepower', resulting a pd.Series.
+Auto[['horsepower']] #obtain a dataframe of the column 'horsepower'. 
+Auto_re.iloc[:,[0,2,3]] # intger-based selection
+auto_df.select_dtypes(include=['int16','int32']) # select columns by dtype
+```
+Select a subset
+```
+Auto_re.iloc[[3,4],[0,2,3]] # integer-basd 
+Auto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based 
+Auto_re.loc[Auto_re['year'] > 80, ['weight', 'origin']] # mix bolean indexing with labels
+
+Auto_re.loc[lambda df: (df['year'] > 80) & (df['mpg'] > 30),
+            ['weight', 'origin']
+           ]  # using labmda function with loc[]
+```
+
+#### Pandas graphics
+Without using `subplots` to get axes and figure objects
+```
+ax = Auto.plot.scatter('horsepower', 'mpg') #scatter plot of 'horsepower' vs 'mpg' from the dataframe Auto
+ax.set_title('Horsepower vs. MPG');
+fig = ax.figure
+fig.savefig('horsepower_mpg.png');
+
+plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95) #in percentage of the figure size. 
+ax1.fig.suptitle('College Scatter Matrix', fontsize=35)
+```
+Using `subplots`
+```
+fig, axes = subplots(  ncols=3, figsize=(15, 5))
+Auto.plot.scatter('horsepower', 'mpg', ax=axes[1]);
+Auto.hist('mpg', ax=ax);
+Auto.hist('mpg', color='red', bins=12, ax=ax); # more customized 
+```
+Boxplot using `subplots`
+```
+Auto.cylinders = pd.Series(Auto.cylinders, dtype='category') # needs to convert the `cylinders` column to categorical dtype
+fig, ax = subplots(figsize=(8, 8))
+Auto.boxplot('mpg', by='cylinders', ax=ax);
+```
+
+Scatter matrix
+```
+pd.plotting.scatter_matrix(Auto); # all columns
+pd.plotting.scatter_matrix(Auto[['mpg',
+                                 'displacement',
+                                 'weight']]);  # selected columns
+                                 
+                                 
+#Alternatively with sns.pairplot
+
+
+```
+
+Sns Graphic
+```
+# Scatter matrix
+ax1 = sns.pairplot(college_df[college_df.columns[0:11]])
+
+# Boxplot
+sns.boxplot(ax=ax, x="Private", y="Outstate", data=college_df)
+
+```
+  
