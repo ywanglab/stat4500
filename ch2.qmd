@@ -3,7 +3,7 @@
 
   For the input variable $X\in \mathbb{R}^p$ and response variable $Y\in \mathbb{R}$, assume that 
   $$Y=f(X) + \epsilon, $$
-  where $\epsilon$ is the random variable representing **irreducible error**. We assume $\epsilon$ is *independent* of $X$ and $E[x]=0$. $\epsilon$ may include *unmeasured variables* or *unmeasurable variation*. 
+  where $\epsilon$ is the random variable representing **irreducible error**. We assume $\epsilon$ is *independent* of $X$ and $E[\epsilon]=0$. $\epsilon$ may include *unmeasured variables* or *unmeasurable variation*. 
   
   Statistical learning is to estimate $f$ using various methods. Denote the estimate by $\hat{f}$. 
   

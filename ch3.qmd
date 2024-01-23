@@ -3,11 +3,13 @@
 Linear regression is a simple supervised learning assuming a linear relation between $Y$ and $X$. When there is only one predictor, it's a **simple linear regression**. When there are more than one predictors, it's called **multiple linear regression**. 
 
 ## Simple Linear Regression
-Assumes the model 
+Assumes the *populaton regression line* model 
 $$
-Y = \beta_0 + \beta_1 X +\epsilon.
+Y = \beta_0 + \beta_1 X +\epsilon, 
 $$
-After training using the training data, we can obtain the parameter estimates $\hat{\beta}_0$ and $\hat{\beta}_1$. The we can obtain the prediction fro $x$ as 
+where, $\beta_0$ is the *expected* value of $Y$ when $X=0$, and $\beta_1$ is the *average* change in $Y$ with a one-unit increase in $X$. $\epsilon$ is a "catch all" error term. 
+
+After training using the training data, we can obtain the parameter estimates $\hat{\beta}_0$ and $\hat{\beta}_1$. The we can obtain the prediction for $x$ given by the *least square line*: 
 $$
 \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
 $$
@@ -25,7 +27,7 @@ $$
 where, $\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$, and the correlation 
 $$
 r_{xy} = \frac{\text{cov(x,y)}}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
-$$
+$${#eq-correlation-rxy}
 Note $-1\le r_{xy} \le 1$. When there is no intercept, that is $\beta_0=0$, then 
 $$
 \hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
@@ -35,27 +37,34 @@ $$
 \hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
 $$
 That is, the fitted values are linear combinations of the response values when there is no intercept. 
+
 ### Assessing the accuracy of the coefficients
-Let $\sigma^2=\text{Var}(\epsilon)$. Then the standard errors under repeated sampling
+Let $\sigma^2=\text{Var}(\epsilon)$, that is, $\sigma^2$ is the variance of $Y$, (estimated by $\sigma^2\approx =\text{RSE} =\sqrt{\text{RSS}/(n-p-1)}$. )  Assume each observation have *common variance* (homoscedasticity) and are *uncorrelated*,   then the standard errors under repeated sampling
 $$
 (\text{SE}[\hat{\beta}_1])^2 = \frac{1}{\sigma^2_x}\cdot \frac{\sigma^2}{n}
 $$
 $$
 (\text{SE}[\hat{\beta}_0])^2 = \left[1+ \frac{\bar{x}^2}{\sigma^2_x} \right]\cdot \frac{\sigma^2}{n}
 $$
-Using the estimated $\hat{beta}_0$ or $\hat{beta}_1$ or one can construct the CI as 
+
+- when $x_i$ are more spread out (with large $\sigma_x^2$), then $\text{SE}[\hat{\beta}_1]$ is small. This is because there are more *leverage* (of $x$ values) to estimate the slope. 
+
+- when $\bar{x} =0$ , then $\text{SE}[\hat{\beta}_0] = \text{SE}[\hat{y}]$. In this case, $\hat{\beta}_0 = \bar{y}$. 
+
+Standard errors are used to construct CI and perform hypothesis test for  the estimated $\hat{\beta}_0$ or $\hat{\beta}_1$.  Under the assumption of **Gaussian error**, One can construct the CI as 
 $$
 \hat{\beta}_j = [\hat{\beta}_j- t_{0.975,n-p-1}\cdot \text{SE}[\hat{\beta}_j], \hat{\beta}_j+ t_{0.975,n-p-1} \cdot \text{SE}[\hat{\beta}_j]  ]
 $$
-Where $j=0, 1$. When $n$ is sufficient large, $t_{0.975,n-p-1} \approx 2$. With the standard errors of the coefficients, one can also perform **hypothesis test** on the coefficients. For $j=0,1$, 
+Where $j=0, 1$. Large interval including zero indicates $\beta_j$ is not statistically significant from 0$. When $n$ is sufficient large, $t_{0.975,n-p-1} \approx 2$. With the standard errors of the coefficients, one can also perform **hypothesis test** on the coefficients. For $j=0,1$, 
 
 $$H_0: \beta_j=0$$
-$$H_A: \beta+j\ne 0$$
-The $t$-statistic of degree $n-p-1$, is given by 
+$$H_A: \beta_j\ne 0$$
+The $t$-statistic of degree $n-p-1$, given by 
 $$
 t = \frac{\hat{\beta}_j - 0}{\text{SE}[\hat{\beta}_j]}
 $$
-One can then compute the $p$-value corresponding to this $t$ and test the hypothesis. 
+shows how far away $\hat{\beta}_j$ is away from zero, normalized by its error $\text{SE}[\hat{\beta}_j]$. 
+One can then compute the $p$-value corresponding to this $t$ and test the hypothesis. Small $p$-value indicates **strong** relationship.  
 
 ## Multiple Linear Regression
 $$
@@ -64,26 +73,35 @@ $$
 The estimate of the coefficients $\hat{\beta_j}$, $j\in \mathbb{Z}_{p+1}$ are found by using the same least square method to minimize RSS. 
 we interpret $\beta_j$ as the *expected* (average)  effect on $Y$ on one unit increase in $X_j$, **holding all other predictors fixed**. This interpretation is based on the assumptions that *the predictors are uncorrelated*, so *each predictor can be estimated and tested separately*. Where there are correlations among predictors, the variance of all coefficients tends to increase, sometimes dramatically, and the previous interpretation becomes hazardous because when $X_j$ changes, everything else changes.
 
+### **Model Assumption**
+
+- linearity: $Y$ is linear in $X$. The change in Y associated with one unit of change in $X_j$ is constant, regardless of the value of $X_j$. This can be examined visually plotting the *residual plot* $e_i$ vs. $x_i$ when $p=1$ or $e_i$ vs $\hat{y}_i$ for multiple regression. Then the linear assumption is true, then the residual plot should not exhibit obvious pattern. If there is a nonlinear relationship suggested by by the residual plot, then a simple approach is to include transformed $X$, such as $\log X$, $\sqrt{X}$, or $X^2$. 
+- additive: The association between $X_j$ and $Y$ is independent of other predictors.
+- Errors $\epsilon_i$ are uncorrelated. This means $\epsilon_i$ provides no information for $\epsilon_{i+1}$. Otherwise (for example, frequently observed in a time series, where error terms are positively correlated, and *tracking* is observed in the residuals, i.e., adjacent error terms similar values), the estimated standard error will tend to be underestimated, hence leading less confidence in the estimated  model. 
+- Homoscedasticity: $\text{Var}(\epsilon_i) =\sigma^2$. The error terms have constant variance. If not (heteroscedasticity), one may use transformed $Y$, such as $\sqrt{Y}$, or $\log(Y)$ to mitigate this; or use *weighted least squares* if it's known that for example $\sigma_i^2=\sigma^2/n_i$. 
+
+- Non-colinearity: two variables are colinear if they are highly correlated with each other. Co-linearity causes a great deal of *uncertainty* in the coefficient estimates, that is, reducing the accuracy of the coefficient estimates, thus cause the standard error of $\beta_j$ to grow, and hence smaller $t$-statistic. As a result, we may fail to reject $H_0: \beta_j=0$. This in turn means the power of Hypothesis test, the probability of correctly detecting a *non-zero* coefficient is reduced by colinearity. 
+    To detect colinearity, 
+    * use the correlation matrix of predictors. large value of the matrix in absolute value indicates highly correlated variable pairs. But this approach cannnot detect *multicolinearity*.
+    
+    * Use VIF (Variance inflation factor, VIF $\ge 1$) to detect multicolinearity. It is possible for colinearity exists between three or more variables even if no pair of variables has a particularly high correlation. This is the *multicolinearity* situation. 
+    
+    VIF is the ratio of the variance of $\hat{\beta}_j$ when fitting the full model divided by the variance of $\hat{\beta}_j$ if fit on its own. It can be calculated by
+    $$
+    \text{VIF}(\hat{\beta}_j) =\frac{1}{1-R^2_{X_j|X_{-j}}}
+    $$
+Where $R^2_{X_j|X_{-j}}$ is the $R^2$  from a regression of $X_j$ onto all of the other predictors. A VIF value exceeds 5 or 10 ($R^2_{X_j|X_{-j}}$ close to 1) indicates colinearity. 
+
+  To remedy a colinearity problem: 
+    * drop a redundant variable (variables with colinearity should have similar VIF values. )
+    * Combine the colinear variables into a single predictor, e.g., taking the average of the standardized versions of those variables. 
+    
+
 **Claims of causality should be avoided for observational data**. 
 
-### Assess the accuracy of the future prediciton
-- prediction interval: predict an individual response $Y=f(X)+\epsilon$. Always wide than the confidence interval, because it includes $\epsilon$.
-- confidence interval: predict an average response $f(X)$, doesnot include $\epsilon$
 
-
-### Assessing the overall accuracy of the model 
-To this end, first define the *Residual Standard Error*
-$$
-\text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
-$$
-We will use two approaches: 
-
-- Approach 1: Using *R-squared* (fraction of variance explained):
-  $$
-  R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
-  $$
-where, $TSS=\sum_{i=1}^n(y_i- \bar{y})$. 
-- Approach 2: test Hypothesis 
+### Assessing existence of linear relationship
+- test Hypothesis (test if there is a linear relationship between the response and  predictors)
 $$
 H_0: \beta_1=\beta_2=\cdots = \beta_p
 $$
@@ -94,37 +112,88 @@ using $F$-statistic
 $$
 F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\text{RSS}/(n-p-1)}\sim F_{p,n-p-1}
 $$
-If $H_0$ is true, $F\approx 1$, if $H_a$ is true, $F>>1$. 
+If $H_0$ is true, $F\approx 1$, if $H_a$ is true, $F>>1$. $F$-statistic adjust with $p$. Note that one **cannot conclude** if an individual $t$-statistic is significant, then there is at least one predictor is related to the response, especially when $p$ is large. This is related to *multiple testing*. The reason is that when $p$ is large, there is $\alpha\%$ (eg 5\%) of chance that a predictor will have a small $p$-value by chance. When $p>n$, $F$-statistic cannot be used. 
 
+If the goal is to test that a particular subset of $q$ of the coefficients are zero, that is, (for convenience, we put the $q$ variables chosen at the end of the variabale list)
+$$
+H_0: \beta_{p-q+1} = \beta_{p-q+2}=\cdots = \beta_p=0
+$$
+In this case, use 
+$$
+F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
+$$
+where, $\text{RSS}_0$ is the residual sum of squares of a seond model that uses all variables *except* those last $q$ variables. 
+
+
+### Assess the accuracy of the future prediciton
+
+- confidence interval: Indicate how far away $\hat{Y}=\hat{f}(X)$ is from the population average $f(X)$ because the coefficients $\hat{\beta}_{j}$ are estimated,  It quantifies *reducible error* around the  predicted   average response $\hat{f}(X)$, does-not include $\epsilon$.
+
+- prediction interval: Indicate how far away $\hat{Y}=\hat{f}(X)$ is from $Y$. predict an individual response $Y\approx \hat{f}(X)+\epsilon$. Prediction interval is always wider than the confidence interval, because it includes *irreducible error*.  $\epsilon$.
+
+
+
+### Assessing the overall accuracy of the model 
+- RSE. To this end, first define the *lack of fit* measure **Residual Standard Error**
+$$
+\text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
+$$
+It is the *average amount* in the unit of $Y$ that a response deviates from the *true regression line* ($\beta_0+\beta_1 X$).  Note, RSE can increase with more variables if the drecrease of RSS doesnot offset the increase of $p$. 
+
+- Approach 2: Using *R-squared* (fraction of variance in $Y$  explained by $X$), which is independent of of the scale of $Y$, and $0\le R^2 \le 1$:
+  $$
+  R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
+  $$
+where, $TSS=\sum_{i=1}^n(y_i- \bar{y})$. When $R^2$ is near 0 indicates that 1) either the linear model is wrong 2) or th error variance $\sigma^2$ is high, or both. $R^2$ measures the linear relationship between $X$ and $Y$. If computed on the training set, when adding more variables, the RSS always decrease, hence $R^2$ will always increase. 
+
+For simple linear regression, $R^2=r_{xy}^2$, where the *sample correlation* measures the linear relationship between  variables $X$ and $Y$. See the formula $r_{xy}$ above @eq-correlation-rxy. For multiple linear regression, $R^2=(\text{Cor}(Y, \hat{Y}))^2$. The fitted linear model maximizes this correlation among all possible linear models. 
 
 
 ## Model Selection/Variable Selections: balance training errors with model size
 - **All subsets (best subsets) regression**: compute the least square fit for all $2^p$ possible subsets  and then choose among them based on certain criterion that balance training error and model size 
 - **Forward selection**: Start from the *null model* that only contains $\beta_0$. Then find the best model containing one predictor that minimizing RSS. Denote the variable by $\beta_1$. Then continue to find the best model with the lowest RSS by adding one variable from the remaining predictors, and so on. Continue until some stopping rule is met: e.g., when all remaining variables have a $p$-value greater than some threshold. 
 - **Backward selection**: start with all variables in the model. Remove the variable with the largest $p$-value (least statistically significant).  The new $(p-1)$ model is fit, and remove the variable with the largest $p$-value. Continue until a stopping rule is satisfied, e.g., all remaining variables have $p$-value less than some threshold. 
-- **others**: including Mallow's $C_p$, AIC (Akaike Informaton Criterion), BIC, adjusted $R^2$, Cross-validation, test set performance. 
+- **Mixed selection**: Start with forward selection.  Since the $p$-value for variables can become larger as new predictors are added, at any point if the $p$-value of a variable in the model rises above a certain threshold, then we remove that variable. Continue to perform these forward and backward steps until all variables in the model have a sufficiently low $p$-value, and all variables outside the model would have a large $p$-value if added to the model. 
+
+    Backward selection cannot be used if $p>n$. Forward selection can always be used, but might include  variables early that later become redundant. Mixed selection can remedy this problem. 
+    
+- **others** (Chapter 6): including Mallow's $C_p$, AIC (Akaike Informaton Criterion), BIC, adjusted $R^2$, Cross-validation, test set performance. 
+- **not valid**: we could look at individual $p$-values, but when the number of variables $p$ is large, we likely to make a false discoveries. 
 
 ## Handle categorical variables (factor variables)
-For a categorical variable $X_i$ with $m$ levels, create one fewer dummy variables ($x_ij, 1\le j \le m-1$)>. The level with no dummy variable is called the *baseline*. The coefficient corresponding to a dummy variable is the expected difference in change in $Y$ when compared to the baseline, while holding other predictors fixed. 
+For a categorical variable $X_i$ with $m$ levels, create one fewer dummy variables ($x_{ij}, 1\le j \le m-1$)>. The level with no dummy variable is called the *baseline*. The coefficient corresponding to a dummy variable is the expected difference in change in $Y$ when compared to the baseline, while holding other predictors fixed. 
 
-## Adding non-linearity (to Polynomial Regression)
+## Adding non-linearity 
 ### Modeling interactions (synergy)
 When two variables have interaction, then their product $X_iX_j$ can be added into the regression model, and the product maybe considered as a single variable for inference, for example,  compute its SE, $t$-statistics, $p$-value, Hypothesis test, etc. 
 
 If we include an interaction in a model, then the **Hierarchy principle** should be followed: always include the main effects, even if the $p$-values associated with their coefficients are not significant. This is because without the main effects, the interactions are hard to interpret, as they would also contain the main effect. 
 
-### Adding higher power of a predictor 
-Add a term involving $X_i^k$ for some $k>1$. 
+### Adding terms of transformed predictors 
+1) *Polynomial regression*: Add a term involving $X_i^k$ for some $k>1$. 
+2) other forms: Adding root or logarithm terms  of the predictors. 
 
-## Outliers (Unusual $y_i$)
+## Outliers (Unusual $y_i$ that is far from $\hat{y}_i$)
+It is typical for an outlier that does not have an unusual predictor value to have little effect on the least squares fit, but it will increase RSE, hence deteriorate CI, $p$-value and $R^2$, thus affecting interpreting the model. 
 
-## Non-constant variance of error terms
+An outlier can be identified by computing the 
+$$\text{studentized residual}=\frac{e_i}{\text{RSE}_i}$$
+A studentized residual great than 3 may be considered as an outlier. 
+
+
 
 ## High leverage points (unusual $x_i$)
-To quantify the observation's leverage, one needs to compute the **leverage statistic**. A large value of this statistic indicates an observation with high leverage. 
+High leverage points tend to have sizeable impact on the regression line. 
+To quantify the observation's leverage, one needs to compute the **leverage statistic** 
+$$h_i = \frac{1}{n}+ \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n (x_j-\bar{x})^2}.$$ 
+$1/n \le h_i\le 1$ and $\text{Ave}(h_i)=(p+1)/n$. A large value of this statistic (for example, great than $(p+1)/n$) indicates an observation with high leverage. 
 
-## Colinearity
-Variance inflection factors (VIF) is useful to assess the effect of colinearity. VIF exceeds 5 or 10 indicates a problematic amount of colinearity. 
+## Compared to KNN Regression
+KNN regression is a non-parametric method that makes prediction at $x_0$ by taking the average in a $K$-point neightborhood 
+$$
+\hat{f}(x_0) = \frac{1}{K}\sum_{x_i \in \mathcal{N}_{x_0}}{y_i}
+$$
+A small value of $K$ provides more flexible model with low bias but high variance while a larger value of $K$ provides smoother fit with less variance. An optimal value of $K$ depend on the *bias-variance tradeoff*. For non-linear data set, KNN may provides better fit than a linear regression model. However, in higher dimension (e.g., $p\ge 4$), even for nonlinear data set, KNN may perform much inferior to linear regression, because of the **curse of dimension**, as the $K$ observations that are nearest to $x_0$ may in fact far away from $x_0$. 
 
 ## Homework (\* indicates optional): 
 
@@ -163,6 +232,11 @@ pd.to_numeric(auto_df['horsepower'], errors='coerce') # if error, denote it by "
 auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in subset, otherwise, all columns
 
 auto_df.drop('name', axis=1, inplace=True)
+
+left2.join(right2, how="left") #join two databases by index. 
+left1.join(right1, on="key") # left-join by left1["key"] and the index of right1. 
+pd.concat([s1, s4], axis="columns", join="outer")
+
 ```
 ### Graphics
 ```
@@ -188,6 +262,13 @@ plt.rc('axes', labelsize=10)
 plt.rc('axes', titlesize=13)
 plt.rc('legend', fontsize=8) # adjust legend globally
     
+```
+
+### Using Sns
+```
+sns.set(font_scale=1.25) # set font size 25% larger than default
+sns.heatmap(corr, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size': 10})
+ax = sns.regplot(x=x, y=y)
 ```
 
 ### Using Sklearn 
@@ -246,7 +327,7 @@ X = design.fit_transform(Boston) # this combines the .fit() and .transform() two
 y = Boston['medv']
 model = sm.OLS(y, X) # setup the model
 model = smf.ols('mpg ~ horsepower', data=auto_df) # alternatively use smf formula, y~x
-
+smf.ols("y ~ x -1" , data=df).fit() # "-1" not inclding the intercept
 results = model.fit() # results is a dictionary:.summary(), .params 
 
 results.summary()
@@ -329,7 +410,7 @@ from statsmodels.nonparametric.smoothers_lowess import lowess
 smoothed = lowess(residuals,fitted) # Note the order (y,x)
 ax.plot(smoothed[:,0],smoothed[:,1],color = 'r')
 
-# QQ plot for the residuas (obtain studentized residuals)
+# QQ plot for the residuas (obtain studentized residuals for identifying outliers)
 import scipy.stats as stats
 sorted_student_residuals = pd.Series(smf_model.get_influence().resid_studentized_internal)
 sorted_student_residuals.index = smf_model.resid.index
@@ -337,7 +418,7 @@ sorted_student_residuals = sorted_student_residuals.sort_values(ascending = True
 df = pd.DataFrame(sorted_student_residuals)
 df.columns = ['sorted_student_residuals']
 
-#stats.probplot() assess whether a dataset follows a specified distribution
+#stats.probplot() #assess whether a dataset follows a specified distribution
 df['theoretical_quantiles'] = stats.probplot(df['sorted_student_residuals'], dist = 'norm', fit = False)[0] 
     
 x = df['theoretical_quantiles']
