@@ -3,11 +3,11 @@
 
   For the input variable $X\in \mathbb{R}^p$ and response variable $Y\in \mathbb{R}$, assume that 
   $$Y=f(X) + \epsilon, $$
-  where $\epsilon$ is the random variable representing **irreducible error**. We assume $\epsilon$ is *independent* of $X$ and $E[\epsilon]=0$. $\epsilon$ may include *unmeasured variables* or *unmeasurable variation*. 
+  where $\epsilon$ is a random variable representing **irreducible error**. We assume $\epsilon$ is *independent* of $X$ and $E[\epsilon]=0$. $\epsilon$ may include *unmeasured variables* or *unmeasurable variation*. 
   
   Statistical learning is to estimate $f$ using various methods. Denote the estimate by $\hat{f}$. 
   
-  - regression problem: when $Y$ is a continuous variable (quantitative). In this case $f(x)=E(Y|X=x)$ is the *regression* function, that is, regression finds a conditional expectation of $Y$. 
+  - regression problem: when $Y$ is a continuous (quantitative) variable . In this case $f(x)=E(Y|X=x)$ is the population *regression* function, that is, regression finds a conditional expectation of $Y$. 
   - classification problem: when $Y$ only takes small number of discrete values, i.e., qualitative (categorical). 
   
   **Logistic regression** is a classification problem, but since it estimates class probability, it may be considered as a regression problem. 
@@ -16,7 +16,7 @@
 - supervised learning: training data $\mathcal{Tr}=\{(x_i, y_i):i\in \mathbb{Z}_n\}$: linear regression, logistic regression
 - unsupervised learning: when only $x_i$ are available. clustering analysis, PCA
 - semi-supervised learning: some data with labels ($y_i$), some do not. 
-- reinforcement learning: learn a state-action policy function for an agent to interacting with an environment. 
+- reinforcement learning: learn a state-action policy function for an agent to interacting with an environment to maximize a reward function. 
   
 ## Why estimate $f$? 
 We can use estimated $\hat{f}$ to 
@@ -26,9 +26,9 @@ We can use estimated $\hat{f}$ to
     The prediction error may be quantified as 
     $$E[(Y-\hat{Y})^2] = (f(X)-\hat{f})^2 +\text{Var}[\epsilon].$$
     The first term of the error is *reducible* by trying to improve $\hat{f}$, where we assume $f$, $\hat{f}$ and $X$ are fixed. 
-  * make inference: 
+  * make inference, such as 
     - Which predictors are associated with the response?
-    - which is the relationship between the response and each predictor?
+    - what is the relationship between the response and each predictor?
     - is the assumed relationship adequate? (linear or more complicated?)
   
 ## How to estimate $f$
@@ -47,10 +47,10 @@ We use obtained observations called **training data** $\{(x_k, y_k): k \in \math
   
     **Disadvantage: need large number of data points 
   
-    Example: KNN (breakdown for higher dimention. Typically only for $p\le 4$), spline fit. 
+    Example: KNN (but breakdown for higher dimention. Typically only for $p\le 4$), spline fit. 
   
 ## How to assess model accuracy
-For repression problems, the most commonly used measure is the *mean squared error* (MSE), given by 
+For regression problems, the most commonly used measure is the *mean squared error* (MSE), given by 
 $$
 MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
 $$
@@ -59,7 +59,7 @@ $$
 \frac{1}{n} \sum_{i=1}^{n} I(y_i\ne \hat{y}_i)
 $$
 The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. 
-Since we are in general  interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set. 
+However,  we are in general  interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set. 
 
 Flexible models tend to overfit the data, which essentially means they follow the error or *noise* too closely in the training set, therefore cannot be generalized to *unseen cases* (test set). 
 
@@ -74,7 +74,7 @@ There is no single best method for all data sets, which means some method works 
 ### Trade-off between Model flexibility and Model Interpretability
 More flexible models have higher *degree of freedom* and are less interpretable because it's difficult to interpret the relationship between a predictor and the response.
 
-LASSO is less flexible than linear regression. GAM allows some non-linearity. Full non-linear models have higher flexibility, such as *bagging, boosting, SVM*, etc. 
+LASSO is less flexible than linear regression. GAM (generalized additive model) allows some non-linearity. Full non-linear models have higher flexibility, such as *bagging, boosting, SVM*, etc. 
 
 When *inference* is the goal, then there are advantages to using simple and less flexible models for interpretability. 
 
@@ -139,7 +139,7 @@ Concatenation using `+`
 [3,4,5] + [4,9,7] # [3,4,5, 4,9,7]
 
 ```
-String formatting
+String formatting using `string.format()`
 ```
 print('Total is: {0}'.format(total))
 
@@ -179,17 +179,17 @@ for value, weight in zip([2,3,19],
 `np.isnan(x).mean()`: find the percentage of `np.nan` values in `x`. 
 
 #### Array Slicing and indexing
-`np.arange`(start, stop, step)` # numpy version of `range`
+`np.arange`(start, stop, step) # numpy version of `range`
 
 `x[slice(3:6)]` # equivalent to `x[3:6]`
 
 
-Using `[row, col]` format. If `col` is missing, then index the entire rows. `len(row)` must be equal to `len(col)`. Otherwise use iterative indexing or use `np.ix_(x_idx, y_idx)` function, or use Boolean indexing, see below. 
+Indexing an array using `[row, col]` format. If `col` is missing, then index the entire rows. `len(row)` must be equal to `len(col)`. Otherwise use iterative indexing or use `np.ix_(x_idx, y_idx)` function, or use Boolean indexing, see below. 
 ```
 A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
 A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
 A[:,[0,2]] # cols 0 and 2
-A[[1,3], [0,2]] # entry A[1,0] and A[3,2]
+A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
 A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
 A[[1,3], [0,2,3]] # syntax error
 # instead one can use the following two methods 
@@ -259,7 +259,7 @@ pd.read_csv('Auto.csv') # read csv
 pd.read_csv('Auto.data', 
             na_values =['?'], #specifying the na_values in the datafile. 
             delim_whitespace=True) # read whitespaced text file
-pd.read_csv('College.csv', index_col=0) # use column `0` as teh row labels 
+pd.read_csv('College.csv', index_col=0) # use column `0` as the row labels 
 
 ```
 
@@ -291,11 +291,11 @@ college_df.rename(columns={college_df.columns[0] : "College"}, inplace=True) #
 
 college['Elite'] = pd.cut(college['Top10perc'],  # binning a column
                           [0,0.5,1],  #bin edges
-                          labels=['No', 'Yes']
-                          right=True,# True: right-inclusive for each bin ( ]; False:rigth-exclusive 
-                          )   # bin labels (names)
+                          labels=['No', 'Yes'],  # bin labels (names)
+                          right=True,# True: right-inclusive (default) for each bin ( ]; False:rigth-exclusive 
+                          )   
 college['Elite'].value_counts() # frequency counts
-auto.columns.tolist() # or  auto.columns.format() (rarely used way)
+auto.columns.tolist() # equivalent to  auto.columns.format() (rarely used)
 
 ```
 
@@ -317,7 +317,7 @@ auto_df.select_dtypes(include=['int16','int32']) # select columns by dtype
 ```
 Select a subset
 ```
-Auto_re.iloc[[3,4],[0,2,3]] # integer-basd 
+Auto_re.iloc[[3,4],[0,2,3]] # integer-based 
 Auto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based 
 Auto_re.loc[Auto_re['year'] > 80, ['weight', 'origin']] # mix bolean indexing with labels
 

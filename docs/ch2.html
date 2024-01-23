@@ -218,10 +218,10 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="what-is-statistical-learning" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="what-is-statistical-learning"><span class="header-section-number">2.1</span> What is statistical learning?</h2>
-<p>For the input variable <span class="math inline">\(X\in \mathbb{R}^p\)</span> and response variable <span class="math inline">\(Y\in \mathbb{R}\)</span>, assume that <span class="math display">\[Y=f(X) + \epsilon, \]</span> where <span class="math inline">\(\epsilon\)</span> is the random variable representing <strong>irreducible error</strong>. We assume <span class="math inline">\(\epsilon\)</span> is <em>independent</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(E[\epsilon]=0\)</span>. <span class="math inline">\(\epsilon\)</span> may include <em>unmeasured variables</em> or <em>unmeasurable variation</em>.</p>
+<p>For the input variable <span class="math inline">\(X\in \mathbb{R}^p\)</span> and response variable <span class="math inline">\(Y\in \mathbb{R}\)</span>, assume that <span class="math display">\[Y=f(X) + \epsilon, \]</span> where <span class="math inline">\(\epsilon\)</span> is a random variable representing <strong>irreducible error</strong>. We assume <span class="math inline">\(\epsilon\)</span> is <em>independent</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(E[\epsilon]=0\)</span>. <span class="math inline">\(\epsilon\)</span> may include <em>unmeasured variables</em> or <em>unmeasurable variation</em>.</p>
 <p>Statistical learning is to estimate <span class="math inline">\(f\)</span> using various methods. Denote the estimate by <span class="math inline">\(\hat{f}\)</span>.</p>
 <ul>
-<li>regression problem: when <span class="math inline">\(Y\)</span> is a continuous variable (quantitative). In this case <span class="math inline">\(f(x)=E(Y|X=x)\)</span> is the <em>regression</em> function, that is, regression finds a conditional expectation of <span class="math inline">\(Y\)</span>.</li>
+<li>regression problem: when <span class="math inline">\(Y\)</span> is a continuous (quantitative) variable . In this case <span class="math inline">\(f(x)=E(Y|X=x)\)</span> is the population <em>regression</em> function, that is, regression finds a conditional expectation of <span class="math inline">\(Y\)</span>.</li>
 <li>classification problem: when <span class="math inline">\(Y\)</span> only takes small number of discrete values, i.e., qualitative (categorical).</li>
 </ul>
 <p><strong>Logistic regression</strong> is a classification problem, but since it estimates class probability, it may be considered as a regression problem.</p>
@@ -229,7 +229,7 @@ ul.task-list li input[type="checkbox"] {
 <li>supervised learning: training data <span class="math inline">\(\mathcal{Tr}=\{(x_i, y_i):i\in \mathbb{Z}_n\}\)</span>: linear regression, logistic regression</li>
 <li>unsupervised learning: when only <span class="math inline">\(x_i\)</span> are available. clustering analysis, PCA</li>
 <li>semi-supervised learning: some data with labels (<span class="math inline">\(y_i\)</span>), some do not.</li>
-<li>reinforcement learning: learn a state-action policy function for an agent to interacting with an environment.</li>
+<li>reinforcement learning: learn a state-action policy function for an agent to interacting with an environment to maximize a reward function.</li>
 </ul>
 </section>
 <section id="why-estimate-f" class="level2" data-number="2.2">
@@ -237,10 +237,10 @@ ul.task-list li input[type="checkbox"] {
 <p>We can use estimated <span class="math inline">\(\hat{f}\)</span> to</p>
 <ul>
 <li>make predictions for a new <span class="math inline">\(X\)</span>, <span class="math display">\[\hat{Y} =\hat{f}(X). \]</span> The prediction error may be quantified as <span class="math display">\[E[(Y-\hat{Y})^2] = (f(X)-\hat{f})^2 +\text{Var}[\epsilon].\]</span> The first term of the error is <em>reducible</em> by trying to improve <span class="math inline">\(\hat{f}\)</span>, where we assume <span class="math inline">\(f\)</span>, <span class="math inline">\(\hat{f}\)</span> and <span class="math inline">\(X\)</span> are fixed.</li>
-<li>make inference:
+<li>make inference, such as
 <ul>
 <li>Which predictors are associated with the response?</li>
-<li>which is the relationship between the response and each predictor?</li>
+<li>what is the relationship between the response and each predictor?</li>
 <li>is the assumed relationship adequate? (linear or more complicated?)</li>
 </ul></li>
 </ul>
@@ -255,16 +255,16 @@ ul.task-list li input[type="checkbox"] {
 <p>Example: linear regression,</p></li>
 <li><p>Non-parametric methods: Do not explicitly assume a function form of <span class="math inline">\(f\)</span>. They seek to estimate <span class="math inline">\(f\)</span> directly using data points, can be quite flexible and accurate.</p>
 <p>**Disadvantage: need large number of data points</p>
-<p>Example: KNN (breakdown for higher dimention. Typically only for <span class="math inline">\(p\le 4\)</span>), spline fit.</p></li>
+<p>Example: KNN (but breakdown for higher dimention. Typically only for <span class="math inline">\(p\le 4\)</span>), spline fit.</p></li>
 </ul>
 </section>
 <section id="how-to-assess-model-accuracy" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="how-to-assess-model-accuracy"><span class="header-section-number">2.4</span> How to assess model accuracy</h2>
-<p>For repression problems, the most commonly used measure is the <em>mean squared error</em> (MSE), given by <span class="math display">\[
+<p>For regression problems, the most commonly used measure is the <em>mean squared error</em> (MSE), given by <span class="math display">\[
 MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
 \]</span> For classification problems, typically the following <strong>error rate</strong> (classifications error) is calculated: <span class="math display">\[
 \frac{1}{n} \sum_{i=1}^{n} I(y_i\ne \hat{y}_i)
-\]</span> The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. Since we are in general interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set.</p>
+\]</span> The accuracy on a training set can be arbitrarily increased by increasing the model flexibility. However, we are in general interested in the error on the test set rather on the training set, the model accuracy should be assessed on a test set.</p>
 <p>Flexible models tend to overfit the data, which essentially means they follow the error or <em>noise</em> too closely in the training set, therefore cannot be generalized to <em>unseen cases</em> (test set).</p>
 </section>
 <section id="model-selection" class="level2" data-number="2.5">
@@ -274,7 +274,7 @@ MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
 <section id="trade-off-between-model-flexibility-and-model-interpretability" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="trade-off-between-model-flexibility-and-model-interpretability"><span class="header-section-number">2.5.1</span> Trade-off between Model flexibility and Model Interpretability</h3>
 <p>More flexible models have higher <em>degree of freedom</em> and are less interpretable because it’s difficult to interpret the relationship between a predictor and the response.</p>
-<p>LASSO is less flexible than linear regression. GAM allows some non-linearity. Full non-linear models have higher flexibility, such as <em>bagging, boosting, SVM</em>, etc.</p>
+<p>LASSO is less flexible than linear regression. GAM (generalized additive model) allows some non-linearity. Full non-linear models have higher flexibility, such as <em>bagging, boosting, SVM</em>, etc.</p>
 <p>When <em>inference</em> is the goal, then there are advantages to using simple and less flexible models for interpretability.</p>
 <p>When <em>prediction</em> is the main goal, more flexible model may be a choice. But sometimes, we obtain more accurate prediction using a simpler model because the underlying dataset has a simpler structure. Therefore, it is not necessarily true that a more flexible model has a higher prediction accuracy.</p>
 <p><strong>Occam’s Razor</strong>: Among competing hypotheses that perform equally well, the one with the fewest assumptions should be selected.</p>
@@ -320,7 +320,7 @@ os.chdir(path) # change dir</code></pre>
 <pre><code>"hello" + " " + "world"  # 'hello world'
 [3,4,5] + [4,9,7] # [3,4,5, 4,9,7]
 </code></pre>
-<p>String formatting</p>
+<p>String formatting using <code>string.format()</code></p>
 <pre><code>print('Total is: {0}'.format(total))
 </code></pre>
 <p><code>zip</code> to loop over a sequence of tuples</p>
@@ -345,13 +345,13 @@ os.chdir(path) # change dir</code></pre>
 </section>
 <section id="array-slicing-and-indexing" class="level4" data-number="2.8.3.2">
 <h4 data-number="2.8.3.2" class="anchored" data-anchor-id="array-slicing-and-indexing"><span class="header-section-number">2.8.3.2</span> Array Slicing and indexing</h4>
-<p><code>np.arange</code>(start, stop, step)<code># numpy version of</code>range`</p>
+<p><code>np.arange</code>(start, stop, step) # numpy version of <code>range</code></p>
 <p><code>x[slice(3:6)]</code> # equivalent to <code>x[3:6]</code></p>
-<p>Using <code>[row, col]</code> format. If <code>col</code> is missing, then index the entire rows. <code>len(row)</code> must be equal to <code>len(col)</code>. Otherwise use iterative indexing or use <code>np.ix_(x_idx, y_idx)</code> function, or use Boolean indexing, see below.</p>
+<p>Indexing an array using <code>[row, col]</code> format. If <code>col</code> is missing, then index the entire rows. <code>len(row)</code> must be equal to <code>len(col)</code>. Otherwise use iterative indexing or use <code>np.ix_(x_idx, y_idx)</code> function, or use Boolean indexing, see below.</p>
 <pre><code>A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
 A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
 A[:,[0,2]] # cols 0 and 2
-A[[1,3], [0,2]] # entry A[1,0] and A[3,2]
+A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
 A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
 A[[1,3], [0,2,3]] # syntax error
 # instead one can use the following two methods 
@@ -421,7 +421,7 @@ ax.imshow(f); # heatmap colorcoded by f</code></pre>
 pd.read_csv('Auto.data', 
             na_values =['?'], #specifying the na_values in the datafile. 
             delim_whitespace=True) # read whitespaced text file
-pd.read_csv('College.csv', index_col=0) # use column `0` as teh row labels 
+pd.read_csv('College.csv', index_col=0) # use column `0` as the row labels 
 </code></pre>
 </section>
 <section id="pandas-dataframe-attributes-and-methods" class="level4" data-number="2.8.5.2">
@@ -452,11 +452,11 @@ college_df.rename(columns={college_df.columns[0] : "College"}, inplace=True) #
 
 college['Elite'] = pd.cut(college['Top10perc'],  # binning a column
                           [0,0.5,1],  #bin edges
-                          labels=['No', 'Yes']
-                          right=True,# True: right-inclusive for each bin ( ]; False:rigth-exclusive 
-                          )   # bin labels (names)
+                          labels=['No', 'Yes'],  # bin labels (names)
+                          right=True,# True: right-inclusive (default) for each bin ( ]; False:rigth-exclusive 
+                          )   
 college['Elite'].value_counts() # frequency counts
-auto.columns.tolist() # or  auto.columns.format() (rarely used way)
+auto.columns.tolist() # equivalent to  auto.columns.format() (rarely used)
 </code></pre>
 </section>
 <section id="selecting-rows-and-columns" class="level4" data-number="2.8.5.3">
@@ -472,7 +472,7 @@ Auto[['horsepower']] #obtain a dataframe of the column 'horsepower'.
 Auto_re.iloc[:,[0,2,3]] # intger-based selection
 auto_df.select_dtypes(include=['int16','int32']) # select columns by dtype</code></pre>
 <p>Select a subset</p>
-<pre><code>Auto_re.iloc[[3,4],[0,2,3]] # integer-basd 
+<pre><code>Auto_re.iloc[[3,4],[0,2,3]] # integer-based 
 Auto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based 
 Auto_re.loc[Auto_re['year'] &gt; 80, ['weight', 'origin']] # mix bolean indexing with labels
 
