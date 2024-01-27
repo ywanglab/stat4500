@@ -144,12 +144,15 @@ make a classficiation, so it's know as *generative learning*.
     FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
     $$
 -   ROC (receiver operating characteristic curve): plot true positive
-    rate (TPR) \~ false postive rate (FPR) as a threshold changes from 0
+    rate (TPR) \~ false positive rate (FPR) as a threshold changes from 0
     to 1. The point on the ROC curve closest to the point (0,1)
     corresponds to the best classifier.
 -   AUC (area under the ROC): a larger AUC indicates a better
     classifier.
 
+## Homework: 
+- Conceptual: 1,2,3,5,6,7,8, 9
+- Applied: 13, 14\*,15\*,16\*
 
 ## Code Gist 
 

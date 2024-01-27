@@ -189,15 +189,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#why-discriminant-analysis" id="toc-why-discriminant-analysis" class="nav-link" data-scroll-target="#why-discriminant-analysis"><span class="header-section-number">4.3.1</span> why discriminant analysis</a></li>
   </ul></li>
   <li><a href="#assessment-of-a-classifier" id="toc-assessment-of-a-classifier" class="nav-link" data-scroll-target="#assessment-of-a-classifier"><span class="header-section-number">4.4</span> Assessment of a classifier</a></li>
-  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">4.5</span> Code Gist</a>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">4.5</span> Homework:</a></li>
+  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">4.6</span> Code Gist</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">4.5.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">4.5.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">4.5.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">4.5.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">4.5.5</span> ISLP and Statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">4.5.6</span> sklearn</a></li>
-  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">4.5.7</span> Useful code snippet</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">4.6.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">4.6.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">4.6.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">4.6.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">4.6.5</span> ISLP and Statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">4.6.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">4.6.7</span> Useful code snippet</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -328,21 +329,28 @@ FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
 <li>AUC (area under the ROC): a larger AUC indicates a better classifier.</li>
 </ul>
 </section>
-<section id="code-gist" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">4.5</span> Code Gist</h2>
-<section id="python" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">4.5.1</span> Python</h3>
+<section id="homework" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="homework"><span class="header-section-number">4.5</span> Homework:</h2>
+<ul>
+<li>Conceptual:</li>
+<li>Applied: 13, 14*,15*,16*</li>
+</ul>
 </section>
-<section id="numpy" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">4.5.2</span> Numpy</h3>
+<section id="code-gist" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">4.6</span> Code Gist</h2>
+<section id="python" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="python"><span class="header-section-number">4.6.1</span> Python</h3>
+</section>
+<section id="numpy" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">4.6.2</span> Numpy</h3>
 <pre><code>np.where(lda_prob[:,1] &gt;= 0.5, 'Up','Down')
 np.argmax(lda_prob, 1) #argmax along axis=1 (col)
 np.asarray(feature_std) # convert to np array
 np.allclose(M_lm.fittedvalues, M2_lm.fittedvalues) 
 #check if corresponding elts are equal within rtol=1e-5 and atol=-1e08</code></pre>
 </section>
-<section id="pandas" class="level3" data-number="4.5.3">
-<h3 data-number="4.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">4.5.3</span> Pandas</h3>
+<section id="pandas" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">4.6.3</span> Pandas</h3>
 <pre><code>Smarket.corr(numeric_only=True)
 train = (Smarket.Year &lt; 2005)
 Smarket_train = Smarket.loc[train] # equivalent to Smarket[train]
@@ -352,15 +360,15 @@ S2.index.str.contains('mnth')
 Bike['mnth'].dtype.categories # get the categories of the categorical data
 obj2 = obj.reindex(["a", "b", "c", "d", "e"])# rearrange the entries in obj according to the new index, introducing missing values if any index values were not already present. </code></pre>
 </section>
-<section id="graphics" class="level3" data-number="4.5.4">
-<h3 data-number="4.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">4.5.4</span> Graphics</h3>
+<section id="graphics" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">4.6.4</span> Graphics</h3>
 <pre><code>ax_month.set_xticks(x_month) # set_xticks at the place given by x_month
 ax_month.set_xticklabels([l[5] for l in coef_month.index], fontsize=20)
 ax.axline([0,0], c='black', linewidth=3,  
           linestyle='--', slope=1);#axline method draw a line passing a given point with a given slope. </code></pre>
 </section>
-<section id="islp-and-statsmodels" class="level3" data-number="4.5.5">
-<h3 data-number="4.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">4.5.5</span> ISLP and Statsmodels</h3>
+<section id="islp-and-statsmodels" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">4.6.5</span> ISLP and Statsmodels</h3>
 <pre><code>from ISLP import confusion_table
 from ISLP.models import contrast
 
@@ -392,8 +400,8 @@ M_pois = sm.GLM(Y, X2, family=sm.families.Poisson()).fit()
 model.
 </code></pre>
 </section>
-<section id="sklearn" class="level3" data-number="4.5.6">
-<h3 data-number="4.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">4.5.6</span> sklearn</h3>
+<section id="sklearn" class="level3" data-number="4.6.6">
+<h3 data-number="4.6.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">4.6.6</span> sklearn</h3>
 <pre><code>from sklearn.discriminant_analysis import \
      (LinearDiscriminantAnalysis as LDA,
       QuadraticDiscriminantAnalysis as QDA)
@@ -460,8 +468,8 @@ logit_pred = logit.predict_proba(X_test)
 
 </code></pre>
 </section>
-<section id="useful-code-snippet" class="level3" data-number="4.5.7">
-<h3 data-number="4.5.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">4.5.7</span> Useful code snippet</h3>
+<section id="useful-code-snippet" class="level3" data-number="4.6.7">
+<h3 data-number="4.6.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">4.6.7</span> Useful code snippet</h3>
 <pre><code># Tuning KNN
 for K in range(1,6):
     knn = KNeighborsClassifier(n_neighbors=K)
