@@ -12,6 +12,7 @@ book:
     - intro.qmd
     - ch2.qmd
     - ch3.qmd
+    - ch4.qmd
     - summary.qmd
     - references.qmd
 

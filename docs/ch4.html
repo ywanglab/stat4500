@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.398">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>stat4500notes - 4&nbsp; Chapter 4: Classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="next">
+<link href="./ch3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">stat4500notes</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.docx">
+              <i class="bi bi-bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3: Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#linear-regression-and-classification" id="toc-linear-regression-and-classification" class="nav-link active" data-scroll-target="#linear-regression-and-classification"><span class="header-section-number">4.1</span> Linear regression and Classification</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">4.2</span> Logistic Regression</a>
+  <ul class="collapse">
+  <li><a href="#with-multiple-variables" id="toc-with-multiple-variables" class="nav-link" data-scroll-target="#with-multiple-variables"><span class="header-section-number">4.2.1</span> with multiple variables</a></li>
+  <li><a href="#multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes" id="toc-multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes" class="nav-link" data-scroll-target="#multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes"><span class="header-section-number">4.2.2</span> Multi-class logistic regression (multinomial regression) with more than two classes</a></li>
+  </ul></li>
+  <li><a href="#discriminant-classifier" id="toc-discriminant-classifier" class="nav-link" data-scroll-target="#discriminant-classifier"><span class="header-section-number">4.3</span> Discriminant Classifier</a>
+  <ul class="collapse">
+  <li><a href="#why-discriminant-analysis" id="toc-why-discriminant-analysis" class="nav-link" data-scroll-target="#why-discriminant-analysis"><span class="header-section-number">4.3.1</span> why discriminant analysis</a></li>
+  </ul></li>
+  <li><a href="#assessment-of-a-classifier" id="toc-assessment-of-a-classifier" class="nav-link" data-scroll-target="#assessment-of-a-classifier"><span class="header-section-number">4.4</span> Assessment of a classifier</a></li>
+  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">4.5</span> Code Gist</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">4.5.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">4.5.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">4.5.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">4.5.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">4.5.5</span> ISLP and Statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">4.5.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">4.5.7</span> Useful code snippet</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Given a feature vector <span class="math inline">\(X\)</span> and a <em>qualitative</em> response <span class="math inline">\(Y\)</span> taking finite values in a set <span class="math inline">\(\mathcal{C}\)</span>, the classification task is to build a classifier <span class="math inline">\(C(X)\)</span> that takes an input <span class="math inline">\(X\)</span> and predicts its class <span class="math inline">\(Y=C(X)\in \mathcal{C}\)</span>. This is often done by model <span class="math inline">\(P(Y=k|X=x)\)</span> for each <span class="math inline">\(k\in \mathcal{C}\)</span>.</p>
+<section id="linear-regression-and-classification" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="linear-regression-and-classification"><span class="header-section-number">4.1</span> Linear regression and Classification</h2>
+<ul>
+<li>For a <em>binary</em> classification, one can use linear regression and does a good job. In this case, the linear regression classifier is equivalent to LDA, because <span class="math display">\[
+P(Y=1|X=x)= E[Y|X=x]
+\]</span> However, linear regression may not represent a probability as it may give a value outside the interval <span class="math inline">\([0,1]\)</span>.</li>
+<li>When there are more than two classes, linear regression is not appropriate, one should turn to <em>multiclass logistic regression</em> or <em>Discriminant Analysis</em>.</li>
+</ul>
+</section>
+<section id="logistic-regression" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">4.2</span> Logistic Regression</h2>
+<p>Logistic regression is a <em>discriminative learning</em>, because it directly calculates <span class="math inline">\(P(Y|X)\)</span> to make classification. ### Binary classification with a single variable Logistic regression simply convert the linear regression to probability by <span class="math display">\[
+p(X)=Pr(Y=1|X) =\frac{e^{\beta_0+\beta_1 X}}{1+ e^{\beta_0+\beta_1X}}.
+\]</span> Note the <em>logit</em> or <em>log odds</em> is linear <span class="math display">\[
+\log\left( \frac{p(X)}{1-p(X)}  \right) =\beta_0 +\beta_1 X.
+\]</span> The parameters are estimated by maximizing the <em>liklihood</em> <span class="math display">\[
+\ell(\beta_0, \beta_1) =\prod_{i: y_i=1}p(x_i) \prod_{i:y_i=0}(1-p(x_i))
+\]</span> With the estimated parameters <span class="math inline">\(\hat{\beta_j}, j=0,1\)</span>, one can calculate the probability <span class="math display">\[
+p(X)=Pr(Y=1|X) =\frac{e^{\hat{\beta_0}+\hat{\beta_1} X}}{1+ e^{\hat{\beta}_0+\hat{\beta}_1X}}
+\]</span></p>
+<section id="with-multiple-variables" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="with-multiple-variables"><span class="header-section-number">4.2.1</span> with multiple variables</h3>
+<p>In this case, simply let the logit be a linear function of <span class="math inline">\(p\)</span> variables.</p>
+<p>Note when there are multiple variables, it’s possible to have variables confounding: the coefficient of a variable may changes significantly or may change sign, this is because the coefficient represents the rate of change in <span class="math inline">\(Y\)</span> of that variable when holding other variable constants. The coefficient reflects the effect when other variables are hold constant, how the variable affects <span class="math inline">\(Y\)</span>, and this effect may be different than when only this variable is used in the model.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One can include a nonlinear term such as a quadratic term in the logit model, similar to a linear regression that includes a non-linear term.</p>
+</div>
+</div>
+</section>
+<section id="multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes"><span class="header-section-number">4.2.2</span> Multi-class logistic regression (multinomial regression) with more than two classes</h3>
+<p>in this case, we use the <em>softmax</em> function to model <span class="math display">\[
+\text{Pr} (Y=k|X) =\frac{e^{\beta_{0k}+\beta_{1k}X_1+ \cdots + \beta_{pk}X_p}}{\sum_{\ell=1}^K e^{\beta_{0\ell}+\beta_{1\ell}X_1+ \cdots + \beta_{p\ell}X_p}}
+\]</span> for each class <span class="math inline">\(k\)</span>.</p>
+</section>
+</section>
+<section id="discriminant-classifier" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="discriminant-classifier"><span class="header-section-number">4.3</span> Discriminant Classifier</h2>
+<p>Apply the Bayes Theorem, the model <span class="math display">\[
+\text{Pr}(Y=k|X=x)=\frac{\text{Pr}(X=x|Y=k)\cdot \text{Pr}(Y=k)}{\text{Pr}(X=x)}=\frac{\pi_k f_k(x)}{\sum_{\ell =}^ K \pi_{\ell}f_\ell(x)}
+\]</span> where <span class="math inline">\(\pi_k=\text{Pr(Y=k)}\)</span> is the <em>marginal</em> or <em>prior</em> probability for class <span class="math inline">\(k\)</span>, and <span class="math inline">\(f_k(x)=\text{Pr}(X=x|Y=k\)</span>) is the <em>density</em> for <span class="math inline">\(X\)</span> in class <span class="math inline">\(k\)</span>. Note the denominator is a <em>normalizing constant</em>. So when making decisions, effectively we compare <span class="math inline">\(\pi_kf_k(x)\)</span>, and assign <span class="math inline">\(x\)</span> to a class <span class="math inline">\(k\)</span> with the largest <span class="math inline">\(\pi_kf_k(x)\)</span>.</p>
+<p>Discriminant uses the full liklihood <span class="math inline">\(P(X,Y)\)</span> to calculate <span class="math inline">\(P(Y|X)\)</span> to make a classficiation, so it’s know as <em>generative learning</em>.</p>
+<ul>
+<li>when <span class="math inline">\(f_k\)</span> is chosen as a normal distribution with constant variance (<span class="math inline">\(\sigma^2\)</span>) for <span class="math inline">\(p=1\)</span> or correlation matrix <span class="math inline">\(\Sigma\)</span> for <span class="math inline">\(p&gt;1\)</span>, this leads to the LDA. For <span class="math inline">\(p=1\)</span>, the <em>discriminant score</em> is given by <span class="math display">\[
+\delta_k(x) = x\cdot \frac{\mu_k}{\sigma^2}-\frac{\mu_k^2}{2\sigma^2}+\log (\pi_k)
+\]</span> when <span class="math inline">\(K=2\)</span> and <span class="math inline">\(\pi_1=\pi_2=0.5\)</span>m then the <em>decision boundary</em> is given by <span class="math display">\[
+x=\frac{\mu_1+\mu_2}{2}.
+\]</span> When <span class="math inline">\(p\ge 2\)</span>, <span class="math display">\[
+\delta_k(x) =x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +\log \pi_k=c_{k0}+c_{k1}x_1+\cdots +c_{kp}x_p.
+\]</span> With <span class="math inline">\(\hat{\delta}_k(x)\)</span> for each <span class="math inline">\(k\)</span>, it can be converted to the class probability by the <em>softmax</em> function <span class="math display">\[
+\hat{\text{Pr}}(Y=k|X=x)=\frac{e^{\hat{\delta}_k(x)}}{\sum_{\ell=1}^K e^{\hat{\delta}_{\ell}(x)}}
+\]</span> The <span class="math inline">\(\pi_k\)</span>, <span class="math inline">\(\mu_k\)</span> and <span class="math inline">\(\sigma\)</span> are estimate the follwing way: <span class="math display">\[
+\hat{\pi}_k =\frac{n_k}{n}
+\]</span> <span class="math display">\[
+\hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i=k} x_i
+\]</span> <span class="math display">\[
+\hat{\sigma}^2 = \frac{1}{n-K}\sum_{k=1}^K \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2=\sum_{k=1}^{K}\frac{n_k-1}{n-K}\hat{\sigma}^2_k
+\]</span> where <span class="math inline">\(\hat{\sigma}_k^2=\frac{1}{n_k-1} \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2\)</span> is the estimated variance for the <span class="math inline">\(k\)</span>-th class. The score function has a quadratic term <span class="math display">\[
+\delta_k(x)=-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)+\log \pi_k -\frac{1}{2}\log |\Sigma_k|
+\]</span></li>
+<li>when each class chooses a different <span class="math inline">\(\Sigma_k\)</span>, then it’s QDA.</li>
+<li>when the features are modeled independently, i.e., <span class="math inline">\(f_k(x) = \prod_{j=1}^p f_{jk}(x_j)\)</span>$, the method is <em>naive Bayes</em>, and <span class="math inline">\(\Sigma_k\)</span> are diagonal.
+<ul>
+<li>Can applied to <em>mixed</em> feature vectors (qualitative and quantitative)</li>
+<li>Despite strong assumptions, performs well.</li>
+<li>Useful when <span class="math inline">\(P\)</span> is very large.</li>
+</ul></li>
+</ul>
+<section id="why-discriminant-analysis" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="why-discriminant-analysis"><span class="header-section-number">4.3.1</span> why discriminant analysis</h3>
+<ul>
+<li>When the classes are well-separated, the parameter estimation of logistic regression is unstable, while LDA does not suffer from this problem.</li>
+<li>if the data size <span class="math inline">\(n\)</span> is small and the distribution of <span class="math inline">\(X\)</span> is approximately normal in each of the classes, then LDA is more stable than logistic regression. Also used when <span class="math inline">\(K&gt;2\)</span>.</li>
+<li>when there are more than two classes, LDA provides low-dimensional views of the data hence popular. Specifically, when there are <span class="math inline">\(K\)</span> classes, LDA can be viewed exactly in <span class="math inline">\(K-1\)</span> dimensional plot. This is because it essentially classifies to the closest centroid, and they span a <span class="math inline">\(K-1\)</span> dimentinal plane.</li>
+<li>For a two-class problem, the logit of <span class="math inline">\(p(Y=1|X=x\)</span>) by LDA (generative learning) is a linear function in <span class="math inline">\(X\)</span>, the same as a logistic regression (discriminative learning). The difference lies in how the parameters are estimated. But in practive, they are similar.</li>
+</ul>
+</section>
+</section>
+<section id="assessment-of-a-classifier" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="assessment-of-a-classifier"><span class="header-section-number">4.4</span> Assessment of a classifier</h2>
+<ul>
+<li>Overall error rate: equals to <span class="math display">\[
+\frac{FP+FN}{N+P}
+\]</span></li>
+<li>False positive rate (FPR): the fraction of negiative exampels (N) that are classified as positive: <span class="math display">\[
+\frac{FP}{FP+TN}=\frac{FP}{N}
+\]</span></li>
+<li>False negative rate (FNR): <span class="math display">\[
+FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
+\]</span></li>
+<li>ROC (receiver operating characteristic curve): plot true positive rate (TPR) ~ false postive rate (FPR) as a threshold changes from 0 to 1. The point on the ROC curve closest to the point (0,1) corresponds to the best classifier.</li>
+<li>AUC (area under the ROC): a larger AUC indicates a better classifier.</li>
+</ul>
+</section>
+<section id="code-gist" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">4.5</span> Code Gist</h2>
+<section id="python" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">4.5.1</span> Python</h3>
+</section>
+<section id="numpy" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">4.5.2</span> Numpy</h3>
+<pre><code>np.where(lda_prob[:,1] &gt;= 0.5, 'Up','Down')
+np.argmax(lda_prob, 1) #argmax along axis=1 (col)
+np.asarray(feature_std) # convert to np array
+np.allclose(M_lm.fittedvalues, M2_lm.fittedvalues) 
+#check if corresponding elts are equal within rtol=1e-5 and atol=-1e08</code></pre>
+</section>
+<section id="pandas" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">4.5.3</span> Pandas</h3>
+<pre><code>Smarket.corr(numeric_only=True)
+train = (Smarket.Year &lt; 2005)
+Smarket_train = Smarket.loc[train] # equivalent to Smarket[train]
+Purchase.value_counts() # frequency table
+feature_std.std() #calculate column std
+S2.index.str.contains('mnth')
+Bike['mnth'].dtype.categories # get the categories of the categorical data
+obj2 = obj.reindex(["a", "b", "c", "d", "e"])# rearrange the entries in obj according to the new index, introducing missing values if any index values were not already present. </code></pre>
+</section>
+<section id="graphics" class="level3" data-number="4.5.4">
+<h3 data-number="4.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">4.5.4</span> Graphics</h3>
+<pre><code>ax_month.set_xticks(x_month) # set_xticks at the place given by x_month
+ax_month.set_xticklabels([l[5] for l in coef_month.index], fontsize=20)
+ax.axline([0,0], c='black', linewidth=3,  
+          linestyle='--', slope=1);#axline method draw a line passing a given point with a given slope. </code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="4.5.5">
+<h3 data-number="4.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">4.5.5</span> ISLP and Statsmodels</h3>
+<pre><code>from ISLP import confusion_table
+from ISLP.models import contrast
+
+# Logistic Regression using sm.GLM() syntax similar to sm.OLS()
+design = MS(allvars)
+X = design.fit_transform(Smarket)
+y = Smarket.Direction == 'Up'
+glm = sm.GLM(y,
+             X,
+             family=sm.families.Binomial())
+results = glm.fit()
+summarize(results)
+results.pvalues
+probs = results.predict() #without data set, calculate predictions on the training set. 
+results.predict(exog=X_test) # on test set
+# Prediction on a new dataset
+newdata = pd.DataFrame({'Lag1':[1.2, 1.5],
+                        'Lag2':[1.1, -0.8]});
+newX = model.transform(newdata)
+results.predict(newX)
+confusion_table(labels, Smarket.Direction) #(predicted_labels, true_labels)
+np.mean(labels == Smarket.Direction) # calculate the accuracy
+
+hr_encode = contrast('hr', 'sum') #coding scheme for categorical data: the unreported coefficient for the missing level equals to the negative ofthe sum of the coefficients of all other variables. In this a coefficient for a level may be interpreted as the differnece from the mean level of response. 
+
+#Poisson Regression 
+M_pois = sm.GLM(Y, X2, family=sm.families.Poisson()).fit()
+#`family=sm.families.Gamma()` fits a Gamma regression
+model.
+</code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="4.5.6">
+<h3 data-number="4.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">4.5.6</span> sklearn</h3>
+<pre><code>from sklearn.discriminant_analysis import \
+     (LinearDiscriminantAnalysis as LDA,
+      QuadraticDiscriminantAnalysis as QDA)
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+#LDA
+lda = LDA(store_covariance=True) #store the covariance of each class
+X_train, X_test = [M.drop(columns=['intercept']) # drop the intercept column
+                   for M in [X_train, X_test]]
+lda.fit(X_train, L_train) # LDA() model will automatically add a intercept term
+
+lda.means_ # mu_k (n_classes, n_features)
+lda.classes_
+lda.priors_ # prior probability of each class
+#Linear discrimnant vectors
+lda.scalings_ #Scaling of the features in the space spanned by the class centroids. Only available for ‘svd’ and ‘eigen’ solvers.
+
+lda_pred = lda.predict(X_test) #predict class labels
+lda_prob = lda.predict_proba(X_test) #ndarray of shape (n_samples, n_classes)
+
+#QDA
+qda = QDA(store_covariance=True)
+qda.fit(X_train, L_train)
+qda.covariance_[0] #estimated covariance for the first class
+
+# Naive Bayes
+NB = GaussianNB()
+NB.fit(X_train, L_train)
+NB.class_prior_
+NB.theta_ #means for (#classes, #features)
+NB.var_ #variances (#classes, #features)
+NB.predict_proba(X_test)[:5]
+
+# KNN
+knn1 = KNeighborsClassifier(n_neighbors=1)
+X_train, X_test = [np.asarray(X) for X in [X_train, X_test]]
+knn1.fit(X_train, L_train)
+knn1_pred = knn1.predict(X_test)
+
+# When using KNN one should standarize each varaibles
+scaler = StandardScaler(with_mean=True,
+                        with_std=True,
+                        copy=True) # do calculaton on a copy of the dataset
+scaler.fit(feature_df)
+
+#train test split
+X_std = scaler.transform(feature_df)
+(X_train,
+ X_test,
+ y_train,
+ y_test) = train_test_split(np.asarray(feature_std),
+                            Purchase,
+                            test_size=1000,
+                            random_state=0)
+
+# Logistic Regression
+logit = LogisticRegression(C=1e10, solver='liblinear') #use solver='liblinear'to avoid warning that the alg doesnot converge.  
+logit.fit(X_train, y_train)
+logit_pred = logit.predict_proba(X_test)
+
+</code></pre>
+</section>
+<section id="useful-code-snippet" class="level3" data-number="4.5.7">
+<h3 data-number="4.5.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">4.5.7</span> Useful code snippet</h3>
+<pre><code># Tuning KNN
+for K in range(1,6):
+    knn = KNeighborsClassifier(n_neighbors=K)
+    knn_pred = knn.fit(X_train, y_train).predict(X_test)
+    C = confusion_table(knn_pred, y_test)
+    templ = ('K={0:d}: # predicted to rent: {1:&gt;2},' +  # &gt; for right alighment
+            '  # who did rent {2:d}, accuracy {3:.1%}')
+    pred = C.loc['Yes'].sum()
+    did_rent = C.loc['Yes','Yes']
+    print(templ.format(
+          K,
+          pred,
+          did_rent,
+          did_rent / pred))</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./ch3.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3: Linear Regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

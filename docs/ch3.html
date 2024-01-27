@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
+<link href="./ch4.html" rel="next">
 <link href="./ch2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -152,8 +152,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,10 +235,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Linear regression is a simple supervised learning assuming a linear relation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>. When there is only one predictor, it’s a <strong>simple linear regression</strong>. When there are more than one predictors, it’s called <strong>multiple linear regression</strong>.</p>
+<p>Linear regression is a simple supervised learning assuming a linear relation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>. When there is only one predictor, it’s a <strong>simple linear regression</strong>. When there are more than one predictors, it’s called <strong>multiple linear regression</strong>. Note <em>multivariate regression</em> refer to the <span class="math inline">\(Y\)</span> variable is a vector.</p>
 <section id="simple-linear-regression" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="simple-linear-regression"><span class="header-section-number">3.1</span> Simple Linear Regression</h2>
-<p>Assumes the <em>populaton regression line</em> model <span class="math display">\[
+<p>Assumes the <em>population regression line</em> model <span class="math display">\[
 Y = \beta_0 + \beta_1 X +\epsilon,
 \]</span> where, <span class="math inline">\(\beta_0\)</span> is the <em>expected</em> value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X=0\)</span>, and <span class="math inline">\(\beta_1\)</span> is the <em>average</em> change in <span class="math inline">\(Y\)</span> with a one-unit increase in <span class="math inline">\(X\)</span>. <span class="math inline">\(\epsilon\)</span> is a “catch all” error term.</p>
 <p>After training using the training data, we can obtain the parameter estimates <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. The we can obtain the prediction for <span class="math inline">\(x\)</span> given by the <em>least square line</em>: <span class="math display">\[
@@ -244,26 +250,26 @@ Y = \beta_0 + \beta_1 X +\epsilon,
 \]</span> <span class="math display">\[
 \hat{\beta}_0= \bar{y}-\hat{\beta}_1 \bar{x}
 \]</span> where, <span class="math inline">\(\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i\)</span> and <span class="math inline">\(\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\)</span>, and the correlation <span id="eq-correlation-rxy"><span class="math display">\[
-r_{xy} = \frac{\text{cov(x,y)}}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
-\tag{3.1}\]</span></span> Note <span class="math inline">\(-1\le r_{xy} \le 1\)</span>. When there is no intercept, that is <span class="math inline">\(\beta_0=0\)</span>, then <span class="math display">\[
+r_{xy} = \frac{\text{cov}(x,y)}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
+\tag{3.1}\]</span></span> is the normalized convariance. Note <span class="math inline">\(-1\le r_{xy} \le 1\)</span>. When there is no intercept, that is <span class="math inline">\(\beta_0=0\)</span>, then <span class="math display">\[
 \hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
 \]</span> where, <span class="math display">\[
 \hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
 \]</span> That is, the fitted values are linear combinations of the response values when there is no intercept.</p>
 <section id="assessing-the-accuracy-of-the-coefficients" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="assessing-the-accuracy-of-the-coefficients"><span class="header-section-number">3.1.1</span> Assessing the accuracy of the coefficients</h3>
-<p>Let <span class="math inline">\(\sigma^2=\text{Var}(\epsilon)\)</span>, that is, <span class="math inline">\(\sigma^2\)</span> is the variance of <span class="math inline">\(Y\)</span>, (estimated by <span class="math inline">\(\sigma^2\approx =\text{RSE} =\sqrt{\text{RSS}/(n-p-1)}\)</span>. ) Assume each observation have <em>common variance</em> (homoscedasticity) and are <em>uncorrelated</em>, then the standard errors under repeated sampling <span class="math display">\[
+<p>Let <span class="math inline">\(\sigma^2=\text{Var}(\epsilon)\)</span>, that is, <span class="math inline">\(\sigma^2\)</span> is the variance of <span class="math inline">\(Y\)</span>, (estimated by <span class="math inline">\(\sigma^2\approx =\text{RSE} =\text{RSS}/(n-p-1)\)</span>. ) Assume each observation have <em>common variance</em> (homoscedasticity) and are <em>uncorrelated</em>, then the standard errors under repeated sampling <span class="math display">\[
 (\text{SE}[\hat{\beta}_1])^2 = \frac{1}{\sigma^2_x}\cdot \frac{\sigma^2}{n}
 \]</span> <span class="math display">\[
 (\text{SE}[\hat{\beta}_0])^2 = \left[1+ \frac{\bar{x}^2}{\sigma^2_x} \right]\cdot \frac{\sigma^2}{n}
 \]</span></p>
 <ul>
 <li><p>when <span class="math inline">\(x_i\)</span> are more spread out (with large <span class="math inline">\(\sigma_x^2\)</span>), then <span class="math inline">\(\text{SE}[\hat{\beta}_1]\)</span> is small. This is because there are more <em>leverage</em> (of <span class="math inline">\(x\)</span> values) to estimate the slope.</p></li>
-<li><p>when <span class="math inline">\(\bar{x} =0\)</span> , then <span class="math inline">\(\text{SE}[\hat{\beta}_0] = \text{SE}[\hat{y}]\)</span>. In this case, <span class="math inline">\(\hat{\beta}_0 = \bar{y}\)</span>.</p></li>
+<li><p>when <span class="math inline">\(\bar{x} =0\)</span> , then <span class="math inline">\(\text{SE}[\hat{\beta}_0] = \text{SE}[\bar{y}]\)</span>. In this case, <span class="math inline">\(\hat{\beta}_0 = \bar{y}\)</span>.</p></li>
 </ul>
-<p>Standard errors are used to construct CI and perform hypothesis test for the estimated <span class="math inline">\(\hat{\beta}_0\)</span> or <span class="math inline">\(\hat{\beta}_1\)</span>. Under the assumption of <strong>Gaussian error</strong>, One can construct the CI as <span class="math display">\[
-\hat{\beta}_j = [\hat{\beta}_j- t_{0.975,n-p-1}\cdot \text{SE}[\hat{\beta}_j], \hat{\beta}_j+ t_{0.975,n-p-1} \cdot \text{SE}[\hat{\beta}_j]  ]
-\]</span> Where <span class="math inline">\(j=0, 1\)</span>. Large interval including zero indicates <span class="math inline">\(\beta_j\)</span> is not statistically significant from 0$. When <span class="math inline">\(n\)</span> is sufficient large, <span class="math inline">\(t_{0.975,n-p-1} \approx 2\)</span>. With the standard errors of the coefficients, one can also perform <strong>hypothesis test</strong> on the coefficients. For <span class="math inline">\(j=0,1\)</span>,</p>
+<p>Standard errors are used to construct CI and perform hypothesis test for the estimated <span class="math inline">\(\hat{\beta}_0\)</span> or <span class="math inline">\(\hat{\beta}_1\)</span>. Under the assumption of <strong>Gaussian error</strong>, One can construct the CI of significance level <span class="math inline">\(\alpha\)</span> (e.g., <span class="math inline">\(\alpha=0.05\)</span>) as <span class="math display">\[
+\hat{\beta}_j = [\hat{\beta}_j- t_{1-\alpha/2,n-p-1}\cdot \text{SE}[\hat{\beta}_j], \hat{\beta}_j+ t_{1-\alpha/2,n-p-1} \cdot \text{SE}[\hat{\beta}_j]  ]
+\]</span> Where <span class="math inline">\(j=0, 1\)</span>. Large interval including zero indicates <span class="math inline">\(\beta_j\)</span> is not statistically significant from 0. When <span class="math inline">\(n\)</span> is sufficient large, <span class="math inline">\(t_{0.975,n-p-1} \approx 2\)</span>. With the standard errors of the coefficients, one can also perform <strong>hypothesis test</strong> on the coefficients. For <span class="math inline">\(j=0,1\)</span>,</p>
 <p><span class="math display">\[H_0: \beta_j=0\]</span> <span class="math display">\[H_A: \beta_j\ne 0\]</span> The <span class="math inline">\(t\)</span>-statistic of degree <span class="math inline">\(n-p-1\)</span>, given by <span class="math display">\[
 t = \frac{\hat{\beta}_j - 0}{\text{SE}[\hat{\beta}_j]}
 \]</span> shows how far away <span class="math inline">\(\hat{\beta}_j\)</span> is away from zero, normalized by its error <span class="math inline">\(\text{SE}[\hat{\beta}_j]\)</span>. One can then compute the <span class="math inline">\(p\)</span>-value corresponding to this <span class="math inline">\(t\)</span> and test the hypothesis. Small <span class="math inline">\(p\)</span>-value indicates <strong>strong</strong> relationship.</p>
@@ -273,22 +279,22 @@ t = \frac{\hat{\beta}_j - 0}{\text{SE}[\hat{\beta}_j]}
 <h2 data-number="3.2" class="anchored" data-anchor-id="multiple-linear-regression"><span class="header-section-number">3.2</span> Multiple Linear Regression</h2>
 <p><span class="math display">\[
 Y= \beta_0 + \beta_1X_1 +\cdots + \beta_pX_p + \epsilon.
-\]</span> The estimate of the coefficients <span class="math inline">\(\hat{\beta_j}\)</span>, <span class="math inline">\(j\in \mathbb{Z}_{p+1}\)</span> are found by using the same least square method to minimize RSS. we interpret <span class="math inline">\(\beta_j\)</span> as the <em>expected</em> (average) effect on <span class="math inline">\(Y\)</span> on one unit increase in <span class="math inline">\(X_j\)</span>, <strong>holding all other predictors fixed</strong>. This interpretation is based on the assumptions that <em>the predictors are uncorrelated</em>, so <em>each predictor can be estimated and tested separately</em>. Where there are correlations among predictors, the variance of all coefficients tends to increase, sometimes dramatically, and the previous interpretation becomes hazardous because when <span class="math inline">\(X_j\)</span> changes, everything else changes.</p>
+\]</span> The estimate of the coefficients <span class="math inline">\(\hat{\beta_j}\)</span>, <span class="math inline">\(j\in \mathbb{Z}_{p+1}\)</span> are found by using the same least square method to minimize RSS. we interpret <span class="math inline">\(\beta_j\)</span> as the <em>expected</em> (average) effect on <span class="math inline">\(Y\)</span> with one unit increase in <span class="math inline">\(X_j\)</span>, <strong>holding all other predictors fixed</strong>. This interpretation is based on the assumptions that <em>the predictors are uncorrelated</em>, so <em>each predictor can be estimated and tested separately</em>. When there are correlations among predictors, the variance of all coefficients tends to increase, sometimes dramatically, and the previous interpretation becomes hazardous because when <span class="math inline">\(X_j\)</span> changes, everything else changes.</p>
 <section id="model-assumption" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="model-assumption"><span class="header-section-number">3.2.1</span> <strong>Model Assumption</strong></h3>
 <ul>
-<li><p>linearity: <span class="math inline">\(Y\)</span> is linear in <span class="math inline">\(X\)</span>. The change in Y associated with one unit of change in <span class="math inline">\(X_j\)</span> is constant, regardless of the value of <span class="math inline">\(X_j\)</span>. This can be examined visually plotting the <em>residual plot</em> <span class="math inline">\(e_i\)</span> vs.&nbsp;<span class="math inline">\(x_i\)</span> when <span class="math inline">\(p=1\)</span> or <span class="math inline">\(e_i\)</span> vs <span class="math inline">\(\hat{y}_i\)</span> for multiple regression. Then the linear assumption is true, then the residual plot should not exhibit obvious pattern. If there is a nonlinear relationship suggested by by the residual plot, then a simple approach is to include transformed <span class="math inline">\(X\)</span>, such as <span class="math inline">\(\log X\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, or <span class="math inline">\(X^2\)</span>.</p></li>
+<li><p>linearity: <span class="math inline">\(Y\)</span> is linear in <span class="math inline">\(X\)</span>. The change in Y associated with one unit of change in <span class="math inline">\(X_j\)</span> is constant, regardless of the value of <span class="math inline">\(X_j\)</span>. This can be examined visually by plotting the <em>residual plot</em> (<span class="math inline">\(e_i\)</span> vs.&nbsp;<span class="math inline">\(x_i\)</span> for <span class="math inline">\(p=1\)</span> or <span class="math inline">\(e_i\)</span> vs <span class="math inline">\(\hat{y}_i\)</span> for multiple regression). If the linear assumption is true, then the residual plot should not exhibit obvious pattern. If there is a nonlinear relationship suggested by by the residual plot, then a simple approach is to include transformed <span class="math inline">\(X\)</span>, such as <span class="math inline">\(\log X\)</span>, <span class="math inline">\(\sqrt{X}\)</span>, or <span class="math inline">\(X^2\)</span>.</p></li>
 <li><p>additive: The association between <span class="math inline">\(X_j\)</span> and <span class="math inline">\(Y\)</span> is independent of other predictors.</p></li>
-<li><p>Errors <span class="math inline">\(\epsilon_i\)</span> are uncorrelated. This means <span class="math inline">\(\epsilon_i\)</span> provides no information for <span class="math inline">\(\epsilon_{i+1}\)</span>. Otherwise (for example, frequently observed in a time series, where error terms are positively correlated, and <em>tracking</em> is observed in the residuals, i.e., adjacent error terms similar values), the estimated standard error will tend to be underestimated, hence leading less confidence in the estimated model.</p></li>
+<li><p>Errors <span class="math inline">\(\epsilon_i\)</span> are uncorrelated. This means <span class="math inline">\(\epsilon_i\)</span> provides no information for <span class="math inline">\(\epsilon_{i+1}\)</span>. Otherwise (for example, frequently observed in a time series, where error terms are positively correlated, and <em>tracking</em> is observed in the residuals, i.e., adjacent error terms take similar values), the estimated standard error will tend to be underestimated, hence leading less confidence in the estimated model.</p></li>
 <li><p>Homoscedasticity: <span class="math inline">\(\text{Var}(\epsilon_i) =\sigma^2\)</span>. The error terms have constant variance. If not (heteroscedasticity), one may use transformed <span class="math inline">\(Y\)</span>, such as <span class="math inline">\(\sqrt{Y}\)</span>, or <span class="math inline">\(\log(Y)\)</span> to mitigate this; or use <em>weighted least squares</em> if it’s known that for example <span class="math inline">\(\sigma_i^2=\sigma^2/n_i\)</span>.</p></li>
 <li><p>Non-colinearity: two variables are colinear if they are highly correlated with each other. Co-linearity causes a great deal of <em>uncertainty</em> in the coefficient estimates, that is, reducing the accuracy of the coefficient estimates, thus cause the standard error of <span class="math inline">\(\beta_j\)</span> to grow, and hence smaller <span class="math inline">\(t\)</span>-statistic. As a result, we may fail to reject <span class="math inline">\(H_0: \beta_j=0\)</span>. This in turn means the power of Hypothesis test, the probability of correctly detecting a <em>non-zero</em> coefficient is reduced by colinearity. To detect colinearity,</p>
 <ul>
-<li><p>use the correlation matrix of predictors. large value of the matrix in absolute value indicates highly correlated variable pairs. But this approach cannnot detect <em>multicolinearity</em>.</p></li>
+<li><p>use the correlation matrix of predictors. Large value of the matrix in absolute value indicates highly correlated variable pairs. But this approach cannnot detect <em>multicolinearity</em>.</p></li>
 <li><p>Use VIF (Variance inflation factor, VIF <span class="math inline">\(\ge 1\)</span>) to detect multicolinearity. It is possible for colinearity exists between three or more variables even if no pair of variables has a particularly high correlation. This is the <em>multicolinearity</em> situation.</p></li>
 </ul>
 <p>VIF is the ratio of the variance of <span class="math inline">\(\hat{\beta}_j\)</span> when fitting the full model divided by the variance of <span class="math inline">\(\hat{\beta}_j\)</span> if fit on its own. It can be calculated by <span class="math display">\[
   \text{VIF}(\hat{\beta}_j) =\frac{1}{1-R^2_{X_j|X_{-j}}}
-  \]</span> Where <span class="math inline">\(R^2_{X_j|X_{-j}}\)</span> is the <span class="math inline">\(R^2\)</span> from a regression of <span class="math inline">\(X_j\)</span> onto all of the other predictors. A VIF value exceeds 5 or 10 (<span class="math inline">\(R^2_{X_j|X_{-j}}\)</span> close to 1) indicates colinearity.</p>
+  \]</span> Where <span class="math inline">\(R^2_{X_j|X_{-j}}\)</span> is the <span class="math inline">\(R^2\)</span> from a regression of <span class="math inline">\(X_j\)</span> onto all of the other predictors. A VIF value exceeds 5 or 10 (i.e., <span class="math inline">\(R^2_{X_j|X_{-j}}\)</span> close to 1) indicates colinearity.</p>
 <p>To remedy a colinearity problem:</p>
 <ul>
 <li>drop a redundant variable (variables with colinearity should have similar VIF values. )</li>
@@ -306,19 +312,19 @@ H_0: \beta_1=\beta_2=\cdots = \beta_p
 H_a: \text{at least one } \beta_j \text{ is non-zero.}
 \]</span> using <span class="math inline">\(F\)</span>-statistic <span class="math display">\[
 F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\text{RSS}/(n-p-1)}\sim F_{p,n-p-1}
-\]</span> If <span class="math inline">\(H_0\)</span> is true, <span class="math inline">\(F\approx 1\)</span>, if <span class="math inline">\(H_a\)</span> is true, <span class="math inline">\(F&gt;&gt;1\)</span>. <span class="math inline">\(F\)</span>-statistic adjust with <span class="math inline">\(p\)</span>. Note that one <strong>cannot conclude</strong> if an individual <span class="math inline">\(t\)</span>-statistic is significant, then there is at least one predictor is related to the response, especially when <span class="math inline">\(p\)</span> is large. This is related to <em>multiple testing</em>. The reason is that when <span class="math inline">\(p\)</span> is large, there is <span class="math inline">\(\alpha\%\)</span> (eg 5%) of chance that a predictor will have a small <span class="math inline">\(p\)</span>-value by chance. When <span class="math inline">\(p&gt;n\)</span>, <span class="math inline">\(F\)</span>-statistic cannot be used.</li>
+\]</span> If <span class="math inline">\(H_0\)</span> is true, <span class="math inline">\(F\approx 1\)</span>; if <span class="math inline">\(H_a\)</span> is true, <span class="math inline">\(F&gt;&gt;1\)</span>. <span class="math inline">\(F\)</span>-statistic adjust with <span class="math inline">\(p\)</span>. Note that one <strong>cannot conclude</strong> if an individual <span class="math inline">\(t\)</span>-statistic is significant, then there is at least one predictor is related to the response, especially when <span class="math inline">\(p\)</span> is large. This is related to <em>multiple testing</em>. The reason is that when <span class="math inline">\(p\)</span> is large, there is <span class="math inline">\(\alpha\)</span> (eg 5%) chance that a predictor will have a small <span class="math inline">\(p\)</span>-value by chance. When <span class="math inline">\(p&gt;n\)</span>, <span class="math inline">\(F\)</span>-statistic cannot be used.</li>
 </ul>
-<p>If the goal is to test that a particular subset of <span class="math inline">\(q\)</span> of the coefficients are zero, that is, (for convenience, we put the <span class="math inline">\(q\)</span> variables chosen at the end of the variabale list) <span class="math display">\[
+<p>If the goal is to test that a particular subset of <span class="math inline">\(q\)</span> of the coefficients are zero, that is, (for convenience, we put the <span class="math inline">\(q\)</span> variables chosen at the end of the variabale list) <span id="eq-subset-hypothesis"><span class="math display">\[
 H_0: \beta_{p-q+1} = \beta_{p-q+2}=\cdots = \beta_p=0
-\]</span> In this case, use <span class="math display">\[
+\tag{3.2}\]</span></span> In this case, use <span class="math display">\[
 F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
-\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a seond model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables.</p>
+\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a second model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables. When <span class="math inline">\(q=1\)</span>, <span class="math inline">\(F\)</span>-statistic in <a href="#eq-subset-hypothesis" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is the square of the <span class="math inline">\(t\)</span>-statistic of that variable.</p>
 </section>
 <section id="assess-the-accuracy-of-the-future-prediciton" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="assess-the-accuracy-of-the-future-prediciton"><span class="header-section-number">3.2.3</span> Assess the accuracy of the future prediciton</h3>
 <ul>
 <li><p>confidence interval: Indicate how far away <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> is from the population average <span class="math inline">\(f(X)\)</span> because the coefficients <span class="math inline">\(\hat{\beta}_{j}\)</span> are estimated, It quantifies <em>reducible error</em> around the predicted average response <span class="math inline">\(\hat{f}(X)\)</span>, does-not include <span class="math inline">\(\epsilon\)</span>.</p></li>
-<li><p>prediction interval: Indicate how far away <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> is from <span class="math inline">\(Y\)</span>. predict an individual response <span class="math inline">\(Y\approx \hat{f}(X)+\epsilon\)</span>. Prediction interval is always wider than the confidence interval, because it includes <em>irreducible error</em>. <span class="math inline">\(\epsilon\)</span>.</p></li>
+<li><p>prediction interval: Indicate how far away <span class="math inline">\(\hat{Y}=\hat{f}(X)\)</span> is from <span class="math inline">\(Y\)</span>. predict an individual response <span class="math inline">\(Y\approx \hat{f}(X)+\epsilon\)</span>. Prediction interval is always wider than the confidence interval, because it includes <em>irreducible error</em> <span class="math inline">\(\epsilon\)</span>.</p></li>
 </ul>
 </section>
 <section id="assessing-the-overall-accuracy-of-the-model" class="level3" data-number="3.2.4">
@@ -326,10 +332,10 @@ F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
 <ul>
 <li><p>RSE. To this end, first define the <em>lack of fit</em> measure <strong>Residual Standard Error</strong> <span class="math display">\[
 \text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
-\]</span> It is the <em>average amount</em> in the unit of <span class="math inline">\(Y\)</span> that a response deviates from the <em>true regression line</em> (<span class="math inline">\(\beta_0+\beta_1 X\)</span>). Note, RSE can increase with more variables if the drecrease of RSS doesnot offset the increase of <span class="math inline">\(p\)</span>.</p></li>
+\]</span> It is the <em>average amount</em> in <span class="math inline">\(Y\)</span> that a response deviates from the <em>true regression line</em> (<span class="math inline">\(\beta_0+\beta_1 X\)</span>). Note, RSE can increase with more variables if the decrease of RSS doesnot offset the increase of <span class="math inline">\(p\)</span>.</p></li>
 <li><p>Approach 2: Using <em>R-squared</em> (fraction of variance in <span class="math inline">\(Y\)</span> explained by <span class="math inline">\(X\)</span>), which is independent of of the scale of <span class="math inline">\(Y\)</span>, and <span class="math inline">\(0\le R^2 \le 1\)</span>: <span class="math display">\[
 R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
-\]</span> where, <span class="math inline">\(TSS=\sum_{i=1}^n(y_i- \bar{y})\)</span>. When <span class="math inline">\(R^2\)</span> is near 0 indicates that 1) either the linear model is wrong 2) or th error variance <span class="math inline">\(\sigma^2\)</span> is high, or both. <span class="math inline">\(R^2\)</span> measures the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. If computed on the training set, when adding more variables, the RSS always decrease, hence <span class="math inline">\(R^2\)</span> will always increase.</p></li>
+\]</span> where, <span class="math inline">\(\text{TSS}=\sum_{i=1}^n(y_i- \bar{y})\)</span>. When <span class="math inline">\(R^2\)</span> is near 0 indicates that 1) either the linear model is wrong 2) or th error variance <span class="math inline">\(\sigma^2\)</span> is high, or both. <span class="math inline">\(R^2\)</span> measures the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. If computed on the training set, when adding more variables, the RSS always decrease, hence <span class="math inline">\(R^2\)</span> will always increase.</p></li>
 </ul>
 <p>For simple linear regression, <span class="math inline">\(R^2=r_{xy}^2\)</span>, where the <em>sample correlation</em> measures the linear relationship between variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. See the formula <span class="math inline">\(r_{xy}\)</span> above <a href="#eq-correlation-rxy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. For multiple linear regression, <span class="math inline">\(R^2=(\text{Cor}(Y, \hat{Y}))^2\)</span>. The fitted linear model maximizes this correlation among all possible linear models.</p>
 </section>
@@ -340,7 +346,7 @@ R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
 <li><p><strong>All subsets (best subsets) regression</strong>: compute the least square fit for all <span class="math inline">\(2^p\)</span> possible subsets and then choose among them based on certain criterion that balance training error and model size</p></li>
 <li><p><strong>Forward selection</strong>: Start from the <em>null model</em> that only contains <span class="math inline">\(\beta_0\)</span>. Then find the best model containing one predictor that minimizing RSS. Denote the variable by <span class="math inline">\(\beta_1\)</span>. Then continue to find the best model with the lowest RSS by adding one variable from the remaining predictors, and so on. Continue until some stopping rule is met: e.g., when all remaining variables have a <span class="math inline">\(p\)</span>-value greater than some threshold.</p></li>
 <li><p><strong>Backward selection</strong>: start with all variables in the model. Remove the variable with the largest <span class="math inline">\(p\)</span>-value (least statistically significant). The new <span class="math inline">\((p-1)\)</span> model is fit, and remove the variable with the largest <span class="math inline">\(p\)</span>-value. Continue until a stopping rule is satisfied, e.g., all remaining variables have <span class="math inline">\(p\)</span>-value less than some threshold.</p></li>
-<li><p><strong>Mixed selection</strong>: Start with forward selection. Since the <span class="math inline">\(p\)</span>-value for variables can become larger as new predictors are added, at any point if the <span class="math inline">\(p\)</span>-value of a variable in the model rises above a certain threshold, then we remove that variable. Continue to perform these forward and backward steps until all variables in the model have a sufficiently low <span class="math inline">\(p\)</span>-value, and all variables outside the model would have a large <span class="math inline">\(p\)</span>-value if added to the model.</p>
+<li><p><strong>Mixed selection</strong>: Start with forward selection. Since the <span class="math inline">\(p\)</span>-value for variables can become larger as new predictors are added, at any point if the <span class="math inline">\(p\)</span>-value of a variable in the model rises above a certain threshold, then remove that variable. Continue to perform these forward and backward steps until all variables in the model have a sufficiently low <span class="math inline">\(p\)</span>-value, and all variables outside the model would have a large <span class="math inline">\(p\)</span>-value if added to the model.</p>
 <p>Backward selection cannot be used if <span class="math inline">\(p&gt;n\)</span>. Forward selection can always be used, but might include variables early that later become redundant. Mixed selection can remedy this problem.</p></li>
 <li><p><strong>others</strong> (Chapter 6): including Mallow’s <span class="math inline">\(C_p\)</span>, AIC (Akaike Informaton Criterion), BIC, adjusted <span class="math inline">\(R^2\)</span>, Cross-validation, test set performance.</p></li>
 <li><p><strong>not valid</strong>: we could look at individual <span class="math inline">\(p\)</span>-values, but when the number of variables <span class="math inline">\(p\)</span> is large, we likely to make a false discoveries.</p></li>
@@ -367,7 +373,7 @@ R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
 </section>
 <section id="outliers-unusual-y_i-that-is-far-from-haty_i" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="outliers-unusual-y_i-that-is-far-from-haty_i"><span class="header-section-number">3.6</span> Outliers (Unusual <span class="math inline">\(y_i\)</span> that is far from <span class="math inline">\(\hat{y}_i\)</span>)</h2>
-<p>It is typical for an outlier that does not have an unusual predictor value to have little effect on the least squares fit, but it will increase RSE, hence deteriorate CI, <span class="math inline">\(p\)</span>-value and <span class="math inline">\(R^2\)</span>, thus affecting interpreting the model.</p>
+<p>It is typical for an outlier that does not have an unusual predictor value (with low levarage) to have little effect on the least squares fit, but it will increase RSE, hence deteriorate CI, <span class="math inline">\(p\)</span>-value and <span class="math inline">\(R^2\)</span>, thus affecting interpreting the model.</p>
 <p>An outlier can be identified by computing the <span class="math display">\[\text{studentized residual}=\frac{e_i}{\text{RSE}_i}\]</span> A studentized residual great than 3 may be considered as an outlier.</p>
 </section>
 <section id="high-leverage-points-unusual-x_i" class="level2" data-number="3.7">
@@ -378,7 +384,7 @@ R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
 <h2 data-number="3.8" class="anchored" data-anchor-id="compared-to-knn-regression"><span class="header-section-number">3.8</span> Compared to KNN Regression</h2>
 <p>KNN regression is a non-parametric method that makes prediction at <span class="math inline">\(x_0\)</span> by taking the average in a <span class="math inline">\(K\)</span>-point neightborhood <span class="math display">\[
 \hat{f}(x_0) = \frac{1}{K}\sum_{x_i \in \mathcal{N}_{x_0}}{y_i}
-\]</span> A small value of <span class="math inline">\(K\)</span> provides more flexible model with low bias but high variance while a larger value of <span class="math inline">\(K\)</span> provides smoother fit with less variance. An optimal value of <span class="math inline">\(K\)</span> depend on the <em>bias-variance tradeoff</em>. For non-linear data set, KNN may provides better fit than a linear regression model. However, in higher dimension (e.g., <span class="math inline">\(p\ge 4\)</span>), even for nonlinear data set, KNN may perform much inferior to linear regression, because of the <strong>curse of dimension</strong>, as the <span class="math inline">\(K\)</span> observations that are nearest to <span class="math inline">\(x_0\)</span> may in fact far away from <span class="math inline">\(x_0\)</span>.</p>
+\]</span> A small value of <span class="math inline">\(K\)</span> provides more flexible model with low bias but high variance while a larger value of <span class="math inline">\(K\)</span> provides smoother fit with less variance. An optimal value of <span class="math inline">\(K\)</span> depend on the <em>bias-variance tradeoff</em>. For non-linear data set, KNN may provides better fit than a linear regression model. However, in higher dimension (e.g., <span class="math inline">\(p\ge 4\)</span>), even for nonlinear data set, KNN may perform much inferior to linear regression, because of the <strong>curse of dimensionality</strong>, as the <span class="math inline">\(K\)</span> observations that are nearest to <span class="math inline">\(x_0\)</span> may in fact far away from <span class="math inline">\(x_0\)</span>.</p>
 </section>
 <section id="homework-indicates-optional" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="homework-indicates-optional"><span class="header-section-number">3.9</span> Homework (* indicates optional):</h2>
@@ -414,10 +420,10 @@ pd.DataFrame({'vif':vals},
 
 X.values  # Convert dataframe X to numpy array
 X.to_numpy() # recommended to replace the above method
-DataFrame.corr() # correlations between columns 
+DataFrame.corr(numeric_only=True) # correlations between columns 
 x.sort_values(ascending=False)
 pd.to_numeric(auto_df['horsepower'], errors='coerce') # if error, denote it by "NaN".
-auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in subset, otherwise, all columns
+auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in `subset`, otherwise, all columns
 
 auto_df.drop('name', axis=1, inplace=True)
 
@@ -518,6 +524,7 @@ results.summary()
 results.params # coefficients
 results.resid # reisdual array
 results.rsquared # R^2
+results.pvalues
 np.sqrt(results.scale) # RSE
 results.fittedvalues # fitted \hat(y)_i at x_i in the traning set
 
@@ -1011,8 +1018,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ch4.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

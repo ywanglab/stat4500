@@ -1,0 +1,307 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Chapter 4: Classification
+
+Given a feature vector $X$ and a *qualitative* response $Y$ taking
+finite values in a set $\mathcal{C}$, the classification task is to
+build a classifier $C(X)$ that takes an input $X$ and predicts its class
+$Y=C(X)\in \mathcal{C}$. This is often done by model $P(Y=k|X=x)$ for
+each $k\in \mathcal{C}$.
+
+## Linear regression and Classification
+
+-   For a *binary* classification, one can use linear regression and
+    does a good job. In this case, the linear regression classifier is
+    equivalent to LDA, because $$
+    P(Y=1|X=x)= E[Y|X=x]
+    $$ However, linear regression may not represent a probability as it
+    may give a value outside the interval $[0,1]$.
+-   When there are more than two classes, linear regression is not
+    appropriate, one should turn to *multiclass logistic regression* or
+    *Discriminant Analysis*.
+
+## Logistic Regression
+
+Logistic regression is a *discriminative learning*, because it directly
+calculates $P(Y|X)$ to make classification. \### Binary classification
+with a single variable Logistic regression simply convert the linear
+regression to probability by $$
+p(X)=Pr(Y=1|X) =\frac{e^{\beta_0+\beta_1 X}}{1+ e^{\beta_0+\beta_1X}}.
+$$ Note the *logit* or *log odds* is linear $$
+\log\left( \frac{p(X)}{1-p(X)}  \right) =\beta_0 +\beta_1 X.
+$$ The parameters are estimated by maximizing the *liklihood* $$
+\ell(\beta_0, \beta_1) =\prod_{i: y_i=1}p(x_i) \prod_{i:y_i=0}(1-p(x_i))
+$$ With the estimated parameters $\hat{\beta_j}, j=0,1$, one can
+calculate the probability $$
+p(X)=Pr(Y=1|X) =\frac{e^{\hat{\beta_0}+\hat{\beta_1} X}}{1+ e^{\hat{\beta}_0+\hat{\beta}_1X}}
+$$ 
+
+### with multiple variables
+
+In this case, simply let the logit be a linear function of $p$
+variables.
+
+Note when there are multiple variables, it's possible to have variables
+confounding: the coefficient of a variable may changes significantly or
+may change sign, this is because the coefficient represents the rate of
+change in $Y$ of that variable when holding other variable constants.
+The coefficient reflects the effect when other variables are hold
+constant, how the variable affects $Y$, and this effect may be different
+than when only this variable is used in the model.
+
+::: callout-note
+One can include a nonlinear term such as a quadratic term in the logit
+model, similar to a linear regression that includes a non-linear term.
+:::
+
+### Multi-class logistic regression (multinomial regression) with more than two classes
+
+in this case, we use the *softmax* function to model $$
+\text{Pr} (Y=k|X) =\frac{e^{\beta_{0k}+\beta_{1k}X_1+ \cdots + \beta_{pk}X_p}}{\sum_{\ell=1}^K e^{\beta_{0\ell}+\beta_{1\ell}X_1+ \cdots + \beta_{p\ell}X_p}}
+$$ for each class $k$.
+
+## Discriminant Classifier
+
+Apply the Bayes Theorem, the model $$
+\text{Pr}(Y=k|X=x)=\frac{\text{Pr}(X=x|Y=k)\cdot \text{Pr}(Y=k)}{\text{Pr}(X=x)}=\frac{\pi_k f_k(x)}{\sum_{\ell =}^ K \pi_{\ell}f_\ell(x)}
+$$ where $\pi_k=\text{Pr(Y=k)}$ is the *marginal* or *prior* probability
+for class $k$, and $f_k(x)=\text{Pr}(X=x|Y=k$) is the *density* for $X$
+in class $k$. Note the denominator is a *normalizing constant*. So when
+making decisions, effectively we compare $\pi_kf_k(x)$, and assign $x$
+to a class $k$ with the largest $\pi_kf_k(x)$.
+
+Discriminant uses the full liklihood $P(X,Y)$ to calculate $P(Y|X)$ to
+make a classficiation, so it's know as *generative learning*.
+
+-   when $f_k$ is chosen as a normal distribution with constant variance
+    ($\sigma^2$) for $p=1$ or correlation matrix $\Sigma$ for $p>1$,
+    this leads to the LDA. For $p=1$, the *discriminant score* is given
+    by $$
+    \delta_k(x) = x\cdot \frac{\mu_k}{\sigma^2}-\frac{\mu_k^2}{2\sigma^2}+\log (\pi_k)
+    $$ when $K=2$ and $\pi_1=\pi_2=0.5$m then the *decision boundary* is
+    given by $$
+    x=\frac{\mu_1+\mu_2}{2}. 
+    $$ When $p\ge 2$, $$
+    \delta_k(x) =x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +\log \pi_k=c_{k0}+c_{k1}x_1+\cdots +c_{kp}x_p.
+    $$ With $\hat{\delta}_k(x)$ for each $k$, it can be converted to the
+    class probability by the *softmax* function $$
+    \hat{\text{Pr}}(Y=k|X=x)=\frac{e^{\hat{\delta}_k(x)}}{\sum_{\ell=1}^K e^{\hat{\delta}_{\ell}(x)}}
+    $$ The $\pi_k$, $\mu_k$ and $\sigma$ are estimate the follwing way:
+    $$
+    \hat{\pi}_k =\frac{n_k}{n}
+    $$ $$
+    \hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i=k} x_i
+    $$ $$
+    \hat{\sigma}^2 = \frac{1}{n-K}\sum_{k=1}^K \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2=\sum_{k=1}^{K}\frac{n_k-1}{n-K}\hat{\sigma}^2_k
+    $$ where
+    $\hat{\sigma}_k^2=\frac{1}{n_k-1} \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2$
+    is the estimated variance for the $k$-th class. The score function
+    has a quadratic term $$
+    \delta_k(x)=-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)+\log \pi_k -\frac{1}{2}\log |\Sigma_k|
+    $$
+-   when each class chooses a different $\Sigma_k$, then it's QDA.
+-   when the features are modeled independently, i.e.,
+    $f_k(x) = \prod_{j=1}^p f_{jk}(x_j)$\$, the method is *naive Bayes*,
+    and $\Sigma_k$ are diagonal.
+    -   Can applied to *mixed* feature vectors (qualitative and
+        quantitative)
+    -   Despite strong assumptions, performs well.
+    -   Useful when $P$ is very large. 
+
+### why discriminant analysis
+
+-   When the classes are well-separated, the parameter estimation of
+    logistic regression is unstable, while LDA does not suffer from this
+    problem.
+-   if the data size $n$ is small and the distribution of $X$ is
+    approximately normal in each of the classes, then LDA is more stable
+    than logistic regression. Also used when $K>2$. 
+-   when there are more than two classes, LDA provides low-dimensional
+    views of the data hence popular. Specifically, when there are $K$
+    classes, LDA can be viewed exactly in $K-1$ dimensional plot. This
+    is because it essentially classifies to the closest centroid, and
+    they span a $K-1$ dimentinal plane.
+-   For a two-class problem, the logit of $p(Y=1|X=x$) by LDA
+    (generative learning) is a linear function in $X$, the same as a
+    logistic regression (discriminative learning). The difference lies
+    in how the parameters are estimated. But in practive, they are
+    similar.
+
+## Assessment of a classifier
+
+-   Overall error rate: equals to $$
+    \frac{FP+FN}{N+P}
+    $$
+-   False positive rate (FPR): the fraction of negiative exampels (N)
+    that are classified as positive: $$
+    \frac{FP}{FP+TN}=\frac{FP}{N}
+    $$
+-   False negative rate (FNR): $$
+    FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
+    $$
+-   ROC (receiver operating characteristic curve): plot true positive
+    rate (TPR) \~ false postive rate (FPR) as a threshold changes from 0
+    to 1. The point on the ROC curve closest to the point (0,1)
+    corresponds to the best classifier.
+-   AUC (area under the ROC): a larger AUC indicates a better
+    classifier.
+
+
+## Code Gist 
+
+### Python
+
+
+### Numpy 
+```
+np.where(lda_prob[:,1] >= 0.5, 'Up','Down')
+np.argmax(lda_prob, 1) #argmax along axis=1 (col)
+np.asarray(feature_std) # convert to np array
+np.allclose(M_lm.fittedvalues, M2_lm.fittedvalues) 
+#check if corresponding elts are equal within rtol=1e-5 and atol=-1e08
+```
+
+### Pandas
+```
+Smarket.corr(numeric_only=True)
+train = (Smarket.Year < 2005)
+Smarket_train = Smarket.loc[train] # equivalent to Smarket[train]
+Purchase.value_counts() # frequency table
+feature_std.std() #calculate column std
+S2.index.str.contains('mnth')
+Bike['mnth'].dtype.categories # get the categories of the categorical data
+obj2 = obj.reindex(["a", "b", "c", "d", "e"])# rearrange the entries in obj according to the new index, introducing missing values if any index values were not already present. 
+```
+### Graphics 
+```
+ax_month.set_xticks(x_month) # set_xticks at the place given by x_month
+ax_month.set_xticklabels([l[5] for l in coef_month.index], fontsize=20)
+ax.axline([0,0], c='black', linewidth=3,  
+          linestyle='--', slope=1);#axline method draw a line passing a given point with a given slope. 
+```
+
+### ISLP and Statsmodels
+```
+from ISLP import confusion_table
+from ISLP.models import contrast
+
+# Logistic Regression using sm.GLM() syntax similar to sm.OLS()
+design = MS(allvars)
+X = design.fit_transform(Smarket)
+y = Smarket.Direction == 'Up'
+glm = sm.GLM(y,
+             X,
+             family=sm.families.Binomial())
+results = glm.fit()
+summarize(results)
+results.pvalues
+probs = results.predict() #without data set, calculate predictions on the training set. 
+results.predict(exog=X_test) # on test set
+# Prediction on a new dataset
+newdata = pd.DataFrame({'Lag1':[1.2, 1.5],
+                        'Lag2':[1.1, -0.8]});
+newX = model.transform(newdata)
+results.predict(newX)
+confusion_table(labels, Smarket.Direction) #(predicted_labels, true_labels)
+np.mean(labels == Smarket.Direction) # calculate the accuracy
+
+hr_encode = contrast('hr', 'sum') #coding scheme for categorical data: the unreported coefficient for the missing level equals to the negative ofthe sum of the coefficients of all other variables. In this a coefficient for a level may be interpreted as the differnece from the mean level of response. 
+
+#Poisson Regression 
+M_pois = sm.GLM(Y, X2, family=sm.families.Poisson()).fit()
+#`family=sm.families.Gamma()` fits a Gamma regression
+model.
+
+```
+
+
+### sklearn
+```
+from sklearn.discriminant_analysis import \
+     (LinearDiscriminantAnalysis as LDA,
+      QuadraticDiscriminantAnalysis as QDA)
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+#LDA
+lda = LDA(store_covariance=True) #store the covariance of each class
+X_train, X_test = [M.drop(columns=['intercept']) # drop the intercept column
+                   for M in [X_train, X_test]]
+lda.fit(X_train, L_train) # LDA() model will automatically add a intercept term
+
+lda.means_ # mu_k (n_classes, n_features)
+lda.classes_
+lda.priors_ # prior probability of each class
+#Linear discrimnant vectors
+lda.scalings_ #Scaling of the features in the space spanned by the class centroids. Only available for ‘svd’ and ‘eigen’ solvers.
+
+lda_pred = lda.predict(X_test) #predict class labels
+lda_prob = lda.predict_proba(X_test) #ndarray of shape (n_samples, n_classes)
+
+#QDA
+qda = QDA(store_covariance=True)
+qda.fit(X_train, L_train)
+qda.covariance_[0] #estimated covariance for the first class
+
+# Naive Bayes
+NB = GaussianNB()
+NB.fit(X_train, L_train)
+NB.class_prior_
+NB.theta_ #means for (#classes, #features)
+NB.var_ #variances (#classes, #features)
+NB.predict_proba(X_test)[:5]
+
+# KNN
+knn1 = KNeighborsClassifier(n_neighbors=1)
+X_train, X_test = [np.asarray(X) for X in [X_train, X_test]]
+knn1.fit(X_train, L_train)
+knn1_pred = knn1.predict(X_test)
+
+# When using KNN one should standarize each varaibles
+scaler = StandardScaler(with_mean=True,
+                        with_std=True,
+                        copy=True) # do calculaton on a copy of the dataset
+scaler.fit(feature_df)
+
+#train test split
+X_std = scaler.transform(feature_df)
+(X_train,
+ X_test,
+ y_train,
+ y_test) = train_test_split(np.asarray(feature_std),
+                            Purchase,
+                            test_size=1000,
+                            random_state=0)
+
+# Logistic Regression
+logit = LogisticRegression(C=1e10, solver='liblinear') #use solver='liblinear'to avoid warning that the alg doesnot converge.  
+logit.fit(X_train, y_train)
+logit_pred = logit.predict_proba(X_test)
+
+
+```
+
+### Useful code snippet
+```
+# Tuning KNN
+for K in range(1,6):
+    knn = KNeighborsClassifier(n_neighbors=K)
+    knn_pred = knn.fit(X_train, y_train).predict(X_test)
+    C = confusion_table(knn_pred, y_test)
+    templ = ('K={0:d}: # predicted to rent: {1:>2},' +  # > for right alighment
+            '  # who did rent {2:d}, accuracy {3:.1%}')
+    pred = C.loc['Yes'].sum()
+    did_rent = C.loc['Yes','Yes']
+    print(templ.format(
+          K,
+          pred,
+          did_rent,
+          did_rent / pred))
+```
