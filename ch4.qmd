@@ -6,13 +6,13 @@ editor:
 
 # Chapter 4: Classification
 
-Given a feature vector $X$ and a *qualitative* response $Y$ taking
+Given a feature vector $X$ and a *qualitative* (categorical) response $Y$ taking
 finite values in a set $\mathcal{C}$, the classification task is to
 build a classifier $C(X)$ that takes an input $X$ and predicts its class
 $Y=C(X)\in \mathcal{C}$. This is often done by model $P(Y=k|X=x)$ for
 each $k\in \mathcal{C}$.
 
-## Linear regression and Classification
+##  Linear regression and Classification
 
 -   For a *binary* classification, one can use linear regression and
     does a good job. In this case, the linear regression classifier is
@@ -21,19 +21,25 @@ each $k\in \mathcal{C}$.
     $$ However, linear regression may not represent a probability as it
     may give a value outside the interval $[0,1]$.
 -   When there are more than two classes, linear regression is not
-    appropriate, one should turn to *multiclass logistic regression* or
+    appropriate, because any chosen coding of the $Y$ variable imposes an ordering and fixed differences among categories, which may not be implied by the data set. If the coding changes, a dramatic function will be fitted, which is not reasonable.   One should turn to *multiclass logistic regression* or
     *Discriminant Analysis*.
 
 ## Logistic Regression
 
 Logistic regression is a *discriminative learning*, because it directly
-calculates $P(Y|X)$ to make classification. \### Binary classification
+calculates the conditional probability $P(Y|X)$ to make classification. 
+
+### Binary classification
 with a single variable Logistic regression simply convert the linear
 regression to probability by $$
 p(X)=Pr(Y=1|X) =\frac{e^{\beta_0+\beta_1 X}}{1+ e^{\beta_0+\beta_1X}}.
-$$ Note the *logit* or *log odds* is linear $$
+$$ 
+Note the *logit* or *log odds* is linear $$
 \log\left( \frac{p(X)}{1-p(X)}  \right) =\beta_0 +\beta_1 X.
-$$ The parameters are estimated by maximizing the *liklihood* $$
+$$ 
+Increasing $X$ by one unit, changes the log odds by $\beta_1$. Equivalently, it multiplied the odds by $e^{\beta_1}$. The rate of change of $p(X)$ is no longer a constant, but depends on the current value of $X$. Positive $\beta_1$ implies increasing $p(X)$, and vice vesa. 
+
+The parameters are estimated by maximizing the *liklihood* $$
 \ell(\beta_0, \beta_1) =\prod_{i: y_i=1}p(x_i) \prod_{i:y_i=0}(1-p(x_i))
 $$ With the estimated parameters $\hat{\beta_j}, j=0,1$, one can
 calculate the probability $$
@@ -46,7 +52,7 @@ In this case, simply let the logit be a linear function of $p$
 variables.
 
 Note when there are multiple variables, it's possible to have variables
-confounding: the coefficient of a variable may changes significantly or
+confounding (especially when two variables are correlated): the coefficient of a variable may changes significantly or
 may change sign, this is because the coefficient represents the rate of
 change in $Y$ of that variable when holding other variable constants.
 The coefficient reflects the effect when other variables are hold
@@ -61,10 +67,16 @@ model, similar to a linear regression that includes a non-linear term.
 ### Multi-class logistic regression (multinomial regression) with more than two classes
 
 in this case, we use the *softmax* function to model $$
-\text{Pr} (Y=k|X) =\frac{e^{\beta_{0k}+\beta_{1k}X_1+ \cdots + \beta_{pk}X_p}}{\sum_{\ell=1}^K e^{\beta_{0\ell}+\beta_{1\ell}X_1+ \cdots + \beta_{p\ell}X_p}}
+\text{Pr} (Y=k|X) =\frac{e^{\beta_{0k}+\beta_{1k}X_1+ \cdots + \beta_{pk}X_p}}{\sum_{\ell=1}^K e^{\beta_{0\ell}+\beta_{1\ell}X_1+ \cdots + \beta_{p\ell}X_p}} =a_k
 $$ for each class $k$.
+Note $\Sigma_k a_k=1$ and the cross-entropy loss function is given by
+$-\log \ell(\beta)= -\Sigma_k \mathbb{1}_k \log a_k$, where $\beta$ represents all the parameters.
 
-## Discriminant Classifier
+The log odds between $k$th and $k'$th classes equals
+$$
+\log(\frac{\text{Pr}(Y=k|X=x)}{\text{Pr}(Y=k'|X=x)})=(\beta_{k0}-\beta_{k'0}) + (\beta_{k1}-\beta_{k'1}) + \cdots + (\beta_{kp}-\beta_{k'p})$$
+
+## Discriminant Classifier: Approximating Omptimal Bayes Classifier
 
 Apply the Bayes Theorem, the model $$
 \text{Pr}(Y=k|X=x)=\frac{\text{Pr}(X=x|Y=k)\cdot \text{Pr}(Y=k)}{\text{Pr}(X=x)}=\frac{\pi_k f_k(x)}{\sum_{\ell =}^ K \pi_{\ell}f_\ell(x)}
@@ -85,7 +97,8 @@ make a classficiation, so it's know as *generative learning*.
     $$ when $K=2$ and $\pi_1=\pi_2=0.5$m then the *decision boundary* is
     given by $$
     x=\frac{\mu_1+\mu_2}{2}. 
-    $$ When $p\ge 2$, $$
+    $$ When $p\ge 2$, assume that $X=(X_1, X_2, \cdots, X_p)$ is drawn from a multivariate Gaussian distribution $X \sim N(\mu_k, \Sigma)$, with a class-specific mean vector and a a common variance matrix. 
+    $$
     \delta_k(x) =x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +\log \pi_k=c_{k0}+c_{k1}x_1+\cdots +c_{kp}x_p.
     $$ With $\hat{\delta}_k(x)$ for each $k$, it can be converted to the
     class probability by the *softmax* function $$
@@ -105,14 +118,14 @@ make a classficiation, so it's know as *generative learning*.
     $$
 -   when each class chooses a different $\Sigma_k$, then it's QDA.
 -   when the features are modeled independently, i.e.,
-    $f_k(x) = \prod_{j=1}^p f_{jk}(x_j)$\$, the method is *naive Bayes*,
+    $f_k(x) = \prod_{j=1}^p f_{jk}(x_j)$, the method is *naive Bayes*,
     and $\Sigma_k$ are diagonal.
     -   Can applied to *mixed* feature vectors (qualitative and
-        quantitative)
+        quantitative). NB does not assume normally distributed predictors. 
     -   Despite strong assumptions, performs well.
-    -   Useful when $P$ is very large. 
+    -   Useful when $p$ is very large. 
 
-### why discriminant analysis
+### Why discriminant analysis
 
 -   When the classes are well-separated, the parameter estimation of
     logistic regression is unstable, while LDA does not suffer from this
@@ -124,31 +137,53 @@ make a classficiation, so it's know as *generative learning*.
     views of the data hence popular. Specifically, when there are $K$
     classes, LDA can be viewed exactly in $K-1$ dimensional plot. This
     is because it essentially classifies to the closest centroid, and
-    they span a $K-1$ dimentinal plane.
+    they span a $K-1$ dimensional plane.
 -   For a two-class problem, the logit of $p(Y=1|X=x$) by LDA
     (generative learning) is a linear function in $X$, the same as a
     logistic regression (discriminative learning). The difference lies
     in how the parameters are estimated. But in practive, they are
     similar.
 
-## Assessment of a classifier
+## KNN
 
+## Generalized Linear Models (GLM)
+- Poisson Regression
+
+## Assessment of a classifier
+- Confusion matrix
 -   Overall error rate: equals to $$
     \frac{FP+FN}{N+P}
     $$
--   False positive rate (FPR): the fraction of negiative exampels (N)
+- Class-specific performance: One can adjust the decision boundary (posterior probability threshold) to improve class specific performance at the expense of lowered overall performance. 
+
+  * percentage of TP detected among all positives
+  
+    $$\text{sensitivity (recall, power)} = TPR = \frac{TP}{TP+FN}=\frac{TP}{P}= 1-\text{Type II error}=1-\beta$$
+  this is equal to $1- FNR$, where, 
+  FNR is The fraction of positive examples that are classified as negatives
+   $$
+    FNR = \frac{FN}{FN+TP}=\frac{FN}{P} 
+    $$
+  
+  * percentage of TN detected among all negatives
+  $$\text{specificity}= TNR = \frac{TN}{TN+FP}=\frac{TN}{N}$$
+  This is equal to $1-FPR$, where, 
+  False positive rate (FPR): the fraction of negative examples (N)
     that are classified as positive: $$
-    \frac{FP}{FP+TN}=\frac{FP}{N}
-    $$
--   False negative rate (FNR): $$
-    FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
-    $$
--   ROC (receiver operating characteristic curve): plot true positive
-    rate (TPR) \~ false positive rate (FPR) as a threshold changes from 0
+    FPR=\frac{FP}{FP+TN}=\frac{FP}{N} = \text{Type I error} (\alpha) 
+    $$ 
+ 
+
+
+  *   ROC (receiver operating characteristic curve): plot true positive
+    rate (TPR=1-Type II error) \~ false positive rate (FPR= 1- specificity=Type I error) as a threshold for the posterior probability of positive class changes from 0
     to 1. The point on the ROC curve closest to the point (0,1)
     corresponds to the best classifier.
--   AUC (area under the ROC): a larger AUC indicates a better
+  *   AUC (area under the ROC): Overall performance of a classified summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example.   A larger AUC indicates a better
     classifier.
+    
+- class-specific prediction performance 
+  *  $$\text{precision} = \frac{TP}{TP+FP}=\frac{TP}{\text{predicted postives}}=1-\text{false discovery proportion}$$
 
 ## Homework: 
 - Conceptual: 1,2,3,5,6,7,8, 9
