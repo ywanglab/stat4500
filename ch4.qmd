@@ -76,7 +76,7 @@ The log odds between $k$th and $k'$th classes equals
 $$
 \log(\frac{\text{Pr}(Y=k|X=x)}{\text{Pr}(Y=k'|X=x)})=(\beta_{k0}-\beta_{k'0}) + (\beta_{k1}-\beta_{k'1}) + \cdots + (\beta_{kp}-\beta_{k'p})$$
 
-## Discriminant Classifier: Approximating Omptimal Bayes Classifier
+## Discriminant Classifier: Approximating Optimal Bayes Classifier
 
 Apply the Bayes Theorem, the model $$
 \text{Pr}(Y=k|X=x)=\frac{\text{Pr}(X=x|Y=k)\cdot \text{Pr}(Y=k)}{\text{Pr}(X=x)}=\frac{\pi_k f_k(x)}{\sum_{\ell =}^ K \pi_{\ell}f_\ell(x)}
@@ -87,7 +87,7 @@ making decisions, effectively we compare $\pi_kf_k(x)$, and assign $x$
 to a class $k$ with the largest $\pi_kf_k(x)$.
 
 Discriminant uses the full liklihood $P(X,Y)$ to calculate $P(Y|X)$ to
-make a classficiation, so it's know as *generative learning*.
+make a classification, so it's known as *generative learning*.
 
 -   when $f_k$ is chosen as a normal distribution with constant variance
     ($\sigma^2$) for $p=1$ or correlation matrix $\Sigma$ for $p>1$,
@@ -100,7 +100,9 @@ make a classficiation, so it's know as *generative learning*.
     $$ When $p\ge 2$, assume that $X=(X_1, X_2, \cdots, X_p)$ is drawn from a multivariate Gaussian distribution $X \sim N(\mu_k, \Sigma)$, with a class-specific mean vector and a a common variance matrix. 
     $$
     \delta_k(x) =x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +\log \pi_k=c_{k0}+c_{k1}x_1+\cdots +c_{kp}x_p.
-    $$ With $\hat{\delta}_k(x)$ for each $k$, it can be converted to the
+    $$ 
+    The score function (posterior probability) is *linear* in $x$.
+    With $\hat{\delta}_k(x)$ for each $k$, it can be converted to the
     class probability by the *softmax* function $$
     \hat{\text{Pr}}(Y=k|X=x)=\frac{e^{\hat{\delta}_k(x)}}{\sum_{\ell=1}^K e^{\hat{\delta}_{\ell}(x)}}
     $$ The $\pi_k$, $\mu_k$ and $\sigma$ are estimate the follwing way:
@@ -112,18 +114,34 @@ make a classficiation, so it's know as *generative learning*.
     \hat{\sigma}^2 = \frac{1}{n-K}\sum_{k=1}^K \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2=\sum_{k=1}^{K}\frac{n_k-1}{n-K}\hat{\sigma}^2_k
     $$ where
     $\hat{\sigma}_k^2=\frac{1}{n_k-1} \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2$
-    is the estimated variance for the $k$-th class. The score function
-    has a quadratic term $$
+    is the estimated variance for the $k$-th class. 
+
+::: callout-note
+One can include a nonlinear term such as a quadratic term in the LDA
+model, similar to a linear regression that includes a non-linear term.
+:::
+
+-   when each class chooses a different $\Sigma_k$, then it's QDA. It assumes an observation from the $k$-th class is $X\sim N(\mu_k, \Sigma_k)$.The score function
+    has a *quadratic* term $$
     \delta_k(x)=-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)+\log \pi_k -\frac{1}{2}\log |\Sigma_k|
     $$
--   when each class chooses a different $\Sigma_k$, then it's QDA.
--   when the features are modeled independently, i.e.,
+    QDA has much more parameters $Kp(p+1)/2$ to estimate compared to LDA ($Kp$), hence has higher flexibility and may lead to higher variance. When there are few training examples, LDA tend to perform better and reducing variance is crucial. When there is a large traning set, QDA is recommended as variance is not a major concern. LDA is a special case of QDA. 
+-   when the features are modeled independently, i.e., there is no association between the $p$ predictors, 
     $f_k(x) = \prod_{j=1}^p f_{jk}(x_j)$, the method is *naive Bayes*,
-    and $\Sigma_k$ are diagonal.
+    and $\Sigma_k$ are diagonal. Any classifier with a linear decision boundary is a special case of NB. So LDA is a special case of NB. 
+    To estimate $f_kj$, one can 
+    
+      * assume that $X_j|Y=k \sim N(\mu_{jk,\sigma^2_{jk}})$, that is, a class specific covariance but is diagonal. QDA's $\Sigma_k$ is not diagonal. If we model $f_{kj}(x_j)\sim N(\mu_{kj}+\sigma_j^2)$ (Note $\sigma_j^2$ is shared among clases), In this case NB is a special case of LDA that has  a diagonal $\Sigma$ and 
+      
+      * use a non-parametric estimate such as histogram (or a smooth kernel density estimator) for the observations of the jth Predictor within each class. 
+      * If $X_j$ is qualitative, then one can simply count the proportion of training observations for the $j$th predictor corresponding to each class. 
+    
     -   Can applied to *mixed* feature vectors (qualitative and
         quantitative). NB does not assume normally distributed predictors. 
-    -   Despite strong assumptions, performs well.
+    -   Despite strong assumptions, performs well, especially when $n$ is not large enough relative to $p$, when estimating the joint distribution is difficult. It introduces some biases but reduces variance, leading to a classifier that works quite well as a result of bias-variance trade-off. 
     -   Useful when $p$ is very large. 
+    - NB is a *generalized additive model*. 
+    - Neigher NB nor QDA is a special case of the other. Because QDA contains interaction term $x_ix_j$, while NB is purely additive, in the sense that a function of $x_i$ is added to a function of $x_j$. Therefore, QDA potentially is a better fit when the interactions among predictors are important. 
 
 ### Why discriminant analysis
 
@@ -141,13 +159,66 @@ make a classficiation, so it's know as *generative learning*.
 -   For a two-class problem, the logit of $p(Y=1|X=x$) by LDA
     (generative learning) is a linear function in $X$, the same as a
     logistic regression (discriminative learning). The difference lies
-    in how the parameters are estimated. But in practive, they are
+    in how the parameters are estimated. But in practice, they are
     similar.
+- LDA assumes the predictors follow a multivariable normal distribution with a shared $\Sigma$ among classes. So when this assumption holds, we expect LDA performs better; and Logistic regress performs better when this asuumption does not hold. 
 
 ## KNN
+KNN is a non-parametric method and doesnot assume a shape for the decision boundary. 
+KNN assign the class of popularity to $X=x$ in a $K$-neighborhood. 
+
+- KNN dominates LDA and Logistic Regression when the decision boundary is highly non-linear, provided $n$ is large and $p$ is small. As KNN breaks down when $p$ is large. 
+- KNN requires large $n>>p$, this is because KNN is non-parametric and tends to reduce bias but increase variance. 
+
+- When the decision boundary is non-linear but $n$ is only modest and $p$ is not very small, QDA may outperform KNN. This is because QDA provides a non-linear boundary while taking advantage of a parametric form, which means that if requires smaller size for accurate classification. 
+- Unlike logistic regression, KNN does not tell which predictors are more importnat: We dont get a table of coefficients. 
+- When the decision boundary is linear, LDA or logistic regression may perform better, when the boundary is moderately non-linear, QDA or NB may perform better; For a much more complicated decision boundary, KNN may perform better. 
+
+## Poisson Regression 
+When $Y$ is discrete and non-negative, a linear regression model is not satisfactory, even with the transformation of $\log (Y)$, because $\log$ does not allow $Y=0$. 
+
+- Poisson Regression: typically used to model counts, 
+$$
+\text{Pr}(Y=k)= \frac{e^{-\lambda}\lambda^k}{k!}, \qquad k=0,1,2, \cdots,
+$$
+where, $\lambda = E(Y)= \text{Var}(Y)$. This means that if $Y$ follows a Poissson distribution, the larger the mean of $Y$, the larger its variance. Posisson regression can handle this when variance changes with mean, but linear regression cannot, because it assumes contant variance. 
+
+Assume 
+$$
+\log(\lambda(X_1, X_2, \cdots, X_p))=\beta_0+\beta_1X_1+\cdots +\beta_pX_p
+$$
+Then one can use maximum likelihood 
+$$
+\ell(\beta_0, \beta_1, \cdots, \beta_p)=\prod_{i=1}^n \frac{e^{-\lambda(x_i)}\lambda(x_i)^{y_i}}{y_i!}
+$$
+to estimate the parameters. 
+
+- Interpretation: An increase in $X_j$ by one unit is associated with a change in $E(Y)=\lambda$ by a *factor* (percentage) of $\exp(\beta_j)$. 
 
 ## Generalized Linear Models (GLM)
-- Poisson Regression
+Perform a regression by modeling $Y$ from a particular member of the *exponential family* (Gaussian, Bernoulli, Poisson, Gamma, negative binomial), and then transform the mean of $Y$ to a linear function. 
+
+- Use predictors $X_1, \cdots, X_p$ to predict $Y$. Assume $Y$ conditional on $X$ follow some distribution: For linear regression, assume $Y$ follows a normal distribution; for logistic regression, assume $Y$ follows a Bernoulli (multinomial distribution for multi-class logistic regression) distribution; 
+For poisson distribution, assume $Y$ follows a poisson distribution. 
+
+- Each approach models the mean of $Y$ as a function of $X$ using a *linking function* $\eta$ to transform $E[Y|X]$ to a linear function. 
+  * for linear regression
+    $$
+    E(Y|X)= \beta_0+\beta_1 X_1+\cdots +\beta_p X_p
+    $$
+    $\eta(\mu) \mu$
+  * for logistic regression
+    $$
+    E(Y|X)=P(Y=1|X)=\frac{e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}{1+e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}
+    $$
+    $\eta(\mu) = \log (\mu/(1-\mu))$
+  * for Poisson regression
+    $$
+    E(Y|X) = \lambda(X) = e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}
+    $$
+    $\eta(\mu) = \log(\mu)$. 
+    
+  * Gamma regression and negative binomial regression. 
 
 ## Assessment of a classifier
 - Confusion matrix

@@ -138,7 +138,7 @@ where, $\text{RSS}_0$ is the residual sum of squares of a second model that uses
 $$
 \text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
 $$
-It is the *average amount* in  $Y$ that a response deviates from the *true regression line* ($\beta_0+\beta_1 X$).  Note, RSE can increase with more variables if the decrease of RSS doesnot offset the increase of $p$. 
+It is the *average amount* in  $\hat{Y}$ that a response deviates from the *true regression line* ($\beta_0+\beta_1 X$).  Note, RSE can increase with more variables if the decrease of RSS doesnot offset the increase of $p$. 
 
 - Approach 2: Using *R-squared* (fraction of variance in $Y$  explained by $X$), which is independent of of the scale of $Y$, and $0\le R^2 \le 1$:
   $$
