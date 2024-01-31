@@ -103,7 +103,7 @@ Where $R^2_{X_j|X_{-j}}$ is the $R^2$  from a regression of $X_j$ onto all of th
 ### Assessing existence of linear relationship
 - test Hypothesis (test if there is a linear relationship between the response and  predictors)
 $$
-H_0: \beta_1=\beta_2=\cdots = \beta_p
+H_0: \beta_1=\beta_2=\cdots = \beta_p=0
 $$
 $$
 H_a: \text{at least one } \beta_j \text{ is non-zero.}
@@ -122,7 +122,7 @@ In this case, use
 $$
 F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
 $$
-where, $\text{RSS}_0$ is the residual sum of squares of a second model that uses all variables *except* those last $q$ variables. When $q=1$, $F$-statistic in @eq-subset-hypothesis is the square of the $t$-statistic of that variable. 
+where, $\text{RSS}_0$ is the residual sum of squares of a second model that uses all variables *except* those last $q$ variables. When $q=1$, $F$-statistic in @eq-subset-hypothesis is the square of the $t$-statistic of that variable. The $t$-statistic reported in a regression model gives the *partial effect* of adding that variable, while holding other variables fixed. 
 
 
 ### Assess the accuracy of the future prediciton

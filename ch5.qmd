@@ -1,0 +1,193 @@
+# Chapter 5: Resampling Methods
+
+Resampling methods are mainly used to estimate the test error but by resampling the traning set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model. Recall training error in general *dramatically underestimate* the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error. 
+
+## how to estimate test error
+- use a large designated test set, but often not available. 
+- make adjustment to the training error to estimate the test error, e.g., Cp statistic, AIC and BIC. 
+- validation set approach: estimate the test error by *holding out* a subset of the training set, also called a *validation set*. 
+  * the estimate of the test error can be highly variable, depending on the random train-validation split. 
+  * Only a subset of the training set is used to fit the model. This suggests the validation error tends to *overestimate* the test error compared to the model that uses the entire traning set. 
+  
+- K-fold Cross-Validation: randomly divide the data into $K$ equal-sized parts $C_1, C_2, \cdots, C_K$. For each $k$, leave out part $k$, fit the model on the remaining $K-1$ parts (combined, $(K-1)/K$ of the original traning set), and then evaluate the model on the part $k$. Then repeat this for each $k$, and weighted average of the errors is computed: 
+$$
+CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
+$$
+where $\text{MSE}_k=\sum_{i\in C_k}(y_i\ne \hat{y}_i)/n_k$. 
+
+For classification problem, simply replace $\text{MSE}_k$ with the misclassificaiton rate $\text{Err}_k =\sum_{i\in C_k}I(y_i\ne \hat{y}_i)/n_k$. 
+
+The estimated standard error of $CV_k$ can be calculated by 
+$$
+\hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
+$$
+
+The estimated error tends bias upward because it uses only $(K-1)/K$ of the training set. This bias is minimized with $K=n$ (LOOCV), but LOOCV estimate has high variance due to the high correlation between folds. 
+
+  *  LOOCV: it's a special case of K-fold CV with $K=n$. For least squares linear or polynomial regression, the LOOCV error can be computed by 
+$$
+\text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
+$$
+Where $h_i$ is the leverage statistic of $x_i$. 
+  * for LOOCV, the estimate from each fold are highly correlated, hence their average can have high variance. 
+  * better choice is $K=5$ or $K=10$. 
+  
+- Bootstrap: Primarily used to estimate the standard error, or a CI (called *bootstrap percentile*) of an estimate . repeatedly sampling the training set with replacement and obtain a *bootstrap set* of the *the same size* as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the *standard error* using the estimated parameters by the bootstrap model, assuming there are $B$ bootstrap data sets:
+$$
+SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
+$$
+  * Note sometimes sampling with replacement must take caution, for example, one can't simply sample a time series with replacement because the data are sequential. 
+
+  * Estimate prediction error: Each bootstrap sample has significant overlap with the original data, in fact, about 2/3 of the original data points appear in each bootstrap sample. If we use the original data set as the validation set, This will cause the bootstrap to seriously *underestimate* the true prediction error. To fix this, one can only use predictions on those samples that do not occur (by chance) in a bootstrap sample. 
+  * Bootstrap vs. Permutation test: permutation methods sample from an estimated *null* distribution for the data, and use this to estimate $p$-values and *False Discovery Rates* for hypothesis tests. 
+  
+    The bootstrap can be used to test a null hypothesis in simple situation. Eg. If $H_0: \theta=0$, we can check whether the confidence interval for $\theta$ contains zero. 
+  
+## Code Gist
+### Python
+
+### Numpy
+```
+c = np.power.outer(row, col) # mesh of row[i]^col[j] power. 
+# random choice 
+rng = np.random.default_rng(0)
+alpha_func(Portfolio,
+           rng.choice(100, # random numbers are selected from arange(100)
+                      100, #size
+                      replace=True))
+
+    
+```
+
+### Pandas
+```
+np.cov(D[['X','Y']].loc[idx], rowvar=False) #cov compute corr of variables. rowvar-False: cols are vars.
+```
+
+### Graphics
+
+
+### ISLP and statsmodels
+```
+# function that evalues MSE for training a model
+def evalMSE(terms,    #predictor variables
+            response, #response variable
+            train,
+            test):
+
+   mm = MS(terms)
+   X_train = mm.fit_transform(train)
+   y_train = train[response]
+
+   X_test = mm.transform(test)
+   y_test = test[response]
+
+   results = sm.OLS(y_train, X_train).fit()
+   test_pred = results.predict(X_test)
+
+   return np.mean((y_test - test_pred)**2)
+
+# Compare polynomial models of different degrees
+MSE = np.zeros(3)
+for idx, degree in enumerate(range(1, 4)):
+    MSE[idx] = evalMSE([poly('horsepower', degree)],
+                       'mpg',
+                       Auto_train,
+                       Auto_valid)
+MSE
+
+# Estimating the accuracy of a LR model using bootstrap
+
+# Compute the SE of the boostraped values computed by func                      
+def boot_SE(func,
+            D,
+            n=None,
+            B=1000,
+            seed=0):
+    rng = np.random.default_rng(seed)
+    first_, second_ = 0, 0
+    n = n or D.shape[0]
+    for _ in range(B):
+        idx = rng.choice(D.index,
+                         n,
+                         replace=True)
+        value = func(D, idx)
+        first_ += value
+        second_ += value**2
+    return np.sqrt(second_ / B - (first_ / B)**2) #compute var. 
+def boot_OLS(model_matrix, response, D, idx):
+    D_ = D.loc[idx]
+    Y_ = D_[response]
+    X_ = clone(model_matrix).fit_transform(D_) #clone create a deep copy. 
+    return sm.OLS(Y_, X_).fit().params
+    
+quad_model = MS([poly('horsepower', 2, raw=True)]) #raw=True: not normalize the feature
+quad_func = partial(boot_OLS,
+                    quad_model,
+                    'mpg')
+boot_SE(quad_func, Auto, B=1000)
+
+```
+
+### sklearn
+```
+from functools import partial
+from sklearn.model_selection import \
+     (cross_validate,
+      KFold,
+      ShuffleSplit)
+from sklearn.base import clone
+from ISLP.models import sklearn_sm #wrapper to feed a sm model to sklearn
+
+#Cross Validation
+hp_model = sklearn_sm(sm.OLS,
+                      MS(['horsepower']))
+X, Y = Auto.drop(columns=['mpg']), Auto['mpg']
+cv_results = cross_validate(hp_model,
+                            X,
+                            Y,
+                            cv=Auto.shape[0]) #cv=K.loocv. Can use cv=KFold()object
+cv_err = np.mean(cv_results['test_score']) # test_score: MSE
+cv_err
+
+# Use KFold to partition instead of using an integer. 
+cv_error = np.zeros(5)
+cv = KFold(n_splits=10,
+           shuffle=True,#shuffle before splitting
+           random_state=0) # use same splits for each degree
+for i, d in enumerate(range(1,6)):
+    X = np.power.outer(H, np.arange(d+1))
+    M_CV = cross_validate(M,
+                          X,
+                          Y,
+                          cv=cv)
+    cv_error[i] = np.mean(M_CV['test_score'])
+cv_error
+
+# using ShuffleSplit() method 
+validation = ShuffleSplit(n_splits=10,
+                          test_size=196,
+                          random_state=0)
+results = cross_validate(hp_model,
+                         Auto.drop(['mpg'], axis=1),
+                         Auto['mpg'],
+                         cv=validation)
+results['test_score'].mean(), results['test_score'].std()
+
+
+#View skleanrn fitting results using model.results_
+hp_model.fit(Auto, Auto['mpg']) # hp_model is a sklearn model sk_model.fit(X, Y) for trainning
+model_se = summarize(hp_model.results_)['std err'] #summarize is an ISLP function
+model_se
+
+```
+
+### Useful code snippet
+```
+
+
+```
+
+
+  
+  

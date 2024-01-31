@@ -206,7 +206,7 @@ For poisson distribution, assume $Y$ follows a poisson distribution.
     $$
     E(Y|X)= \beta_0+\beta_1 X_1+\cdots +\beta_p X_p
     $$
-    $\eta(\mu) \mu$
+    $\eta(\mu) =\mu$
   * for logistic regression
     $$
     E(Y|X)=P(Y=1|X)=\frac{e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}{1+e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}

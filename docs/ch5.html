@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - References</title>
+<title>stat4500notes - 5&nbsp; Chapter 5: Resampling Methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,7 +30,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./ch4.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -86,6 +68,8 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -98,7 +82,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -174,7 +158,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch5.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span></a>
   </div>
 </li>
@@ -186,7 +170,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -196,14 +180,30 @@ div.csl-indent {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#how-to-estimate-test-error" id="toc-how-to-estimate-test-error" class="nav-link active" data-scroll-target="#how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</a></li>
+  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">5.2</span> Code Gist</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">5.2.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">5.2.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">5.2.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">5.2.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">5.2.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">5.2.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">5.2.7</span> Useful code snippet</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></h1>
 </div>
 
 
@@ -220,11 +220,188 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" role="list" style="display: none">
+<p>Resampling methods are mainly used to estimate the test error but by resampling the traning set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model. Recall training error in general <em>dramatically underestimate</em> the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error.</p>
+<section id="how-to-estimate-test-error" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</h2>
+<ul>
+<li>use a large designated test set, but often not available.</li>
+<li>make adjustment to the training error to estimate the test error, e.g., Cp statistic, AIC and BIC.</li>
+<li>validation set approach: estimate the test error by <em>holding out</em> a subset of the training set, also called a <em>validation set</em>.
+<ul>
+<li>the estimate of the test error can be highly variable, depending on the random train-validation split.</li>
+<li>Only a subset of the training set is used to fit the model. This suggests the validation error tends to <em>overestimate</em> the test error compared to the model that uses the entire traning set.</li>
+</ul></li>
+<li>K-fold Cross-Validation: randomly divide the data into <span class="math inline">\(K\)</span> equal-sized parts <span class="math inline">\(C_1, C_2, \cdots, C_K\)</span>. For each <span class="math inline">\(k\)</span>, leave out part <span class="math inline">\(k\)</span>, fit the model on the remaining <span class="math inline">\(K-1\)</span> parts (combined, <span class="math inline">\((K-1)/K\)</span> of the original traning set), and then evaluate the model on the part <span class="math inline">\(k\)</span>. Then repeat this for each <span class="math inline">\(k\)</span>, and weighted average of the errors is computed: <span class="math display">\[
+CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
+\]</span> where <span class="math inline">\(\text{MSE}_k=\sum_{i\in C_k}(y_i\ne \hat{y}_i)/n_k\)</span>.</li>
+</ul>
+<p>For classification problem, simply replace <span class="math inline">\(\text{MSE}_k\)</span> with the misclassificaiton rate <span class="math inline">\(\text{Err}_k =\sum_{i\in C_k}I(y_i\ne \hat{y}_i)/n_k\)</span>.</p>
+<p>The estimated standard error of <span class="math inline">\(CV_k\)</span> can be calculated by <span class="math display">\[
+\hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
+\]</span></p>
+<p>The estimated error tends bias upward because it uses only <span class="math inline">\((K-1)/K\)</span> of the training set. This bias is minimized with <span class="math inline">\(K=n\)</span> (LOOCV), but LOOCV estimate has high variance due to the high correlation between folds.</p>
+<ul>
+<li><p>LOOCV: it’s a special case of K-fold CV with <span class="math inline">\(K=n\)</span>. For least squares linear or polynomial regression, the LOOCV error can be computed by <span class="math display">\[
+\text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
+\]</span> Where <span class="math inline">\(h_i\)</span> is the leverage statistic of <span class="math inline">\(x_i\)</span>.</p></li>
+<li><p>for LOOCV, the estimate from each fold are highly correlated, hence their average can have high variance.</p></li>
+<li><p>better choice is <span class="math inline">\(K=5\)</span> or <span class="math inline">\(K=10\)</span>.</p></li>
+<li><p>Bootstrap: Primarily used to estimate the standard error, or a CI (called <em>bootstrap percentile</em>) of an estimate . repeatedly sampling the training set with replacement and obtain a <em>bootstrap set</em> of the <em>the same size</em> as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the <em>standard error</em> using the estimated parameters by the bootstrap model, assuming there are <span class="math inline">\(B\)</span> bootstrap data sets: <span class="math display">\[
+SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
+\]</span></p>
+<ul>
+<li><p>Note sometimes sampling with replacement must take caution, for example, one can’t simply sample a time series with replacement because the data are sequential.</p></li>
+<li><p>Estimate prediction error: Each bootstrap sample has significant overlap with the original data, in fact, about 2/3 of the original data points appear in each bootstrap sample. If we use the original data set as the validation set, This will cause the bootstrap to seriously <em>underestimate</em> the true prediction error. To fix this, one can only use predictions on those samples that do not occur (by chance) in a bootstrap sample.</p></li>
+<li><p>Bootstrap vs.&nbsp;Permutation test: permutation methods sample from an estimated <em>null</em> distribution for the data, and use this to estimate <span class="math inline">\(p\)</span>-values and <em>False Discovery Rates</em> for hypothesis tests.</p>
+<p>The bootstrap can be used to test a null hypothesis in simple situation. Eg. If <span class="math inline">\(H_0: \theta=0\)</span>, we can check whether the confidence interval for <span class="math inline">\(\theta\)</span> contains zero.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="code-gist" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">5.2</span> Code Gist</h2>
+<section id="python" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="python"><span class="header-section-number">5.2.1</span> Python</h3>
+</section>
+<section id="numpy" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">5.2.2</span> Numpy</h3>
+<pre><code>c = np.power.outer(row, col) # mesh of row[i]^col[j] power. 
+# random choice 
+rng = np.random.default_rng(0)
+alpha_func(Portfolio,
+           rng.choice(100, # random numbers are selected from arange(100)
+                      100, #size
+                      replace=True))
 
-</div>
+    </code></pre>
+</section>
+<section id="pandas" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">5.2.3</span> Pandas</h3>
+<pre><code>np.cov(D[['X','Y']].loc[idx], rowvar=False) #cov compute corr of variables. rowvar-False: cols are vars.</code></pre>
+</section>
+<section id="graphics" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">5.2.4</span> Graphics</h3>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">5.2.5</span> ISLP and statsmodels</h3>
+<pre><code># function that evalues MSE for training a model
+def evalMSE(terms,    #predictor variables
+            response, #response variable
+            train,
+            test):
+
+   mm = MS(terms)
+   X_train = mm.fit_transform(train)
+   y_train = train[response]
+
+   X_test = mm.transform(test)
+   y_test = test[response]
+
+   results = sm.OLS(y_train, X_train).fit()
+   test_pred = results.predict(X_test)
+
+   return np.mean((y_test - test_pred)**2)
+
+# Compare polynomial models of different degrees
+MSE = np.zeros(3)
+for idx, degree in enumerate(range(1, 4)):
+    MSE[idx] = evalMSE([poly('horsepower', degree)],
+                       'mpg',
+                       Auto_train,
+                       Auto_valid)
+MSE
+
+# Estimating the accuracy of a LR model using bootstrap
+
+# Compute the SE of the boostraped values computed by func                      
+def boot_SE(func,
+            D,
+            n=None,
+            B=1000,
+            seed=0):
+    rng = np.random.default_rng(seed)
+    first_, second_ = 0, 0
+    n = n or D.shape[0]
+    for _ in range(B):
+        idx = rng.choice(D.index,
+                         n,
+                         replace=True)
+        value = func(D, idx)
+        first_ += value
+        second_ += value**2
+    return np.sqrt(second_ / B - (first_ / B)**2) #compute var. 
+def boot_OLS(model_matrix, response, D, idx):
+    D_ = D.loc[idx]
+    Y_ = D_[response]
+    X_ = clone(model_matrix).fit_transform(D_) #clone create a deep copy. 
+    return sm.OLS(Y_, X_).fit().params
+    
+quad_model = MS([poly('horsepower', 2, raw=True)]) #raw=True: not normalize the feature
+quad_func = partial(boot_OLS,
+                    quad_model,
+                    'mpg')
+boot_SE(quad_func, Auto, B=1000)
+</code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">5.2.6</span> sklearn</h3>
+<pre><code>from functools import partial
+from sklearn.model_selection import \
+     (cross_validate,
+      KFold,
+      ShuffleSplit)
+from sklearn.base import clone
+from ISLP.models import sklearn_sm #wrapper to feed a sm model to sklearn
+
+#Cross Validation
+hp_model = sklearn_sm(sm.OLS,
+                      MS(['horsepower']))
+X, Y = Auto.drop(columns=['mpg']), Auto['mpg']
+cv_results = cross_validate(hp_model,
+                            X,
+                            Y,
+                            cv=Auto.shape[0]) #cv=K.loocv. Can use cv=KFold()object
+cv_err = np.mean(cv_results['test_score']) # test_score: MSE
+cv_err
+
+# Use KFold to partition instead of using an integer. 
+cv_error = np.zeros(5)
+cv = KFold(n_splits=10,
+           shuffle=True,#shuffle before splitting
+           random_state=0) # use same splits for each degree
+for i, d in enumerate(range(1,6)):
+    X = np.power.outer(H, np.arange(d+1))
+    M_CV = cross_validate(M,
+                          X,
+                          Y,
+                          cv=cv)
+    cv_error[i] = np.mean(M_CV['test_score'])
+cv_error
+
+# using ShuffleSplit() method 
+validation = ShuffleSplit(n_splits=10,
+                          test_size=196,
+                          random_state=0)
+results = cross_validate(hp_model,
+                         Auto.drop(['mpg'], axis=1),
+                         Auto['mpg'],
+                         cv=validation)
+results['test_score'].mean(), results['test_score'].std()
 
 
+#View skleanrn fitting results using model.results_
+hp_model.fit(Auto, Auto['mpg']) # hp_model is a sklearn model sk_model.fit(X, Y) for trainning
+model_se = summarize(hp_model.results_)['std err'] #summarize is an ISLP function
+model_se
+</code></pre>
+</section>
+<section id="useful-code-snippet" class="level3" data-number="5.2.7">
+<h3 data-number="5.2.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">5.2.7</span> Useful code snippet</h3>
+<pre><code>
+</code></pre>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -619,11 +796,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./summary.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summary</span></span>
+      <a href="./ch4.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./summary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

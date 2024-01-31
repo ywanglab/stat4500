@@ -158,8 +158,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -307,7 +313,7 @@ Y= \beta_0 + \beta_1X_1 +\cdots + \beta_pX_p + \epsilon.
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="assessing-existence-of-linear-relationship"><span class="header-section-number">3.2.2</span> Assessing existence of linear relationship</h3>
 <ul>
 <li>test Hypothesis (test if there is a linear relationship between the response and predictors) <span class="math display">\[
-H_0: \beta_1=\beta_2=\cdots = \beta_p
+H_0: \beta_1=\beta_2=\cdots = \beta_p=0
 \]</span> <span class="math display">\[
 H_a: \text{at least one } \beta_j \text{ is non-zero.}
 \]</span> using <span class="math inline">\(F\)</span>-statistic <span class="math display">\[
@@ -318,7 +324,7 @@ F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\te
 H_0: \beta_{p-q+1} = \beta_{p-q+2}=\cdots = \beta_p=0
 \tag{3.2}\]</span></span> In this case, use <span class="math display">\[
 F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
-\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a second model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables. When <span class="math inline">\(q=1\)</span>, <span class="math inline">\(F\)</span>-statistic in <a href="#eq-subset-hypothesis" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is the square of the <span class="math inline">\(t\)</span>-statistic of that variable.</p>
+\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a second model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables. When <span class="math inline">\(q=1\)</span>, <span class="math inline">\(F\)</span>-statistic in <a href="#eq-subset-hypothesis" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is the square of the <span class="math inline">\(t\)</span>-statistic of that variable. The <span class="math inline">\(t\)</span>-statistic reported in a regression model gives the <em>partial effect</em> of adding that variable, while holding other variables fixed.</p>
 </section>
 <section id="assess-the-accuracy-of-the-future-prediciton" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="assess-the-accuracy-of-the-future-prediciton"><span class="header-section-number">3.2.3</span> Assess the accuracy of the future prediciton</h3>
