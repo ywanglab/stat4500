@@ -187,6 +187,7 @@ High leverage points tend to have sizeable impact on the regression line.
 To quantify the observation's leverage, one needs to compute the **leverage statistic** 
 $$h_i = \frac{1}{n}+ \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n (x_j-\bar{x})^2}.$$ 
 $1/n \le h_i\le 1$ and $\text{Ave}(h_i)=(p+1)/n$. A large value of this statistic (for example, great than $(p+1)/n$) indicates an observation with high leverage. 
+The leverage $1/n\le h_i\le 1$, reflects the amount an observation influences its own fit.
 
 ## Compared to KNN Regression
 KNN regression is a non-parametric method that makes prediction at $x_0$ by taking the average in a $K$-point neightborhood 

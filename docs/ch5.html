@@ -185,15 +185,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#how-to-estimate-test-error" id="toc-how-to-estimate-test-error" class="nav-link active" data-scroll-target="#how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</a></li>
-  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">5.2</span> Code Gist</a>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">5.2</span> Homework</a></li>
+  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">5.3</span> Code Gist</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">5.2.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">5.2.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">5.2.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">5.2.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">5.2.5</span> ISLP and statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">5.2.6</span> sklearn</a></li>
-  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">5.2.7</span> Useful code snippet</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">5.3.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">5.3.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">5.3.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">5.3.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">5.3.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">5.3.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">5.3.7</span> Useful code snippet</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -220,7 +221,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Resampling methods are mainly used to estimate the test error but by resampling the traning set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model. Recall training error in general <em>dramatically underestimate</em> the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error.</p>
+<p>Resampling methods are mainly used to estimate the test error by resampling the training set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model.</p>
+<p>Recall training error in general <em>dramatically underestimate</em> the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error.</p>
+<p><em>Model Assessment</em>: evaluating a model’s performance <em>Model selection</em>: selecting the proper level of flexibility.</p>
 <section id="how-to-estimate-test-error" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</h2>
 <ul>
@@ -229,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 <li>validation set approach: estimate the test error by <em>holding out</em> a subset of the training set, also called a <em>validation set</em>.
 <ul>
 <li>the estimate of the test error can be highly variable, depending on the random train-validation split.</li>
-<li>Only a subset of the training set is used to fit the model. This suggests the validation error tends to <em>overestimate</em> the test error compared to the model that uses the entire traning set.</li>
+<li>Only a subset of the training set is used to fit the model. Since statistical methods tend to perform worse when trained on a smaler data set, which suggests the validation error tends to <em>overestimate</em> the test error compared to the model that uses the entire training set.</li>
 </ul></li>
 <li>K-fold Cross-Validation: randomly divide the data into <span class="math inline">\(K\)</span> equal-sized parts <span class="math inline">\(C_1, C_2, \cdots, C_K\)</span>. For each <span class="math inline">\(k\)</span>, leave out part <span class="math inline">\(k\)</span>, fit the model on the remaining <span class="math inline">\(K-1\)</span> parts (combined, <span class="math inline">\((K-1)/K\)</span> of the original traning set), and then evaluate the model on the part <span class="math inline">\(k\)</span>. Then repeat this for each <span class="math inline">\(k\)</span>, and weighted average of the errors is computed: <span class="math display">\[
 CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
@@ -239,14 +242,14 @@ CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
 <p>The estimated standard error of <span class="math inline">\(CV_k\)</span> can be calculated by <span class="math display">\[
 \hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
 \]</span></p>
-<p>The estimated error tends bias upward because it uses only <span class="math inline">\((K-1)/K\)</span> of the training set. This bias is minimized with <span class="math inline">\(K=n\)</span> (LOOCV), but LOOCV estimate has high variance due to the high correlation between folds.</p>
+<p>The estimated error tends bias upward because it uses only <span class="math inline">\((K-1)/K\)</span> of the training set. This <em>bias is minimized with <span class="math inline">\(K=n\)</span> (LOOCV)</em>, but LOOCV estimate has <em>high variance</em> due to the high correlation between folds.</p>
 <ul>
 <li><p>LOOCV: it’s a special case of K-fold CV with <span class="math inline">\(K=n\)</span>. For least squares linear or polynomial regression, the LOOCV error can be computed by <span class="math display">\[
 \text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
-\]</span> Where <span class="math inline">\(h_i\)</span> is the leverage statistic of <span class="math inline">\(x_i\)</span>.</p></li>
+\]</span> Where <span class="math inline">\(h_i\)</span> is the leverage statistic of <span class="math inline">\(x_i\)</span>. There is no randomness in the error. The leverage <span class="math inline">\(1/n\le h_i\le 1\)</span>, reflects the amount an observation influences its own fit. The above formula doesn’t hold in genearl, in which case the model has to refit <span class="math inline">\(n\)</span> times to estimate the test error.</p></li>
 <li><p>for LOOCV, the estimate from each fold are highly correlated, hence their average can have high variance.</p></li>
-<li><p>better choice is <span class="math inline">\(K=5\)</span> or <span class="math inline">\(K=10\)</span>.</p></li>
-<li><p>Bootstrap: Primarily used to estimate the standard error, or a CI (called <em>bootstrap percentile</em>) of an estimate . repeatedly sampling the training set with replacement and obtain a <em>bootstrap set</em> of the <em>the same size</em> as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the <em>standard error</em> using the estimated parameters by the bootstrap model, assuming there are <span class="math inline">\(B\)</span> bootstrap data sets: <span class="math display">\[
+<li><p>better choice is <span class="math inline">\(K=5\)</span> or <span class="math inline">\(K=10\)</span> for bias-variance trade-off, because large <span class="math inline">\(k\)</span> leads to low bias but high variance due to the increased correlation between models. Despite the estimated test error sometimes <em>underestimate</em> the true test error, they then to be close to identify the correct flexibility where the test error is minimum.</p></li>
+<li><p>Bootstrap: Primarily used to estimate the standard error, or a CI (called <em>bootstrap percentile</em>) of an estimate . Repeatedly sampling the training set with replacement and obtain a <em>bootstrap set</em> of the <em>the same size</em> as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the <em>standard error</em> using the estimated parameters by the bootstrap model, assuming there are <span class="math inline">\(B\)</span> bootstrap data sets: <span class="math display">\[
 SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
 \]</span></p>
 <ul>
@@ -257,13 +260,20 @@ SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{
 </ul></li>
 </ul>
 </section>
-<section id="code-gist" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">5.2</span> Code Gist</h2>
-<section id="python" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="python"><span class="header-section-number">5.2.1</span> Python</h3>
+<section id="homework" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="homework"><span class="header-section-number">5.2</span> Homework</h2>
+<ul>
+<li>Conceptual:</li>
+<li>Applied:</li>
+</ul>
 </section>
-<section id="numpy" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">5.2.2</span> Numpy</h3>
+<section id="code-gist" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">5.3</span> Code Gist</h2>
+<section id="python" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="python"><span class="header-section-number">5.3.1</span> Python</h3>
+</section>
+<section id="numpy" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">5.3.2</span> Numpy</h3>
 <pre><code>c = np.power.outer(row, col) # mesh of row[i]^col[j] power. 
 # random choice 
 rng = np.random.default_rng(0)
@@ -274,15 +284,15 @@ alpha_func(Portfolio,
 
     </code></pre>
 </section>
-<section id="pandas" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">5.2.3</span> Pandas</h3>
+<section id="pandas" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">5.3.3</span> Pandas</h3>
 <pre><code>np.cov(D[['X','Y']].loc[idx], rowvar=False) #cov compute corr of variables. rowvar-False: cols are vars.</code></pre>
 </section>
-<section id="graphics" class="level3" data-number="5.2.4">
-<h3 data-number="5.2.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">5.2.4</span> Graphics</h3>
+<section id="graphics" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">5.3.4</span> Graphics</h3>
 </section>
-<section id="islp-and-statsmodels" class="level3" data-number="5.2.5">
-<h3 data-number="5.2.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">5.2.5</span> ISLP and statsmodels</h3>
+<section id="islp-and-statsmodels" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">5.3.5</span> ISLP and statsmodels</h3>
 <pre><code># function that evalues MSE for training a model
 def evalMSE(terms,    #predictor variables
             response, #response variable
@@ -342,8 +352,8 @@ quad_func = partial(boot_OLS,
 boot_SE(quad_func, Auto, B=1000)
 </code></pre>
 </section>
-<section id="sklearn" class="level3" data-number="5.2.6">
-<h3 data-number="5.2.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">5.2.6</span> sklearn</h3>
+<section id="sklearn" class="level3" data-number="5.3.6">
+<h3 data-number="5.3.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">5.3.6</span> sklearn</h3>
 <pre><code>from functools import partial
 from sklearn.model_selection import \
      (cross_validate,
@@ -394,8 +404,8 @@ model_se = summarize(hp_model.results_)['std err'] #summarize is an ISLP functio
 model_se
 </code></pre>
 </section>
-<section id="useful-code-snippet" class="level3" data-number="5.2.7">
-<h3 data-number="5.2.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">5.2.7</span> Useful code snippet</h3>
+<section id="useful-code-snippet" class="level3" data-number="5.3.7">
+<h3 data-number="5.3.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">5.3.7</span> Useful code snippet</h3>
 <pre><code>
 </code></pre>
 

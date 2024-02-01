@@ -1,13 +1,18 @@
 # Chapter 5: Resampling Methods
 
-Resampling methods are mainly used to estimate the test error but by resampling the traning set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model. Recall training error in general *dramatically underestimate* the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error. 
+Resampling methods are mainly used to estimate the test error  by resampling the training set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model. 
+
+Recall training error in general *dramatically underestimate* the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error. 
+
+*Model Assessment*: evaluating a model's performance
+*Model selection*: selecting the proper level of flexibility. 
 
 ## how to estimate test error
 - use a large designated test set, but often not available. 
 - make adjustment to the training error to estimate the test error, e.g., Cp statistic, AIC and BIC. 
 - validation set approach: estimate the test error by *holding out* a subset of the training set, also called a *validation set*. 
   * the estimate of the test error can be highly variable, depending on the random train-validation split. 
-  * Only a subset of the training set is used to fit the model. This suggests the validation error tends to *overestimate* the test error compared to the model that uses the entire traning set. 
+  * Only a subset of the training set is used to fit the model.  Since statistical methods tend to perform worse when trained on a smaler data set, which suggests the validation error tends to *overestimate* the test error compared to the model that uses the entire training set. 
   
 - K-fold Cross-Validation: randomly divide the data into $K$ equal-sized parts $C_1, C_2, \cdots, C_K$. For each $k$, leave out part $k$, fit the model on the remaining $K-1$ parts (combined, $(K-1)/K$ of the original traning set), and then evaluate the model on the part $k$. Then repeat this for each $k$, and weighted average of the errors is computed: 
 $$
@@ -22,17 +27,17 @@ $$
 \hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
 $$
 
-The estimated error tends bias upward because it uses only $(K-1)/K$ of the training set. This bias is minimized with $K=n$ (LOOCV), but LOOCV estimate has high variance due to the high correlation between folds. 
+The estimated error tends bias upward because it uses only $(K-1)/K$ of the training set. This *bias is minimized with $K=n$ (LOOCV)*, but LOOCV estimate has *high variance* due to the high correlation between folds. 
 
   *  LOOCV: it's a special case of K-fold CV with $K=n$. For least squares linear or polynomial regression, the LOOCV error can be computed by 
 $$
 \text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
 $$
-Where $h_i$ is the leverage statistic of $x_i$. 
+Where $h_i$ is the leverage statistic of $x_i$. There is no randomness in the error. The leverage $1/n\le h_i\le 1$, reflects the amount an observation influences its own fit. The above formula doesn't hold in genearl, in which case the model has to refit $n$ times to estimate the test error. 
   * for LOOCV, the estimate from each fold are highly correlated, hence their average can have high variance. 
-  * better choice is $K=5$ or $K=10$. 
+  * better choice is $K=5$ or $K=10$ for bias-variance trade-off, because large $k$ leads to low bias but high variance due to the increased correlation between models.  Despite the estimated test error sometimes *underestimate* the true test error, they then to be close to identify the correct flexibility where  the  test error is minimum. 
   
-- Bootstrap: Primarily used to estimate the standard error, or a CI (called *bootstrap percentile*) of an estimate . repeatedly sampling the training set with replacement and obtain a *bootstrap set* of the *the same size* as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the *standard error* using the estimated parameters by the bootstrap model, assuming there are $B$ bootstrap data sets:
+- Bootstrap: Primarily used to estimate the standard error, or a CI (called *bootstrap percentile*) of an estimate . Repeatedly sampling the training set with replacement and obtain a *bootstrap set* of the *the same size* as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the *standard error* using the estimated parameters by the bootstrap model, assuming there are $B$ bootstrap data sets:
 $$
 SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
 $$
@@ -42,6 +47,10 @@ $$
   * Bootstrap vs. Permutation test: permutation methods sample from an estimated *null* distribution for the data, and use this to estimate $p$-values and *False Discovery Rates* for hypothesis tests. 
   
     The bootstrap can be used to test a null hypothesis in simple situation. Eg. If $H_0: \theta=0$, we can check whether the confidence interval for $\theta$ contains zero. 
+    
+## Homework
+* Conceptual: 
+* Applied: 
   
 ## Code Gist
 ### Python
