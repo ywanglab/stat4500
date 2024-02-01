@@ -257,7 +257,7 @@ For poisson distribution, assume $Y$ follows a poisson distribution.
   *  $$\text{precision} = \frac{TP}{TP+FP}=\frac{TP}{\text{predicted postives}}=1-\text{false discovery proportion}$$
 
 ## Homework: 
-- Conceptual: 1,2,3,5,6,7,8, 9
+- Conceptual: 1,2,3,4, 5,6,7,8, 9, 10, 12
 - Applied: 13, 14\*,15\*,16\*
 
 ## Code Gist 
