@@ -49,11 +49,15 @@ $$
     The bootstrap can be used to test a null hypothesis in simple situation. Eg. If $H_0: \theta=0$, we can check whether the confidence interval for $\theta$ contains zero. 
     
 ## Homework
-* Conceptual: 
-* Applied: 
+* Conceptual: 1,2,3,4
+* Applied: 5--9, at least one. 
   
 ## Code Gist
 ### Python
+```
+np.empty(1000) #create an array without initializing
+quartiles = np.percentile(arr, [25, 50, 75])
+```
 
 ### Numpy
 ```
