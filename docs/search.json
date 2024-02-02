@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "stat4500notes",
     "section": "",
-    "text": "Preface\nThis is a Lecture note written for the course STAT 4500: Machine Learning offered at Auburn University at Montgomery. The course use the textbook James et al. (2003).\nThis is a book wrtieen by Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n\n\n\nJames, G., D. Witten, T. Hastie, R. Tibshirani, and J. Taylor. 2003. An Introduction to Statistical Learning. USA: Springer. https://hastie.su.domains/ISLP/ISLP_website.pdf.",
+    "text": "Preface\nThis is a Lecture note written for the course STAT 4500: Machine Learning offered at Auburn University at Montgomery. The course use the textbook James et al. (2023).\nThis is a book wrtieen by Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n\n\n\nJames, G., D. Witten, T. Hastie, R. Tibshirani, and J. Taylor. 2023. An Introduction to Statistical Learning. USA: Springer. https://hastie.su.domains/ISLP/ISLP_website.pdf.",
     "crumbs": [
       "Preface"
     ]
@@ -344,7 +344,7 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "James, G., D. Witten, T. Hastie, R. Tibshirani, and J. Taylor. 2003.\nAn Introduction to Statistical Learning. USA: Springer. https://hastie.su.domains/ISLP/ISLP_website.pdf.",
+    "text": "James, G., D. Witten, T. Hastie, R. Tibshirani, and J. Taylor. 2023.\nAn Introduction to Statistical Learning. USA: Springer. https://hastie.su.domains/ISLP/ISLP_website.pdf.",
     "crumbs": [
       "References"
     ]
