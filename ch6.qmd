@@ -1,15 +1,151 @@
 # Chapter 6: Linear Model Selection and Regrularization
 
-Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. Thare are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection*. 
+Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. There are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection*. 
 
 There are three classes of methods:
 
 - subset selection: pick a subset of the $p$ predictors that best explains the response. 
-- Shrinkage (regularizaton). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If $L^2$ regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual *variable selection* or *sparse representation*. 
+- Shrinkage (regularization). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If $L^2$ regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual *variable selection* or *sparse representation*. 
 - Dimension reduction. Project $p$-predictors to a $M$ ($M<p$) dimensional subspace. Each new direction is a linear combination (or projection) of the $p$-variables. These $M$-projections can then be used to fit a linear regression model(**PCR** if the $M$-projections are obtained in an unsupervised way; or **PLR** if thses $M$-projections are obtained in a supervised way))
 
+## Best Subset Selecttion
+**Algorithm**
+
+1. Fit the data with the *null model* $\mathcal{M}_0$, which contains no predictors. This model simply set $Y=\text{mean}(y_i)$. 
+2. for $k=1, 2, \cdots, p$: fit $p \choose k$ models containing exactly $k$ predictors. Pick the best one that having the smallest RSS or largest $R^2$ on the training set, called $\mathcal{M}_k$. Note for each categorical variable with $L$-level, there are $L-1$ dummy variables. 
+3. Select the best one among $\mathcal{M}_0, \cdots, \mathcal{M}_p$ using cross-validation or other measures such as $C_p (AIC)$, $BIC$ or adjusted $R^2$. 
+
+Best subset selection suffers
+- high computation: needs to compute $2^p$ models
+- overfitting due to the large search space of models
+
+## Stepwise selection
+Both Forward and Backward   selection are stepwise selection. They are used when $p$ is large.  They searches over $1+p(p+1)/2$ models  and are *greedy* algorithm and is not guaranteed to find the best possible model out of all $2^p$ models.
+
+- Backward selection requires $n>p$ (so that the full model can be fit);
+- Forwarad selection can be used when $n<p$. 
+
+### Forward Stepwise Selection
+Adding one variable at at time that offers the greatest addtional improvement. 
+
+**Algorithm**
+
+1. Fit the data with the *null model* $\mathcal{M}_0$, which contains no predictors. This model simply set $Y=\text{mean}(y_i)$. 
+2. for $k=1, 2, \cdots, p-1$: 
+  * fit all $p-k$ models that augment the predictors in $\mathcal{M}_k$ with one additional predictor. 
+  * Pick the best one that having the smallest RSS or largest $R^2$ on the training set, called $\mathcal{M}_{k+1}$. 
+3. Select the best one among $\mathcal{M}_0, \cdots, \mathcal{M}_p$ using cross-validation or other measures such as $C_p (AIC)$, $BIC$ or adjusted $R^2$. 
 
 
+### Backward Stepwise Selection
+It begins with the full model with all variables, and iteratively removing one variable at at time. 
+
+**Algorithm**
+
+1. Fit the data with the *full model* $\mathcal{M}_p$, which contains all predictors. 
+2. for $k=p, p-1, \cdots, 1$: 
+  * fit all $k$ models that contains all but one of the predictors in $\mathcal{M}_k$. 
+  * Pick the best one that having the smallest RSS or largest $R^2$ on the training set, called $\mathcal{M}_{k-1}$. 
+3. Select the best one among $\mathcal{M}_0, \cdots, \mathcal{M}_p$ using cross-validation or other measures such as $C_p (AIC)$, $BIC$ or adjusted $R^2$. 
+
+## Model selection 
+
+Models with all predictors always have the smallest $RSS$ or largest $R^2$ on the training set. Therefore they are not suitable to choose the best one among models with different number of predictors. 
+
+We ought to *estimate the test error* on a test set. This may be done 
+- indirectly by adjusting the training error to account for the bias due to overfitting: $C_p$ (equivalently, AIC in case of linear model with Gaussian errors), BIC and adjusted $R^2$. 
+  * Mallow's $C_p$: 
+  $$
+  C_p =\frac{1}{n}(RSS+2d\hat{\sigma}^2)
+  $$
+  where, $d$ us the number of parameters and $\hat{\sigma}^2 \approx Var{\epsilon}$. 
+  
+  * AIC
+  $$
+  AIC = -2\log L + 2d
+  $$
+  where, $L$ is the maximum likelihood function for the estimated model. 
+  
+  * BIC
+  $$
+  BIC = \frac{1}{n}( RSS + \log (n)d \hat{\sigma}^2 )
+  $$
+  Since $\log n>$ for $n>7$, the BIC places a higher penatlty on models with many variables, and hence select smalller models than $C_p$. 
+  
+  * Adjusted $R^2$ (larger value is better)
+  
+    $$
+    \text{Adjusted }R^2=1-\frac{RSS/(n-d-1)}{TSS/(n-1)}
+    $$
+    $Rss/(n-d-1)$ may increase or decrease depends on $d$. Unlike $R^2$, adjusted $R^2$ pays a price for the inclusion of unnecessary variables in a model. 
+    
+- directly by cross-validation (or validation). It doesnot require estimate $\sigma^2$. It has a wide range of usage, as it may difficult to estimate $d$ or $\sigma^2$. 
+Choose the model that has the smallest test error. 
+
+## Shrinkage methods for Variable selection
+The shrinkage offers an altertivate to selecting variables by adjusting a hyperparameter that trades-off RSS and the model parameter magnitudes. Cross-validation may be used to select the best $\lambda$. After the $\lambda$ is selected, one can fit a final model using the entire traning data set. 
+
+### Ridge regression: minimize the following objective 
+$$
+RSS + \lambda \sum_{j=1}^p \beta_j^2
+$$
+- It encourages the model parameters to shrink toward zero and find a balance between RSS and model parameter magnitudes. Cross-validation is used to find the best tuning parameter $\lambda$. When $\lambda$ is large, $\beta_j\to 0$. Note, Ridge shrinks all coefficients and include all $p$ variables. 
+
+- The OLS coefficients estimates are *scale equivariant*: regardless of how $X_j$ is scaled, $X_j\hat{\beta}_j$ remain the same: if $X_j$ is multiplied by $c$, this will simply leads to $\hat{\beta}_j$ be scaled by a factor of $1/c$. 
+
+- In contrast, when multiplying $X_j$ by a factor, this may significantly change the ridge coefficients. Therefore, it is best practice to *standardize the predictors* before fitting a ridge model: 
+$$
+\tilde{x}_{ij} =\frac{x_{ij}}{\frac{1}{n} \sum_{i=1}^n(x_{ij} - \bar{x}_j)}
+$$
+*** The Lasso (Least Absolute Shrinkage and Selection Operator)
+
+  * The Lasso replaces the $\ell^2$ error with $\ell^1$ penalty. Lasso can force some coefficients to become exactly zero when $\lambda$ is large enough. Thus it can actually performs *variable selection*. Agian, cross-validaton is employed to select $\lambda$. 
+  
+  * The reason Lasso can perform variable selection is because the objective function is equivalent to 
+  
+  $$\text {minimizing RSS}, \text{subject to } \sum_{j=1}^p |\beta_j| \le s
+  
+  $$
+for some $s$. The contour of RSS in general only touch the $\ell_1$ ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, the $\ell_2$ ball is round, and in general, the countour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes. 
+
+- Neither ridge nor the lasso will universally dominate the other. When the response is a small number of predcitors, one may expect lasso performs better, better in practice, this is never known in advance. 
+
+- Combining ridge and lasso leades to *elastic net* method. 
+
+## Dimension reduction methods: transforming $X_j$. 
+  There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS. 
+  
+### PCA regression: first use PCA to obtain $M$- PCA as linear combinations (directions) of the original $p$ predictors: 
+  $$
+  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M. 
+  $${#eq-PCA}
+The first PCA contains the largest variance in $X$, and minimize the sum of squared perpendicular distances to each point (the projection error on the PCA); The second PCA is orthogonal to the first PCA and has the second largest variance and is uncorrelated with the first, and so on. These directions are obtained in an *unsupervised way*, as $Y$ is not used to obtain these components. Consequently, there is no guarantee that the directions that best explain the predictors will also be the best directions to use for predicting the response. 
+
+We then use OLS to fit a linear regression model 
+$$
+y_i =\theta_0 +\sum_{m=1}^M \theta_m z_{im}+\epsilon_i, \qquad i=1,2,\cdots, n
+$${#eq-PCAR}
+
+After substitute @eq-PCA into equation @eq-PCAR, one can find that 
+$$
+\sum_{m=1}^M \theta_mz_{im} =\sum_{j=1}^p \beta_jx_{ij}
+$$
+with 
+$$
+\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}
+$${#eq-pcar-beta}
+So model @eq-PCAR is a special case of linear regression subject to the constants @eq-pcar-beta.  
+
+### Partial Least Squares
+
+Similar to PCAR, PLS also first identifies a new set of features $Z_1, Z_2, \cdots, Z_m$, each of which is a linear combinations of the orginnal features, and then fits a linear model via OLS with these new $M$ features. 
+
+But PLS identifies these new features in a *supervised way*, that is, PLS uses $Y$ in order to identify the new features that not only approximate the old features well, but also are *related to the response*, i.e., these new features explain both the response and the predictors. 
+
+Firt PLS standarizes the $p$ predictors. PLS identifies the first component 
+$Z_1 = \sum_{j=1}^p \phi_{1j}X_j$ by choosing $\phi_{1j}$ equals to the coefficient from the simple linear regression of $Y$ onto $X_j$. Since this coefficient is equal to $r_{X_jY}\frac{\sigma_{Y}}{\sigma_{X_j}}$, PLS places teh highest weight on the variables that are most strongly related to $Y$. 
+
+Next, PLS takes the residuals and then repeat the same process. 
 
 ## Code Snippet
 ### Python
