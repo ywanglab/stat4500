@@ -1,0 +1,24 @@
+# Chapter 6: Linear Model Selection and Regrularization
+Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. Thare are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection*. 
+
+There are three classes of methods:
+
+- subset selection: pick a subset of the $p$ predictors that best explains the response. 
+- Shrinkage (regularizaton). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If $L^2$ regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual *variable selection* or *sparse representation*. 
+- Dimension reduction. Project $p$-predictors to a $M$ ($M<p$) dimensional subspace. Each new direction is a linear combination (or projection) of the $p$-variables. These $M$-projections can then be used to fit a linear regression model(**PCR** if the $M$-projections are obtained in an unsupervised way; or **PLR** if thses $M$-projections are obtained in a supervised way))
+
+
+
+
+## Code Snippet
+### Python
+
+### Numpy
+
+### Pandas
+
+### Graphics
+
+### ISLP and statsmodels
+
+### sklearn

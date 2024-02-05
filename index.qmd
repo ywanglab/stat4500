@@ -1,6 +1,6 @@
 # Preface {.unnumbered}
 
-This is a Lecture note  written for the course STAT 4500: Machine Learning offered at Auburn University at Montgomery. The course use the textbook @thrt23. 
+This is a Lecture note  written for the course STAT 4500: Machine Learning offered at Auburn University at Montgomery. The course uses the textbook @thrt23. 
 
 This is a book wrtieen by Quarto book.
 

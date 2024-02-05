@@ -1,0 +1,32 @@
+# Class Project 
+
+## Goal
+to use variaous ML algorithm to predict a meaningful target $Y$ by *classificaion alogorithm* or *regression algorithm*. Present it at COS Resarch Sympsium in the end of April. 
+ 
+ **Data set**: real-world stock price and volume data. We could start with just one stock, e.g. APAL. S&P 500  index, DJ index. 
+
+ refer to the page <https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb>. 
+ Perform some EDA to feel the data. 
+
+ reference ticker symbols: <https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2>
+ 
+ **Questions**: Which are the $X$ variables? price, volume, return, day of week, month of year, etc. 
+ What is the $Y$ variable? next-day price, next-day return, next-five-day average price, next-five-day-average return, etc. 
+
+ **Models**
+
+ - Linear regression: 
+
+    * including conituous variables (price, volume), categorical vaiables (day-of-week, month-of-year)
+    * transforming $X$ (for including non-linear relation between $Y$ and $X$) or $Y$ (when $Y$ is heteroschedatic, i.e., with varied $\epsilon_i$)
+    * plot resudal plot to see if $Var(\epsilon_i)$ is changing. If yes, may appeal to transorming $Y$, e.g., $\log Y$, $\sqrt{Y}$. 
+    * investigate outliers (points with unusual $Y$-values) using the *residual plot* or looking at *studentized residual*. 
+    * investigate high leverage points (with unusal $x$ values), by calculating *leverage statistics*. 
+    * Investigate if there is *colinearity* among the variables by calculating *VIF*. 
+
+- classfication: prediting directions of the stock price movement. (up, same, down): binary (with two direction), or multinomial (more than two values), LDA, QDA
+- regularization of the parameters
+- selection of variales 
+- decision tree: random forest, boosting 
+- SVM: support vector machines
+- NN
