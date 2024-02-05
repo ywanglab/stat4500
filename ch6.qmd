@@ -1,4 +1,5 @@
 # Chapter 6: Linear Model Selection and Regrularization
+
 Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. Thare are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection*. 
 
 There are three classes of methods:
