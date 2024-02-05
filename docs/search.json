@@ -330,23 +330,23 @@
     ]
   },
   {
-    "objectID": "class_project.html#goal",
-    "href": "class_project.html#goal",
-    "title": "6  Class Project",
-    "section": "6.1 Goal",
-    "text": "6.1 Goal\nto use variaous ML algorithm to predict a meaningful target \\(Y\\) by classificaion alogorithm or regression algorithm. Present it at COS Resarch Sympsium in the end of April.\nData set: real-world stock price and volume data. We could start with just one stock, e.g. APAL. S&P 500 index, DJ index.\nrefer to the page https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb. Perform some EDA to feel the data.\nreference ticker symbols: https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2\nQuestions: Which are the \\(X\\) variables? price, volume, return, day of week, month of year, etc. What is the \\(Y\\) variable? next-day price, next-day return, next-five-day average price, next-five-day-average return, etc.\nModels\n\nLinear regression:\n\nincluding conituous variables (price, volume), categorical vaiables (day-of-week, month-of-year)\ntransforming \\(X\\) (for including non-linear relation between \\(Y\\) and \\(X\\)) or \\(Y\\) (when \\(Y\\) is heteroschedatic, i.e., with varied \\(\\epsilon_i\\))\nplot resudal plot to see if \\(Var(\\epsilon_i)\\) is changing. If yes, may appeal to transorming \\(Y\\), e.g., \\(\\log Y\\), \\(\\sqrt{Y}\\).\ninvestigate outliers (points with unusual \\(Y\\)-values) using the residual plot or looking at studentized residual.\ninvestigate high leverage points (with unusal \\(x\\) values), by calculating leverage statistics.\nInvestigate if there is colinearity among the variables by calculating VIF.\n\nclassfication: prediting directions of the stock price movement. (up, same, down): binary (with two direction), or multinomial (more than two values), LDA, QDA\nregularization of the parameters\nselection of variales\ndecision tree: random forest, boosting\nSVM: support vector machines\nNN",
+    "objectID": "ch6.html#code-snippet",
+    "href": "ch6.html#code-snippet",
+    "title": "6  Chapter 6: Linear Model Selection and Regrularization",
+    "section": "6.1 Code Snippet",
+    "text": "6.1 Code Snippet\n\n6.1.1 Python\n\n\n6.1.2 Numpy\n\n\n6.1.3 Pandas\n\n\n6.1.4 Graphics\n\n\n6.1.5 ISLP and statsmodels\n\n\n6.1.6 sklearn",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Class Project</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Chapter 6: Linear Model Selection and Regrularization</span>"
     ]
   },
   {
-    "objectID": "ch6.html#code-snippet",
-    "href": "ch6.html#code-snippet",
-    "title": "7  Chapter 6: Linear Model Selection and Regrularization",
-    "section": "7.1 Code Snippet",
-    "text": "7.1 Code Snippet\n\n7.1.1 Python\n\n\n7.1.2 Numpy\n\n\n7.1.3 Pandas\n\n\n7.1.4 Graphics\n\n\n7.1.5 ISLP and statsmodels\n\n\n7.1.6 sklearn",
+    "objectID": "class_project.html",
+    "href": "class_project.html",
+    "title": "7  Class Project",
+    "section": "",
+    "text": "** Goal**\nto use various ML algorithms to predict a meaningful target \\(Y\\) by classification algorithms or regression algorithms. Present it at COS Research Sympsium in the end of April.\nData set: real-world stock price and volume data. We could start with just one stock, e.g. APAL. S&P 500 index, DJ index.\nsome ideas: * Create one model for each stock. * create a single model for all stockes. Needs to embed each stock in a feature space. Research?\nStartup code: refer to the page https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb. Perform some EDA to feel the data.\nreference ticker symbols: https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2\nQuestions: Which are the \\(X\\) variables? price, volume, return, day of week, month of year, etc. What is the \\(Y\\) variable? next-day price, next-day return, next-five-day average price, next-five-day-average return, etc.\nModels\n\nLinear regression:\n\nincluding continuous variables (price, volume), categorical variables (day-of-week, month-of-year)\ntransforming \\(X\\) (for including non-linear relation between \\(Y\\) and \\(X\\)) or \\(Y\\) (when \\(Y\\) is heteroschedatic, i.e., with varied \\(\\epsilon_i\\))\nplot residual plot to see if \\(Var(\\epsilon_i)\\) is changing. If yes, may appeal to transforming \\(Y\\), e.g., \\(\\log Y\\), \\(\\sqrt{Y}\\).\ninvestigate outliers (points with unusual \\(Y\\)-values) using the residual plot or looking at studentized residual.\ninvestigate high leverage points (with unusual \\(x\\) values), by calculating leverage statistics.\nInvestigate if there is colinearity among the variables by calculating VIF.\n\nclassification: predicting directions of the stock price movement. binary (with two direction), or multinomial (more than two values: e.g., up, same, down), LDA, QDA\nregularization of the parameters\nselection of variables: forward, backward, mixture, regularization, cross-validation\ndecision tree: random forest, boosting\nSVM: support vector machines\nNN",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Chapter 6: Linear Model Selection and Regrularization</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Class Project</span>"
     ]
   },
   {

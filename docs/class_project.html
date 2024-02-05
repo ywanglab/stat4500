@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 6&nbsp; Class Project</title>
+<title>stat4500notes - 7&nbsp; Class Project</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch6.html" rel="next">
-<link href="./ch5.html" rel="prev">
+<link href="./summary.html" rel="next">
+<link href="./ch6.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./class_project.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Class Project</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./class_project.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Class Project</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -164,14 +164,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./class_project.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span></a>
+  <a href="./class_project.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -192,20 +192,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#goal" id="toc-goal" class="nav-link active" data-scroll-target="#goal"><span class="header-section-number">6.1</span> Goal</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Class Project</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Class Project</span></h1>
 </div>
 
 
@@ -222,34 +216,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="goal" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">6.1</span> Goal</h2>
-<p>to use variaous ML algorithm to predict a meaningful target <span class="math inline">\(Y\)</span> by <em>classificaion alogorithm</em> or <em>regression algorithm</em>. Present it at COS Resarch Sympsium in the end of April.</p>
+<p>** Goal**</p>
+<p>to use various ML algorithms to predict a meaningful target <span class="math inline">\(Y\)</span> by <em>classification algorithms</em> or <em>regression algorithms</em>. Present it at COS Research Sympsium in the end of April.</p>
 <p><strong>Data set</strong>: real-world stock price and volume data. We could start with just one stock, e.g.&nbsp;APAL. S&amp;P 500 index, DJ index.</p>
-<p>refer to the page <a href="https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb" class="uri">https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb</a>. Perform some EDA to feel the data.</p>
+<p><strong>some ideas</strong>: * Create one model for each stock. * create a single model for all stockes. Needs to embed each stock in a feature space. Research?</p>
+<p><strong>Startup code</strong>: refer to the page <a href="https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb" class="uri">https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb</a>. Perform some EDA to feel the data.</p>
 <p>reference ticker symbols: <a href="https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2" class="uri">https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2</a></p>
 <p><strong>Questions</strong>: Which are the <span class="math inline">\(X\)</span> variables? price, volume, return, day of week, month of year, etc. What is the <span class="math inline">\(Y\)</span> variable? next-day price, next-day return, next-five-day average price, next-five-day-average return, etc.</p>
 <p><strong>Models</strong></p>
 <ul>
 <li><p>Linear regression:</p>
 <ul>
-<li>including conituous variables (price, volume), categorical vaiables (day-of-week, month-of-year)</li>
+<li>including continuous variables (price, volume), categorical variables (day-of-week, month-of-year)</li>
 <li>transforming <span class="math inline">\(X\)</span> (for including non-linear relation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>) or <span class="math inline">\(Y\)</span> (when <span class="math inline">\(Y\)</span> is heteroschedatic, i.e., with varied <span class="math inline">\(\epsilon_i\)</span>)</li>
-<li>plot resudal plot to see if <span class="math inline">\(Var(\epsilon_i)\)</span> is changing. If yes, may appeal to transorming <span class="math inline">\(Y\)</span>, e.g., <span class="math inline">\(\log Y\)</span>, <span class="math inline">\(\sqrt{Y}\)</span>.</li>
+<li>plot residual plot to see if <span class="math inline">\(Var(\epsilon_i)\)</span> is changing. If yes, may appeal to transforming <span class="math inline">\(Y\)</span>, e.g., <span class="math inline">\(\log Y\)</span>, <span class="math inline">\(\sqrt{Y}\)</span>.</li>
 <li>investigate outliers (points with unusual <span class="math inline">\(Y\)</span>-values) using the <em>residual plot</em> or looking at <em>studentized residual</em>.</li>
-<li>investigate high leverage points (with unusal <span class="math inline">\(x\)</span> values), by calculating <em>leverage statistics</em>.</li>
+<li>investigate high leverage points (with unusual <span class="math inline">\(x\)</span> values), by calculating <em>leverage statistics</em>.</li>
 <li>Investigate if there is <em>colinearity</em> among the variables by calculating <em>VIF</em>.</li>
 </ul></li>
-<li><p>classfication: prediting directions of the stock price movement. (up, same, down): binary (with two direction), or multinomial (more than two values), LDA, QDA</p></li>
+<li><p>classification: predicting directions of the stock price movement. binary (with two direction), or multinomial (more than two values: e.g., up, same, down), LDA, QDA</p></li>
 <li><p>regularization of the parameters</p></li>
-<li><p>selection of variales</p></li>
+<li><p>selection of variables: forward, backward, mixture, regularization, cross-validation</p></li>
 <li><p>decision tree: random forest, boosting</p></li>
 <li><p>SVM: support vector machines</p></li>
 <li><p>NN</p></li>
 </ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -644,13 +637,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch5.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span>
+      <a href="./ch6.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch6.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./summary.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 7&nbsp; Chapter 6: Linear Model Selection and Regrularization</title>
+<title>stat4500notes - 6&nbsp; Chapter 6: Linear Model Selection and Regrularization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
-<link href="./class_project.html" rel="prev">
+<link href="./class_project.html" rel="next">
+<link href="./ch5.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch6.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch6.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -164,14 +164,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch6.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span></a>
+  <a href="./class_project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -196,14 +196,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link active" data-scroll-target="#code-snippet"><span class="header-section-number">7.1</span> Code Snippet</a>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link active" data-scroll-target="#code-snippet"><span class="header-section-number">6.1</span> Code Snippet</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">7.1.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">7.1.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">7.1.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">7.1.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">7.1.5</span> ISLP and statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">7.1.6</span> sklearn</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">6.1.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">6.1.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">6.1.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">6.1.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">6.1.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">6.1.6</span> sklearn</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -213,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></h1>
 </div>
 
 
@@ -237,25 +237,25 @@ ul.task-list li input[type="checkbox"] {
 <li>Shrinkage (regularizaton). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If <span class="math inline">\(L^2\)</span> regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual <em>variable selection</em> or <em>sparse representation</em>.</li>
 <li>Dimension reduction. Project <span class="math inline">\(p\)</span>-predictors to a <span class="math inline">\(M\)</span> (<span class="math inline">\(M&lt;p\)</span>) dimensional subspace. Each new direction is a linear combination (or projection) of the <span class="math inline">\(p\)</span>-variables. These <span class="math inline">\(M\)</span>-projections can then be used to fit a linear regression model(<strong>PCR</strong> if the <span class="math inline">\(M\)</span>-projections are obtained in an unsupervised way; or <strong>PLR</strong> if thses <span class="math inline">\(M\)</span>-projections are obtained in a supervised way))</li>
 </ul>
-<section id="code-snippet" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">7.1</span> Code Snippet</h2>
-<section id="python" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="python"><span class="header-section-number">7.1.1</span> Python</h3>
+<section id="code-snippet" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">6.1</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="python"><span class="header-section-number">6.1.1</span> Python</h3>
 </section>
-<section id="numpy" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">7.1.2</span> Numpy</h3>
+<section id="numpy" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">6.1.2</span> Numpy</h3>
 </section>
-<section id="pandas" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">7.1.3</span> Pandas</h3>
+<section id="pandas" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">6.1.3</span> Pandas</h3>
 </section>
-<section id="graphics" class="level3" data-number="7.1.4">
-<h3 data-number="7.1.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">7.1.4</span> Graphics</h3>
+<section id="graphics" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">6.1.4</span> Graphics</h3>
 </section>
-<section id="islp-and-statsmodels" class="level3" data-number="7.1.5">
-<h3 data-number="7.1.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">7.1.5</span> ISLP and statsmodels</h3>
+<section id="islp-and-statsmodels" class="level3" data-number="6.1.5">
+<h3 data-number="6.1.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">6.1.5</span> ISLP and statsmodels</h3>
 </section>
-<section id="sklearn" class="level3" data-number="7.1.6">
-<h3 data-number="7.1.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">7.1.6</span> sklearn</h3>
+<section id="sklearn" class="level3" data-number="6.1.6">
+<h3 data-number="6.1.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">6.1.6</span> sklearn</h3>
 
 
 </section>
@@ -654,13 +654,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./class_project.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Class Project</span></span>
+      <a href="./ch5.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
