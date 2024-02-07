@@ -108,9 +108,9 @@ $$
   $$
 for some $s$. The contour of RSS in general only touch the $\ell_1$ ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, the $\ell_2$ ball is round, and in general, the countour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes. 
 
-- Neither ridge nor the lasso will universally dominate the other. When the response is a small number of predcitors, one may expect lasso performs better, better in practice, this is never known in advance. 
+- Neither ridge nor the lasso will universally dominate the other. When the response is a small number of predictors, one may expect lasso performs better, better in practice, this is never known in advance. 
 
-- Combining ridge and lasso leades to *elastic net* method. 
+- Combining ridge and lasso leads to *elastic net* method. 
 
 ## Dimension reduction methods: transforming $X_j$. 
   There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS. 
@@ -149,13 +149,258 @@ Next, PLS takes the residuals and then repeat the same process.
 
 ## Code Snippet
 ### Python
+```
+np.isnan(Hitters['Salary']).sum()
+
+```
 
 ### Numpy
+```
+np.linalg.norm(beta_hat) #L2 norm. ord=1: L1  ord='inf': max norm.
+```
 
 ### Pandas
+```
+Hitters.dropna();
+soln_path = pd.DataFrame(soln_array.T,
+                         columns=D.columns,
+                         index=-np.log(lambdas))
+soln_path.index.name = 'negative log(lambda)'
+```
+
 
 ### Graphics
+```
+ax.errorbar(np.arange(n_steps), 
+            cv_mse.mean(1), #mean of each row (model)
+            cv_mse.std(1) / np.sqrt(K), #estimate standard error of the mean
+            label='Cross-validated',
+            c='r') # color red
+            
+ax.axvline(-np.log(tuned_ridge.alpha_), c='k', ls='--') # plot a verticalline
+```
 
 ### ISLP and statsmodels
+```
+#Estimate Var(epsilon)
+
+design = MS(Hitters.columns.drop('Salary')).fit(Hitters)
+design.terms # to see the variable names in the design matrix
+Y = np.array(Hitters['Salary'])
+X = design.transform(Hitters)
+sigma2 = OLS(Y,X).fit().scale  #.scale: RSE: residual standard error estimating 
+
+# Forward Selection using ISLP.models and a scoring function
+from ISLP.models import \
+     (Stepwise,
+      sklearn_selected,
+      sklearn_selection_path)
+strategy = Stepwise.first_peak(design,
+                               direction='forward',
+                               max_terms=len(design.terms))
+hitters_Cp = sklearn_selected(OLS,
+                               strategy,
+                               scoring=neg_Cp)
+                               #default scoring MSE, will choose all variables
+hitters_Cp.fit(Hitters, Y) # the same as hitters_Cp.fit(Hitters.drop('Salary', axis=1), Y)
+hitters_Cp.selected_state_
+
+#Forward selection using cross-validation
+strategy = Stepwise.fixed_steps(design,
+                                len(design.terms),
+                                direction='forward')
+full_path = sklearn_selection_path(OLS, strategy) #using default scoring MSE
+full_path.fit(Hitters, Y) # there are , 19 variables, 20 models
+Yhat_in = full_path.predict(Hitters)
+
+#calculate in-sample mse
+
+mse_fig, ax = subplots(figsize=(8,8))
+insample_mse = ((Yhat_in - Y[:,None])**2).mean(0) #Y[:,None]: add a second axis, create a column vector
+                        #[yw] mean(0): calculate mean along row, i.e., for each col. mean(1): calculate mean for each row
+
+#Cross-validation
+K = 5
+kfold = skm.KFold(K,
+                  random_state=0,
+                  shuffle=True)
+Yhat_cv = skm.cross_val_predict(full_path,
+                                Hitters,
+                                Y,
+                                cv=kfold)
+# Cross-validation mse
+cv_mse = []
+for train_idx, test_idx in kfold.split(Y):
+    errors = (Yhat_cv[test_idx] - Y[test_idx,None])**2
+    cv_mse.append(errors.mean(0)) # column means
+cv_mse = np.array(cv_mse).T
+
+#validation approach using ShuffleSplit
+validation = skm.ShuffleSplit(n_splits=1, # only split one time. 
+                              test_size=0.2,
+                              random_state=0)
+for train_idx, test_idx in validation.split(Y):
+    full_path.fit(Hitters.iloc[train_idx], #note needing to use iloc
+                  Y[train_idx])
+    Yhat_val = full_path.predict(Hitters.iloc[test_idx])
+    errors = (Yhat_val - Y[test_idx,None])**2
+    validation_mse = errors.mean(0)
+
+```
 
 ### sklearn
+```
+rom sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from sklearn.cross_decomposition import PLSRegression
+
+#Best subset selection using 10bnb
+
+D = design.fit_transform(Hitters)
+D = D.drop('intercept', axis=1) #needs to drop intercept
+X = np.asarray(D)
+path = fit_path(X, 
+                Y,
+                max_nonzeros=X.shape[1]) #fit_path: a funciton from l0nb. use all variables
+                # max_nonzeros: max nonzero coefficients in the fitted model.
+
+# Ridge Regression
+soln_array = skl.ElasticNet.path(Xs, # standardized, no intercept
+                                 Y,
+                                 l1_ratio=0., #ridge
+                                 alphas=lambdas)
+# Using pipline
+ridge = skl.ElasticNet(alpha=lambdas[59], l1_ratio=0)
+scaler = StandardScaler(with_mean=True,  with_std=True)
+pipe = Pipeline(steps=[('scaler', scaler), ('ridge', ridge)])
+pipe.fit(X, Y)
+ridge.coef_
+
+# Validation
+
+validation = skm.ShuffleSplit(n_splits=1,
+                              test_size=0.5,
+                              random_state=0) # validation is a generator
+ridge.alpha = 0.01
+results = skm.cross_validate(ridge,
+                             X,
+                             Y,
+                             scoring='neg_mean_squared_error',
+                             cv=validation) # using the strategy defined in validation
+-results['test_score']
+
+# GridSearchCV()
+param_grid = {'ridge__alpha': lambdas}
+grid = skm.GridSearchCV(pipe,
+                        param_grid,
+                        cv=validation, # or use cv=kfold (5-fold CV defined separately)
+                        scoring='neg_mean_squared_error') #default scoring=R^2
+grid.fit(X, Y)
+grid.best_params_['ridge__alpha']
+grid.best_estimator_
+grid.cv_results_['mean_test_score']
+grid.cv_results_['std_test_score']
+
+
+#Plot CV MSE
+ridge_fig, ax = subplots(figsize=(8,8))
+ax.errorbar(-np.log(lambdas),
+            -grid.cv_results_['mean_test_score'],
+            yerr=grid.cv_results_['std_test_score'] / np.sqrt(K))
+ax.set_ylim([50000,250000])
+ax.set_xlabel('$-\log(\lambda)$', fontsize=20)
+ax.set_ylabel('Cross-validated MSE', fontsize=20);
+
+# Use ElasticNetCV()
+ridgeCV = skl.ElasticNetCV(alphas=lambdas, # ElasticNetCV accepts a sequence of alphas
+                           l1_ratio=0,
+                           cv=kfold)
+pipeCV = Pipeline(steps=[('scaler', scaler), # scaling is done once. 
+                         ('ridge', ridgeCV)])
+pipeCV.fit(X, Y)
+tuned_ridge = pipeCV.named_steps['ridge']
+tuned_ridge.mse_path_
+tuned_ridge.alpha_ # best alpha
+tuned_ridge.coef_
+
+# Evaluating test Error of Cross-validated Ridge 
+
+outer_valid = skm.ShuffleSplit(n_splits=1, 
+                               test_size=0.25,
+                               random_state=1)
+inner_cv = skm.KFold(n_splits=5,
+                     shuffle=True,
+                     random_state=2)
+ridgeCV = skl.ElasticNetCV(alphas=lambdas, # a sequence of lambdas
+                           l1_ratio=0,
+                           cv=inner_cv) # K-fold validation
+pipeCV = Pipeline(steps=[('scaler', scaler),
+                         ('ridge', ridgeCV)]);
+                         
+                         
+results = skm.cross_validate(pipeCV, 
+                             X,
+                             Y,
+                             cv=outer_valid,
+                             scoring='neg_mean_squared_error')
+-results['test_score']
+
+# Lasso regression
+lassoCV = skl.ElasticNetCV(n_alphas=100, #test 100 alpha values
+                           l1_ratio=1,
+                           cv=kfold)
+pipeCV = Pipeline(steps=[('scaler', scaler),
+                         ('lasso', lassoCV)])
+pipeCV.fit(X, Y)
+tuned_lasso = pipeCV.named_steps['lasso']
+tuned_lasso.alpha_
+tuned_lasso.coef_
+np.min(tuned_lasso.mse_path_.mean(1)) # miminum avg mse
+
+#to get the soln path
+lambdas, soln_array = skl.Lasso.path(Xs, # standarsized, no -intercept
+                                    Y,
+                                    l1_ratio=1,
+                                    n_alphas=100)[:2]
+
+#PCA and PCR
+pca = PCA(n_components=2)
+linreg = skl.LinearRegression()
+pipe = Pipeline([('scaler', scaler), 
+                 ('pca', pca),
+                 ('linreg', linreg)])
+pipe.fit(X, Y)
+pipe.named_steps['linreg'].coef_
+pipe.named_steps['pca'].explained_variance_ratio_
+
+# perform Grid search
+param_grid = {'pca__n_components': range(1, 20)} #PCA needs n_components >0
+grid = skm.GridSearchCV(pipe,
+                        param_grid,
+                        cv=kfold,
+                        scoring='neg_mean_squared_error')
+grid.fit(X, Y)
+
+# cross-validation a null model
+cv_null = skm.cross_validate(linreg,
+                             Xn,
+                             Y,
+                             cv=kfold,
+                             scoring='neg_mean_squared_error')
+-cv_null['test_score'].mean()
+
+#PLS
+pls = PLSRegression(n_components=2, 
+                    scale=True) # standarsize the data 
+pls.fit(X, Y) # X has no-intercept 
+
+# Cross-validation
+param_grid = {'n_components':range(1, 20)}
+grid = skm.GridSearchCV(pls,
+                        param_grid,
+                        cv=kfold,
+                        scoring='neg_mean_squared_error')
+grid.fit(X, Y)
+
+
+```
