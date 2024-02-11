@@ -1,19 +1,19 @@
 # Chapter 6: Linear Model Selection and Regrularization
 
-Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. There are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection*. 
+Linear models are *interpretable* and often shows small variance. They are fitted by *OLS*. There are other methods that can either provide alternatives or improve linear regression models in terms of *prediction accuracy* (especially when $p>n$) and automatic *feature selection* for improved interpretability. 
 
 There are three classes of methods:
 
 - subset selection: pick a subset of the $p$ predictors that best explains the response. 
-- Shrinkage (regularization). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If $L^2$ regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual *variable selection* or *sparse representation*. 
-- Dimension reduction. Project $p$-predictors to a $M$ ($M<p$) dimensional subspace. Each new direction is a linear combination (or projection) of the $p$-variables. These $M$-projections can then be used to fit a linear regression model(**PCR** if the $M$-projections are obtained in an unsupervised way; or **PLR** if thses $M$-projections are obtained in a supervised way))
+- Shrinkage (regularization). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If $L^2$ regularization is used, all coefficients are shrunk toward zero by the same proportion; while if $L^1$ is used, then some coefficients will become zero, leading to actual *variable selection* or *sparse representation*. 
+- Dimension reduction. Project $p$-predictors to a $M$ ($M<p$) dimensional subspace. Each new direction is a linear combination (or projection) of the $p$-variables. These $M$-projections can then be used to fit a linear regression model(**PCR** if the $M$-projections are obtained in an unsupervised way; or **PLR** if these $M$-projections are obtained in a supervised way))
 
 ## Best Subset Selecttion
 **Algorithm**
 
 1. Fit the data with the *null model* $\mathcal{M}_0$, which contains no predictors. This model simply set $Y=\text{mean}(y_i)$. 
-2. for $k=1, 2, \cdots, p$: fit $p \choose k$ models containing exactly $k$ predictors. Pick the best one that having the smallest RSS or largest $R^2$ on the training set, called $\mathcal{M}_k$. Note for each categorical variable with $L$-level, there are $L-1$ dummy variables. 
-3. Select the best one among $\mathcal{M}_0, \cdots, \mathcal{M}_p$ using cross-validation or other measures such as $C_p (AIC)$, $BIC$ or adjusted $R^2$. 
+2. for $k=1, 2, \cdots, p$: fit $p \choose k$ models containing exactly $k$ predictors. Pick the best one that having the smallest RSS or largest $R^2$ (or *deviance* for classification problem, i.e., $-2\max \log (\text{likelihood})$ on the *training set*, called $\mathcal{M}_k$. Note for each categorical variable with $L$-level, there are $L-1$ dummy variables. 
+3. Select the best one among $\mathcal{M}_0, \cdots, \mathcal{M}_p$ using cross-validation or other measures such as $C_p (AIC)$, $BIC$ or adjusted $R^2$. If cross-validation is used, then Step 2 is repeated on each training fold, and the validation errors are averaged to select the best $k$. The the model $\mathcal{M}_k$ fit on the full training set is delivered for chosen $k$. 
 
 Best subset selection suffers
 - high computation: needs to compute $2^p$ models
@@ -23,10 +23,11 @@ Best subset selection suffers
 Both Forward and Backward   selection are stepwise selection. They are used when $p$ is large.  They searches over $1+p(p+1)/2$ models  and are *greedy* algorithm and is not guaranteed to find the best possible model out of all $2^p$ models.
 
 - Backward selection requires $n>p$ (so that the full model can be fit);
-- Forwarad selection can be used when $n<p$. 
+- Forward selection can be used when $n<p$ but only fits up to models with $n$ variables. 
+- One can combine forward and backward selection to a hybrid selection. 
 
 ### Forward Stepwise Selection
-Adding one variable at at time that offers the greatest addtional improvement. 
+Adding one variable at at time that offers the greatest additional improvement. 
 
 **Algorithm**
 
@@ -50,76 +51,110 @@ It begins with the full model with all variables, and iteratively removing one v
 
 ## Model selection 
 
-Models with all predictors always have the smallest $RSS$ or largest $R^2$ on the training set. Therefore they are not suitable to choose the best one among models with different number of predictors. 
+Models with all predictors always have the smallest $RSS$ or largest $R^2$ on the *training set*. Therefore they are not suitable to choose the best one among models with different number of predictors. 
 
 We ought to *estimate the test error* on a test set. This may be done 
 - indirectly by adjusting the training error to account for the bias due to overfitting: $C_p$ (equivalently, AIC in case of linear model with Gaussian errors), BIC and adjusted $R^2$. 
+
   * Mallow's $C_p$: 
   $$
   C_p =\frac{1}{n}(RSS+2d\hat{\sigma}^2)
   $$
-  where, $d$ us the number of parameters and $\hat{\sigma}^2 \approx Var{\epsilon}$. 
+  where, $d$ us the number of parameters and $\hat{\sigma}^2 \approx Var{\epsilon}$, typically estimated by using the *full model* containing all variables. $C_p$ is an unbiased estimate of test MSE. 
   
-  * AIC
+  * AIC is defined for models fit by maximmum likelihood. 
   $$
   AIC = -2\log L + 2d
   $$
-  where, $L$ is the maximum likelihood function for the estimated model. 
+  where, $L$ is the maximum likelihood function for the estimated model. For linear regression with Gaussian error, $AIC\propto C_p$. 
+  
   
   * BIC
   $$
   BIC = \frac{1}{n}( RSS + \log (n)d \hat{\sigma}^2 )
   $$
-  Since $\log n>$ for $n>7$, the BIC places a higher penatlty on models with many variables, and hence select smalller models than $C_p$. 
+  Since $\log n>$ for $n>7$, the BIC places a higher penalty on models with many variables, and hence select smaller models than $C_p$. 
   
   * Adjusted $R^2$ (larger value is better)
   
     $$
     \text{Adjusted }R^2=1-\frac{RSS/(n-d-1)}{TSS/(n-1)}
     $$
-    $Rss/(n-d-1)$ may increase or decrease depends on $d$. Unlike $R^2$, adjusted $R^2$ pays a price for the inclusion of unnecessary variables in a model. 
+    $RSS/(n-d-1)$ may increase or decrease depends on $d$. Unlike $R^2$, adjusted $R^2$ pays a price for the inclusion of unnecessary variables in a model. 
     
-- directly by cross-validation (or validation). It doesnot require estimate $\sigma^2$. It has a wide range of usage, as it may difficult to estimate $d$ or $\sigma^2$. 
-Choose the model that has the smallest test error. 
+    $C_p$, AIC, BIC, adjusted $R^2$,are not appropriate in high-dimentional setting, as the estimated $\hat{\sigma}^2 \approx 0$ (when $p\ge n$). 
+    
+- directly by cross-validation (or validation). It does not require estimate $\sigma^2$. It has a wide range of usage, as it may difficult to estimate $d$ or $\sigma^2$. One can choose the model that has the smallest test error or using the *one-standard-error rule* to  select the model that has a smaller size: 
+  * calculate the SE of the estimated test MSE for each model size. 
+  * identify the lowest test MSE 
+  * choose the smallest model for which its test MSE is within one SE of the lowest point. 
 
 ## Shrinkage methods for Variable selection
-The shrinkage offers an altertivate to selecting variables by adjusting a hyperparameter that trades-off RSS and the model parameter magnitudes. Cross-validation may be used to select the best $\lambda$. After the $\lambda$ is selected, one can fit a final model using the entire traning data set. 
+The shrinkage offers an alternative to selecting variables by adjusting a hyperparameter that trades-off RSS and the model parameter magnitudes. Shrinkage methods will produce a different set of coefficients for a different $\lambda$. Cross-validation may be used to select the best $\lambda$. After the $\lambda$ is selected, one can fit a final model using the entire training data set. 
+
+The reason shrinkage methods may perform better than OLS is rooted in bias-variance trade-off:  as $\lambda$ increases, the flexibility of the model decreases b ecause of shrunk coefficients, leading to decreased variance but increased bias. 
 
 ### Ridge regression: minimize the following objective 
 $$
 RSS + \lambda \sum_{j=1}^p \beta_j^2
 $$
+The ridge regression is equivalent to 
+$$
+\text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p \beta_j^2 \le s
+$$
+for some $s\ge 0$. 
+
 - It encourages the model parameters to shrink toward zero and find a balance between RSS and model parameter magnitudes. Cross-validation is used to find the best tuning parameter $\lambda$. When $\lambda$ is large, $\beta_j\to 0$. Note, Ridge shrinks all coefficients and include all $p$ variables. 
 
 - The OLS coefficients estimates are *scale equivariant*: regardless of how $X_j$ is scaled, $X_j\hat{\beta}_j$ remain the same: if $X_j$ is multiplied by $c$, this will simply leads to $\hat{\beta}_j$ be scaled by a factor of $1/c$. 
 
-- In contrast, when multiplying $X_j$ by a factor, this may significantly change the ridge coefficients. Therefore, it is best practice to *standardize the predictors* before fitting a ridge model: 
+- In contrast, when multiplying $X_j$ by a factor, this may significantly change the ridge coefficients. Ridge coefficients depends on $\lambda$ and the scale of $X_j$, and may even on the scaling of other predictors.  Therefore, it is best practice to *standardize the predictors* before fitting a ridge model: 
 $$
 \tilde{x}_{ij} =\frac{x_{ij}}{\frac{1}{n} \sum_{i=1}^n(x_{ij} - \bar{x}_j)}
 $$
-*** The Lasso (Least Absolute Shrinkage and Selection Operator)
+- Ridge regression works best in situations where the OLS estimates have high variance, especially when $p$ is large. 
+- Ridge will include all $p$ variables in the final model. 
 
-  * The Lasso replaces the $\ell^2$ error with $\ell^1$ penalty. Lasso can force some coefficients to become exactly zero when $\lambda$ is large enough. Thus it can actually performs *variable selection*. Agian, cross-validaton is employed to select $\lambda$. 
+### The Lasso (Least Absolute Shrinkage and Selection Operator)
+
+  * The Lasso replaces the $\ell^2$ error with $\ell^1$ penalty. Lasso can force some coefficients to become exactly zero when $\lambda$ is large enough. Thus it can actually performs *variable selection* hence better interpretation. Again, cross-validation is employed to select $\lambda$. 
   
   * The reason Lasso can perform variable selection is because the objective function is equivalent to 
   
   $$\text {minimizing RSS}, \text{subject to } \sum_{j=1}^p |\beta_j| \le s
-  
   $$
-for some $s$. The contour of RSS in general only touch the $\ell_1$ ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, the $\ell_2$ ball is round, and in general, the countour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes. 
+for some $s$. The contour of RSS in general only touch the $\ell_1$ ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, in the ridge situation, the $\ell_2$ ball is round, and in general, the contour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes. 
 
-- Neither ridge nor the lasso will universally dominate the other. When the response is a small number of predictors, one may expect lasso performs better, better in practice, this is never known in advance. 
+- Neither ridge nor the lasso will universally dominate the other. When the response depends on a small number of predictors, one may expect lasso performs better; but in practice, this is never known in advance. 
 
 - Combining ridge and lasso leads to *elastic net* method. 
+- it is well known that ridge tends to give similar values coefficient values to correlated variables, while lasso may give quite different coefficient values to correlated variables. 
+- ridge regression shrinks all coefficients by the same proportion. While lasso perform **soft-thresholding**, shrink all coefficients by similar amount, and sufficient small coefficients are shrunk all the way to zero. 
 
+  both ridge and lasso can be considered as computationally feasible approximation to the *best subset selection* which can be equivalently formulated as:
+  $$
+  \text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p I(\beta_j\ne 0) \le s.
+  $$
+- **Bayesian formulation**: Both ridge and lasso can be interpreted as maximize the **posterior probability** (MAP)
+$$
+p(\beta|X,Y)\propto f(Y|X,\beta) p(\beta|X)=f(Y|X,\beta)p(\beta)
+$$
+where $p(\beta)= \prod_{j=1}^p g(\beta_j)$ with some density function $g$ is the believed prior on $\beta$. 
+  * if $g$ is Gaussian with mean zero and standard deviation a function of $\lambda$, then it follows the solution $\beta$ given by the ridge is the same as maximizing the posterior $p(\beta|X,Y)$, that is, $\beta$ is the posterior mode. In fact, $\beta$ is also the posterior mean. Since the Gaussian prior is flat at  near zero, ridge assumes the coefficients are randomly distributed about zero. 
+  * if $g$ is double-exponential (Laplace) with mean zero and scale parameter a function of $\lambda$, then it follows the solution $\beta$ given by the lasso is the same as maximizing the posterior $p(\beta|X,Y)$, that is, $\beta$ is the posterior mode. In this case $\beta$ is **not** the posterior mean. Since the Laplacian prior is steeply peaked at zero, lasso expects a priori that many coefficients are (exactly) zero. 
+  
 ## Dimension reduction methods: transforming $X_j$. 
-  There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS. 
+  There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS. Both are designed to handle when the OLS breaks down due to that  there are large number of correlated variables. 
   
 ### PCA regression: first use PCA to obtain $M$- PCA as linear combinations (directions) of the original $p$ predictors: 
   $$
-  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M. 
+  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M,  
   $${#eq-PCA}
-The first PCA contains the largest variance in $X$, and minimize the sum of squared perpendicular distances to each point (the projection error on the PCA); The second PCA is orthogonal to the first PCA and has the second largest variance and is uncorrelated with the first, and so on. These directions are obtained in an *unsupervised way*, as $Y$ is not used to obtain these components. Consequently, there is no guarantee that the directions that best explain the predictors will also be the best directions to use for predicting the response. 
+where, the $\phi_{mj}$ are called **PCA loadings**, and subject to the norm $\sum_{j=1}^p\phi_{mj}^2=1$ for each $m$. Note $Z_m$ is a vector of length equal to the length of $X_j$, which is the number of data points $n$. The component of $Z_m$: $z_{im}$, $1\le i \le n$ are called **PCA scores**. $z_{im}$ is a *single number summary* of the $p$ predictors with the $m$-th PCA for the $i$-th observation. PCA is not a feature selection method.  
+
+The first PCA defines the direction that contains the largest variance in $X$, and minimize the sum of squared perpendicular distances to each point (the projection error on the PCA), that is it defines the line that is *as close as possible* to the data; (In fact, the first PCA is given by the eigenvector of the largest eigenvalue of the covariance matrix $\frac{1}{n-1}X^TX$). The second PCA is orthogonal to the first PCA and has the second largest variance and is uncorrelated with the first, and so on. These directions are obtained in an *unsupervised way*, as $Y$ is not used to obtain these components. Consequently, there is no guarantee that the directions that best explain the predictors will also be the best directions to use for predicting the response. 
+
+PCA is typically conducted after standardizing the data $X$, as without scaling, the high variance variables will tend to have higher influence on the obtained PCAs. 
 
 We then use OLS to fit a linear regression model 
 $$
@@ -132,20 +167,29 @@ $$
 $$
 with 
 $$
-\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}
+\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}.
 $${#eq-pcar-beta}
+Eq. @eq-pcar-beta has the potential to bias the coefficient estimates, but selecting $M<< p$ can significantly reduce the variance. 
 So model @eq-PCAR is a special case of linear regression subject to the constants @eq-pcar-beta.  
+
+PCR and ridge are closely related and one can think of ridge regression as a continuous version of PCR.
 
 ### Partial Least Squares
 
-Similar to PCAR, PLS also first identifies a new set of features $Z_1, Z_2, \cdots, Z_m$, each of which is a linear combinations of the orginnal features, and then fits a linear model via OLS with these new $M$ features. 
+Similar to PCAR, PLS also first identifies a new set of features $Z_1, Z_2, \cdots, Z_m$, each of which is a linear combinations of the original features, and then fits a linear model via OLS with these new $M$ features. 
 
 But PLS identifies these new features in a *supervised way*, that is, PLS uses $Y$ in order to identify the new features that not only approximate the old features well, but also are *related to the response*, i.e., these new features explain both the response and the predictors. 
 
-Firt PLS standarizes the $p$ predictors. PLS identifies the first component 
-$Z_1 = \sum_{j=1}^p \phi_{1j}X_j$ by choosing $\phi_{1j}$ equals to the coefficient from the simple linear regression of $Y$ onto $X_j$. Since this coefficient is equal to $r_{X_jY}\frac{\sigma_{Y}}{\sigma_{X_j}}$, PLS places teh highest weight on the variables that are most strongly related to $Y$. 
+First PLS standardizes the $p$ predictors. PLS identifies the first component 
+$Z_1 = \sum_{j=1}^p \phi_{1j}X_j$ by choosing $\phi_{1j}=<X_j, Y>$, the coefficient from the simple linear regression of $Y$ onto $X_j$. Since this coefficient is equal to the correlation between $Y$ and $X_j$, PLS places the highest weight on the variables that are most strongly related to $Y$. The PLS direction does not fit the predictors as closely as does PCA, but it does a better job explaining the response. 
 
-Next, PLS takes the residuals and then repeat the same process. 
+Next, PLS orthogonality each $X_j$ with respect to $Z_1$, that is, replace each $X_j$ with the residual by regressing $X_j$ on $Z_1$, and then repeat the same process. 
+
+When $p$ is large, especially $p>n$, the forward selection method, shrinkage methods (lasso or ridge), PCR, PLR fit a *less flexible* model, hence particularly useful in performing regression in high-dimensional settings. 
+
+## Homework:
+- Conceptual: 1--4
+- Applied: At least one. 
 
 ## Code Snippet
 ### Python

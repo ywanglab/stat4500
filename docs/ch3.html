@@ -267,9 +267,9 @@ Y = \beta_0 + \beta_1 X +\epsilon,
 \hat{\beta}_1 =\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}=r_{xy}\frac{\sigma_y}{\sigma_x}
 \]</span> <span class="math display">\[
 \hat{\beta}_0= \bar{y}-\hat{\beta}_1 \bar{x}
-\]</span> where, <span class="math inline">\(\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i\)</span> and <span class="math inline">\(\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\)</span>, and the correlation <span id="eq-correlation-rxy"><span class="math display">\[
+\]</span> where, <span class="math inline">\(\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i\)</span> and <span class="math inline">\(\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\)</span>. If we assume the data matrix <span class="math inline">\(X\)</span> is demeaned, then <span class="math inline">\(\hat{beta}_0=\bar{y}\)</span>. and the correlation <span id="eq-correlation-rxy"><span class="math display">\[
 r_{xy} = \frac{\text{cov}(x,y)}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
-\tag{3.1}\]</span></span> is the normalized convariance. Note <span class="math inline">\(-1\le r_{xy} \le 1\)</span>. When there is no intercept, that is <span class="math inline">\(\beta_0=0\)</span>, then <span class="math display">\[
+\tag{3.1}\]</span></span> is the normalized covariance. Note <span class="math inline">\(-1\le r_{xy} \le 1\)</span>. When there is no intercept, that is <span class="math inline">\(\beta_0=0\)</span>, then <span class="math display">\[
 \hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
 \]</span> where, <span class="math display">\[
 \hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}

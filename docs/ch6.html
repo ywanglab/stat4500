@@ -206,20 +206,22 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#shrinkage-methods-for-variable-selection" id="toc-shrinkage-methods-for-variable-selection" class="nav-link" data-scroll-target="#shrinkage-methods-for-variable-selection"><span class="header-section-number">6.4</span> Shrinkage methods for Variable selection</a>
   <ul class="collapse">
   <li><a href="#ridge-regression-minimize-the-following-objective" id="toc-ridge-regression-minimize-the-following-objective" class="nav-link" data-scroll-target="#ridge-regression-minimize-the-following-objective"><span class="header-section-number">6.4.1</span> Ridge regression: minimize the following objective</a></li>
+  <li><a href="#the-lasso-least-absolute-shrinkage-and-selection-operator" id="toc-the-lasso-least-absolute-shrinkage-and-selection-operator" class="nav-link" data-scroll-target="#the-lasso-least-absolute-shrinkage-and-selection-operator"><span class="header-section-number">6.4.2</span> The Lasso (Least Absolute Shrinkage and Selection Operator)</a></li>
   </ul></li>
   <li><a href="#dimension-reduction-methods-transforming-x_j." id="toc-dimension-reduction-methods-transforming-x_j." class="nav-link" data-scroll-target="#dimension-reduction-methods-transforming-x_j."><span class="header-section-number">6.5</span> Dimension reduction methods: transforming <span class="math inline">\(X_j\)</span>.</a>
   <ul class="collapse">
   <li><a href="#pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors" id="toc-pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors" class="nav-link" data-scroll-target="#pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors"><span class="header-section-number">6.5.1</span> PCA regression: first use PCA to obtain <span class="math inline">\(M\)</span>- PCA as linear combinations (directions) of the original <span class="math inline">\(p\)</span> predictors:</a></li>
   <li><a href="#partial-least-squares" id="toc-partial-least-squares" class="nav-link" data-scroll-target="#partial-least-squares"><span class="header-section-number">6.5.2</span> Partial Least Squares</a></li>
   </ul></li>
-  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">6.6</span> Code Snippet</a>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">6.6</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">6.7</span> Code Snippet</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">6.6.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">6.6.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">6.6.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">6.6.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">6.6.5</span> ISLP and statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">6.6.6</span> sklearn</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">6.7.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">6.7.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">6.7.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">6.7.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">6.7.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">6.7.6</span> sklearn</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -246,20 +248,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Linear models are <em>interpretable</em> and often shows small variance. They are fitted by <em>OLS</em>. There are other methods that can either provide alternatives or improve linear regression models in terms of <em>prediction accuracy</em> (especially when <span class="math inline">\(p&gt;n\)</span>) and automatic <em>feature selection</em>.</p>
+<p>Linear models are <em>interpretable</em> and often shows small variance. They are fitted by <em>OLS</em>. There are other methods that can either provide alternatives or improve linear regression models in terms of <em>prediction accuracy</em> (especially when <span class="math inline">\(p&gt;n\)</span>) and automatic <em>feature selection</em> for improved interpretability.</p>
 <p>There are three classes of methods:</p>
 <ul>
 <li>subset selection: pick a subset of the <span class="math inline">\(p\)</span> predictors that best explains the response.</li>
-<li>Shrinkage (regularization). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If <span class="math inline">\(L^2\)</span> regularization is used, all coefficients are shrunk toward zero; while if #L^1$ is used, then some coefficients will become zero, leading to actual <em>variable selection</em> or <em>sparse representation</em>.</li>
-<li>Dimension reduction. Project <span class="math inline">\(p\)</span>-predictors to a <span class="math inline">\(M\)</span> (<span class="math inline">\(M&lt;p\)</span>) dimensional subspace. Each new direction is a linear combination (or projection) of the <span class="math inline">\(p\)</span>-variables. These <span class="math inline">\(M\)</span>-projections can then be used to fit a linear regression model(<strong>PCR</strong> if the <span class="math inline">\(M\)</span>-projections are obtained in an unsupervised way; or <strong>PLR</strong> if thses <span class="math inline">\(M\)</span>-projections are obtained in a supervised way))</li>
+<li>Shrinkage (regularization). With an added regularizing term, estimated parameters are shrunken to zero relative the OLS estimates. If <span class="math inline">\(L^2\)</span> regularization is used, all coefficients are shrunk toward zero by the same proportion; while if <span class="math inline">\(L^1\)</span> is used, then some coefficients will become zero, leading to actual <em>variable selection</em> or <em>sparse representation</em>.</li>
+<li>Dimension reduction. Project <span class="math inline">\(p\)</span>-predictors to a <span class="math inline">\(M\)</span> (<span class="math inline">\(M&lt;p\)</span>) dimensional subspace. Each new direction is a linear combination (or projection) of the <span class="math inline">\(p\)</span>-variables. These <span class="math inline">\(M\)</span>-projections can then be used to fit a linear regression model(<strong>PCR</strong> if the <span class="math inline">\(M\)</span>-projections are obtained in an unsupervised way; or <strong>PLR</strong> if these <span class="math inline">\(M\)</span>-projections are obtained in a supervised way))</li>
 </ul>
 <section id="best-subset-selecttion" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="best-subset-selecttion"><span class="header-section-number">6.1</span> Best Subset Selecttion</h2>
 <p><strong>Algorithm</strong></p>
 <ol type="1">
 <li>Fit the data with the <em>null model</em> <span class="math inline">\(\mathcal{M}_0\)</span>, which contains no predictors. This model simply set <span class="math inline">\(Y=\text{mean}(y_i)\)</span>.</li>
-<li>for <span class="math inline">\(k=1, 2, \cdots, p\)</span>: fit <span class="math inline">\(p \choose k\)</span> models containing exactly <span class="math inline">\(k\)</span> predictors. Pick the best one that having the smallest RSS or largest <span class="math inline">\(R^2\)</span> on the training set, called <span class="math inline">\(\mathcal{M}_k\)</span>. Note for each categorical variable with <span class="math inline">\(L\)</span>-level, there are <span class="math inline">\(L-1\)</span> dummy variables.</li>
-<li>Select the best one among <span class="math inline">\(\mathcal{M}_0, \cdots, \mathcal{M}_p\)</span> using cross-validation or other measures such as <span class="math inline">\(C_p (AIC)\)</span>, <span class="math inline">\(BIC\)</span> or adjusted <span class="math inline">\(R^2\)</span>.</li>
+<li>for <span class="math inline">\(k=1, 2, \cdots, p\)</span>: fit <span class="math inline">\(p \choose k\)</span> models containing exactly <span class="math inline">\(k\)</span> predictors. Pick the best one that having the smallest RSS or largest <span class="math inline">\(R^2\)</span> (or <em>deviance</em> for classification problem, i.e., <span class="math inline">\(-2\max \log (\text{likelihood})\)</span> on the <em>training set</em>, called <span class="math inline">\(\mathcal{M}_k\)</span>. Note for each categorical variable with <span class="math inline">\(L\)</span>-level, there are <span class="math inline">\(L-1\)</span> dummy variables.</li>
+<li>Select the best one among <span class="math inline">\(\mathcal{M}_0, \cdots, \mathcal{M}_p\)</span> using cross-validation or other measures such as <span class="math inline">\(C_p (AIC)\)</span>, <span class="math inline">\(BIC\)</span> or adjusted <span class="math inline">\(R^2\)</span>. If cross-validation is used, then Step 2 is repeated on each training fold, and the validation errors are averaged to select the best <span class="math inline">\(k\)</span>. The the model <span class="math inline">\(\mathcal{M}_k\)</span> fit on the full training set is delivered for chosen <span class="math inline">\(k\)</span>.</li>
 </ol>
 <p>Best subset selection suffers - high computation: needs to compute <span class="math inline">\(2^p\)</span> models - overfitting due to the large search space of models</p>
 </section>
@@ -268,11 +270,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Both Forward and Backward selection are stepwise selection. They are used when <span class="math inline">\(p\)</span> is large. They searches over <span class="math inline">\(1+p(p+1)/2\)</span> models and are <em>greedy</em> algorithm and is not guaranteed to find the best possible model out of all <span class="math inline">\(2^p\)</span> models.</p>
 <ul>
 <li>Backward selection requires <span class="math inline">\(n&gt;p\)</span> (so that the full model can be fit);</li>
-<li>Forwarad selection can be used when <span class="math inline">\(n&lt;p\)</span>.</li>
+<li>Forward selection can be used when <span class="math inline">\(n&lt;p\)</span> but only fits up to models with <span class="math inline">\(n\)</span> variables.</li>
+<li>One can combine forward and backward selection to a hybrid selection.</li>
 </ul>
 <section id="forward-stepwise-selection" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="forward-stepwise-selection"><span class="header-section-number">6.2.1</span> Forward Stepwise Selection</h3>
-<p>Adding one variable at at time that offers the greatest addtional improvement.</p>
+<p>Adding one variable at at time that offers the greatest additional improvement.</p>
 <p><strong>Algorithm</strong></p>
 <ol type="1">
 <li>Fit the data with the <em>null model</em> <span class="math inline">\(\mathcal{M}_0\)</span>, which contains no predictors. This model simply set <span class="math inline">\(Y=\text{mean}(y_i)\)</span>.</li>
@@ -305,94 +308,135 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="model-selection" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">6.3</span> Model selection</h2>
-<p>Models with all predictors always have the smallest <span class="math inline">\(RSS\)</span> or largest <span class="math inline">\(R^2\)</span> on the training set. Therefore they are not suitable to choose the best one among models with different number of predictors.</p>
-<p>We ought to <em>estimate the test error</em> on a test set. This may be done - indirectly by adjusting the training error to account for the bias due to overfitting: <span class="math inline">\(C_p\)</span> (equivalently, AIC in case of linear model with Gaussian errors), BIC and adjusted <span class="math inline">\(R^2\)</span>. * Mallow’s <span class="math inline">\(C_p\)</span>: <span class="math display">\[
-  C_p =\frac{1}{n}(RSS+2d\hat{\sigma}^2)
-  \]</span> where, <span class="math inline">\(d\)</span> us the number of parameters and <span class="math inline">\(\hat{\sigma}^2 \approx Var{\epsilon}\)</span>.</p>
+<p>Models with all predictors always have the smallest <span class="math inline">\(RSS\)</span> or largest <span class="math inline">\(R^2\)</span> on the <em>training set</em>. Therefore they are not suitable to choose the best one among models with different number of predictors.</p>
+<p>We ought to <em>estimate the test error</em> on a test set. This may be done - indirectly by adjusting the training error to account for the bias due to overfitting: <span class="math inline">\(C_p\)</span> (equivalently, AIC in case of linear model with Gaussian errors), BIC and adjusted <span class="math inline">\(R^2\)</span>.</p>
 <ul>
-<li><p>AIC <span class="math display">\[
+<li><p>Mallow’s <span class="math inline">\(C_p\)</span>: <span class="math display">\[
+  C_p =\frac{1}{n}(RSS+2d\hat{\sigma}^2)
+  \]</span> where, <span class="math inline">\(d\)</span> us the number of parameters and <span class="math inline">\(\hat{\sigma}^2 \approx Var{\epsilon}\)</span>, typically estimated by using the <em>full model</em> containing all variables. <span class="math inline">\(C_p\)</span> is an unbiased estimate of test MSE.</p></li>
+<li><p>AIC is defined for models fit by maximmum likelihood. <span class="math display">\[
   AIC = -2\log L + 2d
-  \]</span> where, <span class="math inline">\(L\)</span> is the maximum likelihood function for the estimated model.</p></li>
+  \]</span> where, <span class="math inline">\(L\)</span> is the maximum likelihood function for the estimated model. For linear regression with Gaussian error, <span class="math inline">\(AIC\propto C_p\)</span>.</p></li>
 <li><p>BIC <span class="math display">\[
   BIC = \frac{1}{n}( RSS + \log (n)d \hat{\sigma}^2 )
-  \]</span> Since <span class="math inline">\(\log n&gt;\)</span> for <span class="math inline">\(n&gt;7\)</span>, the BIC places a higher penatlty on models with many variables, and hence select smalller models than <span class="math inline">\(C_p\)</span>.</p></li>
+  \]</span> Since <span class="math inline">\(\log n&gt;\)</span> for <span class="math inline">\(n&gt;7\)</span>, the BIC places a higher penalty on models with many variables, and hence select smaller models than <span class="math inline">\(C_p\)</span>.</p></li>
 <li><p>Adjusted <span class="math inline">\(R^2\)</span> (larger value is better)</p>
 <p><span class="math display">\[
 \text{Adjusted }R^2=1-\frac{RSS/(n-d-1)}{TSS/(n-1)}
-\]</span> <span class="math inline">\(Rss/(n-d-1)\)</span> may increase or decrease depends on <span class="math inline">\(d\)</span>. Unlike <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span> pays a price for the inclusion of unnecessary variables in a model.</p></li>
-<li><p>directly by cross-validation (or validation). It doesnot require estimate <span class="math inline">\(\sigma^2\)</span>. It has a wide range of usage, as it may difficult to estimate <span class="math inline">\(d\)</span> or <span class="math inline">\(\sigma^2\)</span>. Choose the model that has the smallest test error.</p></li>
+\]</span> <span class="math inline">\(RSS/(n-d-1)\)</span> may increase or decrease depends on <span class="math inline">\(d\)</span>. Unlike <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span> pays a price for the inclusion of unnecessary variables in a model.</p>
+<p><span class="math inline">\(C_p\)</span>, AIC, BIC, adjusted <span class="math inline">\(R^2\)</span>,are not appropriate in high-dimentional setting, as the estimated <span class="math inline">\(\hat{\sigma}^2 \approx 0\)</span> (when <span class="math inline">\(p\ge n\)</span>).</p></li>
+<li><p>directly by cross-validation (or validation). It does not require estimate <span class="math inline">\(\sigma^2\)</span>. It has a wide range of usage, as it may difficult to estimate <span class="math inline">\(d\)</span> or <span class="math inline">\(\sigma^2\)</span>. One can choose the model that has the smallest test error or using the <em>one-standard-error rule</em> to select the model that has a smaller size:</p>
+<ul>
+<li>calculate the SE of the estimated test MSE for each model size.</li>
+<li>identify the lowest test MSE</li>
+<li>choose the smallest model for which its test MSE is within one SE of the lowest point.</li>
+</ul></li>
 </ul>
 </section>
 <section id="shrinkage-methods-for-variable-selection" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="shrinkage-methods-for-variable-selection"><span class="header-section-number">6.4</span> Shrinkage methods for Variable selection</h2>
-<p>The shrinkage offers an altertivate to selecting variables by adjusting a hyperparameter that trades-off RSS and the model parameter magnitudes. Cross-validation may be used to select the best <span class="math inline">\(\lambda\)</span>. After the <span class="math inline">\(\lambda\)</span> is selected, one can fit a final model using the entire traning data set.</p>
+<p>The shrinkage offers an alternative to selecting variables by adjusting a hyperparameter that trades-off RSS and the model parameter magnitudes. Shrinkage methods will produce a different set of coefficients for a different <span class="math inline">\(\lambda\)</span>. Cross-validation may be used to select the best <span class="math inline">\(\lambda\)</span>. After the <span class="math inline">\(\lambda\)</span> is selected, one can fit a final model using the entire training data set.</p>
+<p>The reason shrinkage methods may perform better than OLS is rooted in bias-variance trade-off: as <span class="math inline">\(\lambda\)</span> increases, the flexibility of the model decreases b ecause of shrunk coefficients, leading to decreased variance but increased bias.</p>
 <section id="ridge-regression-minimize-the-following-objective" class="level3" data-number="6.4.1">
 <h3 data-number="6.4.1" class="anchored" data-anchor-id="ridge-regression-minimize-the-following-objective"><span class="header-section-number">6.4.1</span> Ridge regression: minimize the following objective</h3>
 <p><span class="math display">\[
 RSS + \lambda \sum_{j=1}^p \beta_j^2
-\]</span> - It encourages the model parameters to shrink toward zero and find a balance between RSS and model parameter magnitudes. Cross-validation is used to find the best tuning parameter <span class="math inline">\(\lambda\)</span>. When <span class="math inline">\(\lambda\)</span> is large, <span class="math inline">\(\beta_j\to 0\)</span>. Note, Ridge shrinks all coefficients and include all <span class="math inline">\(p\)</span> variables.</p>
+\]</span> The ridge regression is equivalent to <span class="math display">\[
+\text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p \beta_j^2 \le s
+\]</span> for some <span class="math inline">\(s\ge 0\)</span>.</p>
 <ul>
+<li><p>It encourages the model parameters to shrink toward zero and find a balance between RSS and model parameter magnitudes. Cross-validation is used to find the best tuning parameter <span class="math inline">\(\lambda\)</span>. When <span class="math inline">\(\lambda\)</span> is large, <span class="math inline">\(\beta_j\to 0\)</span>. Note, Ridge shrinks all coefficients and include all <span class="math inline">\(p\)</span> variables.</p></li>
 <li><p>The OLS coefficients estimates are <em>scale equivariant</em>: regardless of how <span class="math inline">\(X_j\)</span> is scaled, <span class="math inline">\(X_j\hat{\beta}_j\)</span> remain the same: if <span class="math inline">\(X_j\)</span> is multiplied by <span class="math inline">\(c\)</span>, this will simply leads to <span class="math inline">\(\hat{\beta}_j\)</span> be scaled by a factor of <span class="math inline">\(1/c\)</span>.</p></li>
-<li><p>In contrast, when multiplying <span class="math inline">\(X_j\)</span> by a factor, this may significantly change the ridge coefficients. Therefore, it is best practice to <em>standardize the predictors</em> before fitting a ridge model: <span class="math display">\[
+<li><p>In contrast, when multiplying <span class="math inline">\(X_j\)</span> by a factor, this may significantly change the ridge coefficients. Ridge coefficients depends on <span class="math inline">\(\lambda\)</span> and the scale of <span class="math inline">\(X_j\)</span>, and may even on the scaling of other predictors. Therefore, it is best practice to <em>standardize the predictors</em> before fitting a ridge model: <span class="math display">\[
 \tilde{x}_{ij} =\frac{x_{ij}}{\frac{1}{n} \sum_{i=1}^n(x_{ij} - \bar{x}_j)}
-\]</span> *** The Lasso (Least Absolute Shrinkage and Selection Operator)</p>
+\]</span></p></li>
+<li><p>Ridge regression works best in situations where the OLS estimates have high variance, especially when <span class="math inline">\(p\)</span> is large.</p></li>
+<li><p>Ridge will include all <span class="math inline">\(p\)</span> variables in the final model.</p></li>
+</ul>
+</section>
+<section id="the-lasso-least-absolute-shrinkage-and-selection-operator" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="the-lasso-least-absolute-shrinkage-and-selection-operator"><span class="header-section-number">6.4.2</span> The Lasso (Least Absolute Shrinkage and Selection Operator)</h3>
 <ul>
-<li><p>The Lasso replaces the <span class="math inline">\(\ell^2\)</span> error with <span class="math inline">\(\ell^1\)</span> penalty. Lasso can force some coefficients to become exactly zero when <span class="math inline">\(\lambda\)</span> is large enough. Thus it can actually performs <em>variable selection</em>. Agian, cross-validaton is employed to select <span class="math inline">\(\lambda\)</span>.</p></li>
+<li><p>The Lasso replaces the <span class="math inline">\(\ell^2\)</span> error with <span class="math inline">\(\ell^1\)</span> penalty. Lasso can force some coefficients to become exactly zero when <span class="math inline">\(\lambda\)</span> is large enough. Thus it can actually performs <em>variable selection</em> hence better interpretation. Again, cross-validation is employed to select <span class="math inline">\(\lambda\)</span>.</p></li>
 <li><p>The reason Lasso can perform variable selection is because the objective function is equivalent to</p></li>
 </ul>
-<p>$$, _{j=1}^p |_j| s</p>
-<p>$$ for some <span class="math inline">\(s\)</span>. The contour of RSS in general only touch the <span class="math inline">\(\ell_1\)</span> ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, the <span class="math inline">\(\ell_2\)</span> ball is round, and in general, the countour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes.</p></li>
-<li><p>Neither ridge nor the lasso will universally dominate the other. When the response is a small number of predictors, one may expect lasso performs better, better in practice, this is never known in advance.</p></li>
+<p><span class="math display">\[\text {minimizing RSS}, \text{subject to } \sum_{j=1}^p |\beta_j| \le s
+  \]</span> for some <span class="math inline">\(s\)</span>. The contour of RSS in general only touch the <span class="math inline">\(\ell_1\)</span> ball at its vertex, at which a minimum is obtained with some variables vanishes. In contrast, in the ridge situation, the <span class="math inline">\(\ell_2\)</span> ball is round, and in general, the contour of the RSS function only touches the sphere at a surface point where a minimum is obtained with no variable vanishes.</p>
+<ul>
+<li><p>Neither ridge nor the lasso will universally dominate the other. When the response depends on a small number of predictors, one may expect lasso performs better; but in practice, this is never known in advance.</p></li>
 <li><p>Combining ridge and lasso leads to <em>elastic net</em> method.</p></li>
+<li><p>it is well known that ridge tends to give similar values coefficient values to correlated variables, while lasso may give quite different coefficient values to correlated variables.</p></li>
+<li><p>ridge regression shrinks all coefficients by the same proportion. While lasso perform <strong>soft-thresholding</strong>, shrink all coefficients by similar amount, and sufficient small coefficients are shrunk all the way to zero.</p>
+<p>both ridge and lasso can be considered as computationally feasible approximation to the <em>best subset selection</em> which can be equivalently formulated as: <span class="math display">\[
+\text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p I(\beta_j\ne 0) \le s.
+\]</span></p></li>
+<li><p><strong>Bayesian formulation</strong>: Both ridge and lasso can be interpreted as maximize the <strong>posterior probability</strong> (MAP) <span class="math display">\[
+p(\beta|X,Y)\propto f(Y|X,\beta) p(\beta|X)=f(Y|X,\beta)p(\beta)
+\]</span> where <span class="math inline">\(p(\beta)= \prod_{j=1}^p g(\beta_j)\)</span> with some density function <span class="math inline">\(g\)</span> is the believed prior on <span class="math inline">\(\beta\)</span>.</p>
+<ul>
+<li>if <span class="math inline">\(g\)</span> is Gaussian with mean zero and standard deviation a function of <span class="math inline">\(\lambda\)</span>, then it follows the solution <span class="math inline">\(\beta\)</span> given by the ridge is the same as maximizing the posterior <span class="math inline">\(p(\beta|X,Y)\)</span>, that is, <span class="math inline">\(\beta\)</span> is the posterior mode. In fact, <span class="math inline">\(\beta\)</span> is also the posterior mean. Since the Gaussian prior is flat at near zero, ridge assumes the coefficients are randomly distributed about zero.</li>
+<li>if <span class="math inline">\(g\)</span> is double-exponential (Laplace) with mean zero and scale parameter a function of <span class="math inline">\(\lambda\)</span>, then it follows the solution <span class="math inline">\(\beta\)</span> given by the lasso is the same as maximizing the posterior <span class="math inline">\(p(\beta|X,Y)\)</span>, that is, <span class="math inline">\(\beta\)</span> is the posterior mode. In this case <span class="math inline">\(\beta\)</span> is <strong>not</strong> the posterior mean. Since the Laplacian prior is steeply peaked at zero, lasso expects a priori that many coefficients are (exactly) zero.</li>
+</ul></li>
 </ul>
 </section>
 </section>
 <section id="dimension-reduction-methods-transforming-x_j." class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="dimension-reduction-methods-transforming-x_j."><span class="header-section-number">6.5</span> Dimension reduction methods: transforming <span class="math inline">\(X_j\)</span>.</h2>
-<p>There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS.</p>
+<p>There are two types of dimension reduction methods for regression: a) PCA regression, b) Partial list squares PLS. Both are designed to handle when the OLS breaks down due to that there are large number of correlated variables.</p>
 <section id="pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors" class="level3" data-number="6.5.1">
 <h3 data-number="6.5.1" class="anchored" data-anchor-id="pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors"><span class="header-section-number">6.5.1</span> PCA regression: first use PCA to obtain <span class="math inline">\(M\)</span>- PCA as linear combinations (directions) of the original <span class="math inline">\(p\)</span> predictors:</h3>
 <p><span id="eq-PCA"><span class="math display">\[
-  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M.
-   \tag{6.1}\]</span></span> The first PCA contains the largest variance in <span class="math inline">\(X\)</span>, and minimize the sum of squared perpendicular distances to each point (the projection error on the PCA); The second PCA is orthogonal to the first PCA and has the second largest variance and is uncorrelated with the first, and so on. These directions are obtained in an <em>unsupervised way</em>, as <span class="math inline">\(Y\)</span> is not used to obtain these components. Consequently, there is no guarantee that the directions that best explain the predictors will also be the best directions to use for predicting the response.</p>
+  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M,  
+   \tag{6.1}\]</span></span> where, the <span class="math inline">\(\phi_{mj}\)</span> are called <strong>PCA loadings</strong>, and subject to the norm <span class="math inline">\(\sum_{j=1}^p\phi_{mj}^2=1\)</span> for each <span class="math inline">\(m\)</span>. Note <span class="math inline">\(Z_m\)</span> is a vector of length equal to the length of <span class="math inline">\(X_j\)</span>, which is the number of data points <span class="math inline">\(n\)</span>. The component of <span class="math inline">\(Z_m\)</span>: <span class="math inline">\(z_{im}\)</span>, <span class="math inline">\(1\le i \le n\)</span> are called <strong>PCA scores</strong>. <span class="math inline">\(z_{im}\)</span> is a <em>single number summary</em> of the <span class="math inline">\(p\)</span> predictors with the <span class="math inline">\(m\)</span>-th PCA for the <span class="math inline">\(i\)</span>-th observation. PCA is not a feature selection method.</p>
+<p>The first PCA defines the direction that contains the largest variance in <span class="math inline">\(X\)</span>, and minimize the sum of squared perpendicular distances to each point (the projection error on the PCA), that is it defines the line that is <em>as close as possible</em> to the data; (In fact, the first PCA is given by the eigenvector of the largest eigenvalue of the covariance matrix <span class="math inline">\(\frac{1}{n-1}X^TX\)</span>). The second PCA is orthogonal to the first PCA and has the second largest variance and is uncorrelated with the first, and so on. These directions are obtained in an <em>unsupervised way</em>, as <span class="math inline">\(Y\)</span> is not used to obtain these components. Consequently, there is no guarantee that the directions that best explain the predictors will also be the best directions to use for predicting the response.</p>
+<p>PCA is typically conducted after standardizing the data <span class="math inline">\(X\)</span>, as without scaling, the high variance variables will tend to have higher influence on the obtained PCAs.</p>
 <p>We then use OLS to fit a linear regression model <span id="eq-PCAR"><span class="math display">\[
 y_i =\theta_0 +\sum_{m=1}^M \theta_m z_{im}+\epsilon_i, \qquad i=1,2,\cdots, n
 \tag{6.2}\]</span></span></p>
 <p>After substitute <a href="#eq-PCA" class="quarto-xref">Equation&nbsp;<span>6.1</span></a> into equation <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span>6.2</span></a>, one can find that <span class="math display">\[
 \sum_{m=1}^M \theta_mz_{im} =\sum_{j=1}^p \beta_jx_{ij}
 \]</span> with <span id="eq-pcar-beta"><span class="math display">\[
-\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}
-\tag{6.3}\]</span></span> So model <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> is a special case of linear regression subject to the constants <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>.</p>
+\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}.
+\tag{6.3}\]</span></span> Eq. <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> has the potential to bias the coefficient estimates, but selecting <span class="math inline">\(M&lt;&lt; p\)</span> can significantly reduce the variance. So model <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> is a special case of linear regression subject to the constants <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>.</p>
+<p>PCR and ridge are closely related and one can think of ridge regression as a continuous version of PCR.</p>
 </section>
 <section id="partial-least-squares" class="level3" data-number="6.5.2">
 <h3 data-number="6.5.2" class="anchored" data-anchor-id="partial-least-squares"><span class="header-section-number">6.5.2</span> Partial Least Squares</h3>
-<p>Similar to PCAR, PLS also first identifies a new set of features <span class="math inline">\(Z_1, Z_2, \cdots, Z_m\)</span>, each of which is a linear combinations of the orginnal features, and then fits a linear model via OLS with these new <span class="math inline">\(M\)</span> features.</p>
+<p>Similar to PCAR, PLS also first identifies a new set of features <span class="math inline">\(Z_1, Z_2, \cdots, Z_m\)</span>, each of which is a linear combinations of the original features, and then fits a linear model via OLS with these new <span class="math inline">\(M\)</span> features.</p>
 <p>But PLS identifies these new features in a <em>supervised way</em>, that is, PLS uses <span class="math inline">\(Y\)</span> in order to identify the new features that not only approximate the old features well, but also are <em>related to the response</em>, i.e., these new features explain both the response and the predictors.</p>
-<p>Firt PLS standarizes the <span class="math inline">\(p\)</span> predictors. PLS identifies the first component <span class="math inline">\(Z_1 = \sum_{j=1}^p \phi_{1j}X_j\)</span> by choosing <span class="math inline">\(\phi_{1j}\)</span> equals to the coefficient from the simple linear regression of <span class="math inline">\(Y\)</span> onto <span class="math inline">\(X_j\)</span>. Since this coefficient is equal to <span class="math inline">\(r_{X_jY}\frac{\sigma_{Y}}{\sigma_{X_j}}\)</span>, PLS places teh highest weight on the variables that are most strongly related to <span class="math inline">\(Y\)</span>.</p>
-<p>Next, PLS takes the residuals and then repeat the same process.</p>
+<p>First PLS standardizes the <span class="math inline">\(p\)</span> predictors. PLS identifies the first component <span class="math inline">\(Z_1 = \sum_{j=1}^p \phi_{1j}X_j\)</span> by choosing <span class="math inline">\(\phi_{1j}=&lt;X_j, Y&gt;\)</span>, the coefficient from the simple linear regression of <span class="math inline">\(Y\)</span> onto <span class="math inline">\(X_j\)</span>. Since this coefficient is equal to the correlation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_j\)</span>, PLS places the highest weight on the variables that are most strongly related to <span class="math inline">\(Y\)</span>. The PLS direction does not fit the predictors as closely as does PCA, but it does a better job explaining the response.</p>
+<p>Next, PLS orthogonality each <span class="math inline">\(X_j\)</span> with respect to <span class="math inline">\(Z_1\)</span>, that is, replace each <span class="math inline">\(X_j\)</span> with the residual by regressing <span class="math inline">\(X_j\)</span> on <span class="math inline">\(Z_1\)</span>, and then repeat the same process.</p>
+<p>When <span class="math inline">\(p\)</span> is large, especially <span class="math inline">\(p&gt;n\)</span>, the forward selection method, shrinkage methods (lasso or ridge), PCR, PLR fit a <em>less flexible</em> model, hence particularly useful in performing regression in high-dimensional settings.</p>
 </section>
 </section>
-<section id="code-snippet" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">6.6</span> Code Snippet</h2>
-<section id="python" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="python"><span class="header-section-number">6.6.1</span> Python</h3>
+<section id="homework" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="homework"><span class="header-section-number">6.6</span> Homework:</h2>
+<ul>
+<li>Conceptual: 1–4</li>
+<li>Applied: At least one.</li>
+</ul>
+</section>
+<section id="code-snippet" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">6.7</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="python"><span class="header-section-number">6.7.1</span> Python</h3>
 <pre><code>np.isnan(Hitters['Salary']).sum()
 </code></pre>
 </section>
-<section id="numpy" class="level3" data-number="6.6.2">
-<h3 data-number="6.6.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">6.6.2</span> Numpy</h3>
+<section id="numpy" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">6.7.2</span> Numpy</h3>
 <pre><code>np.linalg.norm(beta_hat) #L2 norm. ord=1: L1  ord='inf': max norm.</code></pre>
 </section>
-<section id="pandas" class="level3" data-number="6.6.3">
-<h3 data-number="6.6.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">6.6.3</span> Pandas</h3>
+<section id="pandas" class="level3" data-number="6.7.3">
+<h3 data-number="6.7.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">6.7.3</span> Pandas</h3>
 <pre><code>Hitters.dropna();
 soln_path = pd.DataFrame(soln_array.T,
                          columns=D.columns,
                          index=-np.log(lambdas))
 soln_path.index.name = 'negative log(lambda)'</code></pre>
 </section>
-<section id="graphics" class="level3" data-number="6.6.4">
-<h3 data-number="6.6.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">6.6.4</span> Graphics</h3>
+<section id="graphics" class="level3" data-number="6.7.4">
+<h3 data-number="6.7.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">6.7.4</span> Graphics</h3>
 <pre><code>ax.errorbar(np.arange(n_steps), 
             cv_mse.mean(1), #mean of each row (model)
             cv_mse.std(1) / np.sqrt(K), #estimate standard error of the mean
@@ -401,8 +445,8 @@ soln_path.index.name = 'negative log(lambda)'</code></pre>
             
 ax.axvline(-np.log(tuned_ridge.alpha_), c='k', ls='--') # plot a verticalline</code></pre>
 </section>
-<section id="islp-and-statsmodels" class="level3" data-number="6.6.5">
-<h3 data-number="6.6.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">6.6.5</span> ISLP and statsmodels</h3>
+<section id="islp-and-statsmodels" class="level3" data-number="6.7.5">
+<h3 data-number="6.7.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">6.7.5</span> ISLP and statsmodels</h3>
 <pre><code>#Estimate Var(epsilon)
 
 design = MS(Hitters.columns.drop('Salary')).fit(Hitters)
@@ -468,8 +512,8 @@ for train_idx, test_idx in validation.split(Y):
     validation_mse = errors.mean(0)
 </code></pre>
 </section>
-<section id="sklearn" class="level3" data-number="6.6.6">
-<h3 data-number="6.6.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">6.6.6</span> sklearn</h3>
+<section id="sklearn" class="level3" data-number="6.7.6">
+<h3 data-number="6.7.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">6.7.6</span> sklearn</h3>
 <pre><code>rom sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import PLSRegression

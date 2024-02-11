@@ -24,11 +24,11 @@ $$
 $$
 \hat{\beta}_0= \bar{y}-\hat{\beta}_1 \bar{x}
 $$
-where, $\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$, and the correlation 
+where, $\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i$ and $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$. If we assume the data matrix $X$ is demeaned, then $\hat{beta}_0=\bar{y}$.  and the correlation 
 $$
 r_{xy} = \frac{\text{cov}(x,y)}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
 $${#eq-correlation-rxy}
-is the normalized convariance. Note $-1\le r_{xy} \le 1$. When there is no intercept, that is $\beta_0=0$, then 
+is the normalized covariance. Note $-1\le r_{xy} \le 1$. When there is no intercept, that is $\beta_0=0$, then 
 $$
 \hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
 $$
