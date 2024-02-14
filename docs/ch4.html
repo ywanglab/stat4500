@@ -380,7 +380,7 @@ Note
 <ul>
 <li>Poisson Regression: typically used to model counts, <span class="math display">\[
 \text{Pr}(Y=k)= \frac{e^{-\lambda}\lambda^k}{k!}, \qquad k=0,1,2, \cdots,
-\]</span> where, <span class="math inline">\(\lambda = E(Y)= \text{Var}(Y)\)</span>. This means that if <span class="math inline">\(Y\)</span> follows a Poissson distribution, the larger the mean of <span class="math inline">\(Y\)</span>, the larger its variance. Posisson regression can handle this when variance changes with mean, but linear regression cannot, because it assumes contant variance.</li>
+\]</span> where, <span class="math inline">\(\lambda = E(Y)= \text{Var}(Y)\)</span>. This means that if <span class="math inline">\(Y\)</span> follows a Poissson distribution, the larger the mean of <span class="math inline">\(Y\)</span>, the larger its variance. Posisson regression can handle this when variance changes with mean, but linear regression cannot, because it assumes constant variance.</li>
 </ul>
 <p>Assume <span class="math display">\[
 \log(\lambda(X_1, X_2, \cdots, X_p))=\beta_0+\beta_1X_1+\cdots +\beta_pX_p
@@ -428,7 +428,7 @@ FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
 FPR=\frac{FP}{FP+TN}=\frac{FP}{N} = \text{Type I error} (\alpha)
 \]</span></p></li>
 <li><p>ROC (receiver operating characteristic curve): plot true positive rate (TPR=1-Type II error) ~ false positive rate (FPR= 1- specificity=Type I error) as a threshold for the posterior probability of positive class changes from 0 to 1. The point on the ROC curve closest to the point (0,1) corresponds to the best classifier.</p></li>
-<li><p>AUC (area under the ROC): Overall performance of a classified summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example. A larger AUC indicates a better classifier.</p></li>
+<li><p>AUC (area under the ROC): Overall performance of a classifier summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example. A larger AUC indicates a better classifier.</p></li>
 </ul></li>
 <li><p>class-specific prediction performance</p>
 <ul>

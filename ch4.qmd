@@ -181,7 +181,7 @@ When $Y$ is discrete and non-negative, a linear regression model is not satisfac
 $$
 \text{Pr}(Y=k)= \frac{e^{-\lambda}\lambda^k}{k!}, \qquad k=0,1,2, \cdots,
 $$
-where, $\lambda = E(Y)= \text{Var}(Y)$. This means that if $Y$ follows a Poissson distribution, the larger the mean of $Y$, the larger its variance. Posisson regression can handle this when variance changes with mean, but linear regression cannot, because it assumes contant variance. 
+where, $\lambda = E(Y)= \text{Var}(Y)$. This means that if $Y$ follows a Poissson distribution, the larger the mean of $Y$, the larger its variance. Posisson regression can handle this when variance changes with mean, but linear regression cannot, because it assumes constant variance. 
 
 Assume 
 $$
@@ -250,7 +250,7 @@ For poisson distribution, assume $Y$ follows a poisson distribution.
     rate (TPR=1-Type II error) \~ false positive rate (FPR= 1- specificity=Type I error) as a threshold for the posterior probability of positive class changes from 0
     to 1. The point on the ROC curve closest to the point (0,1)
     corresponds to the best classifier.
-  *   AUC (area under the ROC): Overall performance of a classified summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example.   A larger AUC indicates a better
+  *   AUC (area under the ROC): Overall performance of a classifier summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example.   A larger AUC indicates a better
     classifier.
     
 - class-specific prediction performance 
