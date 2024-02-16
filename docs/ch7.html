@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 8&nbsp; Class Project</title>
+<title>stat4500notes - 7&nbsp; Chapter 7: Moving Beyond Linearity</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
-<link href="./ch7.html" rel="prev">
+<link href="./class_project.html" rel="next">
+<link href="./ch6.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./class_project.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Class Project</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Moving Beyond Linearity</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -170,13 +170,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch7.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch7.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Moving Beyond Linearity</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./class_project.html" class="sidebar-item-text sidebar-link active">
+  <a href="./class_project.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
@@ -198,14 +198,34 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#polynomials" id="toc-polynomials" class="nav-link active" data-scroll-target="#polynomials"><span class="header-section-number">7.1</span> Polynomials</a></li>
+  <li><a href="#step-functions" id="toc-step-functions" class="nav-link" data-scroll-target="#step-functions"><span class="header-section-number">7.2</span> Step functions</a></li>
+  <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines"><span class="header-section-number">7.3</span> Splines</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">7.4</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">7.5</span> Code Snippet</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">7.5.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">7.5.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">7.5.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">7.5.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">7.5.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">7.5.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">7.5.7</span> Useful code snippets</a></li>
+  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam"><span class="header-section-number">7.5.8</span> GAM</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Class Project</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Moving Beyond Linearity</span></h1>
 </div>
 
 
@@ -222,33 +242,314 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><strong>Goal</strong></p>
-<p>to use various ML algorithms to predict a meaningful target <span class="math inline">\(Y\)</span> by <em>classification algorithms</em> or <em>regression algorithms</em>. Present it at COS Research Sympsium in the end of April.</p>
-<p><strong>Data set</strong>: real-world stock price and volume data. We could start with just one stock, e.g.&nbsp;APAL, S&amp;P 500, index, DJ index.</p>
-<p><strong>Some ideas</strong>: * Create one model for each stock. * create a single model for all stocks. Needs to embed each stock in a feature space. Research?</p>
-<p><strong>Start-up code</strong>: refer to the page <a href="https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb" class="uri">https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb</a>. Perform some EDA to feel the data.</p>
-<p>reference ticker symbols: <a href="https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2" class="uri">https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2</a></p>
-<p><strong>Questions</strong>: Which are the <span class="math inline">\(X\)</span> variables? price, volume, return, day of week, month of year, etc. What is the <span class="math inline">\(Y\)</span> variable? next-day price, next-day return, next-five-day average price, next-five-day-average return, etc.</p>
-<p><strong>Models</strong></p>
+<p>Often the linearity assumption of Y of X is good. However, when it’s not, - Polynomials - step functions - splines - local regression, - generalized additive models offer much more flexibility.</p>
+<section id="polynomials" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="polynomials"><span class="header-section-number">7.1</span> Polynomials</h2>
+<p>Polynomial terms of higher powers for <span class="math inline">\(X_j\)</span> or interaction terms <span class="math inline">\(X_iX_j\)</span> are used, but the model is still a linear model in the coefficients <span class="math inline">\(\beta_j\)</span>. The optimum degree <span class="math inline">\(d\)</span> can be chosen by cross-validation. polynomial terms can be included in either a linear regression model or a logistic regression model.</p>
+</section>
+<section id="step-functions" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="step-functions"><span class="header-section-number">7.2</span> Step functions</h2>
+<p>A step function is a piece-wise constant function. Cut a <span class="math inline">\(X\)</span> variable into <span class="math inline">\(m\)</span> regions and then create <span class="math inline">\(m-1\)</span> dummy variables to represent all those regions. Choice of <em>cut-points</em> (knots) can be problematic.</p>
+</section>
+<section id="splines" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="splines"><span class="header-section-number">7.3</span> Splines</h2>
+<p>Piece-wise polynomials are different polynomials on different regions defined by <em>knots</em>. **Splines* are piece-wise polynomials with maximum amount of continuity.</p>
 <ul>
-<li><p>Linear regression:</p>
-<ul>
-<li>including continuous variables (price, volume), categorical variables (day-of-week, month-of-year)</li>
-<li>transforming <span class="math inline">\(X\)</span> (for including non-linear relation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>) or <span class="math inline">\(Y\)</span> (when <span class="math inline">\(Y\)</span> is heteroschedatic, i.e., with varied <span class="math inline">\(\epsilon_i\)</span>)</li>
-<li>plot residual plot to see if <span class="math inline">\(Var(\epsilon_i)\)</span> is changing. If yes, may appeal to transforming <span class="math inline">\(Y\)</span>, e.g., <span class="math inline">\(\log Y\)</span>, <span class="math inline">\(\sqrt{Y}\)</span>.</li>
-<li>investigate outliers (points with unusual <span class="math inline">\(Y\)</span>-values) using the <em>residual plot</em> or looking at <em>studentized residual</em>.</li>
-<li>investigate high leverage points (with unusual <span class="math inline">\(x\)</span> values), by calculating <em>leverage statistics</em>.</li>
-<li>Investigate if there is <em>colinearity</em> among the variables by calculating <em>VIF</em>.</li>
-</ul></li>
-<li><p>classification: predicting directions of the stock price movement. binary (with two direction), or multinomial (more than two values: e.g., up, same, down), LDA, QDA</p></li>
-<li><p>regularization of the parameters</p></li>
-<li><p>selection of variables: forward, backward, mixture, regularization, cross-validation</p></li>
-<li><p>decision tree: random forest, boosting</p></li>
-<li><p>SVM: support vector machines</p></li>
-<li><p>NN</p></li>
+<li><p>linear spline: with knots <span class="math inline">\(\xi_k\)</span>, <span class="math inline">\(k=1, \cdots, K\)</span> is a piecewise linear polynomial that is continuous at each knot. <span class="math display">\[
+y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+1}b_{K+1}(x)+\epsilon,
+\]</span> where, <span class="math inline">\(b_k\)</span> are <strong>basis functions</strong> defined by <span class="math display">\[\begin{align}
+b_1(x) &amp; = x \\
+b_{k+1}(x) &amp; = (x- \xi_k)_{+}, \qquad k=1, \cdots K
+\end{align}\]</span> Here the <em>positive part</em> is defined by <span class="math display">\[x_{+}=\begin{cases}
+x, &amp;  \text{ if } x&gt;0 \\
+0 &amp;  \text{ otherwise}
+\end{cases}
+\]</span></p></li>
+<li><p>cubic splines: with knots <span class="math inline">\(\xi_k\)</span>, <span class="math inline">\(k=1, \cdots, K\)</span> is a piecewise cubic polynomials with continuous derivatives up to order 2 at each knot.</p></li>
 </ul>
+<p><span class="math display">\[
+y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+3}b_{K+3}(x)+\epsilon,
+\]</span> <strong>knot placement</strong>: One strategy is to place them at appropriate quantiles of the observed <span class="math inline">\(X\)</span>.</p>
+<p>For a <strong>regular cubic spline</strong>, the <strong>basis functions</strong> are defined by <span class="math display">\[\begin{align}
+b_1(x) &amp; = x \\
+b_2(x) &amp; = x^2 \\
+b_3(x) &amp; = x^3 \\
+b_{k+3}(x) &amp; = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
+\end{align}\]</span></p>
+<p><strong>dof</strong>: <span class="math inline">\(K+4\)</span> number of parameters</p>
+<p>a <strong>natural cubic spline</strong> extrapolates linearly beyond the boundary knots. This adds <span class="math inline">\(2\times 2\)</span> extra constrains, and allows to put more internal knots for the same degree of freedom as a regular cubic spline</p>
+<p><strong>dof</strong>: <span class="math inline">\(K\)</span>.</p>
+<p>For a <strong>smoothing spline</strong>: it is the solution <span class="math inline">\(g\)</span> to the following problem: <span class="math display">\[
+  \text{minimize}_{g\in S}\sum_{i=1}^n(y_i-g(x_i))^2 +\lambda \int g''(t)dt
+  \]</span></p>
+<p>The first term is RSS and encourages <span class="math inline">\(g(x_i)\)</span> matches <span class="math inline">\(y_i\)</span>. The second term modulates the <em>roughness</em> by a tuning parameter <span class="math inline">\(\lambda \ge 0\)</span>. If <span class="math inline">\(\lambda=0\)</span>, then the solution is just an interpolating polynomial. If <span class="math inline">\(\lambda\to \infty\)</span>, then <span class="math inline">\(g\)</span> is a linear function.</p>
+<p>The smoothing spline is in fact a natural spline with knots at unique values of <span class="math inline">\(x_i\)</span>. it avoids the knot selection issue and leaving a single <span class="math inline">\(\lambda\)</span> to tune. An <em>effective degrees of freedom</em> can be calcualted for a smoothing spline as <span class="math display">\[
+df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii},
+\]</span> where <span class="math inline">\(\bf{S}_\lambda\)</span> is a <span class="math inline">\(n\times n\)</span> matrix determined by <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(x_i\)</span> such that the vector of <span class="math inline">\(n\)</span> fitted values can be written as <span class="math display">\[
+\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}
+\]</span> The LOO cross-validation error is given by <span class="math display">\[
+\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
+\]</span> - Local Regression: a non-parametric method. with a sliding weight function, fit seprate linear fits over the range of <span class="math inline">\(X\)</span> by weighted least squares.</p>
+<ul>
+<li>GAM (Generalized Additive Models): <span class="math display">\[
+y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
+\]</span> GAM can mix different <span class="math inline">\(f_j\)</span>, for example, a spline, or a linear term or even include low order interactive terms. The coefficients are hard to interpret, but the fitted values are of interest.</li>
+</ul>
+<p>GAM can be used in fitting a regression model, that is <span class="math display">\[
+\log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
+\]</span></p>
+</section>
+<section id="homework" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="homework"><span class="header-section-number">7.4</span> Homework:</h2>
+<ul>
+<li>Conceptual:</li>
+<li>Applied: At least one.</li>
+</ul>
+</section>
+<section id="code-snippet" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">7.5</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">7.5.1</span> Python</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="numpy" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">7.5.2</span> Numpy</h3>
+<pre><code>Wage['education'].cat.categories # .cat is the categorical method accessor
+Wage['education'].cat.codes
+pd.crosstab(Wage['high_earn'], Wage['education'])
+
+np.column_stack([Wage_['age'],
+                         Wage_['year'],
+                         Wage_['education'].cat.codes-1])
+
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -&gt; 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+</code></pre>
+</section>
+<section id="pandas" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">7.5.3</span> Pandas</h3>
+<pre><code>cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints. pd.cut is similar</code></pre>
+</section>
+<section id="graphics" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">7.5.4</span> Graphics</h3>
+<pre><code>ax.legend(title='$\lambda$');
+</code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="7.5.5">
+<h3 data-number="7.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">7.5.5</span> ISLP and statsmodels</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="7.5.6">
+<h3 data-number="7.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">7.5.6</span> sklearn</h3>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="7.5.7">
+<h3 data-number="7.5.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">7.5.7</span> Useful code snippets</h3>
+<section id="plot-a-model-fit-with-confidence-interval" class="level4" data-number="7.5.7.1">
+<h4 data-number="7.5.7.1" class="anchored" data-anchor-id="plot-a-model-fit-with-confidence-interval"><span class="header-section-number">7.5.7.1</span> plot a model fit with confidence interval</h4>
+<pre><code>def plot_wage_fit(age_df, 
+                  basis, # ISL model object
+                  title):
+
+    X = basis.transform(Wage)
+    Xnew = basis.transform(age_df)
+    M = sm.OLS(y, X).fit()
+    preds = M.get_prediction(Xnew)
+    bands = preds.conf_int(alpha=0.05)
+    fig, ax = subplots(figsize=(8,8))
+    ax.scatter(age,
+               y,
+               facecolor='gray',
+               alpha=0.5)
+    for val, ls in zip([preds.predicted_mean,
+                      bands[:,0],
+                      bands[:,1]],
+                     ['b','r--','r--']):
+        ax.plot(age_df.values, val, ls, linewidth=3)
+    ax.set_title(title, fontsize=20)
+    ax.set_xlabel('Age', fontsize=20)
+    ax.set_ylabel('Wage', fontsize=20);
+    return ax</code></pre>
+</section>
+<section id="fitting-with-a-step-function" class="level4" data-number="7.5.7.2">
+<h4 data-number="7.5.7.2" class="anchored" data-anchor-id="fitting-with-a-step-function"><span class="header-section-number">7.5.7.2</span> Fitting with a step function</h4>
+<pre><code>cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints
+# note pd.get_dummies(cut_age) is the X matrix
+summarize(sm.OLS(y, pd.get_dummies(cut_age)).fit()) 
+</code></pre>
+</section>
+<section id="fitting-a-spline" class="level4" data-number="7.5.7.3">
+<h4 data-number="7.5.7.3" class="anchored" data-anchor-id="fitting-a-spline"><span class="header-section-number">7.5.7.3</span> Fitting a spline</h4>
+<pre><code>#specifying internal knots
+
+bs_age = MS([bs('age',
+                internal_knots=[25,40,60],
+                name='bs(age)')]) #rename the variable names 
+Xbs = bs_age.fit_transform(Wage) # Xbs == bs_age above
+M = sm.OLS(y, Xbs).fit()
+summarize(M)
+
+# specifying df 
+bs_age0 = MS([bs('age',
+                 df=3, # df count does not include intercept. df=degree+ #knots
+                 degree=0)]).fit(Wage)
+Xbs0 = bs_age0.transform(Wage)
+summarize(sm.OLS(y, Xbs0).fit())
+
+BSpline(df=3, degree=0).fit(age).internal_knots_
+
+# Fit a natural spline
+ns_age = MS([ns('age', df=5)]).fit(Wage) #df=degree+ #knots -2
+M_ns = sm.OLS(y, ns_age.transform(Wage)).fit()
+summarize(M_ns)
+
+# fit a smoothing spline
+X_age = np.asarray(age).reshape((-1,1))
+gam = LinearGAM(s_gam(0, lam=0.6)) #gam is the smoothing spline model with a given lambda
+gam.fit(X_age, y)
+
+#Fiting a smoothing spline with an optimized lambda
+gam_opt = gam.gridsearch(X_age, y)
 
 
+# Fitting a smoothin spline by specifying a df (not including intercept)
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(X_age,
+           y,
+           facecolor='gray',
+           alpha=0.3)
+for df in [1,3,4,8,15]:
+    lam = approx_lam(X_age, age_term, df+1) # find the lambda corresponding to a df. 
+    age_term.lam = lam # update lambda
+    gam.fit(X_age, y)
+    ax.plot(age_grid,
+            gam.predict(age_grid),
+            label='{:d}'.format(df),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='Degrees of freedom');
+
+
+
+</code></pre>
+</section>
+</section>
+<section id="gam" class="level3" data-number="7.5.8">
+<h3 data-number="7.5.8" class="anchored" data-anchor-id="gam"><span class="header-section-number">7.5.8</span> GAM</h3>
+<pre><code>### manually contruct basis 
+ns_age = NaturalSpline(df=4).fit(age) #df counts do not include intercepts. -&gt; 4 columns
+ns_year = NaturalSpline(df=5).fit(Wage['year']) # -&gt; 5 cols
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -&gt; 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+gam_bh = sm.OLS(y, X_bh).fit()
+
+### Examinge partial effect
+
+age_grid = np.linspace(age.min(),
+                       age.max(),
+                       100)
+X_age_bh = X_bh.copy()[:100] # Take the first 100 rows of X_bh
+# calculate the row mean and make it a row vector in the shape of 1Xp, then broadcast
+X_age_bh[:] = X_bh[:].mean(0)[None,:] 
+X_age_bh[:,:4] = ns_age.transform(age_grid)# replace the first 4 cols with basis functions evalued at age_grid
+preds = gam_bh.get_prediction(X_age_bh) #gam_bh is the GAM model with all 14 basis
+bounds_age = preds.conf_int(alpha=0.05)
+partial_age = preds.predicted_mean
+center = partial_age.mean() # center of the prediction 
+partial_age -= center # center the prediction for better viz
+bounds_age -= center
+fig, ax = subplots(figsize=(8,8))
+ax.plot(age_grid, partial_age, 'b', linewidth=3)
+ax.plot(age_grid, bounds_age[:,0], 'r--', linewidth=3)
+ax.plot(age_grid, bounds_age[:,1], 'r--', linewidth=3)
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage', fontsize=20);
+
+
+### Using a smoothing spline and pygam package
+#### Specifying lambda
+#### default \lambda = 0.6 is used.
+gam_full = LinearGAM(s_gam(0) + # spline smoothing applies to the first col of the feature matrix
+                     s_gam(1, n_splines=7) + # smoothing applied to the 2nd col 
+                     f_gam(2, lam=0)) # smothing applied to the 3rd col: a factor col
+Xgam = np.column_stack([age,  #stack as columns
+                        Wage['year'],
+                        Wage['education'].cat.codes]) 
+gam_full = gam_full.fit(Xgam, y)
+
+gam_full.summary() # verbose summary
+
+#### Plot partial effect using a plot_gam from ISLP.pygam
+fig, ax = subplots(figsize=(8,8))
+plot_gam(gam_full, 0, ax=ax) # 0: partial plot of the first component: age
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage - default lam=0.6', fontsize=20);
+
+### Specifying df
+age_term = gam_full.terms[0]
+age_term.lam = approx_lam(Xgam, age_term, df=4+1)
+year_term = gam_full.terms[1]
+year_term.lam = approx_lam(Xgam, year_term, df=4+1)
+gam_full = gam_full.fit(Xgam, y)
+
+#### Plot partial effect
+fig, ax = subplots(figsize=(8, 8))
+ax = plot_gam(gam_full, 2)
+ax.set_xlabel('Education')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of wage on education',
+             fontsize=20);
+ax.set_xticklabels(Wage['education'].cat.categories, fontsize=8);
+</code></pre>
+<section id="anova-for-gam" class="level4" data-number="7.5.8.1">
+<h4 data-number="7.5.8.1" class="anchored" data-anchor-id="anova-for-gam"><span class="header-section-number">7.5.8.1</span> Anova for GAM</h4>
+<pre><code>gam_0 = LinearGAM(age_term + f_gam(2, lam=0)) # note age_term is a s_gam with df=4 defined above 
+gam_0.fit(Xgam, y)
+gam_linear = LinearGAM(age_term +
+                       l_gam(1, lam=0) +
+                       f_gam(2, lam=0))
+gam_linear.fit(Xgam, y)
+anova_gam(gam_0, gam_linear, gam_full)
+</code></pre>
+</section>
+<section id="logistic-gam" class="level4" data-number="7.5.8.2">
+<h4 data-number="7.5.8.2" class="anchored" data-anchor-id="logistic-gam"><span class="header-section-number">7.5.8.2</span> Logistic GAM</h4>
+<pre><code>gam_logit = LogisticGAM(age_term + 
+                        l_gam(1, lam=0) +
+                        f_gam(2, lam=0))
+gam_logit.fit(Xgam, high_earn)
+</code></pre>
+</section>
+<section id="loess" class="level4" data-number="7.5.8.3">
+<h4 data-number="7.5.8.3" class="anchored" data-anchor-id="loess"><span class="header-section-number">7.5.8.3</span> LOESS</h4>
+<pre><code>lowess = sm.nonparametric.lowess
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(age, y, facecolor='gray', alpha=0.5)
+for span in [0.2, 0.5]:
+    fitted = lowess(y,
+                    age,
+                    frac=span,
+                    xvals=age_grid)
+    ax.plot(age_grid,
+            fitted,
+            label='{:.1f}'.format(span),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='span', fontsize=15);</code></pre>
+
+
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -643,13 +944,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch7.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Moving Beyond Linearity</span></span>
+      <a href="./ch6.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

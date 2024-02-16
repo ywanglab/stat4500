@@ -1,0 +1,340 @@
+# Chapter 7: Moving Beyond Linearity
+
+Often the linearity assumption of Y of X is good. However, when it's not, 
+- Polynomials
+- step functions
+- splines
+- local regression, 
+- generalized additive models
+offer much more flexibility. 
+
+## Polynomials
+Polynomial terms of higher powers for $X_j$ or interaction terms $X_iX_j$ are used, but the model is still a linear model in the coefficients $\beta_j$. The optimum degree $d$ can be chosen by cross-validation. polynomial terms can be included in either a linear regression model or  a logistic regression model. 
+
+## Step functions 
+A step function is a piece-wise constant function. Cut a $X$ variable into $m$ regions and then create $m-1$ dummy variables to represent all those regions. Choice of *cut-points* (knots) can be problematic. 
+
+## Splines
+Piece-wise polynomials are different polynomials on different regions defined by *knots*. **Splines* are piece-wise polynomials with maximum amount of continuity. 
+
+- linear spline: with knots $\xi_k$, $k=1, \cdots, K$ is a piecewise linear polynomial that is continuous at each knot. 
+$$
+y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+1}b_{K+1}(x)+\epsilon, 
+$$
+where, $b_k$ are **basis functions** defined by 
+\begin{align}
+b_1(x) & = x \\
+b_{k+1}(x) & = (x- \xi_k)_{+}, \qquad k=1, \cdots K
+\end{align}
+Here the *positive part* is defined by 
+$$x_{+}=\begin{cases}
+x, &  \text{ if } x>0 \\
+0 &  \text{ otherwise}
+\end{cases}
+$$
+
+- cubic splines: with knots $\xi_k$, $k=1, \cdots, K$ is a piecewise cubic polynomials with continuous derivatives up to order 2 at each knot. 
+
+$$
+y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+3}b_{K+3}(x)+\epsilon, 
+$$
+**knot placement**: One strategy is to place them at appropriate quantiles of the observed $X$. 
+
+  For a **regular cubic spline**, the **basis functions** are defined by 
+\begin{align}
+b_1(x) & = x \\
+b_2(x) & = x^2 \\
+b_3(x) & = x^3 \\
+b_{k+3}(x) & = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
+\end{align}
+
+  **dof**: $K+4$ number of parameters 
+
+  a **natural cubic spline** extrapolates linearly beyond the boundary knots. This adds $2\times 2$ extra constrains, and allows to put more internal knots for the same degree of freedom as a regular cubic spline 
+    
+  **dof**: $K$. 
+
+  For a **smoothing spline**: it is the solution $g$ to the following problem:
+  $$
+  \text{minimize}_{g\in S}\sum_{i=1}^n(y_i-g(x_i))^2 +\lambda \int g''(t)dt
+  $$
+
+The first term is RSS and encourages $g(x_i)$ matches $y_i$. The second term modulates the *roughness* by a tuning parameter $\lambda \ge 0$. If $\lambda=0$, then the solution is just an interpolating polynomial. If $\lambda\to \infty$, then $g$ is a linear function. 
+
+The smoothing spline is in fact a natural spline with knots at unique values of $x_i$. it avoids the knot selection issue and leaving a single $\lambda$ to tune. An *effective degrees of freedom* can be calcualted for a smoothing spline as 
+$$
+df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii}, 
+$$
+where $\bf{S}_\lambda$ is a $n\times n$ matrix determined by $\lambda$ and $x_i$ such that the vector of $n$ fitted values can be written as 
+$$
+\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}
+$$
+The LOO cross-validation error is given by 
+$$
+\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
+$$
+- Local Regression: a non-parametric method. with a sliding weight function, fit seprate linear fits over the range of $X$ by weighted least squares. 
+
+- GAM (Generalized Additive Models): 
+  $$
+  y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
+  $$
+GAM can mix different  $f_j$, for example, a spline, or a linear term or even include low order interactive terms. The coefficients are hard to interpret, but the fitted values are of interest. 
+
+GAM can be used in fitting a regression model, that is 
+$$
+\log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
+$$
+
+
+## Homework:
+- Conceptual: 
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+```
+
+
+```
+
+### Numpy
+```
+Wage['education'].cat.categories # .cat is the categorical method accessor
+Wage['education'].cat.codes
+pd.crosstab(Wage['high_earn'], Wage['education'])
+
+np.column_stack([Wage_['age'],
+                         Wage_['year'],
+                         Wage_['education'].cat.codes-1])
+
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -> 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+
+```
+
+### Pandas
+```
+cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints. pd.cut is similar
+```
+
+
+### Graphics
+```
+ax.legend(title='$\lambda$');
+
+```
+
+### ISLP and statsmodels
+```
+
+
+```
+
+### sklearn
+
+### Useful code snippets
+#### plot a model fit with confidence interval
+```
+def plot_wage_fit(age_df, 
+                  basis, # ISL model object
+                  title):
+
+    X = basis.transform(Wage)
+    Xnew = basis.transform(age_df)
+    M = sm.OLS(y, X).fit()
+    preds = M.get_prediction(Xnew)
+    bands = preds.conf_int(alpha=0.05)
+    fig, ax = subplots(figsize=(8,8))
+    ax.scatter(age,
+               y,
+               facecolor='gray',
+               alpha=0.5)
+    for val, ls in zip([preds.predicted_mean,
+                      bands[:,0],
+                      bands[:,1]],
+                     ['b','r--','r--']):
+        ax.plot(age_df.values, val, ls, linewidth=3)
+    ax.set_title(title, fontsize=20)
+    ax.set_xlabel('Age', fontsize=20)
+    ax.set_ylabel('Wage', fontsize=20);
+    return ax
+```
+#### Fitting with a step function
+
+```
+cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints
+# note pd.get_dummies(cut_age) is the X matrix
+summarize(sm.OLS(y, pd.get_dummies(cut_age)).fit()) 
+
+```
+
+#### Fitting a spline 
+```
+#specifying internal knots
+
+bs_age = MS([bs('age',
+                internal_knots=[25,40,60],
+                name='bs(age)')]) #rename the variable names 
+Xbs = bs_age.fit_transform(Wage) # Xbs == bs_age above
+M = sm.OLS(y, Xbs).fit()
+summarize(M)
+
+# specifying df 
+bs_age0 = MS([bs('age',
+                 df=3, # df count does not include intercept. df=degree+ #knots
+                 degree=0)]).fit(Wage)
+Xbs0 = bs_age0.transform(Wage)
+summarize(sm.OLS(y, Xbs0).fit())
+
+BSpline(df=3, degree=0).fit(age).internal_knots_
+
+# Fit a natural spline
+ns_age = MS([ns('age', df=5)]).fit(Wage) #df=degree+ #knots -2
+M_ns = sm.OLS(y, ns_age.transform(Wage)).fit()
+summarize(M_ns)
+
+# fit a smoothing spline
+X_age = np.asarray(age).reshape((-1,1))
+gam = LinearGAM(s_gam(0, lam=0.6)) #gam is the smoothing spline model with a given lambda
+gam.fit(X_age, y)
+
+#Fiting a smoothing spline with an optimized lambda
+gam_opt = gam.gridsearch(X_age, y)
+
+
+# Fitting a smoothin spline by specifying a df (not including intercept)
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(X_age,
+           y,
+           facecolor='gray',
+           alpha=0.3)
+for df in [1,3,4,8,15]:
+    lam = approx_lam(X_age, age_term, df+1) # find the lambda corresponding to a df. 
+    age_term.lam = lam # update lambda
+    gam.fit(X_age, y)
+    ax.plot(age_grid,
+            gam.predict(age_grid),
+            label='{:d}'.format(df),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='Degrees of freedom');
+
+
+
+
+```
+### GAM
+```
+### manually contruct basis 
+ns_age = NaturalSpline(df=4).fit(age) #df counts do not include intercepts. -> 4 columns
+ns_year = NaturalSpline(df=5).fit(Wage['year']) # -> 5 cols
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -> 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+gam_bh = sm.OLS(y, X_bh).fit()
+
+### Examinge partial effect
+
+age_grid = np.linspace(age.min(),
+                       age.max(),
+                       100)
+X_age_bh = X_bh.copy()[:100] # Take the first 100 rows of X_bh
+# calculate the row mean and make it a row vector in the shape of 1Xp, then broadcast
+X_age_bh[:] = X_bh[:].mean(0)[None,:] 
+X_age_bh[:,:4] = ns_age.transform(age_grid)# replace the first 4 cols with basis functions evalued at age_grid
+preds = gam_bh.get_prediction(X_age_bh) #gam_bh is the GAM model with all 14 basis
+bounds_age = preds.conf_int(alpha=0.05)
+partial_age = preds.predicted_mean
+center = partial_age.mean() # center of the prediction 
+partial_age -= center # center the prediction for better viz
+bounds_age -= center
+fig, ax = subplots(figsize=(8,8))
+ax.plot(age_grid, partial_age, 'b', linewidth=3)
+ax.plot(age_grid, bounds_age[:,0], 'r--', linewidth=3)
+ax.plot(age_grid, bounds_age[:,1], 'r--', linewidth=3)
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage', fontsize=20);
+
+
+### Using a smoothing spline and pygam package
+#### Specifying lambda
+#### default \lambda = 0.6 is used.
+gam_full = LinearGAM(s_gam(0) + # spline smoothing applies to the first col of the feature matrix
+                     s_gam(1, n_splines=7) + # smoothing applied to the 2nd col 
+                     f_gam(2, lam=0)) # smothing applied to the 3rd col: a factor col
+Xgam = np.column_stack([age,  #stack as columns
+                        Wage['year'],
+                        Wage['education'].cat.codes]) 
+gam_full = gam_full.fit(Xgam, y)
+
+gam_full.summary() # verbose summary
+
+#### Plot partial effect using a plot_gam from ISLP.pygam
+fig, ax = subplots(figsize=(8,8))
+plot_gam(gam_full, 0, ax=ax) # 0: partial plot of the first component: age
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage - default lam=0.6', fontsize=20);
+
+### Specifying df
+age_term = gam_full.terms[0]
+age_term.lam = approx_lam(Xgam, age_term, df=4+1)
+year_term = gam_full.terms[1]
+year_term.lam = approx_lam(Xgam, year_term, df=4+1)
+gam_full = gam_full.fit(Xgam, y)
+
+#### Plot partial effect
+fig, ax = subplots(figsize=(8, 8))
+ax = plot_gam(gam_full, 2)
+ax.set_xlabel('Education')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of wage on education',
+             fontsize=20);
+ax.set_xticklabels(Wage['education'].cat.categories, fontsize=8);
+
+```
+#### Anova for GAM
+```
+gam_0 = LinearGAM(age_term + f_gam(2, lam=0)) # note age_term is a s_gam with df=4 defined above 
+gam_0.fit(Xgam, y)
+gam_linear = LinearGAM(age_term +
+                       l_gam(1, lam=0) +
+                       f_gam(2, lam=0))
+gam_linear.fit(Xgam, y)
+anova_gam(gam_0, gam_linear, gam_full)
+
+```
+
+#### Logistic GAM
+```
+gam_logit = LogisticGAM(age_term + 
+                        l_gam(1, lam=0) +
+                        f_gam(2, lam=0))
+gam_logit.fit(Xgam, high_earn)
+
+```
+
+#### LOESS
+```
+lowess = sm.nonparametric.lowess
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(age, y, facecolor='gray', alpha=0.5)
+for span in [0.2, 0.5]:
+    fitted = lowess(y,
+                    age,
+                    frac=span,
+                    xvals=age_grid)
+    ax.plot(age_grid,
+            fitted,
+            label='{:.1f}'.format(span),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='span', fontsize=15);
+```

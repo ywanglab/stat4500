@@ -1,0 +1,3549 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={stat4500notes},
+  pdfauthor={Yi Wang},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{stat4500notes}
+\author{Yi Wang}
+\date{2023-09-19}
+
+\begin{document}
+\maketitle
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\bookmarksetup{startatroot}
+
+\chapter*{Preface}\label{preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+\markboth{Preface}{Preface}
+
+This is a Lecture note written for the course STAT 4500: Machine
+Learning offered at Auburn University at Montgomery. The course uses the
+textbook James et al. (2023).
+
+This is a book wrtieen by Quarto book.
+
+To learn more about Quarto books visit
+\url{https://quarto.org/docs/books}.
+
+\bookmarksetup{startatroot}
+
+\chapter{Setting up Python Computing
+Environment}\label{setting-up-python-computing-environment}
+
+\section{on Your own computer}\label{on-your-own-computer}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  you can either \texttt{git\ clone} or download a zipped file
+  containing the codes from the site:
+  \url{https://github.com/intro-stat-learning/ISLP_labs/tree/stable}. If
+  downloaded a zipped file of the codes, unzipped the file to a folder,
+  for example, named \texttt{islp}. If \texttt{git\ clone} (preferred,
+  you need to have Git installed on your computer, check this link for
+  how to install \texttt{Git}
+  \url{https://ywanglab.github.io/stat1010/git.html}), do
+  \texttt{git\ clone\ https://github.com/intro-stat-learning/ISLP\_labs.git}
+\item
+  Download and install the following software:
+
+  \begin{itemize}
+  \item
+    \textbf{Anaconda}: Download anaconda and install using default
+    installation options
+  \item
+    \textbf{Visual Studio Code} (VSC): Download VSC and install
+  \item
+    start VSC and install VSC extensions in VSC: Python, Jupyter,
+    intellicode
+  \item
+    (optional) \textbf{Quarto} for authoring: Download Quarto and
+    install
+  \end{itemize}
+\item
+  Create a virtual environment named \texttt{islp} for Python. Start an
+  anaconda terminal.
+
+\begin{verbatim}
+  conda create -n islp python==3.10
+  conda activate islp
+  conda install pip ipykernel
+  pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2.1.2/requirements.txt
+\end{verbatim}
+\item
+  You are ready to run the codes using \texttt{VSC} or
+  \texttt{jupyter\ lab}.
+
+  \begin{itemize}
+  \item
+    Activate the venv: \texttt{conda\ activate\ islp}
+  \item
+    Start a Anaconda terminal, navigate to the folder using the command
+    \texttt{cd\ path/to/islp}, where \texttt{path/to/islp} means the
+    file path to the folder \texttt{islp}, such as
+    \texttt{\textbackslash{}Users\textbackslash{}ywang2\textbackslash{}islp}.
+    Start VSC by typing \texttt{code\ .} in the anaconda terminal.
+  \item
+    open/create a \texttt{.ipynb} or \texttt{.py} file.
+  \item
+    Select the kernel \texttt{islp}
+  \item
+    Run a code cell by pressing \texttt{Shift+Enter} or click the
+    triangular play button.
+  \item
+    Continue to run other cells.
+  \item
+    After finishing using VSC, close the VSC, and deactivate the virtual
+    environment in a conda terminal: \texttt{conda\ deactivate}
+  \end{itemize}
+\end{enumerate}
+
+\section{Use Google Colab}\label{use-google-colab}
+
+All you need is a Google account. Sign in your Google account in a
+browser, and navigate to Google Colab. Google Colab supports both
+\texttt{Python} and \texttt{R}. \texttt{Python} is the default engine.
+Change the engine to \texttt{R} in
+\texttt{Connect}-\textgreater{}\texttt{change\ runtime\ type}. Then you
+are all set. Your file will be saved to your Google Drive or you can
+choose to send it to your \texttt{GitHub} account (recommended).
+
+\subsection{How to run a project file from your Google
+Drive?}\label{how-to-run-a-project-file-from-your-google-drive}
+
+Many times, when you run a python file in Colab, it needs to access
+other files, such as data files in a subdirectory. In this case, it
+would be convenient to have the same file structure in the Google Colab
+user home directory. To do this, you can use Google Drive to store your
+project folder, and then mount the Google Drive in Colab.
+
+Let's assume the project folder name, \texttt{islp/}.Here are the steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{git\ clone} the project folder (example:
+  \texttt{git\ clone\ https://github.com/intro-stat-learning/ISLP\_labs.git})
+  to your local folder. This step is only needed when you want to clone
+  some remote repo from GitHub.
+\item
+  \textbf{Upload} the folder (ex: \texttt{islp}) to Google Drive.
+\item
+  \textbf{Open the file using Colab}. In Google Drive, double click on
+  the \texttt{ipynb} file, example, \texttt{ch06.ipynb} (or click on the
+  three dots on the right end, and choose \texttt{open\ with}, then
+  \texttt{Google\ Colaborotary}), the file will be opened by Google
+  Colab.
+\item
+  \textbf{Mount the Google Drive}. In Google Colab, with the specific
+  file (example, \texttt{ch06.ipynb}) being opened, move your cursor to
+  the first code cell, and then click on the folder icon (this should be
+  the fourth icon) on the upper left border in the Colab browser. This
+  will open the file explorer pane. Typically you would see a folder
+  named \texttt{sample\_data} shown. On the top of the pane, click on
+  the Google Drive icon to mount the Google Drive. Google Colab will
+  insert the following code below the cursor in your opened
+  \texttt{ipynb} file:
+
+\begin{verbatim}
+from google.colab import drive
+drive.mount('/content/drive')
+\end{verbatim}
+
+  Run this code cell by pressing \texttt{SHIFT+ENTER}, and follow the
+  prompts to complete the authentication. Wait for \textasciitilde10
+  seconds, your Google Drive will be mounted in Colab, and it will be
+  displayed as a folder named \texttt{drive} in the file explorer pane.
+  You might need to click on the \texttt{Refresh} folder icon to see the
+  folder \texttt{drive}.
+\item
+  Open a new code cell below the above code cell, and type the code
+
+\begin{verbatim}
+  %cd /content/drive/MyDrive/islp/
+\end{verbatim}
+
+  This is to change the directory to the project directory on the Google
+  Drive. Run this code cell, and you are ready to run the file
+  \texttt{ch06.ipynb} from the folder \texttt{islp} on your personal
+  Google Drive, just like it's on your local computer.
+\end{enumerate}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 2: Statistical
+Learning}\label{chapter-2-statistical-learning}
+
+\section{What is statistical
+learning?}\label{what-is-statistical-learning}
+
+For the input variable \(X\in \mathbb{R}^p\) and response variable
+\(Y\in \mathbb{R}\), assume that \[Y=f(X) + \epsilon, \] where
+\(\epsilon\) is a random variable representing \textbf{irreducible
+error}. We assume \(\epsilon\) is \emph{independent} of \(X\) and
+\(E[\epsilon]=0\). \(\epsilon\) may include \emph{unmeasured variables}
+or \emph{unmeasurable variation}.
+
+Statistical learning is to estimate \(f\) using various methods. Denote
+the estimate by \(\hat{f}\).
+
+\begin{itemize}
+\tightlist
+\item
+  regression problem: when \(Y\) is a continuous (quantitative) variable
+  . In this case \(f(x)=E(Y|X=x)\) is the population \emph{regression}
+  function, that is, regression finds a conditional expectation of
+  \(Y\).
+\item
+  classification problem: when \(Y\) only takes small number of discrete
+  values, i.e., qualitative (categorical).
+\end{itemize}
+
+\textbf{Logistic regression} is a classification problem, but since it
+estimates class probability, it may be considered as a regression
+problem.
+
+\begin{itemize}
+\tightlist
+\item
+  supervised learning: training data
+  \(\mathcal{Tr}=\{(x_i, y_i):i\in \mathbb{Z}_n\}\): linear regression,
+  logistic regression
+\item
+  unsupervised learning: when only \(x_i\) are available. clustering
+  analysis, PCA
+\item
+  semi-supervised learning: some data with labels (\(y_i\)), some do
+  not.
+\item
+  reinforcement learning: learn a state-action policy function for an
+  agent to interacting with an environment to maximize a reward
+  function.
+\end{itemize}
+
+\section{\texorpdfstring{Why estimate
+\(f\)?}{Why estimate f?}}\label{why-estimate-f}
+
+We can use estimated \(\hat{f}\) to
+
+\begin{itemize}
+\tightlist
+\item
+  make predictions for a new \(X\), \[\hat{Y} =\hat{f}(X). \] The
+  prediction error may be quantified as
+  \[E[(Y-\hat{Y})^2] = (f(X)-\hat{f})^2 +\text{Var}[\epsilon].\] The
+  first term of the error is \emph{reducible} by trying to improve
+  \(\hat{f}\), where we assume \(f\), \(\hat{f}\) and \(X\) are fixed.
+\item
+  make inference, such as
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Which predictors are associated with the response?
+  \item
+    what is the relationship between the response and each predictor?
+  \item
+    is the assumed relationship adequate? (linear or more complicated?)
+  \end{itemize}
+\end{itemize}
+
+\section{\texorpdfstring{How to estimate
+\(f\)}{How to estimate f}}\label{how-to-estimate-f}
+
+We use obtained observations called \textbf{training data}
+\(\{(x_k, y_k): k \in \mathbb{Z}_n \}\) to train an algorithm to obtain
+the estimate \(\hat{f}\).
+
+\begin{itemize}
+\item
+  Parametric methods: first assume there is a function form (shape) with
+  some parameters. For example, a linear regression model with two
+  parameters. Then use the \emph{training data} to \textbf{train} or
+  \textbf{fit} the model to determine the values of the parameters.
+
+  \textbf{Advantages}: simplify the problem of fit an arbitrary function
+  to estimate a set of parameters.
+
+  \textbf{Disadvantages}: may not be flexible unless with large number
+  of parameters and/or complex function shapes.
+
+  Example: linear regression,
+\item
+  Non-parametric methods: Do not explicitly assume a function form of
+  \(f\). They seek to estimate \(f\) directly using data points, can be
+  quite flexible and accurate.
+
+  **Disadvantage: need large number of data points
+
+  Example: KNN (but breakdown for higher dimention. Typically only for
+  \(p\le 4\)), spline fit.
+\end{itemize}
+
+\section{How to assess model
+accuracy}\label{how-to-assess-model-accuracy}
+
+For regression problems, the most commonly used measure is the
+\emph{mean squared error} (MSE), given by \[
+MSE = \frac{1}{n}\sum_{i=1}^n (y_i-\hat{f}(x_i))^2
+\] For classification problems, typically the following \textbf{error
+rate} (classifications error) is calculated: \[
+\frac{1}{n} \sum_{i=1}^{n} I(y_i\ne \hat{y}_i)
+\] The accuracy on a training set can be arbitrarily increased by
+increasing the model flexibility. However, we are in general interested
+in the error on the test set rather on the training set, the model
+accuracy should be assessed on a test set.
+
+Flexible models tend to overfit the data, which essentially means they
+follow the error or \emph{noise} too closely in the training set,
+therefore cannot be generalized to \emph{unseen cases} (test set).
+
+\section{Model Selection:}\label{model-selection}
+
+\textbf{No free lunch theorem}
+
+There is no single best method for all data sets, which means some
+method works better than other methods for a particular dataset.
+Therefore, one needs to perform model selections. Here are some
+principles.
+
+\subsection{Trade-off between Model flexibility and Model
+Interpretability}\label{trade-off-between-model-flexibility-and-model-interpretability}
+
+More flexible models have higher \emph{degree of freedom} and are less
+interpretable because it's difficult to interpret the relationship
+between a predictor and the response.
+
+LASSO is less flexible than linear regression. GAM (generalized additive
+model) allows some non-linearity. Full non-linear models have higher
+flexibility, such as \emph{bagging, boosting, SVM}, etc.
+
+When \emph{inference} is the goal, then there are advantages to using
+simple and less flexible models for interpretability.
+
+When \emph{prediction} is the main goal, more flexible model may be a
+choice. But sometimes, we obtain more accurate prediction using a
+simpler model because the underlying dataset has a simpler structure.
+Therefore, it is not necessarily true that a more flexible model has a
+higher prediction accuracy.
+
+\textbf{Occam's Razor}: Among competing hypotheses that perform equally
+well, the one with the fewest assumptions should be selected.
+
+\subsection{Model Selection: the Bias-Variance
+Trade-off}\label{model-selection-the-bias-variance-trade-off}
+
+As the model flexibility increases, the training MSE (or error rate for
+classificiton) will decrease, but the test MSE (error rate) in general
+will not and will show a characteristic \textbf{U-shape}. This is
+because when evaluated at a test point \(x_0\), the expected test MSE
+can be decomposed into \[
+E\left[ (y_0-\hat{f}(x_0))^2 \right] = \text{Var}[\hat{f}(x_0)] + (\text{Bias}(\hat{f}(x_0)))^2+\text{Var}[\epsilon]
+\] where the expectation is over different \(\hat{f}\) on a different
+training set or on a different training step if the training process is
+stochastic, and \[
+\text{Bias}(\hat{f}(x_0))= E[\hat{f}(x_0)]-f(x_0)
+\] To obtain the least test MSE, one must trade off between variance and
+bias. Less flexible model tendes to have higher bias, and more flexible
+models tend to have higher variance. An optimal flexibility for the
+least test MSE varies with different data sets. Non-linear data tends to
+require higher optimal flexibility.
+
+\section{Bayes Classifier}\label{bayes-classifier}
+
+It can be shown that Bayes Classifier minimizes the classification test
+error \[
+\text{Ave}(I(y_0\ne \hat{y}_0)).
+\] A Bayes Classifier assigns a test observation with predictor \(x_0\)
+to the class for which \[
+\text{Pr}(Y=j|X=x_0)
+\] is largest. It's error rate is given by \[
+1-E[\max_{j} \text{Pr}(Y=j|X)]
+\]
+
+where the expectation is over \(X\). The Bayes error is analogous to the
+irreducible error \(\epsilon\).
+
+Bayes Classifier is not attainable as we do not know \(\text{Pr}(Y|X)\).
+We only can estimate \(\text{Pr}(Y|X)\). One way to do this is by KNN.
+KNN estimate the conditional probability simply with a majority vote.
+The flexibility of KNN increases as \(1/K\) increases with \(K=1\) being
+the most flexible KNN. The training error is 0 for \(K=1\). A suitable
+\(K\) should be chosen for an appropriate trade off between bias and
+variance. The KNN classifier will classify the test point \(x_0\) based
+on the probability calculated from the \(k\) nearest points. KNN
+regression on the other hand will assign the test point \(x_0\) the
+average value of the \(k\) nearest neighbors.
+
+\section{Homework (* indicates
+optional):}\label{homework-indicates-optional}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1,2,3,4*,5,6,7
+\item
+  Applied: 8, 9*, 10*
+\end{itemize}
+
+\section{Code Gist}\label{code-gist}
+
+\subsection{OS}\label{os}
+
+\begin{verbatim}
+import os
+os.chdir(path) # change dir
+\end{verbatim}
+
+\subsection{Python:}\label{python}
+
+Concatenation using \texttt{+}
+
+\begin{verbatim}
+"hello" + " " + "world"  # 'hello world'
+[3,4,5] + [4,9,7] # [3,4,5, 4,9,7]
+\end{verbatim}
+
+String formatting using \texttt{string.format()}
+
+\begin{verbatim}
+print('Total is: {0}'.format(total))
+\end{verbatim}
+
+\texttt{zip} to loop over a sequence of tuples
+
+\begin{verbatim}
+for value, weight in zip([2,3,19],
+                         [0.2,0.3,0.5]):
+    total += weight * value
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy}
+
+\subsubsection{Numpy functions:}\label{numpy-functions}
+
+\texttt{np.sum(x)}, \texttt{np.sqrt(x)} (entry wise). \texttt{x**2}
+(entry wise power), \texttt{np.corrcoef(x,y)} (find the correlation
+coefficient of array \texttt{x} and array \texttt{y})
+
+\texttt{np.mean(axis=None)}: axis could be \texttt{None} (all entries),
+\texttt{0}(along row), \texttt{1}(along column)
+
+\texttt{np.var(x,\ ddof=0)}, \texttt{np.std(x,\ ddof=0)}, \# Note both
+\texttt{np.var} and \texttt{np.std} accepts an argument \texttt{ddof},
+the divisor is \texttt{N-ddof}.
+
+\texttt{np.linspace(-np.pi,\ np.pi,\ 50)} \# start, end, number of
+points 50
+
+\texttt{np.multiply.outer(row,col)} \# calculate the product over the
+mesh with vectors \texttt{row} and \texttt{col}.
+
+\texttt{np.zeros(shape\ or\ int,\ dtype)} \#eg:
+\texttt{np.zeros(5,bool)}
+
+\texttt{np.ones(Boston.shape{[}0{]})}
+
+\texttt{np.all(x)}, \texttt{np.any(x)}: check if all or any entry of
+\texttt{x} is true.
+
+\texttt{np.unique(x)}: find unique values in \texttt{x}.
+\texttt{np.isnan(x)}: return a boolean array of \texttt{len(x)}.
+\texttt{np.isnan(x).mean()}: find the percentage of \texttt{np.nan}
+values in \texttt{x}.
+
+\subsubsection{Array Slicing and
+indexing}\label{array-slicing-and-indexing}
+
+\texttt{np.arange}(start, stop, step) \# numpy version of \texttt{range}
+
+\texttt{x{[}slice(3:6){]}} \# equivalent to \texttt{x{[}3:6{]}}
+
+Indexing an array using \texttt{{[}row,\ col{]}} format. If \texttt{col}
+is missing, then index the entire rows. \texttt{len(row)} must be equal
+to \texttt{len(col)}. Otherwise use iterative indexing or use
+\texttt{np.ix\_(x\_idx,\ y\_idx)} function, or use Boolean indexing, see
+below.
+
+\begin{verbatim}
+A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
+A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
+A[:,[0,2]] # cols 0 and 2
+A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
+A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
+A[[1,3], [0,2,3]] # syntax error
+# instead one can use the following two methods 
+A[[1,3]][:,[0,2]] # iterative subsetting
+A[np.ix_([1,3],[0,2,3])] # use .ix_ function to create an index mesh
+A[keep_rows, keep_cols] # keep_rows, keep_cols are boolean arrays of the same length of rows or cols, respectively
+A[np.ix_([1,3],keep_cols)] # np.ix_()can be applied to mixture of integer array and boolean array
+\end{verbatim}
+
+\subsubsection{Random numbers and
+generators}\label{random-numbers-and-generators}
+
+\begin{verbatim}
+np.random.normal(loc=0.0, scale=1.0,size=None) # size can be an integer or a tuple.
+# 
+rng = np.random.default_rng(1303) # set random generator seed
+rng.normal(loc=0, scale=5, size=2) # 
+rng.standard_normal(10) # standard normal distribution of size 10
+rng.choice([0, np.nan], p=[0.8,0.2], size=A.shape)
+\end{verbatim}
+
+\subsubsection{Numpy array atributes}\label{numpy-array-atributes}
+
+\texttt{.dtype}, \texttt{.ndim}, \texttt{.shape}
+
+\subsubsection{Numpy array methods}\label{numpy-array-methods}
+
+\texttt{x.sum(axis=None)} (equivalent to \texttt{np.sum(x)}),
+\texttt{x.T} (transpose),
+
+\texttt{x.reshape((2,3))} \# x.reshape() is a reference to x.
+
+\texttt{x.min()}, \texttt{x.max()}
+
+\subsection{Graphics}\label{graphics}
+
+\subsubsection{2-D figure}\label{d-figure}
+
+\begin{verbatim}
+# Using the subplots + ax methods
+fig, ax = subplots(nrows=2, ncols=3, figsize=(8, 8)) 
+# explicitly name each axis in the grid 
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
+
+ax[0,1].plot(x, y,marker='o', 'r--', linewidth=3); #line plot. `;` suppresses the text output. pick ax[0,1] when there are  multiple axes
+ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
+ax.scatter(x, y, marker='o'); #scatter plot
+ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
+ax.set_xlabel("this is the x-axis")
+ax.set_ylabel("this is the y-axis")
+ax.set_title("Plot of X vs Y");
+axes[0,1].set_xlim([-1,1]) # set x_lim. similarly `set_ylim()`
+
+fig = ax.figure  # get the figure object from an axes object
+fig.set_size_inches(12,3) # access the fig object to change fig size (width, height)
+fig # re-render the figure
+fig.savefig("Figure.pdf", dpi=200); #save a figure into pdf. Other formats: .jpg, .png, etc
+\end{verbatim}
+
+\subsubsection{Contour and image}\label{contour-and-image}
+
+\begin{verbatim}
+fig, ax = subplots(figsize=(8, 8))
+x = np.linspace(-np.pi, np.pi, 50)
+y = x
+f = np.multiply.outer(np.cos(y), 1 / (1 + x**2))
+ax.contour(x, y, f, levels=None); # numbre of levels. if None, automatically choose
+ax.imshow(f); # heatmap colorcoded by f
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas}
+
+\subsubsection{loading data}\label{loading-data}
+
+\begin{verbatim}
+pd.read_csv('Auto.csv') # read csv
+pd.read_csv('Auto.data', 
+            na_values =['?'], #specifying the na_values in the datafile. 
+            delim_whitespace=True) # read whitespaced text file
+pd.read_csv('College.csv', index_col=0) # use column `0` as the row labels 
+\end{verbatim}
+
+\subsubsection{Pandas Dataframe attributes and
+methods}\label{pandas-dataframe-attributes-and-methods}
+
+\begin{verbatim}
+Auto.shape
+Auto.columns # gets the list of column names
+Auto.index #return the index (labels) objects
+Auto['horsepower'].to_numpy() # convert to numpy array
+Auto['horsepower'].sum()
+
+Auto.dropna() # drop the rows containing na values. 
+df.drop('B', axis=1, inplace=True) # drop a column 'B' inplace. 
+#equivalent to df.drop(columns=['B'], inplace=True)
+df.drop(index=['Ohio','Colorado']) #eqivalent to: df.drop(['Ohio','Colorado'], axis=0)
+auto_df.drop(auto_df.index[10:86]) # drop rows with index[10:86] not including 86
+
+Auto.set_index('name')# rename the index using the column 'name'.
+
+pd.Series(Auto.cylinders, dtype='category') # convert the column `cylinders` to 'category` dtype
+# the convertison can be done using `astype()` method
+Auto.cylinders.astype('category')
+Auto.describe() # statistics summary of all columns
+Auto['mpg'].describe() # for selected columns
+
+college.rename({'Unnamed: 0': 'College'}, axis=1): # change column name, 
+# alternavie way
+college_df.rename(columns={college_df.columns[0] : "College"}, inplace=True) #
+
+college['Elite'] = pd.cut(college['Top10perc'],  # binning a column
+                          [0,0.5,1],  #bin edges
+                          labels=['No', 'Yes'],  # bin labels (names)
+                          right=True,# True: right-inclusive (default) for each bin ( ]; False:rigth-exclusive 
+                          )   
+college['Elite'].value_counts() # frequency counts
+auto.columns.tolist() # equivalent to  auto.columns.format() (rarely used)
+\end{verbatim}
+
+\subsubsection{Selecting rows and
+columns}\label{selecting-rows-and-columns}
+
+Select Rows:
+
+\begin{verbatim}
+Auto[:3] # the first 3 rows. 
+Auto[Auto['year'] > 80] # select rows with boolean array
+Auto_re.loc[['amc rebel sst', 'ford torino']] #label_based row selection
+Auto_re.iloc[[3,4]] #integer-based row seleciton: rows 3 and 4 (index starting from 0)
+\end{verbatim}
+
+Select Columns
+
+\begin{verbatim}
+Auto['horsepower'] # select the column 'horsepower', resulting a pd.Series.
+Auto[['horsepower']] #obtain a dataframe of the column 'horsepower'. 
+Auto_re.iloc[:,[0,2,3]] # intger-based selection
+auto_df.select_dtypes(include=['int16','int32']) # select columns by dtype
+\end{verbatim}
+
+Select a subset
+
+\begin{verbatim}
+Auto_re.iloc[[3,4],[0,2,3]] # integer-based 
+Auto_re.loc['ford galaxie 500', ['mpg', 'origin']] #label-based 
+Auto_re.loc[Auto_re['year'] > 80, ['weight', 'origin']] # mix bolean indexing with labels
+
+Auto_re.loc[lambda df: (df['year'] > 80) & (df['mpg'] > 30),
+            ['weight', 'origin']
+           ]  # using labmda function with loc[]
+\end{verbatim}
+
+\subsubsection{Pandas graphics}\label{pandas-graphics}
+
+Without using \texttt{subplots} to get axes and figure objects
+
+\begin{verbatim}
+ax = Auto.plot.scatter('horsepower', 'mpg') #scatter plot of 'horsepower' vs 'mpg' from the dataframe Auto
+ax.set_title('Horsepower vs. MPG');
+fig = ax.figure
+fig.savefig('horsepower_mpg.png');
+
+plt.gcf().subplots_adjust(bottom=0.05, left=0.1, top=0.95, right=0.95) #in percentage of the figure size. 
+ax1.fig.suptitle('College Scatter Matrix', fontsize=35)
+\end{verbatim}
+
+Using \texttt{subplots}
+
+\begin{verbatim}
+fig, axes = subplots(  ncols=3, figsize=(15, 5))
+Auto.plot.scatter('horsepower', 'mpg', ax=axes[1]);
+Auto.hist('mpg', ax=ax);
+Auto.hist('mpg', color='red', bins=12, ax=ax); # more customized 
+\end{verbatim}
+
+Boxplot using \texttt{subplots}
+
+\begin{verbatim}
+Auto.cylinders = pd.Series(Auto.cylinders, dtype='category') # needs to convert the `cylinders` column to categorical dtype
+fig, ax = subplots(figsize=(8, 8))
+Auto.boxplot('mpg', by='cylinders', ax=ax);
+\end{verbatim}
+
+Scatter matrix
+
+\begin{verbatim}
+pd.plotting.scatter_matrix(Auto); # all columns
+pd.plotting.scatter_matrix(Auto[['mpg',
+                                 'displacement',
+                                 'weight']]);  # selected columns
+                                 
+                                 
+#Alternatively with sns.pairplot
+
+\end{verbatim}
+
+Sns Graphic
+
+\begin{verbatim}
+# Scatter matrix
+ax1 = sns.pairplot(college_df[college_df.columns[0:11]])
+
+# Boxplot
+sns.boxplot(ax=ax, x="Private", y="Outstate", data=college_df)
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 3: Linear
+Regression}\label{chapter-3-linear-regression}
+
+Linear regression is a simple supervised learning assuming a linear
+relation between \(Y\) and \(X\). When there is only one predictor, it's
+a \textbf{simple linear regression}. When there are more than one
+predictors, it's called \textbf{multiple linear regression}. Note
+\emph{multivariate regression} refer to the \(Y\) variable is a vector.
+
+\section{Simple Linear Regression}\label{simple-linear-regression}
+
+Assumes the \emph{population regression line} model \[
+Y = \beta_0 + \beta_1 X +\epsilon, 
+\] where, \(\beta_0\) is the \emph{expected} value of \(Y\) when
+\(X=0\), and \(\beta_1\) is the \emph{average} change in \(Y\) with a
+one-unit increase in \(X\). \(\epsilon\) is a ``catch all'' error term.
+
+After training using the training data, we can obtain the parameter
+estimates \(\hat{\beta}_0\) and \(\hat{\beta}_1\). The we can obtain the
+prediction for \(x\) given by the \emph{least square line}: \[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+\] The error at a data point \(x_i\) is given by
+\(e_i = y_i -\hat{y}_i\), and the \emph{residual sum of squares} (RSS)
+is \[
+\text{RSS} =e_1^2+\cdots +e_n^2. 
+\] One can use the least square approach to minimize RSS to obtain \[
+\hat{\beta}_1 =\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}=r_{xy}\frac{\sigma_y}{\sigma_x}
+\] \[
+\hat{\beta}_0= \bar{y}-\hat{\beta}_1 \bar{x}
+\] where, \(\bar{y}=\frac{1}{n}\sum_{i=1}^n y_i\) and
+\(\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\). If we assume the data matrix
+\(X\) is demeaned, then \(\hat{beta}_0=\bar{y}\). and the correlation
+\begin{equation}\phantomsection\label{eq-correlation-rxy}{
+r_{xy} = \frac{\text{cov}(x,y)}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}.
+}\end{equation} is the normalized covariance. Note
+\(-1\le r_{xy} \le 1\). When there is no intercept, that is
+\(\beta_0=0\), then \[
+\hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
+\] where, \[
+\hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
+\] That is, the fitted values are linear combinations of the response
+values when there is no intercept.
+
+\subsection{Assessing the accuracy of the
+coefficients}\label{assessing-the-accuracy-of-the-coefficients}
+
+Let \(\sigma^2=\text{Var}(\epsilon)\), that is, \(\sigma^2\) is the
+variance of \(Y\), (estimated by
+\(\sigma^2\approx =\text{RSE} =\text{RSS}/(n-p-1)\). ) Assume each
+observation have \emph{common variance} (homoscedasticity) and are
+\emph{uncorrelated}, then the standard errors under repeated sampling \[
+(\text{SE}[\hat{\beta}_1])^2 = \frac{1}{\sigma^2_x}\cdot \frac{\sigma^2}{n}
+\] \[
+(\text{SE}[\hat{\beta}_0])^2 = \left[1+ \frac{\bar{x}^2}{\sigma^2_x} \right]\cdot \frac{\sigma^2}{n}
+\]
+
+\begin{itemize}
+\item
+  when \(x_i\) are more spread out (with large \(\sigma_x^2\)), then
+  \(\text{SE}[\hat{\beta}_1]\) is small. This is because there are more
+  \emph{leverage} (of \(x\) values) to estimate the slope.
+\item
+  when \(\bar{x} =0\) , then
+  \(\text{SE}[\hat{\beta}_0] = \text{SE}[\bar{y}]\). In this case,
+  \(\hat{\beta}_0 = \bar{y}\).
+\end{itemize}
+
+Standard errors are used to construct CI and perform hypothesis test for
+the estimated \(\hat{\beta}_0\) or \(\hat{\beta}_1\). Under the
+assumption of \textbf{Gaussian error}, One can construct the CI of
+significance level \(\alpha\) (e.g., \(\alpha=0.05\)) as \[
+\hat{\beta}_j = [\hat{\beta}_j- t_{1-\alpha/2,n-p-1}\cdot \text{SE}[\hat{\beta}_j], \hat{\beta}_j+ t_{1-\alpha/2,n-p-1} \cdot \text{SE}[\hat{\beta}_j]  ]
+\] Where \(j=0, 1\). Large interval including zero indicates \(\beta_j\)
+is not statistically significant from 0. When \(n\) is sufficient large,
+\(t_{0.975,n-p-1} \approx 2\). With the standard errors of the
+coefficients, one can also perform \textbf{hypothesis test} on the
+coefficients. For \(j=0,1\),
+
+\[H_0: \beta_j=0\] \[H_A: \beta_j\ne 0\] The \(t\)-statistic of degree
+\(n-p-1\), given by \[
+t = \frac{\hat{\beta}_j - 0}{\text{SE}[\hat{\beta}_j]}
+\] shows how far away \(\hat{\beta}_j\) is away from zero, normalized by
+its error \(\text{SE}[\hat{\beta}_j]\). One can then compute the
+\(p\)-value corresponding to this \(t\) and test the hypothesis. Small
+\(p\)-value indicates \textbf{strong} relationship.
+
+\section{Multiple Linear Regression}\label{multiple-linear-regression}
+
+\[
+Y= \beta_0 + \beta_1X_1 +\cdots + \beta_pX_p + \epsilon.
+\] The estimate of the coefficients \(\hat{\beta_j}\),
+\(j\in \mathbb{Z}_{p+1}\) are found by using the same least square
+method to minimize RSS. we interpret \(\beta_j\) as the \emph{expected}
+(average) effect on \(Y\) with one unit increase in \(X_j\),
+\textbf{holding all other predictors fixed}. This interpretation is
+based on the assumptions that \emph{the predictors are uncorrelated}, so
+\emph{each predictor can be estimated and tested separately}. When there
+are correlations among predictors, the variance of all coefficients
+tends to increase, sometimes dramatically, and the previous
+interpretation becomes hazardous because when \(X_j\) changes,
+everything else changes.
+
+\subsection{\texorpdfstring{\textbf{Model
+Assumption}}{Model Assumption}}\label{model-assumption}
+
+\begin{itemize}
+\item
+  linearity: \(Y\) is linear in \(X\). The change in Y associated with
+  one unit of change in \(X_j\) is constant, regardless of the value of
+  \(X_j\). This can be examined visually by plotting the \emph{residual
+  plot} (\(e_i\) vs.~\(x_i\) for \(p=1\) or \(e_i\) vs \(\hat{y}_i\) for
+  multiple regression). If the linear assumption is true, then the
+  residual plot should not exhibit obvious pattern. If there is a
+  nonlinear relationship suggested by by the residual plot, then a
+  simple approach is to include transformed \(X\), such as \(\log X\),
+  \(\sqrt{X}\), or \(X^2\).
+\item
+  additive: The association between \(X_j\) and \(Y\) is independent of
+  other predictors.
+\item
+  Errors \(\epsilon_i\) are uncorrelated. This means \(\epsilon_i\)
+  provides no information for \(\epsilon_{i+1}\). Otherwise (for
+  example, frequently observed in a time series, where error terms are
+  positively correlated, and \emph{tracking} is observed in the
+  residuals, i.e., adjacent error terms take similar values), the
+  estimated standard error will tend to be underestimated, hence leading
+  less confidence in the estimated model.
+\item
+  Homoscedasticity: \(\text{Var}(\epsilon_i) =\sigma^2\). The error
+  terms have constant variance. If not (heteroscedasticity), one may use
+  transformed \(Y\), such as \(\sqrt{Y}\), or \(\log(Y)\) to mitigate
+  this; or use \emph{weighted least squares} if it's known that for
+  example \(\sigma_i^2=\sigma^2/n_i\).
+\item
+  Non-colinearity: two variables are colinear if they are highly
+  correlated with each other. Co-linearity causes a great deal of
+  \emph{uncertainty} in the coefficient estimates, that is, reducing the
+  accuracy of the coefficient estimates, thus cause the standard error
+  of \(\beta_j\) to grow, and hence smaller \(t\)-statistic. As a
+  result, we may fail to reject \(H_0: \beta_j=0\). This in turn means
+  the power of Hypothesis test, the probability of correctly detecting a
+  \emph{non-zero} coefficient is reduced by colinearity. To detect
+  colinearity,
+
+  \begin{itemize}
+  \item
+    use the correlation matrix of predictors. Large value of the matrix
+    in absolute value indicates highly correlated variable pairs. But
+    this approach cannnot detect \emph{multicolinearity}.
+  \item
+    Use VIF (Variance inflation factor, VIF \(\ge 1\)) to detect
+    multicolinearity. It is possible for colinearity exists between
+    three or more variables even if no pair of variables has a
+    particularly high correlation. This is the \emph{multicolinearity}
+    situation.
+  \end{itemize}
+
+  VIF is the ratio of the variance of \(\hat{\beta}_j\) when fitting the
+  full model divided by the variance of \(\hat{\beta}_j\) if fit on its
+  own. It can be calculated by \[
+    \text{VIF}(\hat{\beta}_j) =\frac{1}{1-R^2_{X_j|X_{-j}}}
+    \] Where \(R^2_{X_j|X_{-j}}\) is the \(R^2\) from a regression of
+  \(X_j\) onto all of the other predictors. A VIF value exceeds 5 or 10
+  (i.e., \(R^2_{X_j|X_{-j}}\) close to 1) indicates colinearity.
+
+  To remedy a colinearity problem:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    drop a redundant variable (variables with colinearity should have
+    similar VIF values. )
+  \item
+    Combine the colinear variables into a single predictor, e.g., taking
+    the average of the standardized versions of those variables.
+  \end{itemize}
+\end{itemize}
+
+\textbf{Claims of causality should be avoided for observational data}.
+
+\subsection{Assessing existence of linear
+relationship}\label{assessing-existence-of-linear-relationship}
+
+\begin{itemize}
+\tightlist
+\item
+  test Hypothesis (test if there is a linear relationship between the
+  response and predictors) \[
+  H_0: \beta_1=\beta_2=\cdots = \beta_p=0
+  \] \[
+  H_a: \text{at least one } \beta_j \text{ is non-zero.}
+  \] using \(F\)-statistic \[
+  F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\text{RSS}/(n-p-1)}\sim F_{p,n-p-1}
+  \] If \(H_0\) is true, \(F\approx 1\); if \(H_a\) is true, \(F>>1\).
+  \(F\)-statistic adjust with \(p\). Note that one \textbf{cannot
+  conclude} if an individual \(t\)-statistic is significant, then there
+  is at least one predictor is related to the response, especially when
+  \(p\) is large. This is related to \emph{multiple testing}. The reason
+  is that when \(p\) is large, there is \(\alpha\) (eg 5\%) chance that
+  a predictor will have a small \(p\)-value by chance. When \(p>n\),
+  \(F\)-statistic cannot be used.
+\end{itemize}
+
+If the goal is to test that a particular subset of \(q\) of the
+coefficients are zero, that is, (for convenience, we put the \(q\)
+variables chosen at the end of the variabale list)
+\begin{equation}\phantomsection\label{eq-subset-hypothesis}{
+H_0: \beta_{p-q+1} = \beta_{p-q+2}=\cdots = \beta_p=0
+}\end{equation} In this case, use \[
+F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
+\] where, \(\text{RSS}_0\) is the residual sum of squares of a second
+model that uses all variables \emph{except} those last \(q\) variables.
+When \(q=1\), \(F\)-statistic in Equation~\ref{eq-subset-hypothesis} is
+the square of the \(t\)-statistic of that variable. The \(t\)-statistic
+reported in a regression model gives the \emph{partial effect} of adding
+that variable, while holding other variables fixed.
+
+\subsection{Assess the accuracy of the future
+prediciton}\label{assess-the-accuracy-of-the-future-prediciton}
+
+\begin{itemize}
+\item
+  confidence interval: Indicate how far away \(\hat{Y}=\hat{f}(X)\) is
+  from the population average \(f(X)\) because the coefficients
+  \(\hat{\beta}_{j}\) are estimated, It quantifies \emph{reducible
+  error} around the predicted average response \(\hat{f}(X)\), does-not
+  include \(\epsilon\).
+\item
+  prediction interval: Indicate how far away \(\hat{Y}=\hat{f}(X)\) is
+  from \(Y\). predict an individual response
+  \(Y\approx \hat{f}(X)+\epsilon\). Prediction interval is always wider
+  than the confidence interval, because it includes \emph{irreducible
+  error} \(\epsilon\).
+\end{itemize}
+
+\subsection{Assessing the overall accuracy of the
+model}\label{assessing-the-overall-accuracy-of-the-model}
+
+\begin{itemize}
+\item
+  RSE. To this end, first define the \emph{lack of fit} measure
+  \textbf{Residual Standard Error} \[
+  \text{RSE} = \sqrt{\frac{1}{n-p-1}\text{RSS}} = \sqrt{\frac{1}{n-p-1}\sum_{i=1}^n(y_i-\hat{y}_i)^2} \approx \sigma=\sqrt{\text{Var}(\epsilon)}
+  \] It is the \emph{average amount} in \(\hat{Y}\) that a response
+  deviates from the \emph{true regression line} (\(\beta_0+\beta_1 X\)).
+  Note, RSE can increase with more variables if the decrease of RSS
+  doesnot offset the increase of \(p\).
+\item
+  Approach 2: Using \emph{R-squared} (fraction of variance in \(Y\)
+  explained by \(X\)), which is independent of of the scale of \(Y\),
+  and \(0\le R^2 \le 1\): \[
+  R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
+  \] where, \(\text{TSS}=\sum_{i=1}^n(y_i- \bar{y})\). When \(R^2\) is
+  near 0 indicates that 1) either the linear model is wrong 2) or th
+  error variance \(\sigma^2\) is high, or both. \(R^2\) measures the
+  linear relationship between \(X\) and \(Y\). If computed on the
+  training set, when adding more variables, the RSS always decrease,
+  hence \(R^2\) will always increase.
+\end{itemize}
+
+For simple linear regression, \(R^2=r_{xy}^2\), where the \emph{sample
+correlation} measures the linear relationship between variables \(X\)
+and \(Y\). See the formula \(r_{xy}\) above
+Equation~\ref{eq-correlation-rxy}. For multiple linear regression,
+\(R^2=(\text{Cor}(Y, \hat{Y}))^2\). The fitted linear model maximizes
+this correlation among all possible linear models.
+
+\section{Model Selection/Variable Selections: balance training errors
+with model
+size}\label{model-selectionvariable-selections-balance-training-errors-with-model-size}
+
+\begin{itemize}
+\item
+  \textbf{All subsets (best subsets) regression}: compute the least
+  square fit for all \(2^p\) possible subsets and then choose among them
+  based on certain criterion that balance training error and model size
+\item
+  \textbf{Forward selection}: Start from the \emph{null model} that only
+  contains \(\beta_0\). Then find the best model containing one
+  predictor that minimizing RSS. Denote the variable by \(\beta_1\).
+  Then continue to find the best model with the lowest RSS by adding one
+  variable from the remaining predictors, and so on. Continue until some
+  stopping rule is met: e.g., when all remaining variables have a
+  \(p\)-value greater than some threshold.
+\item
+  \textbf{Backward selection}: start with all variables in the model.
+  Remove the variable with the largest \(p\)-value (least statistically
+  significant). The new \((p-1)\) model is fit, and remove the variable
+  with the largest \(p\)-value. Continue until a stopping rule is
+  satisfied, e.g., all remaining variables have \(p\)-value less than
+  some threshold.
+\item
+  \textbf{Mixed selection}: Start with forward selection. Since the
+  \(p\)-value for variables can become larger as new predictors are
+  added, at any point if the \(p\)-value of a variable in the model
+  rises above a certain threshold, then remove that variable. Continue
+  to perform these forward and backward steps until all variables in the
+  model have a sufficiently low \(p\)-value, and all variables outside
+  the model would have a large \(p\)-value if added to the model.
+
+  Backward selection cannot be used if \(p>n\). Forward selection can
+  always be used, but might include variables early that later become
+  redundant. Mixed selection can remedy this problem.
+\item
+  \textbf{others} (Chapter 6): including Mallow's \(C_p\), AIC (Akaike
+  Informaton Criterion), BIC, adjusted \(R^2\), Cross-validation, test
+  set performance.
+\item
+  \textbf{not valid}: we could look at individual \(p\)-values, but when
+  the number of variables \(p\) is large, we likely to make a false
+  discoveries.
+\end{itemize}
+
+\section{Handle categorical variables (factor
+variables)}\label{handle-categorical-variables-factor-variables}
+
+For a categorical variable \(X_i\) with \(m\) levels, create one fewer
+dummy variables (\(x_{ij}, 1\le j \le m-1\))\textgreater. The level with
+no dummy variable is called the \emph{baseline}. The coefficient
+corresponding to a dummy variable is the expected difference in change
+in \(Y\) when compared to the baseline, while holding other predictors
+fixed.
+
+\section{Adding non-linearity}\label{adding-non-linearity}
+
+\subsection{Modeling interactions
+(synergy)}\label{modeling-interactions-synergy}
+
+When two variables have interaction, then their product \(X_iX_j\) can
+be added into the regression model, and the product maybe considered as
+a single variable for inference, for example, compute its SE,
+\(t\)-statistics, \(p\)-value, Hypothesis test, etc.
+
+If we include an interaction in a model, then the \textbf{Hierarchy
+principle} should be followed: always include the main effects, even if
+the \(p\)-values associated with their coefficients are not significant.
+This is because without the main effects, the interactions are hard to
+interpret, as they would also contain the main effect.
+
+\subsection{Adding terms of transformed
+predictors}\label{adding-terms-of-transformed-predictors}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  \emph{Polynomial regression}: Add a term involving \(X_i^k\) for some
+  \(k>1\).
+\item
+  other forms: Adding root or logarithm terms of the predictors.
+\end{enumerate}
+
+\section{\texorpdfstring{Outliers (Unusual \(y_i\) that is far from
+\(\hat{y}_i\))}{Outliers (Unusual y\_i that is far from \textbackslash hat\{y\}\_i)}}\label{outliers-unusual-y_i-that-is-far-from-haty_i}
+
+It is typical for an outlier that does not have an unusual predictor
+value (with low levarage) to have little effect on the least squares
+fit, but it will increase RSE, hence deteriorate CI, \(p\)-value and
+\(R^2\), thus affecting interpreting the model.
+
+An outlier can be identified by computing the
+\[\text{studentized residual}=\frac{e_i}{\text{RSE}_i}\] A studentized
+residual great than 3 may be considered as an outlier.
+
+\section{\texorpdfstring{High leverage points (unusual
+\(x_i\))}{High leverage points (unusual x\_i)}}\label{high-leverage-points-unusual-x_i}
+
+High leverage points tend to have sizeable impact on the regression
+line. To quantify the observation's leverage, one needs to compute the
+\textbf{leverage statistic}
+\[h_i = \frac{1}{n}+ \frac{(x_i-\bar{x})^2}{\sum_{j=1}^n (x_j-\bar{x})^2}.\]
+\(1/n \le h_i\le 1\) and \(\text{Ave}(h_i)=(p+1)/n\). A large value of
+this statistic (for example, great than \((p+1)/n\)) indicates an
+observation with high leverage. The leverage \(1/n\le h_i\le 1\),
+reflects the amount an observation influences its own fit.
+
+\section{Compared to KNN Regression}\label{compared-to-knn-regression}
+
+KNN regression is a non-parametric method that makes prediction at
+\(x_0\) by taking the average in a \(K\)-point neightborhood \[
+\hat{f}(x_0) = \frac{1}{K}\sum_{x_i \in \mathcal{N}_{x_0}}{y_i}
+\] A small value of \(K\) provides more flexible model with low bias but
+high variance while a larger value of \(K\) provides smoother fit with
+less variance. An optimal value of \(K\) depend on the
+\emph{bias-variance tradeoff}. For non-linear data set, KNN may provides
+better fit than a linear regression model. However, in higher dimension
+(e.g., \(p\ge 4\)), even for nonlinear data set, KNN may perform much
+inferior to linear regression, because of the \textbf{curse of
+dimensionality}, as the \(K\) observations that are nearest to \(x_0\)
+may in fact far away from \(x_0\).
+
+\section{Homework (* indicates
+optional):}\label{homework-indicates-optional-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1--6
+\item
+  Applied: 8--15. at least one.
+\end{itemize}
+
+\section{Code Gist}\label{code-gist-1}
+
+\subsection{Python}\label{python-1}
+
+\begin{verbatim}
+dir() # provides a list of objects at the top level name space
+dir(A) # display addtributes and methods for the object A
+' + '.join(X.columns) # form a string by joining the list of column names by "+"
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy-1}
+
+\begin{verbatim}
+np.argmax(x) # identify the location of the largest element
+np.concatenate([x,y],axis=0) # concatenate two arrays x and y. 
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-1}
+
+\begin{verbatim}
+X = pd.DataFrame(data=X, columns=['a','b'])
+
+pd.DataFrame({'intercept': np.ones(Boston.shape[0]),
+                  'lstat': Boston['lstat']}) # make a dataframe using a dictionary
+Boston.columns.drop('medv','age') # drop the elements 'medv' and 'age' from the list of column names
+
+pd.DataFrame({'vif':vals},
+                   index=X.columns[1:]) # form a df by specifying index labels
+
+X.values  # Convert dataframe X to numpy array
+X.to_numpy() # recommended to replace the above method
+DataFrame.corr(numeric_only=True) # correlations between columns 
+x.sort_values(ascending=False)
+pd.to_numeric(auto_df['horsepower'], errors='coerce') # if error, denote it by "NaN".
+auto_df.dropna(subset= ['horsepower', 'mpg',], inplace=True) # looking for NaN in the columns in `subset`, otherwise, all columns
+
+auto_df.drop('name', axis=1, inplace=True)
+
+left2.join(right2, how="left") #join two databases by index. 
+left1.join(right1, on="key") # left-join by left1["key"] and the index of right1. 
+pd.concat([s1, s4], axis="columns", join="outer")
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-1}
+
+\begin{verbatim}
+xlim = ax.get_xlim() # get the x_limit values xlim[0], xlim[1]
+ax.axline() # add a line to a plot
+ax.axhline(0, c='k', ls='--'); # horizontal line
+line, = ax.plot(x,y,label="line 1") # "line 1" is the legend
+# alternatively the label can be set by 
+line.set_label("line 1")
+ax.scatter(fitted, residuals, edgecolors = 'k', facecolors = 'none')
+ax.plot([min(fitted),max(fitted)],[0,0],color = 'k',linestyle = ':', alpha = .3)
+ax.legend(loc="upper left", fontsize=25) # adding legendes
+ax.annotate(i,xy=(fitted[i],residuals[i])) # annote at the xy position with i. 
+
+
+plt.style.use('seaborn') # pretty matplotlib plots
+plt.rcParams.update({'font.size': 16})
+plt.rcParams["figure.figsize"] = (8,7)
+
+plt.rc('font', size=10)
+plt.rc('figure', titlesize=13)
+plt.rc('axes', labelsize=10)
+plt.rc('axes', titlesize=13)
+plt.rc('legend', fontsize=8) # adjust legend globally
+    
+\end{verbatim}
+
+\subsection{Using Sns}\label{using-sns}
+
+\begin{verbatim}
+sns.set(font_scale=1.25) # set font size 25% larger than default
+sns.heatmap(corr, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size': 10})
+ax = sns.regplot(x=x, y=y)
+\end{verbatim}
+
+\subsection{Using Sklearn}\label{using-sklearn}
+
+\begin{verbatim}
+from sklearn.linear_model import LinearRegression
+## Set the target and predictors
+X = auto_df['horsepower']
+
+### To get polynomial features
+poly = PolynomialFeatures(interaction_only=True,include_bias = False)
+X = poly.fit_transform(X)
+
+y = auto_df['mpg']
+
+## Reshape the columns in the required dimensions for sklearn
+length = X.values.shape[0]
+X = X.values.reshape(length, 1) #both X and y needs to be 2-D
+y = y.values.reshape(length, 1)
+
+## Initiate the linear regressor and fit it to data using sklearn
+regr = LinearRegression()
+regr.fit(X, y)
+regr.intercept_
+regr.coef_
+
+pred_y = regr.predict(X)
+\end{verbatim}
+
+\subsection{Using statsmodels and
+ISLP}\label{using-statsmodels-and-islp}
+
+\begin{verbatim}
+from ISLP import load_data
+from ISLP.models import (ModelSpec as MS,
+                         summarize,
+                         poly)
+                         
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+from statsmodels.stats.outliers_influence \
+     import variance_inflation_factor as VIF
+from statsmodels.stats.anova import anova_lm
+
+#Training
+Boston = load_data("Boston") 
+#hand-craft the design matrix X
+X = pd.DataFrame({'intercept': np.ones(Boston.shape[0]), #design matrix. intercept column
+                  'lstat': Boston['lstat']}) 
+#the following is the preferred method to create X
+design = MS(['lstat']) # specifying the model variables. Automatically add an intercept, adding "intercept=False" if no intercept. 
+design = design.fit(Boston) # do intial computation as specified in the model object design by MS(), such as means or sd. This attached some statistics to the `design` object, and need to be applied to the new data for prediciton
+
+X = design.transform(Boston) # apply the fitted transformation to the data to create X
+#alternatiely, 
+X = design.fit_transform(Boston) # this combines the .fit() and .transform() two lines
+
+y = Boston['medv']
+model = sm.OLS(y, X) # setup the model
+model = smf.ols('mpg ~ horsepower', data=auto_df) # alternatively use smf formula, y~x
+smf.ols("y ~ x -1" , data=df).fit() # "-1" not inclding the intercept
+results = model.fit() # results is a dictionary:.summary(), .params 
+
+results.summary()
+results.params # coefficients
+results.resid # reisdual array
+results.rsquared # R^2
+results.pvalues
+np.sqrt(results.scale) # RSE
+results.fittedvalues # fitted \hat(y)_i at x_i in the traning set
+
+
+summarize(results) # summzrize() is from ISLP to show the esstial results from model.fit()
+
+# Makding prediciton 
+new_df = pd.DataFrame({'lstat':[5, 10, 15]})  # new test-set containing data where to make predicitons
+newX = design.transform(new_df) # apply the same transform to the test-set
+new_predictions = results.get_prediction(newX);
+new_predictions.predicted_mean #predicted values
+new_predictions.conf_int(alpha=0.05) #for the predicted values
+
+new_predictions.conf_int(obs=True, alpha=0.05) # prediction intervals by setting obs=True
+
+# Including an interaction term
+X = MS(['lstat',
+        'age',
+        ('lstat', 'age')]).fit_transform(Boston) #interaction term ('lstat', 'age')
+
+# Adding a polynomial term of higher degree
+X = MS([poly('lstat', degree=2), 'age']).fit_transform(Boston) # Note poly is from ISLP, # adding deg1 and deg2 terms. by default poly creates ortho. poly. not including an intercept. 
+# Given a qualitative variable, `ModelSpec()` generates dummy
+variables automatically, to avoid collinearity with an intercept, the first column is dropped in the design matrix generated by 'ModelSpec()` by default.
+
+# Compare nested models using ANOVA
+anova_lm(results1, results3) # result1 is the result of linear model, an result3 is the result of a larger model
+
+# Identify high leverage x
+infl = results.get_influence() 
+# hat_matrix_diag calculate the leverate statistics
+np.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage
+
+# Calculate VIF
+vals = [VIF(X, i)
+        for i in range(1, X.shape[1])] #excluding column 0 because it's all 1's in X.
+vif = pd.DataFrame({'vif':vals},
+                   index=X.columns[1:])
+vif # VIF exceeds 5 or 10 indicates a problematic amount of colinearity
+\end{verbatim}
+
+Useful Code Snippets
+
+\begin{verbatim}
+def abline(ax, b, m, *args, **kwargs):
+    "Add a line with slope m and intercept b to ax"
+    xlim = ax.get_xlim()
+    ylim = [m * xlim[0] + b, m * xlim[1] + b]
+    ax.plot(xlim, ylim, *args, **kwargs)
+\end{verbatim}
+
+\begin{verbatim}
+# Plot scatter plot with a regression line
+ax = Boston.plot.scatter('lstat', 'medv')
+abline(ax,
+       results.params[0],
+       results.params[1],
+       'r--',
+       linewidth=3)
+\end{verbatim}
+
+\begin{verbatim}
+# Plot residuals vs. fitted values (note, not vs x, therefore works for multiple regression)
+ax = subplots(figsize=(8,8))[1]
+ax.scatter(results.fittedvalues, results.resid)
+ax.set_xlabel('Fitted value')
+ax.set_ylabel('Residual')
+ax.axhline(0, c='k', ls='--');
+
+# Alternatively
+sns.residplot(x=X, y=y, lowess=True, color="g", ax=ax)
+
+# Plot the smoothed residuals~fitted by LOWESS
+from statsmodels.nonparametric.smoothers_lowess import lowess
+smoothed = lowess(residuals,fitted) # Note the order (y,x)
+ax.plot(smoothed[:,0],smoothed[:,1],color = 'r')
+
+# QQ plot for the residuas (obtain studentized residuals for identifying outliers)
+import scipy.stats as stats
+sorted_student_residuals = pd.Series(smf_model.get_influence().resid_studentized_internal)
+sorted_student_residuals.index = smf_model.resid.index
+sorted_student_residuals = sorted_student_residuals.sort_values(ascending = True)
+df = pd.DataFrame(sorted_student_residuals)
+df.columns = ['sorted_student_residuals']
+
+#stats.probplot() #assess whether a dataset follows a specified distribution
+df['theoretical_quantiles'] = stats.probplot(df['sorted_student_residuals'], dist = 'norm', fit = False)[0] 
+    
+x = df['theoretical_quantiles']
+y = df['sorted_student_residuals']
+ax.scatter(x,y, edgecolor = 'k',facecolor = 'none')
+\end{verbatim}
+
+\begin{verbatim}
+# Plot leverage statistics
+infl = results.get_influence()
+ax = subplots(figsize=(8,8))[1]
+ax.scatter(np.arange(X.shape[0]), infl.hat_matrix_diag)
+ax.set_xlabel('Index')
+ax.set_ylabel('Leverage')
+np.argmax(infl.hat_matrix_diag) # identify the location of the largest levarage
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 4: Classification}\label{chapter-4-classification}
+
+Given a feature vector \(X\) and a \emph{qualitative} (categorical)
+response \(Y\) taking finite values in a set \(\mathcal{C}\), the
+classification task is to build a classifier \(C(X)\) that takes an
+input \(X\) and predicts its class \(Y=C(X)\in \mathcal{C}\). This is
+often done by model \(P(Y=k|X=x)\) for each \(k\in \mathcal{C}\).
+
+\section{Linear regression and
+Classification}\label{linear-regression-and-classification}
+
+\begin{itemize}
+\tightlist
+\item
+  For a \emph{binary} classification, one can use linear regression and
+  does a good job. In this case, the linear regression classifier is
+  equivalent to LDA, because \[
+  P(Y=1|X=x)= E[Y|X=x]
+  \] However, linear regression may not represent a probability as it
+  may give a value outside the interval \([0,1]\).
+\item
+  When there are more than two classes, linear regression is not
+  appropriate, because any chosen coding of the \(Y\) variable imposes
+  an ordering and fixed differences among categories, which may not be
+  implied by the data set. If the coding changes, a dramatic function
+  will be fitted, which is not reasonable. One should turn to
+  \emph{multiclass logistic regression} or \emph{Discriminant Analysis}.
+\end{itemize}
+
+\section{Logistic Regression}\label{logistic-regression}
+
+Logistic regression is a \emph{discriminative learning}, because it
+directly calculates the conditional probability \(P(Y|X)\) to make
+classification.
+
+\subsection{Binary classification}\label{binary-classification}
+
+with a single variable Logistic regression simply convert the linear
+regression to probability by \[
+p(X)=Pr(Y=1|X) =\frac{e^{\beta_0+\beta_1 X}}{1+ e^{\beta_0+\beta_1X}}.
+\] Note the \emph{logit} or \emph{log odds} is linear \[
+\log\left( \frac{p(X)}{1-p(X)}  \right) =\beta_0 +\beta_1 X.
+\] Increasing \(X\) by one unit, changes the log odds by \(\beta_1\).
+Equivalently, it multiplied the odds by \(e^{\beta_1}\). The rate of
+change of \(p(X)\) is no longer a constant, but depends on the current
+value of \(X\). Positive \(\beta_1\) implies increasing \(p(X)\), and
+vice vesa.
+
+The parameters are estimated by maximizing the \emph{liklihood} \[
+\ell(\beta_0, \beta_1) =\prod_{i: y_i=1}p(x_i) \prod_{i:y_i=0}(1-p(x_i))
+\] With the estimated parameters \(\hat{\beta_j}, j=0,1\), one can
+calculate the probability \[
+p(X)=Pr(Y=1|X) =\frac{e^{\hat{\beta_0}+\hat{\beta_1} X}}{1+ e^{\hat{\beta}_0+\hat{\beta}_1X}}
+\]
+
+\subsection{with multiple variables}\label{with-multiple-variables}
+
+In this case, simply let the logit be a linear function of \(p\)
+variables.
+
+Note when there are multiple variables, it's possible to have variables
+confounding (especially when two variables are correlated): the
+coefficient of a variable may changes significantly or may change sign,
+this is because the coefficient represents the rate of change in \(Y\)
+of that variable when holding other variable constants. The coefficient
+reflects the effect when other variables are hold constant, how the
+variable affects \(Y\), and this effect may be different than when only
+this variable is used in the model.
+
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, rightrule=.15mm, left=2mm, bottomtitle=1mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, colback=white, arc=.35mm, toprule=.15mm, titlerule=0mm, leftrule=.75mm, opacityback=0]
+
+One can include a nonlinear term such as a quadratic term in the logit
+model, similar to a linear regression that includes a non-linear term.
+
+\end{tcolorbox}
+
+\subsection{Multi-class logistic regression (multinomial regression)
+with more than two
+classes}\label{multi-class-logistic-regression-multinomial-regression-with-more-than-two-classes}
+
+in this case, we use the \emph{softmax} function to model \[
+\text{Pr} (Y=k|X) =\frac{e^{\beta_{0k}+\beta_{1k}X_1+ \cdots + \beta_{pk}X_p}}{\sum_{\ell=1}^K e^{\beta_{0\ell}+\beta_{1\ell}X_1+ \cdots + \beta_{p\ell}X_p}} =a_k
+\] for each class \(k\). Note \(\Sigma_k a_k=1\) and the cross-entropy
+loss function is given by
+\(-\log \ell(\beta)= -\Sigma_k \mathbb{1}_k \log a_k\), where \(\beta\)
+represents all the parameters.
+
+The log odds between \(k\)th and \(k'\)th classes equals \[
+\log(\frac{\text{Pr}(Y=k|X=x)}{\text{Pr}(Y=k'|X=x)})=(\beta_{k0}-\beta_{k'0}) + (\beta_{k1}-\beta_{k'1}) + \cdots + (\beta_{kp}-\beta_{k'p})\]
+
+\section{Discriminant Classifier: Approximating Optimal Bayes
+Classifier}\label{discriminant-classifier-approximating-optimal-bayes-classifier}
+
+Apply the Bayes Theorem, the model \[
+\text{Pr}(Y=k|X=x)=\frac{\text{Pr}(X=x|Y=k)\cdot \text{Pr}(Y=k)}{\text{Pr}(X=x)}=\frac{\pi_k f_k(x)}{\sum_{\ell =}^ K \pi_{\ell}f_\ell(x)}
+\] where \(\pi_k=\text{Pr(Y=k)}\) is the \emph{marginal} or \emph{prior}
+probability for class \(k\), and \(f_k(x)=\text{Pr}(X=x|Y=k\)) is the
+\emph{density} for \(X\) in class \(k\). Note the denominator is a
+\emph{normalizing constant}. So when making decisions, effectively we
+compare \(\pi_kf_k(x)\), and assign \(x\) to a class \(k\) with the
+largest \(\pi_kf_k(x)\).
+
+Discriminant uses the full liklihood \(P(X,Y)\) to calculate \(P(Y|X)\)
+to make a classification, so it's known as \emph{generative learning}.
+
+\begin{itemize}
+\tightlist
+\item
+  when \(f_k\) is chosen as a normal distribution with constant variance
+  (\(\sigma^2\)) for \(p=1\) or correlation matrix \(\Sigma\) for
+  \(p>1\), this leads to the LDA. For \(p=1\), the \emph{discriminant
+  score} is given by \[
+  \delta_k(x) = x\cdot \frac{\mu_k}{\sigma^2}-\frac{\mu_k^2}{2\sigma^2}+\log (\pi_k)
+  \] when \(K=2\) and \(\pi_1=\pi_2=0.5\)m then the \emph{decision
+  boundary} is given by \[
+  x=\frac{\mu_1+\mu_2}{2}. 
+  \] When \(p\ge 2\), assume that \(X=(X_1, X_2, \cdots, X_p)\) is drawn
+  from a multivariate Gaussian distribution \(X \sim N(\mu_k, \Sigma)\),
+  with a class-specific mean vector and a a common variance matrix. \[
+  \delta_k(x) =x^T\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}\mu_k +\log \pi_k=c_{k0}+c_{k1}x_1+\cdots +c_{kp}x_p.
+  \] The score function (posterior probability) is \emph{linear} in
+  \(x\). With \(\hat{\delta}_k(x)\) for each \(k\), it can be converted
+  to the class probability by the \emph{softmax} function \[
+  \hat{\text{Pr}}(Y=k|X=x)=\frac{e^{\hat{\delta}_k(x)}}{\sum_{\ell=1}^K e^{\hat{\delta}_{\ell}(x)}}
+  \] The \(\pi_k\), \(\mu_k\) and \(\sigma\) are estimate the follwing
+  way: \[
+  \hat{\pi}_k =\frac{n_k}{n}
+  \] \[
+  \hat{\mu}_k = \frac{1}{n_k} \sum_{i:y_i=k} x_i
+  \] \[
+  \hat{\sigma}^2 = \frac{1}{n-K}\sum_{k=1}^K \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2=\sum_{k=1}^{K}\frac{n_k-1}{n-K}\hat{\sigma}^2_k
+  \] where
+  \(\hat{\sigma}_k^2=\frac{1}{n_k-1} \sum_{i:y_i=k}(x_i-\hat{\mu}_k)^2\)
+  is the estimated variance for the \(k\)-th class.
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, rightrule=.15mm, left=2mm, bottomtitle=1mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, colback=white, arc=.35mm, toprule=.15mm, titlerule=0mm, leftrule=.75mm, opacityback=0]
+
+One can include a nonlinear term such as a quadratic term in the LDA
+model, similar to a linear regression that includes a non-linear term.
+
+\end{tcolorbox}
+
+\begin{itemize}
+\item
+  when each class chooses a different \(\Sigma_k\), then it's QDA. It
+  assumes an observation from the \(k\)-th class is
+  \(X\sim N(\mu_k, \Sigma_k)\).The score function has a \emph{quadratic}
+  term \[
+  \delta_k(x)=-\frac{1}{2}(x-\mu_k)^T\Sigma_k^{-1}(x-\mu_k)+\log \pi_k -\frac{1}{2}\log |\Sigma_k|
+  \] QDA has much more parameters \(Kp(p+1)/2\) to estimate compared to
+  LDA (\(Kp\)), hence has higher flexibility and may lead to higher
+  variance. When there are few training examples, LDA tend to perform
+  better and reducing variance is crucial. When there is a large traning
+  set, QDA is recommended as variance is not a major concern. LDA is a
+  special case of QDA.
+\item
+  when the features are modeled independently, i.e., there is no
+  association between the \(p\) predictors,
+  \(f_k(x) = \prod_{j=1}^p f_{jk}(x_j)\), the method is \emph{naive
+  Bayes}, and \(\Sigma_k\) are diagonal. Any classifier with a linear
+  decision boundary is a special case of NB. So LDA is a special case of
+  NB. To estimate \(f_kj\), one can
+
+  \begin{itemize}
+  \item
+    assume that \(X_j|Y=k \sim N(\mu_{jk,\sigma^2_{jk}})\), that is, a
+    class specific covariance but is diagonal. QDA's \(\Sigma_k\) is not
+    diagonal. If we model \(f_{kj}(x_j)\sim N(\mu_{kj}+\sigma_j^2)\)
+    (Note \(\sigma_j^2\) is shared among clases), In this case NB is a
+    special case of LDA that has a diagonal \(\Sigma\) and
+  \item
+    use a non-parametric estimate such as histogram (or a smooth kernel
+    density estimator) for the observations of the jth Predictor within
+    each class.
+  \item
+    If \(X_j\) is qualitative, then one can simply count the proportion
+    of training observations for the \(j\)th predictor corresponding to
+    each class.
+  \item
+    Can applied to \emph{mixed} feature vectors (qualitative and
+    quantitative). NB does not assume normally distributed predictors.
+  \item
+    Despite strong assumptions, performs well, especially when \(n\) is
+    not large enough relative to \(p\), when estimating the joint
+    distribution is difficult. It introduces some biases but reduces
+    variance, leading to a classifier that works quite well as a result
+    of bias-variance trade-off.
+  \item
+    Useful when \(p\) is very large.
+  \item
+    NB is a \emph{generalized additive model}.
+  \item
+    Neigher NB nor QDA is a special case of the other. Because QDA
+    contains interaction term \(x_ix_j\), while NB is purely additive,
+    in the sense that a function of \(x_i\) is added to a function of
+    \(x_j\). Therefore, QDA potentially is a better fit when the
+    interactions among predictors are important.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Why discriminant analysis}\label{why-discriminant-analysis}
+
+\begin{itemize}
+\tightlist
+\item
+  When the classes are well-separated, the parameter estimation of
+  logistic regression is unstable, while LDA does not suffer from this
+  problem.
+\item
+  if the data size \(n\) is small and the distribution of \(X\) is
+  approximately normal in each of the classes, then LDA is more stable
+  than logistic regression. Also used when \(K>2\).
+\item
+  when there are more than two classes, LDA provides low-dimensional
+  views of the data hence popular. Specifically, when there are \(K\)
+  classes, LDA can be viewed exactly in \(K-1\) dimensional plot. This
+  is because it essentially classifies to the closest centroid, and they
+  span a \(K-1\) dimensional plane.
+\item
+  For a two-class problem, the logit of \(p(Y=1|X=x\)) by LDA
+  (generative learning) is a linear function in \(X\), the same as a
+  logistic regression (discriminative learning). The difference lies in
+  how the parameters are estimated. But in practice, they are similar.
+\item
+  LDA assumes the predictors follow a multivariable normal distribution
+  with a shared \(\Sigma\) among classes. So when this assumption holds,
+  we expect LDA performs better; and Logistic regress performs better
+  when this asuumption does not hold.
+\end{itemize}
+
+\section{KNN}\label{knn}
+
+KNN is a non-parametric method and doesnot assume a shape for the
+decision boundary. KNN assign the class of popularity to \(X=x\) in a
+\(K\)-neighborhood.
+
+\begin{itemize}
+\item
+  KNN dominates LDA and Logistic Regression when the decision boundary
+  is highly non-linear, provided \(n\) is large and \(p\) is small. As
+  KNN breaks down when \(p\) is large.
+\item
+  KNN requires large \(n>>p\), this is because KNN is non-parametric and
+  tends to reduce bias but increase variance.
+\item
+  When the decision boundary is non-linear but \(n\) is only modest and
+  \(p\) is not very small, QDA may outperform KNN. This is because QDA
+  provides a non-linear boundary while taking advantage of a parametric
+  form, which means that if requires smaller size for accurate
+  classification.
+\item
+  Unlike logistic regression, KNN does not tell which predictors are
+  more importnat: We dont get a table of coefficients.
+\item
+  When the decision boundary is linear, LDA or logistic regression may
+  perform better, when the boundary is moderately non-linear, QDA or NB
+  may perform better; For a much more complicated decision boundary, KNN
+  may perform better.
+\end{itemize}
+
+\section{Poisson Regression}\label{poisson-regression}
+
+When \(Y\) is discrete and non-negative, a linear regression model is
+not satisfactory, even with the transformation of \(\log (Y)\), because
+\(\log\) does not allow \(Y=0\).
+
+\begin{itemize}
+\tightlist
+\item
+  Poisson Regression: typically used to model counts, \[
+  \text{Pr}(Y=k)= \frac{e^{-\lambda}\lambda^k}{k!}, \qquad k=0,1,2, \cdots,
+  \] where, \(\lambda = E(Y)= \text{Var}(Y)\). This means that if \(Y\)
+  follows a Poissson distribution, the larger the mean of \(Y\), the
+  larger its variance. Posisson regression can handle this when variance
+  changes with mean, but linear regression cannot, because it assumes
+  constant variance.
+\end{itemize}
+
+Assume \[
+\log(\lambda(X_1, X_2, \cdots, X_p))=\beta_0+\beta_1X_1+\cdots +\beta_pX_p
+\] Then one can use maximum likelihood \[
+\ell(\beta_0, \beta_1, \cdots, \beta_p)=\prod_{i=1}^n \frac{e^{-\lambda(x_i)}\lambda(x_i)^{y_i}}{y_i!}
+\] to estimate the parameters.
+
+\begin{itemize}
+\tightlist
+\item
+  Interpretation: An increase in \(X_j\) by one unit is associated with
+  a change in \(E(Y)=\lambda\) by a \emph{factor} (percentage) of
+  \(\exp(\beta_j)\).
+\end{itemize}
+
+\section{Generalized Linear Models
+(GLM)}\label{generalized-linear-models-glm}
+
+Perform a regression by modeling \(Y\) from a particular member of the
+\emph{exponential family} (Gaussian, Bernoulli, Poisson, Gamma, negative
+binomial), and then transform the mean of \(Y\) to a linear function.
+
+\begin{itemize}
+\item
+  Use predictors \(X_1, \cdots, X_p\) to predict \(Y\). Assume \(Y\)
+  conditional on \(X\) follow some distribution: For linear regression,
+  assume \(Y\) follows a normal distribution; for logistic regression,
+  assume \(Y\) follows a Bernoulli (multinomial distribution for
+  multi-class logistic regression) distribution; For poisson
+  distribution, assume \(Y\) follows a poisson distribution.
+\item
+  Each approach models the mean of \(Y\) as a function of \(X\) using a
+  \emph{linking function} \(\eta\) to transform \(E[Y|X]\) to a linear
+  function.
+
+  \begin{itemize}
+  \item
+    for linear regression \[
+    E(Y|X)= \beta_0+\beta_1 X_1+\cdots +\beta_p X_p
+    \] \(\eta(\mu) =\mu\)
+  \item
+    for logistic regression \[
+    E(Y|X)=P(Y=1|X)=\frac{e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}{1+e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}}
+    \] \(\eta(\mu) = \log (\mu/(1-\mu))\)
+  \item
+    for Poisson regression \[
+    E(Y|X) = \lambda(X) = e^{\beta_0+\beta_1X_1+\cdots+\beta_pX_p}
+    \] \(\eta(\mu) = \log(\mu)\).
+  \item
+    Gamma regression and negative binomial regression.
+  \end{itemize}
+\end{itemize}
+
+\section{Assessment of a classifier}\label{assessment-of-a-classifier}
+
+\begin{itemize}
+\item
+  Confusion matrix
+\item
+  Overall error rate: equals to \[
+  \frac{FP+FN}{N+P}
+  \]
+\item
+  Class-specific performance: One can adjust the decision boundary
+  (posterior probability threshold) to improve class specific
+  performance at the expense of lowered overall performance.
+
+  \begin{itemize}
+  \item
+    percentage of TP detected among all positives
+
+    \[\text{sensitivity (recall, power)} = TPR = \frac{TP}{TP+FN}=\frac{TP}{P}= 1-\text{Type II error}=1-\beta\]
+    this is equal to \(1- FNR\), where, FNR is The fraction of positive
+    examples that are classified as negatives \[
+    FNR = \frac{FN}{FN+TP}=\frac{FN}{P} 
+    \]
+  \item
+    percentage of TN detected among all negatives
+    \[\text{specificity}= TNR = \frac{TN}{TN+FP}=\frac{TN}{N}\] This is
+    equal to \(1-FPR\), where, False positive rate (FPR): the fraction
+    of negative examples (N) that are classified as positive: \[
+    FPR=\frac{FP}{FP+TN}=\frac{FP}{N} = \text{Type I error} (\alpha) 
+    \]
+  \item
+    ROC (receiver operating characteristic curve): plot true positive
+    rate (TPR=1-Type II error) \textasciitilde{} false positive rate
+    (FPR= 1- specificity=Type I error) as a threshold for the posterior
+    probability of positive class changes from 0 to 1. The point on the
+    ROC curve closest to the point (0,1) corresponds to the best
+    classifier.
+  \item
+    AUC (area under the ROC): Overall performance of a classifier
+    summarized over all thresholds. AUC measures the probability a
+    random positive example is ranked higher than a random negative
+    example. A larger AUC indicates a better classifier.
+  \end{itemize}
+\item
+  class-specific prediction performance
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \[\text{precision} = \frac{TP}{TP+FP}=\frac{TP}{\text{predicted postives}}=1-\text{false discovery proportion}\]
+  \end{itemize}
+\end{itemize}
+
+\section{Homework:}\label{homework}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1,2,3,4, 5,6,7,8, 9, 10, 12
+\item
+  Applied: 13, 14*,15*,16*
+\end{itemize}
+
+\section{Code Gist}\label{code-gist-2}
+
+\subsection{Python}\label{python-2}
+
+\subsection{Numpy}\label{numpy-2}
+
+\begin{verbatim}
+np.where(lda_prob[:,1] >= 0.5, 'Up','Down')
+np.argmax(lda_prob, 1) #argmax along axis=1 (col)
+np.asarray(feature_std) # convert to np array
+np.allclose(M_lm.fittedvalues, M2_lm.fittedvalues) 
+#check if corresponding elts are equal within rtol=1e-5 and atol=-1e08
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-2}
+
+\begin{verbatim}
+Smarket.corr(numeric_only=True)
+train = (Smarket.Year < 2005)
+Smarket_train = Smarket.loc[train] # equivalent to Smarket[train]
+Purchase.value_counts() # frequency table
+feature_std.std() #calculate column std
+S2.index.str.contains('mnth')
+Bike['mnth'].dtype.categories # get the categories of the categorical data
+obj2 = obj.reindex(["a", "b", "c", "d", "e"])# rearrange the entries in obj according to the new index, introducing missing values if any index values were not already present. 
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-2}
+
+\begin{verbatim}
+ax_month.set_xticks(x_month) # set_xticks at the place given by x_month
+ax_month.set_xticklabels([l[5] for l in coef_month.index], fontsize=20)
+ax.axline([0,0], c='black', linewidth=3,  
+          linestyle='--', slope=1);#axline method draw a line passing a given point with a given slope. 
+\end{verbatim}
+
+\subsection{ISLP and Statsmodels}\label{islp-and-statsmodels}
+
+\begin{verbatim}
+from ISLP import confusion_table
+from ISLP.models import contrast
+
+# Logistic Regression using sm.GLM() syntax similar to sm.OLS()
+design = MS(allvars)
+X = design.fit_transform(Smarket)
+y = Smarket.Direction == 'Up'
+glm = sm.GLM(y,
+             X,
+             family=sm.families.Binomial())
+results = glm.fit()
+summarize(results)
+results.pvalues
+probs = results.predict() #without data set, calculate predictions on the training set. 
+results.predict(exog=X_test) # on test set
+# Prediction on a new dataset
+newdata = pd.DataFrame({'Lag1':[1.2, 1.5],
+                        'Lag2':[1.1, -0.8]});
+newX = model.transform(newdata)
+results.predict(newX)
+confusion_table(labels, Smarket.Direction) #(predicted_labels, true_labels)
+np.mean(labels == Smarket.Direction) # calculate the accuracy
+
+hr_encode = contrast('hr', 'sum') #coding scheme for categorical data: the unreported coefficient for the missing level equals to the negative ofthe sum of the coefficients of all other variables. In this a coefficient for a level may be interpreted as the differnece from the mean level of response. 
+
+#Poisson Regression 
+M_pois = sm.GLM(Y, X2, family=sm.families.Poisson()).fit()
+#`family=sm.families.Gamma()` fits a Gamma regression
+model.
+\end{verbatim}
+
+\subsection{sklearn}\label{sklearn}
+
+\begin{verbatim}
+from sklearn.discriminant_analysis import \
+     (LinearDiscriminantAnalysis as LDA,
+      QuadraticDiscriminantAnalysis as QDA)
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+#LDA
+lda = LDA(store_covariance=True) #store the covariance of each class
+X_train, X_test = [M.drop(columns=['intercept']) # drop the intercept column
+                   for M in [X_train, X_test]]
+lda.fit(X_train, L_train) # LDA() model will automatically add a intercept term
+
+lda.means_ # mu_k (n_classes, n_features)
+lda.classes_
+lda.priors_ # prior probability of each class
+#Linear discrimnant vectors
+lda.scalings_ #Scaling of the features in the space spanned by the class centroids. Only available for ‘svd’ and ‘eigen’ solvers.
+
+lda_pred = lda.predict(X_test) #predict class labels
+lda_prob = lda.predict_proba(X_test) #ndarray of shape (n_samples, n_classes)
+
+#QDA
+qda = QDA(store_covariance=True)
+qda.fit(X_train, L_train)
+qda.covariance_[0] #estimated covariance for the first class
+
+# Naive Bayes
+NB = GaussianNB()
+NB.fit(X_train, L_train)
+NB.class_prior_
+NB.theta_ #means for (#classes, #features)
+NB.var_ #variances (#classes, #features)
+NB.predict_proba(X_test)[:5]
+
+# KNN
+knn1 = KNeighborsClassifier(n_neighbors=1)
+X_train, X_test = [np.asarray(X) for X in [X_train, X_test]]
+knn1.fit(X_train, L_train)
+knn1_pred = knn1.predict(X_test)
+
+# When using KNN one should standarize each varaibles
+scaler = StandardScaler(with_mean=True,
+                        with_std=True,
+                        copy=True) # do calculaton on a copy of the dataset
+scaler.fit(feature_df)
+
+#train test split
+X_std = scaler.transform(feature_df)
+(X_train,
+ X_test,
+ y_train,
+ y_test) = train_test_split(np.asarray(feature_std),
+                            Purchase,
+                            test_size=1000,
+                            random_state=0)
+
+# Logistic Regression
+logit = LogisticRegression(C=1e10, solver='liblinear') #use solver='liblinear'to avoid warning that the alg doesnot converge.  
+logit.fit(X_train, y_train)
+logit_pred = logit.predict_proba(X_test)
+
+\end{verbatim}
+
+\subsection{Useful code snippet}\label{useful-code-snippet}
+
+\begin{verbatim}
+# Tuning KNN
+for K in range(1,6):
+    knn = KNeighborsClassifier(n_neighbors=K)
+    knn_pred = knn.fit(X_train, y_train).predict(X_test)
+    C = confusion_table(knn_pred, y_test)
+    templ = ('K={0:d}: # predicted to rent: {1:>2},' +  # > for right alighment
+            '  # who did rent {2:d}, accuracy {3:.1%}')
+    pred = C.loc['Yes'].sum()
+    did_rent = C.loc['Yes','Yes']
+    print(templ.format(
+          K,
+          pred,
+          did_rent,
+          did_rent / pred))
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 5: Resampling
+Methods}\label{chapter-5-resampling-methods}
+
+Resampling methods are mainly used to estimate the test error by
+resampling the training set. Two methods: cross-validation and
+bootstrap. Theses methods refit a model to samples from the training
+set, in order to obtain additional information (eg. prediction error on
+the test set, standard deviation and bias of estimated parameters) about
+the fitted model.
+
+Recall training error in general \emph{dramatically underestimate} the
+test error, and in general, training error decreases as the model
+flexibility increases, but the test error shows a characteristic U-curve
+due to the bias-variance trade-off of the test error.
+
+\emph{Model Assessment}: evaluating a model's performance \emph{Model
+selection}: selecting the proper level of flexibility.
+
+\section{how to estimate test error}\label{how-to-estimate-test-error}
+
+\begin{itemize}
+\tightlist
+\item
+  use a large designated test set, but often not available.
+\item
+  make adjustment to the training error to estimate the test error,
+  e.g., Cp statistic, AIC and BIC.
+\item
+  validation set approach: estimate the test error by \emph{holding out}
+  a subset of the training set, also called a \emph{validation set}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    the estimate of the test error can be highly variable, depending on
+    the random train-validation split.
+  \item
+    Only a subset of the training set is used to fit the model. Since
+    statistical methods tend to perform worse when trained on a smaler
+    data set, which suggests the validation error tends to
+    \emph{overestimate} the test error compared to the model that uses
+    the entire training set.
+  \end{itemize}
+\item
+  K-fold Cross-Validation: randomly divide the data into \(K\)
+  equal-sized parts \(C_1, C_2, \cdots, C_K\). For each \(k\), leave out
+  part \(k\), fit the model on the remaining \(K-1\) parts (combined,
+  \((K-1)/K\) of the original traning set), and then evaluate the model
+  on the part \(k\). Then repeat this for each \(k\), and weighted
+  average of the errors is computed: \[
+  CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
+  \] where \(\text{MSE}_k=\sum_{i\in C_k}(y_i\ne \hat{y}_i)/n_k\).
+\end{itemize}
+
+For classification problem, simply replace \(\text{MSE}_k\) with the
+misclassificaiton rate
+\(\text{Err}_k =\sum_{i\in C_k}I(y_i\ne \hat{y}_i)/n_k\).
+
+The estimated standard error of \(CV_k\) can be calculated by \[
+\hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
+\]
+
+The estimated error tends bias upward because it uses only \((K-1)/K\)
+of the training set. This \emph{bias is minimized with \(K=n\) (LOOCV)},
+but LOOCV estimate has \emph{high variance} due to the high correlation
+between folds.
+
+\begin{itemize}
+\item
+  LOOCV: it's a special case of K-fold CV with \(K=n\). For least
+  squares linear or polynomial regression, the LOOCV error can be
+  computed by \[
+  \text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
+  \] Where \(h_i\) is the leverage statistic of \(x_i\). There is no
+  randomness in the error. The leverage \(1/n\le h_i\le 1\), reflects
+  the amount an observation influences its own fit. The above formula
+  doesn't hold in genearl, in which case the model has to refit \(n\)
+  times to estimate the test error.
+\item
+  for LOOCV, the estimate from each fold are highly correlated, hence
+  their average can have high variance.
+\item
+  better choice is \(K=5\) or \(K=10\) for bias-variance trade-off,
+  because large \(k\) leads to low bias but high variance due to the
+  increased correlation between models. Despite the estimated test error
+  sometimes \emph{underestimate} the true test error, they then to be
+  close to identify the correct flexibility where the test error is
+  minimum.
+\item
+  Bootstrap: Primarily used to estimate the standard error, or a CI
+  (called \emph{bootstrap percentile}) of an estimate . Repeatedly
+  sampling the training set with replacement and obtain a
+  \emph{bootstrap set} of the \emph{the same size} as the original
+  training set. One can fit a model and estimate a parameter with each
+  bootstrap data set, and then estimate the \emph{standard error} using
+  the estimated parameters by the bootstrap model, assuming there are
+  \(B\) bootstrap data sets: \[
+  SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
+  \]
+
+  \begin{itemize}
+  \item
+    Note sometimes sampling with replacement must take caution, for
+    example, one can't simply sample a time series with replacement
+    because the data are sequential.
+  \item
+    Estimate prediction error: Each bootstrap sample has significant
+    overlap with the original data, in fact, about 2/3 of the original
+    data points appear in each bootstrap sample. If we use the original
+    data set as the validation set, This will cause the bootstrap to
+    seriously \emph{underestimate} the true prediction error. To fix
+    this, one can only use predictions on those samples that do not
+    occur (by chance) in a bootstrap sample.
+  \item
+    Bootstrap vs.~Permutation test: permutation methods sample from an
+    estimated \emph{null} distribution for the data, and use this to
+    estimate \(p\)-values and \emph{False Discovery Rates} for
+    hypothesis tests.
+
+    The bootstrap can be used to test a null hypothesis in simple
+    situation. Eg. If \(H_0: \theta=0\), we can check whether the
+    confidence interval for \(\theta\) contains zero.
+  \end{itemize}
+\end{itemize}
+
+\section{Homework}\label{homework-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1,2,3,4
+\item
+  Applied: 5--9, at least one.
+\end{itemize}
+
+\section{Code Gist}\label{code-gist-3}
+
+\subsection{Python}\label{python-3}
+
+\begin{verbatim}
+np.empty(1000) #create an array without initializing
+quartiles = np.percentile(arr, [25, 50, 75])
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy-3}
+
+\begin{verbatim}
+c = np.power.outer(row, col) # mesh of row[i]^col[j] power. 
+# random choice 
+rng = np.random.default_rng(0)
+alpha_func(Portfolio,
+           rng.choice(100, # random numbers are selected from arange(100)
+                      100, #size
+                      replace=True))
+
+    
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-3}
+
+\begin{verbatim}
+np.cov(D[['X','Y']].loc[idx], rowvar=False) #cov compute corr of variables. rowvar-False: cols are vars.
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-3}
+
+\subsection{ISLP and statsmodels}\label{islp-and-statsmodels-1}
+
+\begin{verbatim}
+# function that evalues MSE for training a model
+def evalMSE(terms,    #predictor variables
+            response, #response variable
+            train,
+            test):
+
+   mm = MS(terms)
+   X_train = mm.fit_transform(train)
+   y_train = train[response]
+
+   X_test = mm.transform(test)
+   y_test = test[response]
+
+   results = sm.OLS(y_train, X_train).fit()
+   test_pred = results.predict(X_test)
+
+   return np.mean((y_test - test_pred)**2)
+
+# Compare polynomial models of different degrees
+MSE = np.zeros(3)
+for idx, degree in enumerate(range(1, 4)):
+    MSE[idx] = evalMSE([poly('horsepower', degree)],
+                       'mpg',
+                       Auto_train,
+                       Auto_valid)
+MSE
+
+# Estimating the accuracy of a LR model using bootstrap
+
+# Compute the SE of the boostraped values computed by func                      
+def boot_SE(func,
+            D,
+            n=None,
+            B=1000,
+            seed=0):
+    rng = np.random.default_rng(seed)
+    first_, second_ = 0, 0
+    n = n or D.shape[0]
+    for _ in range(B):
+        idx = rng.choice(D.index,
+                         n,
+                         replace=True)
+        value = func(D, idx)
+        first_ += value
+        second_ += value**2
+    return np.sqrt(second_ / B - (first_ / B)**2) #compute var. 
+def boot_OLS(model_matrix, response, D, idx):
+    D_ = D.loc[idx]
+    Y_ = D_[response]
+    X_ = clone(model_matrix).fit_transform(D_) #clone create a deep copy. 
+    return sm.OLS(Y_, X_).fit().params
+    
+quad_model = MS([poly('horsepower', 2, raw=True)]) #raw=True: not normalize the feature
+quad_func = partial(boot_OLS,
+                    quad_model,
+                    'mpg')
+boot_SE(quad_func, Auto, B=1000)
+\end{verbatim}
+
+\subsection{sklearn}\label{sklearn-1}
+
+\begin{verbatim}
+from functools import partial
+from sklearn.model_selection import \
+     (cross_validate,
+      KFold,
+      ShuffleSplit)
+from sklearn.base import clone
+from ISLP.models import sklearn_sm #wrapper to feed a sm model to sklearn
+
+#Cross Validation
+hp_model = sklearn_sm(sm.OLS,
+                      MS(['horsepower']))
+X, Y = Auto.drop(columns=['mpg']), Auto['mpg']
+cv_results = cross_validate(hp_model,
+                            X,
+                            Y,
+                            cv=Auto.shape[0]) #cv=K.loocv. Can use cv=KFold()object
+cv_err = np.mean(cv_results['test_score']) # test_score: MSE
+cv_err
+
+# Use KFold to partition instead of using an integer. 
+cv_error = np.zeros(5)
+cv = KFold(n_splits=10,
+           shuffle=True,#shuffle before splitting
+           random_state=0) # use same splits for each degree
+for i, d in enumerate(range(1,6)):
+    X = np.power.outer(H, np.arange(d+1))
+    M_CV = cross_validate(M,
+                          X,
+                          Y,
+                          cv=cv)
+    cv_error[i] = np.mean(M_CV['test_score'])
+cv_error
+
+# using ShuffleSplit() method 
+validation = ShuffleSplit(n_splits=10,
+                          test_size=196,
+                          random_state=0)
+results = cross_validate(hp_model,
+                         Auto.drop(['mpg'], axis=1),
+                         Auto['mpg'],
+                         cv=validation)
+results['test_score'].mean(), results['test_score'].std()
+
+
+#View skleanrn fitting results using model.results_
+hp_model.fit(Auto, Auto['mpg']) # hp_model is a sklearn model sk_model.fit(X, Y) for trainning
+model_se = summarize(hp_model.results_)['std err'] #summarize is an ISLP function
+model_se
+\end{verbatim}
+
+\subsection{Useful code snippet}\label{useful-code-snippet-1}
+
+\begin{verbatim}
+
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 6: Linear Model Selection and
+Regrularization}\label{chapter-6-linear-model-selection-and-regrularization}
+
+Linear models are \emph{interpretable} and often shows small variance.
+They are fitted by \emph{OLS}. There are other methods that can either
+provide alternatives or improve linear regression models in terms of
+\emph{prediction accuracy} (especially when \(p>n\)) and automatic
+\emph{feature selection} for improved interpretability.
+
+There are three classes of methods:
+
+\begin{itemize}
+\tightlist
+\item
+  subset selection: pick a subset of the \(p\) predictors that best
+  explains the response.
+\item
+  Shrinkage (regularization). With an added regularizing term, estimated
+  parameters are shrunken to zero relative the OLS estimates. If \(L^2\)
+  regularization is used, all coefficients are shrunk toward zero by the
+  same proportion; while if \(L^1\) is used, then some coefficients will
+  become zero, leading to actual \emph{variable selection} or
+  \emph{sparse representation}.
+\item
+  Dimension reduction. Project \(p\)-predictors to a \(M\) (\(M<p\))
+  dimensional subspace. Each new direction is a linear combination (or
+  projection) of the \(p\)-variables. These \(M\)-projections can then
+  be used to fit a linear regression model(\textbf{PCR} if the
+  \(M\)-projections are obtained in an unsupervised way; or \textbf{PLR}
+  if these \(M\)-projections are obtained in a supervised way))
+\end{itemize}
+
+\section{Best Subset Selecttion}\label{best-subset-selecttion}
+
+\textbf{Algorithm}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Fit the data with the \emph{null model} \(\mathcal{M}_0\), which
+  contains no predictors. This model simply set \(Y=\text{mean}(y_i)\).
+\item
+  for \(k=1, 2, \cdots, p\): fit \(p \choose k\) models containing
+  exactly \(k\) predictors. Pick the best one that having the smallest
+  RSS or largest \(R^2\) (or \emph{deviance} for classification problem,
+  i.e., \(-2\max \log (\text{likelihood})\) on the \emph{training set},
+  called \(\mathcal{M}_k\). Note for each categorical variable with
+  \(L\)-level, there are \(L-1\) dummy variables.
+\item
+  Select the best one among \(\mathcal{M}_0, \cdots, \mathcal{M}_p\)
+  using cross-validation or other measures such as \(C_p (AIC)\),
+  \(BIC\) or adjusted \(R^2\). If cross-validation is used, then Step 2
+  is repeated on each training fold, and the validation errors are
+  averaged to select the best \(k\). The the model \(\mathcal{M}_k\) fit
+  on the full training set is delivered for chosen \(k\).
+\end{enumerate}
+
+Best subset selection suffers - high computation: needs to compute
+\(2^p\) models - overfitting due to the large search space of models
+
+\section{Stepwise selection}\label{stepwise-selection}
+
+Both Forward and Backward selection are stepwise selection. They are
+used when \(p\) is large. They searches over \(1+p(p+1)/2\) models and
+are \emph{greedy} algorithm and is not guaranteed to find the best
+possible model out of all \(2^p\) models.
+
+\begin{itemize}
+\tightlist
+\item
+  Backward selection requires \(n>p\) (so that the full model can be
+  fit);
+\item
+  Forward selection can be used when \(n<p\) but only fits up to models
+  with \(n\) variables.
+\item
+  One can combine forward and backward selection to a hybrid selection.
+\end{itemize}
+
+\subsection{Forward Stepwise
+Selection}\label{forward-stepwise-selection}
+
+Adding one variable at at time that offers the greatest additional
+improvement.
+
+\textbf{Algorithm}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Fit the data with the \emph{null model} \(\mathcal{M}_0\), which
+  contains no predictors. This model simply set \(Y=\text{mean}(y_i)\).
+\item
+  for \(k=1, 2, \cdots, p-1\):
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  fit all \(p-k\) models that augment the predictors in
+  \(\mathcal{M}_k\) with one additional predictor.
+\item
+  Pick the best one that having the smallest RSS or largest \(R^2\) on
+  the training set, called \(\mathcal{M}_{k+1}\).
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Select the best one among \(\mathcal{M}_0, \cdots, \mathcal{M}_p\)
+  using cross-validation or other measures such as \(C_p (AIC)\),
+  \(BIC\) or adjusted \(R^2\).
+\end{enumerate}
+
+\subsection{Backward Stepwise
+Selection}\label{backward-stepwise-selection}
+
+It begins with the full model with all variables, and iteratively
+removing one variable at at time.
+
+\textbf{Algorithm}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Fit the data with the \emph{full model} \(\mathcal{M}_p\), which
+  contains all predictors.
+\item
+  for \(k=p, p-1, \cdots, 1\):
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  fit all \(k\) models that contains all but one of the predictors in
+  \(\mathcal{M}_k\).
+\item
+  Pick the best one that having the smallest RSS or largest \(R^2\) on
+  the training set, called \(\mathcal{M}_{k-1}\).
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Select the best one among \(\mathcal{M}_0, \cdots, \mathcal{M}_p\)
+  using cross-validation or other measures such as \(C_p (AIC)\),
+  \(BIC\) or adjusted \(R^2\).
+\end{enumerate}
+
+\section{Model selection}\label{model-selection-1}
+
+Models with all predictors always have the smallest \(RSS\) or largest
+\(R^2\) on the \emph{training set}. Therefore they are not suitable to
+choose the best one among models with different number of predictors.
+
+We ought to \emph{estimate the test error} on a test set. This may be
+done - indirectly by adjusting the training error to account for the
+bias due to overfitting: \(C_p\) (equivalently, AIC in case of linear
+model with Gaussian errors), BIC and adjusted \(R^2\).
+
+\begin{itemize}
+\item
+  Mallow's \(C_p\): \[
+    C_p =\frac{1}{n}(RSS+2d\hat{\sigma}^2)
+    \] where, \(d\) us the number of parameters and
+  \(\hat{\sigma}^2 \approx Var{\epsilon}\), typically estimated by using
+  the \emph{full model} containing all variables. \(C_p\) is an unbiased
+  estimate of test MSE.
+\item
+  AIC is defined for models fit by maximmum likelihood. \[
+    AIC = -2\log L + 2d
+    \] where, \(L\) is the maximum likelihood function for the estimated
+  model. For linear regression with Gaussian error, \(AIC\propto C_p\).
+\item
+  BIC \[
+    BIC = \frac{1}{n}( RSS + \log (n)d \hat{\sigma}^2 )
+    \] Since \(\log n>\) for \(n>7\), the BIC places a higher penalty on
+  models with many variables, and hence select smaller models than
+  \(C_p\).
+\item
+  Adjusted \(R^2\) (larger value is better)
+
+  \[
+  \text{Adjusted }R^2=1-\frac{RSS/(n-d-1)}{TSS/(n-1)}
+  \] \(RSS/(n-d-1)\) may increase or decrease depends on \(d\). Unlike
+  \(R^2\), adjusted \(R^2\) pays a price for the inclusion of
+  unnecessary variables in a model.
+
+  \(C_p\), AIC, BIC, adjusted \(R^2\),are not appropriate in
+  high-dimentional setting, as the estimated
+  \(\hat{\sigma}^2 \approx 0\) (when \(p\ge n\)).
+\item
+  directly by cross-validation (or validation). It does not require
+  estimate \(\sigma^2\). It has a wide range of usage, as it may
+  difficult to estimate \(d\) or \(\sigma^2\). One can choose the model
+  that has the smallest test error or using the \emph{one-standard-error
+  rule} to select the model that has a smaller size:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    calculate the SE of the estimated test MSE for each model size.
+  \item
+    identify the lowest test MSE
+  \item
+    choose the smallest model for which its test MSE is within one SE of
+    the lowest point.
+  \end{itemize}
+\end{itemize}
+
+\section{Shrinkage methods for Variable
+selection}\label{shrinkage-methods-for-variable-selection}
+
+The shrinkage offers an alternative to selecting variables by adjusting
+a hyperparameter that trades-off RSS and the model parameter magnitudes.
+Shrinkage methods will produce a different set of coefficients for a
+different \(\lambda\). Cross-validation may be used to select the best
+\(\lambda\). After the \(\lambda\) is selected, one can fit a final
+model using the entire training data set.
+
+The reason shrinkage methods may perform better than OLS is rooted in
+bias-variance trade-off: as \(\lambda\) increases, the flexibility of
+the model decreases b ecause of shrunk coefficients, leading to
+decreased variance but increased bias.
+
+\subsection{Ridge regression: minimize the following
+objective}\label{ridge-regression-minimize-the-following-objective}
+
+\[
+RSS + \lambda \sum_{j=1}^p \beta_j^2
+\] The ridge regression is equivalent to \[
+\text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p \beta_j^2 \le s
+\] for some \(s\ge 0\).
+
+\begin{itemize}
+\item
+  It encourages the model parameters to shrink toward zero and find a
+  balance between RSS and model parameter magnitudes. Cross-validation
+  is used to find the best tuning parameter \(\lambda\). When
+  \(\lambda\) is large, \(\beta_j\to 0\). Note, Ridge shrinks all
+  coefficients and include all \(p\) variables.
+\item
+  The OLS coefficients estimates are \emph{scale equivariant}:
+  regardless of how \(X_j\) is scaled, \(X_j\hat{\beta}_j\) remain the
+  same: if \(X_j\) is multiplied by \(c\), this will simply leads to
+  \(\hat{\beta}_j\) be scaled by a factor of \(1/c\).
+\item
+  In contrast, when multiplying \(X_j\) by a factor, this may
+  significantly change the ridge coefficients. Ridge coefficients
+  depends on \(\lambda\) and the scale of \(X_j\), and may even on the
+  scaling of other predictors. Therefore, it is best practice to
+  \emph{standardize the predictors} before fitting a ridge model: \[
+  \tilde{x}_{ij} =\frac{x_{ij}}{\frac{1}{n} \sum_{i=1}^n(x_{ij} - \bar{x}_j)}
+  \]
+\item
+  Ridge regression works best in situations where the OLS estimates have
+  high variance, especially when \(p\) is large.
+\item
+  Ridge will include all \(p\) variables in the final model.
+\end{itemize}
+
+\subsection{The Lasso (Least Absolute Shrinkage and Selection
+Operator)}\label{the-lasso-least-absolute-shrinkage-and-selection-operator}
+
+\begin{itemize}
+\item
+  The Lasso replaces the \(\ell^2\) error with \(\ell^1\) penalty. Lasso
+  can force some coefficients to become exactly zero when \(\lambda\) is
+  large enough. Thus it can actually performs \emph{variable selection}
+  hence better interpretation. Again, cross-validation is employed to
+  select \(\lambda\).
+\item
+  The reason Lasso can perform variable selection is because the
+  objective function is equivalent to
+\end{itemize}
+
+\[\text {minimizing RSS}, \text{subject to } \sum_{j=1}^p |\beta_j| \le s
+  \] for some \(s\). The contour of RSS in general only touch the
+\(\ell_1\) ball at its vertex, at which a minimum is obtained with some
+variables vanishes. In contrast, in the ridge situation, the \(\ell_2\)
+ball is round, and in general, the contour of the RSS function only
+touches the sphere at a surface point where a minimum is obtained with
+no variable vanishes.
+
+\begin{itemize}
+\item
+  Neither ridge nor the lasso will universally dominate the other. When
+  the response depends on a small number of predictors, one may expect
+  lasso performs better; but in practice, this is never known in
+  advance.
+\item
+  Combining ridge and lasso leads to \emph{elastic net} method.
+\item
+  it is well known that ridge tends to give similar values coefficient
+  values to correlated variables, while lasso may give quite different
+  coefficient values to correlated variables.
+\item
+  ridge regression shrinks all coefficients by the same proportion.
+  While lasso perform \textbf{soft-thresholding}, shrink all
+  coefficients by similar amount, and sufficient small coefficients are
+  shrunk all the way to zero.
+
+  both ridge and lasso can be considered as computationally feasible
+  approximation to the \emph{best subset selection} which can be
+  equivalently formulated as: \[
+  \text{minimize } RSS \qquad \text{subject to } \sum_{j=1}^p I(\beta_j\ne 0) \le s.
+  \]
+\item
+  \textbf{Bayesian formulation}: Both ridge and lasso can be interpreted
+  as maximize the \textbf{posterior probability} (MAP) \[
+  p(\beta|X,Y)\propto f(Y|X,\beta) p(\beta|X)=f(Y|X,\beta)p(\beta)
+  \] where \(p(\beta)= \prod_{j=1}^p g(\beta_j)\) with some density
+  function \(g\) is the believed prior on \(\beta\).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    if \(g\) is Gaussian with mean zero and standard deviation a
+    function of \(\lambda\), then it follows the solution \(\beta\)
+    given by the ridge is the same as maximizing the posterior
+    \(p(\beta|X,Y)\), that is, \(\beta\) is the posterior mode. In fact,
+    \(\beta\) is also the posterior mean. Since the Gaussian prior is
+    flat at near zero, ridge assumes the coefficients are randomly
+    distributed about zero.
+  \item
+    if \(g\) is double-exponential (Laplace) with mean zero and scale
+    parameter a function of \(\lambda\), then it follows the solution
+    \(\beta\) given by the lasso is the same as maximizing the posterior
+    \(p(\beta|X,Y)\), that is, \(\beta\) is the posterior mode. In this
+    case \(\beta\) is \textbf{not} the posterior mean. Since the
+    Laplacian prior is steeply peaked at zero, lasso expects a priori
+    that many coefficients are (exactly) zero.
+  \end{itemize}
+\end{itemize}
+
+\section{\texorpdfstring{Dimension reduction methods: transforming
+\(X_j\).}{Dimension reduction methods: transforming X\_j.}}\label{dimension-reduction-methods-transforming-x_j.}
+
+There are two types of dimension reduction methods for regression: a)
+PCA regression, b) Partial list squares PLS. Both are designed to handle
+when the OLS breaks down due to that there are large number of
+correlated variables.
+
+\subsection{\texorpdfstring{PCA regression: first use PCA to obtain
+\(M\)- PCA as linear combinations (directions) of the original \(p\)
+predictors:}{PCA regression: first use PCA to obtain M- PCA as linear combinations (directions) of the original p predictors:}}\label{pca-regression-first-use-pca-to-obtain-m--pca-as-linear-combinations-directions-of-the-original-p-predictors}
+
+\begin{equation}\phantomsection\label{eq-PCA}{
+  Z_m =\sum_{j=1}^p \phi_{mj} X_j, \qquad 1\le m \le M,  
+  }\end{equation} where, the \(\phi_{mj}\) are called \textbf{PCA
+loadings}, and subject to the norm \(\sum_{j=1}^p\phi_{mj}^2=1\) for
+each \(m\). Note \(Z_m\) is a vector of length equal to the length of
+\(X_j\), which is the number of data points \(n\). The component of
+\(Z_m\): \(z_{im}\), \(1\le i \le n\) are called \textbf{PCA scores}.
+\(z_{im}\) is a \emph{single number summary} of the \(p\) predictors
+with the \(m\)-th PCA for the \(i\)-th observation. PCA is not a feature
+selection method.
+
+The first PCA defines the direction that contains the largest variance
+in \(X\), and minimize the sum of squared perpendicular distances to
+each point (the projection error on the PCA), that is it defines the
+line that is \emph{as close as possible} to the data; (In fact, the
+first PCA is given by the eigenvector of the largest eigenvalue of the
+covariance matrix \(\frac{1}{n-1}X^TX\)). The second PCA is orthogonal
+to the first PCA and has the second largest variance and is uncorrelated
+with the first, and so on. These directions are obtained in an
+\emph{unsupervised way}, as \(Y\) is not used to obtain these
+components. Consequently, there is no guarantee that the directions that
+best explain the predictors will also be the best directions to use for
+predicting the response.
+
+PCA is typically conducted after standardizing the data \(X\), as
+without scaling, the high variance variables will tend to have higher
+influence on the obtained PCAs.
+
+We then use OLS to fit a linear regression model
+\begin{equation}\phantomsection\label{eq-PCAR}{
+y_i =\theta_0 +\sum_{m=1}^M \theta_m z_{im}+\epsilon_i, \qquad i=1,2,\cdots, n
+}\end{equation}
+
+After substitute Equation~\ref{eq-PCA} into equation
+Equation~\ref{eq-PCAR}, one can find that \[
+\sum_{m=1}^M \theta_mz_{im} =\sum_{j=1}^p \beta_jx_{ij}
+\] with \begin{equation}\phantomsection\label{eq-pcar-beta}{
+\beta_j = \sum_{m=1}^M \theta_m\phi_{mj}.
+}\end{equation} Eq. Equation~\ref{eq-pcar-beta} has the potential to
+bias the coefficient estimates, but selecting \(M<< p\) can
+significantly reduce the variance. So model Equation~\ref{eq-PCAR} is a
+special case of linear regression subject to the constants
+Equation~\ref{eq-pcar-beta}.
+
+PCR and ridge are closely related and one can think of ridge regression
+as a continuous version of PCR.
+
+\subsection{Partial Least Squares}\label{partial-least-squares}
+
+Similar to PCAR, PLS also first identifies a new set of features
+\(Z_1, Z_2, \cdots, Z_m\), each of which is a linear combinations of the
+original features, and then fits a linear model via OLS with these new
+\(M\) features.
+
+But PLS identifies these new features in a \emph{supervised way}, that
+is, PLS uses \(Y\) in order to identify the new features that not only
+approximate the old features well, but also are \emph{related to the
+response}, i.e., these new features explain both the response and the
+predictors.
+
+First PLS standardizes the \(p\) predictors. PLS identifies the first
+component \(Z_1 = \sum_{j=1}^p \phi_{1j}X_j\) by choosing
+\(\phi_{1j}=<X_j, Y>\), the coefficient from the simple linear
+regression of \(Y\) onto \(X_j\). Since this coefficient is equal to the
+correlation between \(Y\) and \(X_j\), PLS places the highest weight on
+the variables that are most strongly related to \(Y\). The PLS direction
+does not fit the predictors as closely as does PCA, but it does a better
+job explaining the response.
+
+Next, PLS orthogonality each \(X_j\) with respect to \(Z_1\), that is,
+replace each \(X_j\) with the residual by regressing \(X_j\) on \(Z_1\),
+and then repeat the same process.
+
+When \(p\) is large, especially \(p>n\), the forward selection method,
+shrinkage methods (lasso or ridge), PCR, PLR fit a \emph{less flexible}
+model, hence particularly useful in performing regression in
+high-dimensional settings.
+
+\section{Homework:}\label{homework-2}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1--4
+\item
+  Applied: At least one.
+\end{itemize}
+
+\section{Code Snippet}\label{code-snippet}
+
+\subsection{Python}\label{python-4}
+
+\begin{verbatim}
+np.isnan(Hitters['Salary']).sum()
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy-4}
+
+\begin{verbatim}
+np.linalg.norm(beta_hat) #L2 norm. ord=1: L1  ord='inf': max norm.
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-4}
+
+\begin{verbatim}
+Hitters.dropna();
+soln_path = pd.DataFrame(soln_array.T,
+                         columns=D.columns,
+                         index=-np.log(lambdas))
+soln_path.index.name = 'negative log(lambda)'
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-4}
+
+\begin{verbatim}
+ax.errorbar(np.arange(n_steps), 
+            cv_mse.mean(1), #mean of each row (model)
+            cv_mse.std(1) / np.sqrt(K), #estimate standard error of the mean
+            label='Cross-validated',
+            c='r') # color red
+            
+ax.axvline(-np.log(tuned_ridge.alpha_), c='k', ls='--') # plot a verticalline
+\end{verbatim}
+
+\subsection{ISLP and statsmodels}\label{islp-and-statsmodels-2}
+
+\begin{verbatim}
+#Estimate Var(epsilon)
+
+design = MS(Hitters.columns.drop('Salary')).fit(Hitters)
+design.terms # to see the variable names in the design matrix
+Y = np.array(Hitters['Salary'])
+X = design.transform(Hitters)
+sigma2 = OLS(Y,X).fit().scale  #.scale: RSE: residual standard error estimating 
+
+# Forward Selection using ISLP.models and a scoring function
+from ISLP.models import \
+     (Stepwise,
+      sklearn_selected,
+      sklearn_selection_path)
+strategy = Stepwise.first_peak(design,
+                               direction='forward',
+                               max_terms=len(design.terms))
+hitters_Cp = sklearn_selected(OLS,
+                               strategy,
+                               scoring=neg_Cp)
+                               #default scoring MSE, will choose all variables
+hitters_Cp.fit(Hitters, Y) # the same as hitters_Cp.fit(Hitters.drop('Salary', axis=1), Y)
+hitters_Cp.selected_state_
+
+#Forward selection using cross-validation
+strategy = Stepwise.fixed_steps(design,
+                                len(design.terms),
+                                direction='forward')
+full_path = sklearn_selection_path(OLS, strategy) #using default scoring MSE
+full_path.fit(Hitters, Y) # there are , 19 variables, 20 models
+Yhat_in = full_path.predict(Hitters)
+
+#calculate in-sample mse
+
+mse_fig, ax = subplots(figsize=(8,8))
+insample_mse = ((Yhat_in - Y[:,None])**2).mean(0) #Y[:,None]: add a second axis, create a column vector
+                        #[yw] mean(0): calculate mean along row, i.e., for each col. mean(1): calculate mean for each row
+
+#Cross-validation
+K = 5
+kfold = skm.KFold(K,
+                  random_state=0,
+                  shuffle=True)
+Yhat_cv = skm.cross_val_predict(full_path,
+                                Hitters,
+                                Y,
+                                cv=kfold)
+# Cross-validation mse
+cv_mse = []
+for train_idx, test_idx in kfold.split(Y):
+    errors = (Yhat_cv[test_idx] - Y[test_idx,None])**2
+    cv_mse.append(errors.mean(0)) # column means
+cv_mse = np.array(cv_mse).T
+
+#validation approach using ShuffleSplit
+validation = skm.ShuffleSplit(n_splits=1, # only split one time. 
+                              test_size=0.2,
+                              random_state=0)
+for train_idx, test_idx in validation.split(Y):
+    full_path.fit(Hitters.iloc[train_idx], #note needing to use iloc
+                  Y[train_idx])
+    Yhat_val = full_path.predict(Hitters.iloc[test_idx])
+    errors = (Yhat_val - Y[test_idx,None])**2
+    validation_mse = errors.mean(0)
+\end{verbatim}
+
+\subsection{sklearn}\label{sklearn-2}
+
+\begin{verbatim}
+rom sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from sklearn.cross_decomposition import PLSRegression
+
+#Best subset selection using 10bnb
+
+D = design.fit_transform(Hitters)
+D = D.drop('intercept', axis=1) #needs to drop intercept
+X = np.asarray(D)
+path = fit_path(X, 
+                Y,
+                max_nonzeros=X.shape[1]) #fit_path: a funciton from l0nb. use all variables
+                # max_nonzeros: max nonzero coefficients in the fitted model.
+
+# Ridge Regression
+soln_array = skl.ElasticNet.path(Xs, # standardized, no intercept
+                                 Y,
+                                 l1_ratio=0., #ridge
+                                 alphas=lambdas)
+# Using pipline
+ridge = skl.ElasticNet(alpha=lambdas[59], l1_ratio=0)
+scaler = StandardScaler(with_mean=True,  with_std=True)
+pipe = Pipeline(steps=[('scaler', scaler), ('ridge', ridge)])
+pipe.fit(X, Y)
+ridge.coef_
+
+# Validation
+
+validation = skm.ShuffleSplit(n_splits=1,
+                              test_size=0.5,
+                              random_state=0) # validation is a generator
+ridge.alpha = 0.01
+results = skm.cross_validate(ridge,
+                             X,
+                             Y,
+                             scoring='neg_mean_squared_error',
+                             cv=validation) # using the strategy defined in validation
+-results['test_score']
+
+# GridSearchCV()
+param_grid = {'ridge__alpha': lambdas}
+grid = skm.GridSearchCV(pipe,
+                        param_grid,
+                        cv=validation, # or use cv=kfold (5-fold CV defined separately)
+                        scoring='neg_mean_squared_error') #default scoring=R^2
+grid.fit(X, Y)
+grid.best_params_['ridge__alpha']
+grid.best_estimator_
+grid.cv_results_['mean_test_score']
+grid.cv_results_['std_test_score']
+
+
+#Plot CV MSE
+ridge_fig, ax = subplots(figsize=(8,8))
+ax.errorbar(-np.log(lambdas),
+            -grid.cv_results_['mean_test_score'],
+            yerr=grid.cv_results_['std_test_score'] / np.sqrt(K))
+ax.set_ylim([50000,250000])
+ax.set_xlabel('$-\log(\lambda)$', fontsize=20)
+ax.set_ylabel('Cross-validated MSE', fontsize=20);
+
+# Use ElasticNetCV()
+ridgeCV = skl.ElasticNetCV(alphas=lambdas, # ElasticNetCV accepts a sequence of alphas
+                           l1_ratio=0,
+                           cv=kfold)
+pipeCV = Pipeline(steps=[('scaler', scaler), # scaling is done once. 
+                         ('ridge', ridgeCV)])
+pipeCV.fit(X, Y)
+tuned_ridge = pipeCV.named_steps['ridge']
+tuned_ridge.mse_path_
+tuned_ridge.alpha_ # best alpha
+tuned_ridge.coef_
+
+# Evaluating test Error of Cross-validated Ridge 
+
+outer_valid = skm.ShuffleSplit(n_splits=1, 
+                               test_size=0.25,
+                               random_state=1)
+inner_cv = skm.KFold(n_splits=5,
+                     shuffle=True,
+                     random_state=2)
+ridgeCV = skl.ElasticNetCV(alphas=lambdas, # a sequence of lambdas
+                           l1_ratio=0,
+                           cv=inner_cv) # K-fold validation
+pipeCV = Pipeline(steps=[('scaler', scaler),
+                         ('ridge', ridgeCV)]);
+                         
+                         
+results = skm.cross_validate(pipeCV, 
+                             X,
+                             Y,
+                             cv=outer_valid,
+                             scoring='neg_mean_squared_error')
+-results['test_score']
+
+# Lasso regression
+lassoCV = skl.ElasticNetCV(n_alphas=100, #test 100 alpha values
+                           l1_ratio=1,
+                           cv=kfold)
+pipeCV = Pipeline(steps=[('scaler', scaler),
+                         ('lasso', lassoCV)])
+pipeCV.fit(X, Y)
+tuned_lasso = pipeCV.named_steps['lasso']
+tuned_lasso.alpha_
+tuned_lasso.coef_
+np.min(tuned_lasso.mse_path_.mean(1)) # miminum avg mse
+
+#to get the soln path
+lambdas, soln_array = skl.Lasso.path(Xs, # standarsized, no -intercept
+                                    Y,
+                                    l1_ratio=1,
+                                    n_alphas=100)[:2]
+
+#PCA and PCR
+pca = PCA(n_components=2)
+linreg = skl.LinearRegression()
+pipe = Pipeline([('scaler', scaler), 
+                 ('pca', pca),
+                 ('linreg', linreg)])
+pipe.fit(X, Y)
+pipe.named_steps['linreg'].coef_
+pipe.named_steps['pca'].explained_variance_ratio_
+
+# perform Grid search
+param_grid = {'pca__n_components': range(1, 20)} #PCA needs n_components >0
+grid = skm.GridSearchCV(pipe,
+                        param_grid,
+                        cv=kfold,
+                        scoring='neg_mean_squared_error')
+grid.fit(X, Y)
+
+# cross-validation a null model
+cv_null = skm.cross_validate(linreg,
+                             Xn,
+                             Y,
+                             cv=kfold,
+                             scoring='neg_mean_squared_error')
+-cv_null['test_score'].mean()
+
+#PLS
+pls = PLSRegression(n_components=2, 
+                    scale=True) # standarsize the data 
+pls.fit(X, Y) # X has no-intercept 
+
+# Cross-validation
+param_grid = {'n_components':range(1, 20)}
+grid = skm.GridSearchCV(pls,
+                        param_grid,
+                        cv=kfold,
+                        scoring='neg_mean_squared_error')
+grid.fit(X, Y)
+
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 7: Moving Beyond
+Linearity}\label{chapter-7-moving-beyond-linearity}
+
+Often the linearity assumption of Y of X is good. However, when it's
+not, - Polynomials - step functions - splines - local regression, -
+generalized additive models offer much more flexibility.
+
+\section{Polynomials}\label{polynomials}
+
+Polynomial terms of higher powers for \(X_j\) or interaction terms
+\(X_iX_j\) are used, but the model is still a linear model in the
+coefficients \(\beta_j\). The optimum degree \(d\) can be chosen by
+cross-validation. polynomial terms can be included in either a linear
+regression model or a logistic regression model.
+
+\section{Step functions}\label{step-functions}
+
+A step function is a piece-wise constant function. Cut a \(X\) variable
+into \(m\) regions and then create \(m-1\) dummy variables to represent
+all those regions. Choice of \emph{cut-points} (knots) can be
+problematic.
+
+\section{Splines}\label{splines}
+
+Piece-wise polynomials are different polynomials on different regions
+defined by \emph{knots}. **Splines* are piece-wise polynomials with
+maximum amount of continuity.
+
+\begin{itemize}
+\item
+  linear spline: with knots \(\xi_k\), \(k=1, \cdots, K\) is a piecewise
+  linear polynomial that is continuous at each knot. \[
+  y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+1}b_{K+1}(x)+\epsilon, 
+  \] where, \(b_k\) are \textbf{basis functions} defined by
+  \begin{align}
+  b_1(x) & = x \\
+  b_{k+1}(x) & = (x- \xi_k)_{+}, \qquad k=1, \cdots K
+  \end{align} Here the \emph{positive part} is defined by
+  \[x_{+}=\begin{cases}
+  x, &  \text{ if } x>0 \\
+  0 &  \text{ otherwise}
+  \end{cases}
+  \]
+\item
+  cubic splines: with knots \(\xi_k\), \(k=1, \cdots, K\) is a piecewise
+  cubic polynomials with continuous derivatives up to order 2 at each
+  knot.
+\end{itemize}
+
+\[
+y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+3}b_{K+3}(x)+\epsilon, 
+\] \textbf{knot placement}: One strategy is to place them at appropriate
+quantiles of the observed \(X\).
+
+For a \textbf{regular cubic spline}, the \textbf{basis functions} are
+defined by \begin{align}
+b_1(x) & = x \\
+b_2(x) & = x^2 \\
+b_3(x) & = x^3 \\
+b_{k+3}(x) & = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
+\end{align}
+
+\textbf{dof}: \(K+4\) number of parameters
+
+a \textbf{natural cubic spline} extrapolates linearly beyond the
+boundary knots. This adds \(2\times 2\) extra constrains, and allows to
+put more internal knots for the same degree of freedom as a regular
+cubic spline
+
+\textbf{dof}: \(K\).
+
+For a \textbf{smoothing spline}: it is the solution \(g\) to the
+following problem: \[
+  \text{minimize}_{g\in S}\sum_{i=1}^n(y_i-g(x_i))^2 +\lambda \int g''(t)dt
+  \]
+
+The first term is RSS and encourages \(g(x_i)\) matches \(y_i\). The
+second term modulates the \emph{roughness} by a tuning parameter
+\(\lambda \ge 0\). If \(\lambda=0\), then the solution is just an
+interpolating polynomial. If \(\lambda\to \infty\), then \(g\) is a
+linear function.
+
+The smoothing spline is in fact a natural spline with knots at unique
+values of \(x_i\). it avoids the knot selection issue and leaving a
+single \(\lambda\) to tune. An \emph{effective degrees of freedom} can
+be calcualted for a smoothing spline as \[
+df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii}, 
+\] where \(\bf{S}_\lambda\) is a \(n\times n\) matrix determined by
+\(\lambda\) and \(x_i\) such that the vector of \(n\) fitted values can
+be written as \[
+\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}
+\] The LOO cross-validation error is given by \[
+\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
+\] - Local Regression: a non-parametric method. with a sliding weight
+function, fit seprate linear fits over the range of \(X\) by weighted
+least squares.
+
+\begin{itemize}
+\tightlist
+\item
+  GAM (Generalized Additive Models): \[
+  y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
+  \] GAM can mix different \(f_j\), for example, a spline, or a linear
+  term or even include low order interactive terms. The coefficients are
+  hard to interpret, but the fitted values are of interest.
+\end{itemize}
+
+GAM can be used in fitting a regression model, that is \[
+\log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
+\]
+
+\section{Homework:}\label{homework-3}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual:
+\item
+  Applied: At least one.
+\end{itemize}
+
+\section{Code Snippet}\label{code-snippet-1}
+
+\subsection{Python}\label{python-5}
+
+\begin{verbatim}
+
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy-5}
+
+\begin{verbatim}
+Wage['education'].cat.categories # .cat is the categorical method accessor
+Wage['education'].cat.codes
+pd.crosstab(Wage['high_earn'], Wage['education'])
+
+np.column_stack([Wage_['age'],
+                         Wage_['year'],
+                         Wage_['education'].cat.codes-1])
+
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -> 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-5}
+
+\begin{verbatim}
+cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints. pd.cut is similar
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-5}
+
+\begin{verbatim}
+ax.legend(title='$\lambda$');
+\end{verbatim}
+
+\subsection{ISLP and statsmodels}\label{islp-and-statsmodels-3}
+
+\begin{verbatim}
+
+\end{verbatim}
+
+\subsection{sklearn}\label{sklearn-3}
+
+\subsection{Useful code snippets}\label{useful-code-snippets}
+
+\subsubsection{plot a model fit with confidence
+interval}\label{plot-a-model-fit-with-confidence-interval}
+
+\begin{verbatim}
+def plot_wage_fit(age_df, 
+                  basis, # ISL model object
+                  title):
+
+    X = basis.transform(Wage)
+    Xnew = basis.transform(age_df)
+    M = sm.OLS(y, X).fit()
+    preds = M.get_prediction(Xnew)
+    bands = preds.conf_int(alpha=0.05)
+    fig, ax = subplots(figsize=(8,8))
+    ax.scatter(age,
+               y,
+               facecolor='gray',
+               alpha=0.5)
+    for val, ls in zip([preds.predicted_mean,
+                      bands[:,0],
+                      bands[:,1]],
+                     ['b','r--','r--']):
+        ax.plot(age_df.values, val, ls, linewidth=3)
+    ax.set_title(title, fontsize=20)
+    ax.set_xlabel('Age', fontsize=20)
+    ax.set_ylabel('Wage', fontsize=20);
+    return ax
+\end{verbatim}
+
+\subsubsection{Fitting with a step
+function}\label{fitting-with-a-step-function}
+
+\begin{verbatim}
+cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints
+# note pd.get_dummies(cut_age) is the X matrix
+summarize(sm.OLS(y, pd.get_dummies(cut_age)).fit()) 
+\end{verbatim}
+
+\subsubsection{Fitting a spline}\label{fitting-a-spline}
+
+\begin{verbatim}
+#specifying internal knots
+
+bs_age = MS([bs('age',
+                internal_knots=[25,40,60],
+                name='bs(age)')]) #rename the variable names 
+Xbs = bs_age.fit_transform(Wage) # Xbs == bs_age above
+M = sm.OLS(y, Xbs).fit()
+summarize(M)
+
+# specifying df 
+bs_age0 = MS([bs('age',
+                 df=3, # df count does not include intercept. df=degree+ #knots
+                 degree=0)]).fit(Wage)
+Xbs0 = bs_age0.transform(Wage)
+summarize(sm.OLS(y, Xbs0).fit())
+
+BSpline(df=3, degree=0).fit(age).internal_knots_
+
+# Fit a natural spline
+ns_age = MS([ns('age', df=5)]).fit(Wage) #df=degree+ #knots -2
+M_ns = sm.OLS(y, ns_age.transform(Wage)).fit()
+summarize(M_ns)
+
+# fit a smoothing spline
+X_age = np.asarray(age).reshape((-1,1))
+gam = LinearGAM(s_gam(0, lam=0.6)) #gam is the smoothing spline model with a given lambda
+gam.fit(X_age, y)
+
+#Fiting a smoothing spline with an optimized lambda
+gam_opt = gam.gridsearch(X_age, y)
+
+
+# Fitting a smoothin spline by specifying a df (not including intercept)
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(X_age,
+           y,
+           facecolor='gray',
+           alpha=0.3)
+for df in [1,3,4,8,15]:
+    lam = approx_lam(X_age, age_term, df+1) # find the lambda corresponding to a df. 
+    age_term.lam = lam # update lambda
+    gam.fit(X_age, y)
+    ax.plot(age_grid,
+            gam.predict(age_grid),
+            label='{:d}'.format(df),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='Degrees of freedom');
+
+
+
+\end{verbatim}
+
+\subsection{GAM}\label{gam}
+
+\begin{verbatim}
+### manually contruct basis 
+ns_age = NaturalSpline(df=4).fit(age) #df counts do not include intercepts. -> 4 columns
+ns_year = NaturalSpline(df=5).fit(Wage['year']) # -> 5 cols
+Xs = [ns_age.transform(age),
+      ns_year.transform(Wage['year']),
+      pd.get_dummies(Wage['education']).values] # -> 5 education levels: 1-hot coding
+X_bh = np.hstack(Xs)
+gam_bh = sm.OLS(y, X_bh).fit()
+
+### Examinge partial effect
+
+age_grid = np.linspace(age.min(),
+                       age.max(),
+                       100)
+X_age_bh = X_bh.copy()[:100] # Take the first 100 rows of X_bh
+# calculate the row mean and make it a row vector in the shape of 1Xp, then broadcast
+X_age_bh[:] = X_bh[:].mean(0)[None,:] 
+X_age_bh[:,:4] = ns_age.transform(age_grid)# replace the first 4 cols with basis functions evalued at age_grid
+preds = gam_bh.get_prediction(X_age_bh) #gam_bh is the GAM model with all 14 basis
+bounds_age = preds.conf_int(alpha=0.05)
+partial_age = preds.predicted_mean
+center = partial_age.mean() # center of the prediction 
+partial_age -= center # center the prediction for better viz
+bounds_age -= center
+fig, ax = subplots(figsize=(8,8))
+ax.plot(age_grid, partial_age, 'b', linewidth=3)
+ax.plot(age_grid, bounds_age[:,0], 'r--', linewidth=3)
+ax.plot(age_grid, bounds_age[:,1], 'r--', linewidth=3)
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage', fontsize=20);
+
+
+### Using a smoothing spline and pygam package
+#### Specifying lambda
+#### default \lambda = 0.6 is used.
+gam_full = LinearGAM(s_gam(0) + # spline smoothing applies to the first col of the feature matrix
+                     s_gam(1, n_splines=7) + # smoothing applied to the 2nd col 
+                     f_gam(2, lam=0)) # smothing applied to the 3rd col: a factor col
+Xgam = np.column_stack([age,  #stack as columns
+                        Wage['year'],
+                        Wage['education'].cat.codes]) 
+gam_full = gam_full.fit(Xgam, y)
+
+gam_full.summary() # verbose summary
+
+#### Plot partial effect using a plot_gam from ISLP.pygam
+fig, ax = subplots(figsize=(8,8))
+plot_gam(gam_full, 0, ax=ax) # 0: partial plot of the first component: age
+ax.set_xlabel('Age')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of age on wage - default lam=0.6', fontsize=20);
+
+### Specifying df
+age_term = gam_full.terms[0]
+age_term.lam = approx_lam(Xgam, age_term, df=4+1)
+year_term = gam_full.terms[1]
+year_term.lam = approx_lam(Xgam, year_term, df=4+1)
+gam_full = gam_full.fit(Xgam, y)
+
+#### Plot partial effect
+fig, ax = subplots(figsize=(8, 8))
+ax = plot_gam(gam_full, 2)
+ax.set_xlabel('Education')
+ax.set_ylabel('Effect on wage')
+ax.set_title('Partial dependence of wage on education',
+             fontsize=20);
+ax.set_xticklabels(Wage['education'].cat.categories, fontsize=8);
+\end{verbatim}
+
+\subsubsection{Anova for GAM}\label{anova-for-gam}
+
+\begin{verbatim}
+gam_0 = LinearGAM(age_term + f_gam(2, lam=0)) # note age_term is a s_gam with df=4 defined above 
+gam_0.fit(Xgam, y)
+gam_linear = LinearGAM(age_term +
+                       l_gam(1, lam=0) +
+                       f_gam(2, lam=0))
+gam_linear.fit(Xgam, y)
+anova_gam(gam_0, gam_linear, gam_full)
+\end{verbatim}
+
+\subsubsection{Logistic GAM}\label{logistic-gam}
+
+\begin{verbatim}
+gam_logit = LogisticGAM(age_term + 
+                        l_gam(1, lam=0) +
+                        f_gam(2, lam=0))
+gam_logit.fit(Xgam, high_earn)
+\end{verbatim}
+
+\subsubsection{LOESS}\label{loess}
+
+\begin{verbatim}
+lowess = sm.nonparametric.lowess
+fig, ax = subplots(figsize=(8,8))
+ax.scatter(age, y, facecolor='gray', alpha=0.5)
+for span in [0.2, 0.5]:
+    fitted = lowess(y,
+                    age,
+                    frac=span,
+                    xvals=age_grid)
+    ax.plot(age_grid,
+            fitted,
+            label='{:.1f}'.format(span),
+            linewidth=4)
+ax.set_xlabel('Age', fontsize=20)
+ax.set_ylabel('Wage', fontsize=20);
+ax.legend(title='span', fontsize=15);
+\end{verbatim}
+
+\bookmarksetup{startatroot}
+
+\chapter{Class Project}\label{class-project}
+
+\textbf{Goal}
+
+to use various ML algorithms to predict a meaningful target \(Y\) by
+\emph{classification algorithms} or \emph{regression algorithms}.
+Present it at COS Research Sympsium in the end of April.
+
+\textbf{Data set}: real-world stock price and volume data. We could
+start with just one stock, e.g.~APAL, S\&P 500, index, DJ index.
+
+\textbf{Some ideas}: * Create one model for each stock. * create a
+single model for all stocks. Needs to embed each stock in a feature
+space. Research?
+
+\textbf{Start-up code}: refer to the page
+\url{https://github.com/ywanglab/Predicting_stock_movement/blob/main/Time_series_stock_data_analysis_ver2.ipynb}.
+Perform some EDA to feel the data.
+
+reference ticker symbols:
+\url{https://gist.github.com/quantra-go-algo/ac5180bf164a7894f70969fa563627b2}
+
+\textbf{Questions}: Which are the \(X\) variables? price, volume,
+return, day of week, month of year, etc. What is the \(Y\) variable?
+next-day price, next-day return, next-five-day average price,
+next-five-day-average return, etc.
+
+\textbf{Models}
+
+\begin{itemize}
+\item
+  Linear regression:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    including continuous variables (price, volume), categorical
+    variables (day-of-week, month-of-year)
+  \item
+    transforming \(X\) (for including non-linear relation between \(Y\)
+    and \(X\)) or \(Y\) (when \(Y\) is heteroschedatic, i.e., with
+    varied \(\epsilon_i\))
+  \item
+    plot residual plot to see if \(Var(\epsilon_i)\) is changing. If
+    yes, may appeal to transforming \(Y\), e.g., \(\log Y\),
+    \(\sqrt{Y}\).
+  \item
+    investigate outliers (points with unusual \(Y\)-values) using the
+    \emph{residual plot} or looking at \emph{studentized residual}.
+  \item
+    investigate high leverage points (with unusual \(x\) values), by
+    calculating \emph{leverage statistics}.
+  \item
+    Investigate if there is \emph{colinearity} among the variables by
+    calculating \emph{VIF}.
+  \end{itemize}
+\item
+  classification: predicting directions of the stock price movement.
+  binary (with two direction), or multinomial (more than two values:
+  e.g., up, same, down), LDA, QDA
+\item
+  regularization of the parameters
+\item
+  selection of variables: forward, backward, mixture, regularization,
+  cross-validation
+\item
+  decision tree: random forest, boosting
+\item
+  SVM: support vector machines
+\item
+  NN
+\end{itemize}
+
+\bookmarksetup{startatroot}
+
+\chapter{Summary}\label{summary}
+
+In summary, this book has no content whatsoever.
+
+\bookmarksetup{startatroot}
+
+\chapter*{References}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\markboth{References}{References}
+
+James et al. (2023)
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-thrt23}
+James, G., D. Witten, T. Hastie, R. Tibshirani, and J. Taylor. 2023.
+\emph{An Introduction to Statistical Learning}. USA: Springer.
+\url{https://hastie.su.domains/ISLP/ISLP_website.pdf}.
+
+\end{CSLReferences}
+
+
+
+\end{document}
