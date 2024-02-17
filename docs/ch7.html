@@ -251,8 +251,8 @@ y_i=\beta_0+\beta_1b_1(x_i) +\cdots + \beta_K b_K(x_i) +\epsilon_i
 <p>The basis functions are simply the polynomial functions of different degrees. Polynomial terms of higher powers for <span class="math inline">\(X_j\)</span> or interaction terms <span class="math inline">\(X_iX_j\)</span> are used, but the model is still a linear model in the coefficients <span class="math inline">\(\beta_j\)</span>. The optimum degree <span class="math inline">\(d\)</span> can be chosen by cross-validation. polynomial terms can be included in either a linear regression model or a logistic regression model.</p>
 <p>In practice hardly a degree greater than 3 or 4 is used because a higher degree polynomial exhibits high degree of oscillation, especially near the boundary (Runge’s phenomenon). This is because a polynomial imposes a <em>global structure</em>.</p>
 <p>The standard error at a point <span class="math inline">\(x_0\)</span>is calculated by <span class="math display">\[
-SE[\hat{f}(x_0)] = \ell_0^T \hat{\bf{C}} {\ell}_0
-\]</span> where, <span class="math inline">\(\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)\)</span>, and <span class="math inline">\(\hat{\bf{C}}\)</span> is the covariance matrix of the estimated coefficients <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j=0, 1, \cdots, d\)</span> obtained from the OLS.</p>
+SE[\hat{f}(x_0)] = \ell_0^T \hat{\mathbf{C}} {\ell}_0
+\]</span> where, <span class="math inline">\(\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)\)</span>, and <span class="math inline">\(\hat{\mathbf{C}}\)</span> is the covariance matrix of the estimated coefficients <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j=0, 1, \cdots, d\)</span> obtained from the OLS.</p>
 </section>
 <section id="step-functions" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="step-functions"><span class="header-section-number">7.2</span> Step functions</h2>
@@ -298,12 +298,12 @@ b_{k+3}(x) &amp; = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
   \]</span></p>
 <p>The first term is the <em>loss</em> RSS and encourages <span class="math inline">\(g(x_i)\)</span> matches <span class="math inline">\(y_i\)</span>. The second term is the <em>penalty</em> that penalize the <em>variability</em> in <span class="math inline">\(g\)</span> (measured by <span class="math inline">\(g''(t)\)</span>) by a tuning parameter <span class="math inline">\(\lambda \ge 0\)</span>. If <span class="math inline">\(\lambda=0\)</span> (no constraints on <span class="math inline">\(g\)</span>), then the solution is just an interpolating polynomial. If <span class="math inline">\(\lambda\to \infty\)</span>, then <span class="math inline">\(g\)</span> is a linear function (because its second derivative is zero). <span class="math inline">\(\lambda\)</span> controls the bias-variance trade-off.</p>
 <p>The smoothing spline is in fact a natural spline with knots at unique values of <span class="math inline">\(x_i\)</span>. But it is <strong>different</strong> than the natural spline. It is a <em>shrunk</em> version of a natural cubic spline, otherwise it would have too large (<em>nominal</em>) dof (number of parameters) because it has knots at unique values of <span class="math inline">\(x_i\)</span>. It avoids the knot selection issue and leaving a single <span class="math inline">\(\lambda\)</span> to tune. An <em>effective degrees of freedom</em> can be calculated for a smoothing spline as <span class="math display">\[
-df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii},
-\]</span> where <span class="math inline">\(\bf{S}_\lambda\)</span> is a <span class="math inline">\(n\times n\)</span> matrix determined by <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(x_i\)</span> such that the vector of <span class="math inline">\(n\)</span> fitted values can be written as <span class="math display">\[
-\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}.
+df_\lambda =\sum_{i=1}^n {\{\mathbf{S}_\lambda}\}_{ii},
+\]</span> where <span class="math inline">\(\mathbf{S}_\lambda\)</span> is a <span class="math inline">\(n\times n\)</span> matrix determined by <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(x_i\)</span> such that the vector of <span class="math inline">\(n\)</span> fitted values can be written as <span class="math display">\[
+\hat{\mathbf{g}}_\lambda =\mathbf{S}_\lambda \mathbf{y}.
 \]</span> <span class="math inline">\(df_\lambda\)</span> decreases from <span class="math inline">\(n\)</span> to 2 as <span class="math inline">\(\lambda\)</span> increases from 0 to <span class="math inline">\(\infty\)</span>.</p>
 <p>The LOO cross-validation error can be efficiently computed by <span class="math display">\[
-\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
+\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\mathbf S}_\lambda\}_{ii}} \right]^2
 \]</span> - Local Regression: a non-parametric method. It is similar to spline, but allowing regions overlap. With a sliding weight function of <em>span</em> <span class="math inline">\(s\)</span>, fit separate (constant, linear, quadratic, for instance) fits over the range of <span class="math inline">\(X\)</span> by weighted least squares.</p>
 <p>The span <span class="math inline">\(s\)</span> plays the similar role as <span class="math inline">\(\lambda\)</span> in a smoothing spline, it controls the flexibility of the local regression. The smaller <span class="math inline">\(s\)</span> is, the more <em>local and wiggle</em> will be the fit.</p>
 <p>Local regression is a <em>memory based</em> procedure, because like KNN, all training data are needed each time when making a prediction.</p>
@@ -318,7 +318,15 @@ y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
 \log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
 \]</span></p>
 <p>When fitting a GAM, and if OLS can not be used (such as when a smoothing spline is used), then the <em>back fitting</em> iterative method can be used: randomly initialize all variable coefficients; repeatedly hold all but one variable fixed, and perform a simple linear regression on that single variable, and update the corresponding coefficients until convergence. Convergence is typically very fast.</p>
-<p><strong>Pros and Cons of GAM</strong> * flexible to model <span class="math inline">\(f_j\)</span>, eliminating the need to try different transformations on each variable * potentially more accurate prediction * because the model is additive, can easily examine the effects of <span class="math inline">\(X_j\)</span> on <span class="math inline">\(Y\)</span> by holding all of the other variables fixed. * The smoothness of <span class="math inline">\(f_j\)</span> can be summarized by the effective dof. * interaction terms <span class="math inline">\(X_jX_k\)</span> can be added. * low dimensional interaction functions of the form <span class="math inline">\(f_jk}(X_j, X_k)\)</span> can be added. Such term can be fit using a two-dimensional smoothers such as local regression or two dimensional splines.</p>
+<p><strong>Pros and Cons of GAM</strong></p>
+<ul>
+<li>flexible to model <span class="math inline">\(f_j\)</span>, eliminating the need to try different transformations on each variable</li>
+<li>potentially more accurate prediction</li>
+<li>because the model is additive, can easily examine the effects of <span class="math inline">\(X_j\)</span> on <span class="math inline">\(Y\)</span> by holding all of the other variables fixed.</li>
+<li>The smoothness of <span class="math inline">\(f_j\)</span> can be summarized by the effective dof.</li>
+<li>interaction terms <span class="math inline">\(X_jX_k\)</span> can be added.</li>
+<li>low dimensional interaction functions of the form <span class="math inline">\(f_{jk}(X_j, X_k)\)</span> can be added. Such term can be fit using a two-dimensional smoothers such as local regression or two dimensional splines.</li>
+</ul>
 </section>
 <section id="homework" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="homework"><span class="header-section-number">7.5</span> Homework:</h2>

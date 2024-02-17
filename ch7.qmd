@@ -20,9 +20,9 @@ In practice hardly a degree greater than 3 or 4 is used because a higher degree 
 
 The standard error at a point $x_0$is calculated by
 $$
-SE[\hat{f}(x_0)] = \ell_0^T \hat{\bf{C}} {\ell}_0
+SE[\hat{f}(x_0)] = \ell_0^T \hat{\mathbf{C}} {\ell}_0
 $$
-where, $\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)$, and $\hat{\bf{C}}$ is the covariance matrix of the estimated coefficients $\beta_j$, $j=0, 1, \cdots, d$ obtained from the OLS. 
+where, $\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)$, and $\hat{\mathbf{C}}$ is the covariance matrix of the estimated coefficients $\beta_j$, $j=0, 1, \cdots, d$ obtained from the OLS. 
 
 
 ## Step functions 
@@ -86,17 +86,17 @@ The first term is the *loss* RSS and encourages $g(x_i)$ matches $y_i$. The seco
 
 The smoothing spline is in fact a natural spline with knots at unique values of $x_i$. But it is **different** than the natural spline. It is a *shrunk* version of a natural cubic spline, otherwise it would have too large (*nominal*) dof (number of parameters) because it has knots at unique values of $x_i$.   It avoids the knot selection issue and leaving a single $\lambda$ to tune. An *effective degrees of freedom* can be calculated for a smoothing spline as 
 $$
-df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii}, 
+df_\lambda =\sum_{i=1}^n {\{\mathbf{S}_\lambda}\}_{ii}, 
 $$
-where $\bf{S}_\lambda$ is a $n\times n$ matrix determined by $\lambda$ and $x_i$ such that the vector of $n$ fitted values can be written as 
+where $\mathbf{S}_\lambda$ is a $n\times n$ matrix determined by $\lambda$ and $x_i$ such that the vector of $n$ fitted values can be written as 
 $$
-\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}.
+\hat{\mathbf{g}}_\lambda =\mathbf{S}_\lambda \mathbf{y}.
 $$
 $df_\lambda$ decreases from $n$ to 2 as $\lambda$ increases from 0 to $\infty$. 
 
 The LOO cross-validation error can be efficiently computed  by 
 $$
-\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
+\text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\mathbf S}_\lambda\}_{ii}} \right]^2
 $$
 - Local Regression: a non-parametric method. It is similar to spline, but allowing regions overlap. With a sliding weight function of *span* $s$, fit separate (constant, linear, quadratic, for instance) fits over the range of $X$ by weighted least squares. 
 
@@ -122,12 +122,13 @@ $$
 When fitting a GAM, and if OLS can not be used (such as when a smoothing spline is used), then the *back fitting* iterative method can be used: randomly initialize all variable coefficients; repeatedly hold all but one variable fixed, and perform a simple linear regression on that single variable, and update the corresponding coefficients until convergence. Convergence is typically very fast. 
 
 **Pros and Cons of GAM**
+
   * flexible to model $f_j$, eliminating the need to try different transformations on each variable 
   * potentially more accurate prediction
   * because the model is additive, can easily examine the effects of $X_j$ on $Y$ by holding all of the other variables fixed. 
   * The smoothness of $f_j$ can be summarized by the effective dof. 
   * interaction terms $X_jX_k$ can be added. 
-  * low dimensional interaction functions of the form $f_jk}(X_j, X_k)$ can be added. Such term can be fit using a two-dimensional smoothers such as local regression or two dimensional splines. 
+  * low dimensional interaction functions of the form $f_{jk}(X_j, X_k)$ can be added. Such term can be fit using a two-dimensional smoothers such as local regression or two dimensional splines. 
   
   
   
