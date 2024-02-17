@@ -204,18 +204,19 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#polynomials" id="toc-polynomials" class="nav-link active" data-scroll-target="#polynomials"><span class="header-section-number">7.1</span> Polynomials</a></li>
   <li><a href="#step-functions" id="toc-step-functions" class="nav-link" data-scroll-target="#step-functions"><span class="header-section-number">7.2</span> Step functions</a></li>
-  <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines"><span class="header-section-number">7.3</span> Splines</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">7.4</span> Homework:</a></li>
-  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">7.5</span> Code Snippet</a>
+  <li><a href="#piececwise-polynomials" id="toc-piececwise-polynomials" class="nav-link" data-scroll-target="#piececwise-polynomials"><span class="header-section-number">7.3</span> Piececwise polynomials</a></li>
+  <li><a href="#splines" id="toc-splines" class="nav-link" data-scroll-target="#splines"><span class="header-section-number">7.4</span> Splines</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">7.5</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">7.6</span> Code Snippet</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">7.5.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">7.5.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">7.5.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">7.5.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">7.5.5</span> ISLP and statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">7.5.6</span> sklearn</a></li>
-  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">7.5.7</span> Useful code snippets</a></li>
-  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam"><span class="header-section-number">7.5.8</span> GAM</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">7.6.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">7.6.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">7.6.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">7.6.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">7.6.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">7.6.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">7.6.7</span> Useful code snippets</a></li>
+  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam"><span class="header-section-number">7.6.8</span> GAM</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -242,20 +243,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Often the linearity assumption of Y of X is good. However, when it’s not, - Polynomials - step functions - splines - local regression, - generalized additive models offer much more flexibility.</p>
+<p>Often the linearity assumption of Y of X is good but it may have limited predictive power, as often a linear model is just an approximation. Imporovement can be obtained by reducing the model complexity (hence variance) with lasso, ridge, PCAR or PLR, etc. when it’s not, - Polynomials - step functions - splines - local regression, - generalized additive models offer much more flexibility. All the above nonlinear methods falls into the <em>basis function</em> approach where we fit the following function <span class="math display">\[
+y_i=\beta_0+\beta_1b_1(x_i) +\cdots + \beta_K b_K(x_i) +\epsilon_i
+\]</span> where the <span class="math inline">\(b_j\)</span>, <span class="math inline">\(j=1, \cdots, K\)</span> are pre-defined basis functions that transform <span class="math inline">\(X\)</span> to a feature <span class="math inline">\(b_j(X)\)</span>. Each approach corresponding to a choice of particular family of basis functions. The model can then fit with <em>OLS</em>.</p>
 <section id="polynomials" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="polynomials"><span class="header-section-number">7.1</span> Polynomials</h2>
-<p>Polynomial terms of higher powers for <span class="math inline">\(X_j\)</span> or interaction terms <span class="math inline">\(X_iX_j\)</span> are used, but the model is still a linear model in the coefficients <span class="math inline">\(\beta_j\)</span>. The optimum degree <span class="math inline">\(d\)</span> can be chosen by cross-validation. polynomial terms can be included in either a linear regression model or a logistic regression model.</p>
+<p>The basis functions are simply the polynomial functions of different degrees. Polynomial terms of higher powers for <span class="math inline">\(X_j\)</span> or interaction terms <span class="math inline">\(X_iX_j\)</span> are used, but the model is still a linear model in the coefficients <span class="math inline">\(\beta_j\)</span>. The optimum degree <span class="math inline">\(d\)</span> can be chosen by cross-validation. polynomial terms can be included in either a linear regression model or a logistic regression model.</p>
+<p>In practice hardly a degree greater than 3 or 4 is used because a higher degree polynomial exhibits high degree of oscillation, especially near the boundary (Runge’s phenomenon). This is because a polynomial imposes a <em>global structure</em>.</p>
+<p>The standard error at a point <span class="math inline">\(x_0\)</span>is calculated by <span class="math display">\[
+SE[\hat{f}(x_0)] = \ell_0^T \hat{\bf{C}} {\ell}_0
+\]</span> where, <span class="math inline">\(\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)\)</span>, and <span class="math inline">\(\hat{\bf{C}}\)</span> is the covariance matrix of the estimated coefficients <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j=0, 1, \cdots, d\)</span> obtained from the OLS.</p>
 </section>
 <section id="step-functions" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="step-functions"><span class="header-section-number">7.2</span> Step functions</h2>
-<p>A step function is a piece-wise constant function. Cut a <span class="math inline">\(X\)</span> variable into <span class="math inline">\(m\)</span> regions and then create <span class="math inline">\(m-1\)</span> dummy variables to represent all those regions. Choice of <em>cut-points</em> (knots) can be problematic.</p>
+<p>A step function is a piece-wise constant function. Cut a <span class="math inline">\(X\)</span> variable into <span class="math inline">\(K+1\)</span> regions using <span class="math inline">\(K\)</span> cut points and then either use one-hot coding with <span class="math inline">\(K+1\)</span> dummy variables (and no intercept, in this case, each coefficient can be interpreted as the average value in that region) or create <span class="math inline">\(K\)</span> dummy variables with an intercept to represent all those regions (in this case, the average value in that region equals to the intercept plus the coefficient). Choice of <em>cut-points</em> (knots) can be problematic. Binning the <span class="math inline">\(X\)</span> variable amounts to convert a continuous variable into an <em>ordered categorical variable</em>.</p>
+<p>The basis functions are simply <em>indicator functions</em> on each region: <span class="math display">\[
+b_j(x_i)= I(c_j\le x_i&lt; c_{j+1}).
+\]</span></p>
 </section>
-<section id="splines" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="splines"><span class="header-section-number">7.3</span> Splines</h2>
-<p>Piece-wise polynomials are different polynomials on different regions defined by <em>knots</em>. **Splines* are piece-wise polynomials with maximum amount of continuity.</p>
+<section id="piececwise-polynomials" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="piececwise-polynomials"><span class="header-section-number">7.3</span> Piececwise polynomials</h2>
+<p>It overcomes the disadvantage of polynomial basis which imposes a <em>global structure</em>. It fits separate low-degree polynomials over different regions of <span class="math inline">\(X\)</span> separated by <em>knots</em>.</p>
+</section>
+<section id="splines" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="splines"><span class="header-section-number">7.4</span> Splines</h2>
+<p>Splines are piece-wise polynomials of degree <span class="math inline">\(d\)</span> that are continuous up to <span class="math inline">\(d-1\)</span> derivatives at each knot. E.g. a cubic spline with <span class="math inline">\(K\)</span> knots has continuity up to second derivative at each knot, and has degree of freedom of <span class="math inline">\(K+4\)</span>.</p>
 <ul>
-<li><p>linear spline: with knots <span class="math inline">\(\xi_k\)</span>, <span class="math inline">\(k=1, \cdots, K\)</span> is a piecewise linear polynomial that is continuous at each knot. <span class="math display">\[
+<li><p>linear spline: with knots <span class="math inline">\(\xi_k\)</span>, <span class="math inline">\(k=1, \cdots, K\)</span> is a piece-wise linear polynomial that is continuous at each knot. <span class="math display">\[
 y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+1}b_{K+1}(x)+\epsilon,
 \]</span> where, <span class="math inline">\(b_k\)</span> are <strong>basis functions</strong> defined by <span class="math display">\[\begin{align}
 b_1(x) &amp; = x \\
@@ -269,52 +283,59 @@ x, &amp;  \text{ if } x&gt;0 \\
 </ul>
 <p><span class="math display">\[
 y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+3}b_{K+3}(x)+\epsilon,
-\]</span> <strong>knot placement</strong>: One strategy is to place them at appropriate quantiles of the observed <span class="math inline">\(X\)</span>.</p>
+\]</span> <strong>knot placement</strong>: General principle is that placing more knots in places where the function might vary most rapidly. In practice, it is common to place them at uniform quantiles of the observed <span class="math inline">\(X\)</span>. This can be done by specifying a dof, and then let the algorithm to calculate the knots at uniform quantiles. Note a natural spline have more internal knots than a regression spline for the same dof.</p>
 <p>For a <strong>regular cubic spline</strong>, the <strong>basis functions</strong> are defined by <span class="math display">\[\begin{align}
 b_1(x) &amp; = x \\
 b_2(x) &amp; = x^2 \\
 b_3(x) &amp; = x^3 \\
 b_{k+3}(x) &amp; = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
 \end{align}\]</span></p>
-<p><strong>dof</strong>: <span class="math inline">\(K+4\)</span> number of parameters</p>
-<p>a <strong>natural cubic spline</strong> extrapolates linearly beyond the boundary knots. This adds <span class="math inline">\(2\times 2\)</span> extra constrains, and allows to put more internal knots for the same degree of freedom as a regular cubic spline</p>
-<p><strong>dof</strong>: <span class="math inline">\(K\)</span>.</p>
+<p><strong>dof</strong>: <span class="math inline">\(K+4\)</span> number of parameters (including the intercept). A regression spline can have high variance at the outer range of the predictors. To remedy this, one can use a <em>natural cubic spline</em>.</p>
+<p>a <strong>natural cubic spline</strong> extrapolates linearly ( as a linear function) beyond the internal knots. This adds <span class="math inline">\(2\times 2\)</span> extra constrains. A natural cubic spline allows to put more internal knots for the same degree of freedom as a regular cubic spline.</p>
+<p><strong>dof</strong>: <span class="math inline">\(K+2\)</span> (<span class="math inline">\(K\)</span> only counts the internal knots; including the intercept).</p>
 <p>For a <strong>smoothing spline</strong>: it is the solution <span class="math inline">\(g\)</span> to the following problem: <span class="math display">\[
   \text{minimize}_{g\in S}\sum_{i=1}^n(y_i-g(x_i))^2 +\lambda \int g''(t)dt
   \]</span></p>
-<p>The first term is RSS and encourages <span class="math inline">\(g(x_i)\)</span> matches <span class="math inline">\(y_i\)</span>. The second term modulates the <em>roughness</em> by a tuning parameter <span class="math inline">\(\lambda \ge 0\)</span>. If <span class="math inline">\(\lambda=0\)</span>, then the solution is just an interpolating polynomial. If <span class="math inline">\(\lambda\to \infty\)</span>, then <span class="math inline">\(g\)</span> is a linear function.</p>
-<p>The smoothing spline is in fact a natural spline with knots at unique values of <span class="math inline">\(x_i\)</span>. it avoids the knot selection issue and leaving a single <span class="math inline">\(\lambda\)</span> to tune. An <em>effective degrees of freedom</em> can be calcualted for a smoothing spline as <span class="math display">\[
+<p>The first term is the <em>loss</em> RSS and encourages <span class="math inline">\(g(x_i)\)</span> matches <span class="math inline">\(y_i\)</span>. The second term is the <em>penalty</em> that penalize the <em>variability</em> in <span class="math inline">\(g\)</span> (measured by <span class="math inline">\(g''(t)\)</span>) by a tuning parameter <span class="math inline">\(\lambda \ge 0\)</span>. If <span class="math inline">\(\lambda=0\)</span> (no constraints on <span class="math inline">\(g\)</span>), then the solution is just an interpolating polynomial. If <span class="math inline">\(\lambda\to \infty\)</span>, then <span class="math inline">\(g\)</span> is a linear function (because its second derivative is zero). <span class="math inline">\(\lambda\)</span> controls the bias-variance trade-off.</p>
+<p>The smoothing spline is in fact a natural spline with knots at unique values of <span class="math inline">\(x_i\)</span>. But it is <strong>different</strong> than the natural spline. It is a <em>shrunk</em> version of a natural cubic spline, otherwise it would have too large (<em>nominal</em>) dof (number of parameters) because it has knots at unique values of <span class="math inline">\(x_i\)</span>. It avoids the knot selection issue and leaving a single <span class="math inline">\(\lambda\)</span> to tune. An <em>effective degrees of freedom</em> can be calculated for a smoothing spline as <span class="math display">\[
 df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii},
 \]</span> where <span class="math inline">\(\bf{S}_\lambda\)</span> is a <span class="math inline">\(n\times n\)</span> matrix determined by <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(x_i\)</span> such that the vector of <span class="math inline">\(n\)</span> fitted values can be written as <span class="math display">\[
-\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}
-\]</span> The LOO cross-validation error is given by <span class="math display">\[
+\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}.
+\]</span> <span class="math inline">\(df_\lambda\)</span> decreases from <span class="math inline">\(n\)</span> to 2 as <span class="math inline">\(\lambda\)</span> increases from 0 to <span class="math inline">\(\infty\)</span>.</p>
+<p>The LOO cross-validation error can be efficiently computed by <span class="math display">\[
 \text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
-\]</span> - Local Regression: a non-parametric method. with a sliding weight function, fit seprate linear fits over the range of <span class="math inline">\(X\)</span> by weighted least squares.</p>
+\]</span> - Local Regression: a non-parametric method. It is similar to spline, but allowing regions overlap. With a sliding weight function of <em>span</em> <span class="math inline">\(s\)</span>, fit separate (constant, linear, quadratic, for instance) fits over the range of <span class="math inline">\(X\)</span> by weighted least squares.</p>
+<p>The span <span class="math inline">\(s\)</span> plays the similar role as <span class="math inline">\(\lambda\)</span> in a smoothing spline, it controls the flexibility of the local regression. The smaller <span class="math inline">\(s\)</span> is, the more <em>local and wiggle</em> will be the fit.</p>
+<p>Local regression is a <em>memory based</em> procedure, because like KNN, all training data are needed each time when making a prediction.</p>
+<p>Local regression can be generalized to <em>varying coefficient models</em> that fits a multiple linear regression model that is global in some variables but local in another, such as time.</p>
+<p>Local regression can be naturally extends to <span class="math inline">\(p\)</span>-dimension using a <span class="math inline">\(p\)</span>-dimensional neighborhood, but really used when <span class="math inline">\(p\)</span> is larger than 3 or 4 because there will be generally very few training examples near <span class="math inline">\(x_0\)</span> (curse of dimensionality)</p>
 <ul>
-<li>GAM (Generalized Additive Models): <span class="math display">\[
+<li>GAM (Generalized Additive Models): can be considered as an extension of multiple linear regression, replacing each feature <span class="math inline">\(\beta_jX_j\)</span> with an nonlinear function <span class="math inline">\(f_j(X_j)\)</span>. <span class="math display">\[
 y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
 \]</span> GAM can mix different <span class="math inline">\(f_j\)</span>, for example, a spline, or a linear term or even include low order interactive terms. The coefficients are hard to interpret, but the fitted values are of interest.</li>
 </ul>
-<p>GAM can be used in fitting a regression model, that is <span class="math display">\[
+<p>GAM can be used in fitting a logistic regression model, that is <span class="math display">\[
 \log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
 \]</span></p>
+<p>When fitting a GAM, and if OLS can not be used (such as when a smoothing spline is used), then the <em>back fitting</em> iterative method can be used: randomly initialize all variable coefficients; repeatedly hold all but one variable fixed, and perform a simple linear regression on that single variable, and update the corresponding coefficients until convergence. Convergence is typically very fast.</p>
+<p><strong>Pros and Cons of GAM</strong> * flexible to model <span class="math inline">\(f_j\)</span>, eliminating the need to try different transformations on each variable * potentially more accurate prediction * because the model is additive, can easily examine the effects of <span class="math inline">\(X_j\)</span> on <span class="math inline">\(Y\)</span> by holding all of the other variables fixed. * The smoothness of <span class="math inline">\(f_j\)</span> can be summarized by the effective dof. * interaction terms <span class="math inline">\(X_jX_k\)</span> can be added. * low dimensional interaction functions of the form <span class="math inline">\(f_jk}(X_j, X_k)\)</span> can be added. Such term can be fit using a two-dimensional smoothers such as local regression or two dimensional splines.</p>
 </section>
-<section id="homework" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="homework"><span class="header-section-number">7.4</span> Homework:</h2>
+<section id="homework" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="homework"><span class="header-section-number">7.5</span> Homework:</h2>
 <ul>
-<li>Conceptual:</li>
+<li>Conceptual: 1–5</li>
 <li>Applied: At least one.</li>
 </ul>
 </section>
-<section id="code-snippet" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">7.5</span> Code Snippet</h2>
-<section id="python" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">7.5.1</span> Python</h3>
+<section id="code-snippet" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">7.6</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="python"><span class="header-section-number">7.6.1</span> Python</h3>
 <pre><code>
 </code></pre>
 </section>
-<section id="numpy" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">7.5.2</span> Numpy</h3>
+<section id="numpy" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">7.6.2</span> Numpy</h3>
 <pre><code>Wage['education'].cat.categories # .cat is the categorical method accessor
 Wage['education'].cat.codes
 pd.crosstab(Wage['high_earn'], Wage['education'])
@@ -329,27 +350,27 @@ Xs = [ns_age.transform(age),
 X_bh = np.hstack(Xs)
 </code></pre>
 </section>
-<section id="pandas" class="level3" data-number="7.5.3">
-<h3 data-number="7.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">7.5.3</span> Pandas</h3>
+<section id="pandas" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">7.6.3</span> Pandas</h3>
 <pre><code>cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints. pd.cut is similar</code></pre>
 </section>
-<section id="graphics" class="level3" data-number="7.5.4">
-<h3 data-number="7.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">7.5.4</span> Graphics</h3>
+<section id="graphics" class="level3" data-number="7.6.4">
+<h3 data-number="7.6.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">7.6.4</span> Graphics</h3>
 <pre><code>ax.legend(title='$\lambda$');
 </code></pre>
 </section>
-<section id="islp-and-statsmodels" class="level3" data-number="7.5.5">
-<h3 data-number="7.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">7.5.5</span> ISLP and statsmodels</h3>
+<section id="islp-and-statsmodels" class="level3" data-number="7.6.5">
+<h3 data-number="7.6.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">7.6.5</span> ISLP and statsmodels</h3>
 <pre><code>
 </code></pre>
 </section>
-<section id="sklearn" class="level3" data-number="7.5.6">
-<h3 data-number="7.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">7.5.6</span> sklearn</h3>
+<section id="sklearn" class="level3" data-number="7.6.6">
+<h3 data-number="7.6.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">7.6.6</span> sklearn</h3>
 </section>
-<section id="useful-code-snippets" class="level3" data-number="7.5.7">
-<h3 data-number="7.5.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">7.5.7</span> Useful code snippets</h3>
-<section id="plot-a-model-fit-with-confidence-interval" class="level4" data-number="7.5.7.1">
-<h4 data-number="7.5.7.1" class="anchored" data-anchor-id="plot-a-model-fit-with-confidence-interval"><span class="header-section-number">7.5.7.1</span> plot a model fit with confidence interval</h4>
+<section id="useful-code-snippets" class="level3" data-number="7.6.7">
+<h3 data-number="7.6.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">7.6.7</span> Useful code snippets</h3>
+<section id="plot-a-model-fit-with-confidence-interval" class="level4" data-number="7.6.7.1">
+<h4 data-number="7.6.7.1" class="anchored" data-anchor-id="plot-a-model-fit-with-confidence-interval"><span class="header-section-number">7.6.7.1</span> plot a model fit with confidence interval</h4>
 <pre><code>def plot_wage_fit(age_df, 
                   basis, # ISL model object
                   title):
@@ -374,15 +395,15 @@ X_bh = np.hstack(Xs)
     ax.set_ylabel('Wage', fontsize=20);
     return ax</code></pre>
 </section>
-<section id="fitting-with-a-step-function" class="level4" data-number="7.5.7.2">
-<h4 data-number="7.5.7.2" class="anchored" data-anchor-id="fitting-with-a-step-function"><span class="header-section-number">7.5.7.2</span> Fitting with a step function</h4>
+<section id="fitting-with-a-step-function" class="level4" data-number="7.6.7.2">
+<h4 data-number="7.6.7.2" class="anchored" data-anchor-id="fitting-with-a-step-function"><span class="header-section-number">7.6.7.2</span> Fitting with a step function</h4>
 <pre><code>cut_age = pd.qcut(age, 4) # cut based on the 25%, 50%, and 75% cutpoints
 # note pd.get_dummies(cut_age) is the X matrix
 summarize(sm.OLS(y, pd.get_dummies(cut_age)).fit()) 
 </code></pre>
 </section>
-<section id="fitting-a-spline" class="level4" data-number="7.5.7.3">
-<h4 data-number="7.5.7.3" class="anchored" data-anchor-id="fitting-a-spline"><span class="header-section-number">7.5.7.3</span> Fitting a spline</h4>
+<section id="fitting-a-spline" class="level4" data-number="7.6.7.3">
+<h4 data-number="7.6.7.3" class="anchored" data-anchor-id="fitting-a-spline"><span class="header-section-number">7.6.7.3</span> Fitting a spline</h4>
 <pre><code>#specifying internal knots
 
 bs_age = MS([bs('age',
@@ -438,8 +459,8 @@ ax.legend(title='Degrees of freedom');
 </code></pre>
 </section>
 </section>
-<section id="gam" class="level3" data-number="7.5.8">
-<h3 data-number="7.5.8" class="anchored" data-anchor-id="gam"><span class="header-section-number">7.5.8</span> GAM</h3>
+<section id="gam" class="level3" data-number="7.6.8">
+<h3 data-number="7.6.8" class="anchored" data-anchor-id="gam"><span class="header-section-number">7.6.8</span> GAM</h3>
 <pre><code>### manually contruct basis 
 ns_age = NaturalSpline(df=4).fit(age) #df counts do not include intercepts. -&gt; 4 columns
 ns_year = NaturalSpline(df=5).fit(Wage['year']) # -&gt; 5 cols
@@ -509,8 +530,8 @@ ax.set_title('Partial dependence of wage on education',
              fontsize=20);
 ax.set_xticklabels(Wage['education'].cat.categories, fontsize=8);
 </code></pre>
-<section id="anova-for-gam" class="level4" data-number="7.5.8.1">
-<h4 data-number="7.5.8.1" class="anchored" data-anchor-id="anova-for-gam"><span class="header-section-number">7.5.8.1</span> Anova for GAM</h4>
+<section id="anova-for-gam" class="level4" data-number="7.6.8.1">
+<h4 data-number="7.6.8.1" class="anchored" data-anchor-id="anova-for-gam"><span class="header-section-number">7.6.8.1</span> Anova for GAM</h4>
 <pre><code>gam_0 = LinearGAM(age_term + f_gam(2, lam=0)) # note age_term is a s_gam with df=4 defined above 
 gam_0.fit(Xgam, y)
 gam_linear = LinearGAM(age_term +
@@ -520,16 +541,16 @@ gam_linear.fit(Xgam, y)
 anova_gam(gam_0, gam_linear, gam_full)
 </code></pre>
 </section>
-<section id="logistic-gam" class="level4" data-number="7.5.8.2">
-<h4 data-number="7.5.8.2" class="anchored" data-anchor-id="logistic-gam"><span class="header-section-number">7.5.8.2</span> Logistic GAM</h4>
+<section id="logistic-gam" class="level4" data-number="7.6.8.2">
+<h4 data-number="7.6.8.2" class="anchored" data-anchor-id="logistic-gam"><span class="header-section-number">7.6.8.2</span> Logistic GAM</h4>
 <pre><code>gam_logit = LogisticGAM(age_term + 
                         l_gam(1, lam=0) +
                         f_gam(2, lam=0))
 gam_logit.fit(Xgam, high_earn)
 </code></pre>
 </section>
-<section id="loess" class="level4" data-number="7.5.8.3">
-<h4 data-number="7.5.8.3" class="anchored" data-anchor-id="loess"><span class="header-section-number">7.5.8.3</span> LOESS</h4>
+<section id="loess" class="level4" data-number="7.6.8.3">
+<h4 data-number="7.6.8.3" class="anchored" data-anchor-id="loess"><span class="header-section-number">7.6.8.3</span> LOESS</h4>
 <pre><code>lowess = sm.nonparametric.lowess
 fig, ax = subplots(figsize=(8,8))
 ax.scatter(age, y, facecolor='gray', alpha=0.5)

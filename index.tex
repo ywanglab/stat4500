@@ -1589,7 +1589,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, rightrule=.15mm, left=2mm, bottomtitle=1mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, colback=white, arc=.35mm, toprule=.15mm, titlerule=0mm, leftrule=.75mm, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, breakable, bottomtitle=1mm, left=2mm, toptitle=1mm, opacityback=0, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, arc=.35mm, coltitle=black, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, opacitybacktitle=0.6]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1656,7 +1656,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, rightrule=.15mm, left=2mm, bottomtitle=1mm, bottomrule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, colback=white, arc=.35mm, toprule=.15mm, titlerule=0mm, leftrule=.75mm, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, breakable, bottomtitle=1mm, left=2mm, toptitle=1mm, opacityback=0, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, rightrule=.15mm, colframe=quarto-callout-note-color-frame, arc=.35mm, coltitle=black, bottomrule=.15mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, opacitybacktitle=0.6]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.
@@ -3071,35 +3071,74 @@ grid.fit(X, Y)
 \chapter{Chapter 7: Moving Beyond
 Linearity}\label{chapter-7-moving-beyond-linearity}
 
-Often the linearity assumption of Y of X is good. However, when it's
-not, - Polynomials - step functions - splines - local regression, -
-generalized additive models offer much more flexibility.
+Often the linearity assumption of Y of X is good but it may have limited
+predictive power, as often a linear model is just an approximation.
+Imporovement can be obtained by reducing the model complexity (hence
+variance) with lasso, ridge, PCAR or PLR, etc. when it's not, -
+Polynomials - step functions - splines - local regression, - generalized
+additive models offer much more flexibility. All the above nonlinear
+methods falls into the \emph{basis function} approach where we fit the
+following function \[
+y_i=\beta_0+\beta_1b_1(x_i) +\cdots + \beta_K b_K(x_i) +\epsilon_i
+\] where the \(b_j\), \(j=1, \cdots, K\) are pre-defined basis functions
+that transform \(X\) to a feature \(b_j(X)\). Each approach
+corresponding to a choice of particular family of basis functions. The
+model can then fit with \emph{OLS}.
 
 \section{Polynomials}\label{polynomials}
 
-Polynomial terms of higher powers for \(X_j\) or interaction terms
-\(X_iX_j\) are used, but the model is still a linear model in the
+The basis functions are simply the polynomial functions of different
+degrees. Polynomial terms of higher powers for \(X_j\) or interaction
+terms \(X_iX_j\) are used, but the model is still a linear model in the
 coefficients \(\beta_j\). The optimum degree \(d\) can be chosen by
 cross-validation. polynomial terms can be included in either a linear
 regression model or a logistic regression model.
 
+In practice hardly a degree greater than 3 or 4 is used because a higher
+degree polynomial exhibits high degree of oscillation, especially near
+the boundary (Runge's phenomenon). This is because a polynomial imposes
+a \emph{global structure}.
+
+The standard error at a point \(x_0\)is calculated by \[
+SE[\hat{f}(x_0)] = \ell_0^T \hat{\bf{C}} {\ell}_0
+\] where, \(\ell_0^T =(1, x_0, x_0^2, \cdots, x_0^d)\), and
+\(\hat{\bf{C}}\) is the covariance matrix of the estimated coefficients
+\(\beta_j\), \(j=0, 1, \cdots, d\) obtained from the OLS.
+
 \section{Step functions}\label{step-functions}
 
 A step function is a piece-wise constant function. Cut a \(X\) variable
-into \(m\) regions and then create \(m-1\) dummy variables to represent
-all those regions. Choice of \emph{cut-points} (knots) can be
-problematic.
+into \(K+1\) regions using \(K\) cut points and then either use one-hot
+coding with \(K+1\) dummy variables (and no intercept, in this case,
+each coefficient can be interpreted as the average value in that region)
+or create \(K\) dummy variables with an intercept to represent all those
+regions (in this case, the average value in that region equals to the
+intercept plus the coefficient). Choice of \emph{cut-points} (knots) can
+be problematic. Binning the \(X\) variable amounts to convert a
+continuous variable into an \emph{ordered categorical variable}.
+
+The basis functions are simply \emph{indicator functions} on each
+region: \[
+b_j(x_i)= I(c_j\le x_i< c_{j+1}).
+\]
+
+\section{Piececwise polynomials}\label{piececwise-polynomials}
+
+It overcomes the disadvantage of polynomial basis which imposes a
+\emph{global structure}. It fits separate low-degree polynomials over
+different regions of \(X\) separated by \emph{knots}.
 
 \section{Splines}\label{splines}
 
-Piece-wise polynomials are different polynomials on different regions
-defined by \emph{knots}. **Splines* are piece-wise polynomials with
-maximum amount of continuity.
+Splines are piece-wise polynomials of degree \(d\) that are continuous
+up to \(d-1\) derivatives at each knot. E.g. a cubic spline with \(K\)
+knots has continuity up to second derivative at each knot, and has
+degree of freedom of \(K+4\).
 
 \begin{itemize}
 \item
-  linear spline: with knots \(\xi_k\), \(k=1, \cdots, K\) is a piecewise
-  linear polynomial that is continuous at each knot. \[
+  linear spline: with knots \(\xi_k\), \(k=1, \cdots, K\) is a
+  piece-wise linear polynomial that is continuous at each knot. \[
   y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+1}b_{K+1}(x)+\epsilon, 
   \] where, \(b_k\) are \textbf{basis functions} defined by
   \begin{align}
@@ -3119,8 +3158,12 @@ maximum amount of continuity.
 
 \[
 y= \beta_0+\beta_1 b_1(x)+\cdots + \beta_{K+3}b_{K+3}(x)+\epsilon, 
-\] \textbf{knot placement}: One strategy is to place them at appropriate
-quantiles of the observed \(X\).
+\] \textbf{knot placement}: General principle is that placing more knots
+in places where the function might vary most rapidly. In practice, it is
+common to place them at uniform quantiles of the observed \(X\). This
+can be done by specifying a dof, and then let the algorithm to calculate
+the knots at uniform quantiles. Note a natural spline have more internal
+knots than a regression spline for the same dof.
 
 For a \textbf{regular cubic spline}, the \textbf{basis functions} are
 defined by \begin{align}
@@ -3130,61 +3173,109 @@ b_3(x) & = x^3 \\
 b_{k+3}(x) & = (x- \xi_k)^3_{+}, \qquad k=1, \cdots K
 \end{align}
 
-\textbf{dof}: \(K+4\) number of parameters
+\textbf{dof}: \(K+4\) number of parameters (including the intercept). A
+regression spline can have high variance at the outer range of the
+predictors. To remedy this, one can use a \emph{natural cubic spline}.
 
-a \textbf{natural cubic spline} extrapolates linearly beyond the
-boundary knots. This adds \(2\times 2\) extra constrains, and allows to
-put more internal knots for the same degree of freedom as a regular
-cubic spline
+a \textbf{natural cubic spline} extrapolates linearly ( as a linear
+function) beyond the internal knots. This adds \(2\times 2\) extra
+constrains. A natural cubic spline allows to put more internal knots for
+the same degree of freedom as a regular cubic spline.
 
-\textbf{dof}: \(K\).
+\textbf{dof}: \(K+2\) (\(K\) only counts the internal knots; including
+the intercept).
 
 For a \textbf{smoothing spline}: it is the solution \(g\) to the
 following problem: \[
   \text{minimize}_{g\in S}\sum_{i=1}^n(y_i-g(x_i))^2 +\lambda \int g''(t)dt
   \]
 
-The first term is RSS and encourages \(g(x_i)\) matches \(y_i\). The
-second term modulates the \emph{roughness} by a tuning parameter
-\(\lambda \ge 0\). If \(\lambda=0\), then the solution is just an
-interpolating polynomial. If \(\lambda\to \infty\), then \(g\) is a
-linear function.
+The first term is the \emph{loss} RSS and encourages \(g(x_i)\) matches
+\(y_i\). The second term is the \emph{penalty} that penalize the
+\emph{variability} in \(g\) (measured by \(g''(t)\)) by a tuning
+parameter \(\lambda \ge 0\). If \(\lambda=0\) (no constraints on \(g\)),
+then the solution is just an interpolating polynomial. If
+\(\lambda\to \infty\), then \(g\) is a linear function (because its
+second derivative is zero). \(\lambda\) controls the bias-variance
+trade-off.
 
 The smoothing spline is in fact a natural spline with knots at unique
-values of \(x_i\). it avoids the knot selection issue and leaving a
-single \(\lambda\) to tune. An \emph{effective degrees of freedom} can
-be calcualted for a smoothing spline as \[
+values of \(x_i\). But it is \textbf{different} than the natural spline.
+It is a \emph{shrunk} version of a natural cubic spline, otherwise it
+would have too large (\emph{nominal}) dof (number of parameters) because
+it has knots at unique values of \(x_i\). It avoids the knot selection
+issue and leaving a single \(\lambda\) to tune. An \emph{effective
+degrees of freedom} can be calculated for a smoothing spline as \[
 df_\lambda =\sum_{i=1}^n {\{\bf{S}_\lambda}\}_{ii}, 
 \] where \(\bf{S}_\lambda\) is a \(n\times n\) matrix determined by
 \(\lambda\) and \(x_i\) such that the vector of \(n\) fitted values can
 be written as \[
-\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}
-\] The LOO cross-validation error is given by \[
+\hat{\bf{g}}_\lambda =\bf{S}_\lambda \bf{y}.
+\] \(df_\lambda\) decreases from \(n\) to 2 as \(\lambda\) increases
+from 0 to \(\infty\).
+
+The LOO cross-validation error can be efficiently computed by \[
 \text{RSS}_{cv}(\lambda) =\sum_{i=1}^n (y_i-\hat{g}_\lambda ^{(-i)}(x_i))^2=\sum_{i=1}^n \left[ \frac{y_i-\hat{g}_\lambda (x_i)}{1-\{ {\bf S}_\lambda\}_{ii}} \right]^2
-\] - Local Regression: a non-parametric method. with a sliding weight
-function, fit seprate linear fits over the range of \(X\) by weighted
-least squares.
+\] - Local Regression: a non-parametric method. It is similar to spline,
+but allowing regions overlap. With a sliding weight function of
+\emph{span} \(s\), fit separate (constant, linear, quadratic, for
+instance) fits over the range of \(X\) by weighted least squares.
+
+The span \(s\) plays the similar role as \(\lambda\) in a smoothing
+spline, it controls the flexibility of the local regression. The smaller
+\(s\) is, the more \emph{local and wiggle} will be the fit.
+
+Local regression is a \emph{memory based} procedure, because like KNN,
+all training data are needed each time when making a prediction.
+
+Local regression can be generalized to \emph{varying coefficient models}
+that fits a multiple linear regression model that is global in some
+variables but local in another, such as time.
+
+Local regression can be naturally extends to \(p\)-dimension using a
+\(p\)-dimensional neighborhood, but really used when \(p\) is larger
+than 3 or 4 because there will be generally very few training examples
+near \(x_0\) (curse of dimensionality)
 
 \begin{itemize}
 \tightlist
 \item
-  GAM (Generalized Additive Models): \[
+  GAM (Generalized Additive Models): can be considered as an extension
+  of multiple linear regression, replacing each feature \(\beta_jX_j\)
+  with an nonlinear function \(f_j(X_j)\). \[
   y_i = \beta_0 + f_1(x_{i1}) + f_2(x_{i2}) +\cdots + f_p(x_{ip})  + \epsilon
   \] GAM can mix different \(f_j\), for example, a spline, or a linear
   term or even include low order interactive terms. The coefficients are
   hard to interpret, but the fitted values are of interest.
 \end{itemize}
 
-GAM can be used in fitting a regression model, that is \[
+GAM can be used in fitting a logistic regression model, that is \[
 \log \frac{p(X)}{1-p(X)} =\beta_0+f_1(X_1)+f_2(X_2)+\cdots +f_p(X_p)
 \]
+
+When fitting a GAM, and if OLS can not be used (such as when a smoothing
+spline is used), then the \emph{back fitting} iterative method can be
+used: randomly initialize all variable coefficients; repeatedly hold all
+but one variable fixed, and perform a simple linear regression on that
+single variable, and update the corresponding coefficients until
+convergence. Convergence is typically very fast.
+
+\textbf{Pros and Cons of GAM} * flexible to model \(f_j\), eliminating
+the need to try different transformations on each variable * potentially
+more accurate prediction * because the model is additive, can easily
+examine the effects of \(X_j\) on \(Y\) by holding all of the other
+variables fixed. * The smoothness of \(f_j\) can be summarized by the
+effective dof. * interaction terms \(X_jX_k\) can be added. * low
+dimensional interaction functions of the form \(f_jk}(X_j, X_k)\) can be
+added. Such term can be fit using a two-dimensional smoothers such as
+local regression or two dimensional splines.
 
 \section{Homework:}\label{homework-3}
 
 \begin{itemize}
 \tightlist
 \item
-  Conceptual:
+  Conceptual: 1--5
 \item
   Applied: At least one.
 \end{itemize}
