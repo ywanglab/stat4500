@@ -1,0 +1,285 @@
+# Chapter 9: Support Vector Machine
+
+Idea: To attak a two-class classification problem directly:
+*try and find a (hyper)plane that separates the classes in the feature space. *
+
+If we can not, we relax the conditions:
+- soften what we mean by "separating" by allowing misclassified points (Support Vector Classifier)
+- enrich and enlarge the feature space so that the separation is possible with non-linear decision boundary. 
+
+## What is a hyperplane?
+A hyperplane is defined by the following linear equation
+$$
+\beta_0+ \beta_1X_1 +\cdots +\beta_pX_p=0.
+$$
+It is a $p-1$ dimension **flat affine** subspace (affines means not necessarily pass the origin).
+- When $p=2$, it is a line. 
+- When $\beta_0$, it passes through the origin, becomes a *subspace*. 
+- The normal vector $\beta=(\beta_1, \beta_2, \cdots, \beta_p)$ is perpendicular to the hyperplane. 
+- Let $f(X)= \beta_0+ \beta_1X_1 +\cdots +\beta_pX_p$, then $f(X)=0$  defines the hyperplane which separte the space into two halves, and for points on one side of the hyperplane, $f(X)>0$,  and vice versa. 
+- If we code $Y_i=1$ for $f(X_i)>0$, and $Y_i=-1$ for $f(X_i)<0$, then we always have 
+$$
+Y_i\cdot f(X_i)>0 \qquad \text{for all } i.
+$$
+If $f(x^*)$ is far from zero, then we are more confident that the test point $x^*$ belongs to a class. 
+
+## Maximal Margin Classifier (Optimal Seperating Hyperplane)
+When the data can be perfectly separated using a hyperplane, among all infinitely many separating hyperplanes, the maximal margin classifier makes the biggest gap or margin between two classes. It is the solution of the following convex quadratic program
+$$
+\text{maximize}_{\beta_0, \beta_1, \cdots, \beta_p}M
+$$
+$$
+\text{subject to } \sum_{j=1}^p {\beta_j}^2 =1\qquad \text{and}\qquad y_i(\beta_0+\beta_1x_{xi}+\cdots + \beta_px_{ip})\ge M \text{ for all }i=1, \cdots, n
+$$
+The constraints guarantees that each observation will be on the correct side of the hyperplane. The normalizing constraint allows to interpret 
+$$
+y_i(\beta_0+\beta_1x_{xi}+\cdots + \beta_px_{ip})
+$$
+to be the perpendicular distance from observation $i$ to the hyperplane. Hence $M$ represents the *margin* of our hyperplane. 
+In a sense, the maximal
+margin hyperplane represents the mid-line of the widest “slab” that we can
+insert between the two classes. Maximal margin classifier may lead to overfitting when $p$ is large. 
+
+The observations that lie along the margin are called *support vectors*. They affect the optimal separating hyperplane. Other observations that outside the separating margin do not affect the optimal separating plane, provided their movement do not cause them to cross the boundary set by the margin. 
+
+## Support Vector Classifier (soft margin classifier)
+
+Often time: 
+- the data is not  separable by a linear plane, hence there is no maximal margin classifier. 
+- or the data is noisy, and a poor maximal margin separating plane is obtained. leading to a classifier that is sensitive to a single observation (overfitting). 
+
+A support Vector Classifier maximizes a *soft* margin to almost separates the classes:
+$$
+\text{maximize}_{\beta_0, \beta_1, \cdots, \beta_p}M, \text{ subject to } \sum_{j=1}^p {\beta_j}^2 =1
+$$
+and 
+$$
+y_i(\beta_0+\beta_1x_{xi}+\cdots + \beta_px_{ip})\ge M(1-\epsilon_i), \text{ where } \epsilon_i\ge 0, \sum_{i=1}^n \epsilon_i \le C.
+$${#eq-svc}
+ The soft margin may be violated by some observations. $\epsilon_i$ are *slack varaibles* that individual observations to be on the wrong side of the margin or the hyperplane. 
+- If $\epsilon_i=0$, then the $i$-th observation is on the correct side of the margin.
+- If $1>\epsilon>0$, then the $i$-th observation is on the wrong side of the margin. 
+- If $\epsilon >1$, then it is on the wrong side of the hyperplane. 
+
+$C$ is a regulation parameter that can be tuned with cross-validation, bounding the sum of $\epsilon_i$'s, i.e., it determines the number and severity of the violations to the margin (and to the hyperplane) that we will tolerate. So $C$ is a *budget* for such violations. 
+- If $C=0$, then all $\epsilon_i=0$ for each $i$, and the support vector classifier becomes the maximal margin hyperplane. 
+- If $C>0$, then no more than $C$ observation can be on the wrong side of the hyperplane then $\epsilon_i>1$. As $C$ increases, more tolerant to the violations leading to *wider* margin, and more support vectors. 
+
+So $C$ controls the bias-variance trade-off
+- When $C$ is small, less tolerance and smaller margin, the classifier may highly fit the data, hence small bias but high variance. 
+
+Similar to the maximal margin classfier, the support vector classfier is only affected by the *support vector* points on the margin or that violate the margin, robust to the points that are far away from the hyperplane. This is in contrast to some other classifiers such as LDA which needs a class mean of all within class observations, and a within-class covariance computed using *all* observations. 
+
+On the other hand, support vector classifer is very similar to Logistic regression, which is also not sensitive to observations far from the decision boundary. 
+
+
+## Feature (Basis) Expansion for nonlinear decision boundary
+Sometimes, a linear boundary can fail no matter what $C$ takes on. One way to fix this is to enlarge the feature space by including transformations such as $X_1^2, X_1^3, X_1X_2$, $X_1X_2^2, \cdots$. Hence go from a $p$ dimension space to a higher dimension space. This results in non-linear decision boundaries in the original space. 
+For example, the adding of $X_1, X_2, X_1^2, X_2^2 X_1X2$ would have decision boundary of the form 
+$$
+\beta_0+\beta_1X_1+\beta_2X_2 +\beta_3X_1^2+\beta_4X_2^2 + \beta_5X_1X_2=0. 
+$$
+
+## Kennel trick and Support Vector Machines
+The kernel trick is simply an efficient computational approach that enacting enlarging the feature space. The linear support vector classifier can be represented by 
+$$
+f(x)=\beta_0+ \sum_{i=1}^n \alpha_i \langle x, x_i \rangle 
+$$
+The parameters $\alpha_i$ can be estimated on a training set by computing the $n \choose 2$ inner products between pairwise training examples $\langle x_i, x'_i \rangle$. It turns out most $\hat{\alpha}_i$ are zeros, and 
+$$
+f(x)=\beta_0+ \sum_{i\in S}^n \hat{\alpha}_i \langle x, x_i \rangle 
+$$
+Where $S$ is the *support set* of indices $i$ such that $\hat{\alpha}_i>0$. Note all $\hat{\alpha}_i\ge 0$.  The inner product $\langle x, x_i \rangle$ can be rewritten as a  *linear* kernel (linear on the feature $x$)  
+$$
+K(x,x_i)=\langle x,x_i  \rangle 
+$$
+thus the linear support vector classifier becomes 
+$$
+f(x) = \beta_0 + \sum_{i\in S} \hat{\alpha}_i K(x, x_i). 
+$$
+The linear kernal function essentially quantifies the **similarity** of a pair of observations using **Pearson** (standard) correlation. Generalize this idea, one could use other form of kernels to measure the similarity. 
+
+For a nonlinear boundary determined by a polynomial of degree $d$ feature space with $p$ variables, the kernel function is given by 
+$$
+K(x_i, x_{i'}) = \left( 1+ \sum_{j=1}^p x_{ij}x_{i'j}  \right)^d
+$$
+When the support vector classifier is combined with a non-linear kernel, the resulting classifier is a **support vector machine (SVM)**.  It essentially fits a support vector classifier in a higher dimensional space involving polynomials of degree $d$. 
+
+
+The kernel function will allow easy computation for the inner product of the $p+d \choose d$ monomial basis functions without explicitly working in the enlarged feature space. This is important because in many applications, the enlarged feature space is large so that the computations are intractable. For some other kernel such as *radial kernel*, the feature space is *implicit* and infinite-dimensional. 
+
+A quick **proof** of the fact that there are $p+d \choose d$ monomial basis funtions for the space of polynomials of degree $d$ in $p$ variables. 
+
+1. Use the *stars and bars* method, it is easy to see that for a fixed degree $\delta$, there are 
+$${p+\delta-1 \choose p-1} = {p +\delta -1 \choose \delta}$$ monomials. 
+This can be understood as distributing $p-1$ bars separating $\delta$ starts (each representing one degree) into $p$ bins, each bin representing a variable. 
+2. Adding the number of monomials for $\delta=0, 1, \cdots, d$, 
+$$
+{p+0-1 \choose 0 } + {p+1-1 \choose 1 }+\cdots +{p+d-1 \choose d }
+$$
+Rewrite ${p+0-1 \choose 0 }$ as ${p+1-1 \choose 0 }$ and apply the Pascal formula 
+$$
+{n \choose k}= {n-1 \choose k-1} + {n \choose k-1}
+$$
+repeatedly, to obtain the sum is ${p+d \choose d}$. 
+
+A final note is that SVM can also be used for regression, known as *support vector regression*, in which SVR seeks coefficents ($\beta_j$) that minimize the a loss where only residuals larger in absolute value than some positive constant contributes to the loss. 
+
+
+**Other Common Used Kernels**
+- Radial Kernel 
+$$
+K(x_i,x_i')=\exp(-\gamma \sum_{j=1}^p (x_{ij}-x_{i'j})^2)
+$$
+When a test point $x^*$ is far from a training example $x_i$, then the kernel function value is small and plays little role in $f(x^*)$. So radial kernel has a *local behavior*: in the sense that only nearby points have an effect on the class label of a test observation. 
+
+As $\gamma$ increases (fewer local training points are included in a decision), the fit becomes more non-linear (local) and the training error decreases. 
+
+
+**How to apply SVM to multiple class classification**
+
+- OVA (one-vs-rest): One vs All: Fit $K$ different 2-class SVM classifiers $\hat{f}_k(x)$, $k=1, \cdots, K$. Classify $x^*$ to the class for which $\hat{f}_k(x^*)$ is the largest, as this amounts to a high level of confidence that the test observation belogs to. 
+
+- OVO (all-pairs): One vs. One: Fit all $K \choose 2$ pairwise classifiers $\hat{f}_{k\ell}(x)$. Classify $x^*$ to the class that wins the most pairwise competitions. 
+
+If $K$ is not too large, use OVO. 
+
+## SVM vs. Logistic Regression
+SVM can be viewed as minimizing the following *hinge loss*
+$$
+\text{minimize}_{\beta_0, \beta_1, \cdots, \beta_p} \left\{\sum_{i=1}^n \max[0, 1-y_if(x_i)] +\lambda\sum_{j=1}^p \beta_j^2 \right\}
+$$
+When $\lambda$ is large, then $\beta_j$'s are small, more violations to the margin are tolerated, and a low-variance and high-bias classier will result. A small value of $\lambda$ amounts to a small value of $C$ in @eq-svc. 
+
+The hinge loss function is very similar to the negative log-likelihood loss for the logistic regression. The loss function $\text{minimize}_{\beta_0, \beta_1, \cdots, \beta_p} \sum_{i=1}^n \max[0, 1-y_if(x_i)]$ is zero when $y_i(\beta_0+\beta_1x_{i1}+\cdots +\beta_px_{ip})\ge 1$; Theses corresponds to when an observation in **on the correct side of the margin**. In contrast, the loss function for logistic equation is not exactly zero anywhere, but it is very small for observations that are far from the decision boundary. 
+
+- When classes are nearly separable, SVM does better than LR, so does LDA. When not, LR is preferred. 
+- when not, LR with ridge penalty and SVM are very similar. 
+- If wish to estimate probability, then LR is the choice. 
+- For nonlinear boundary, kernel SVMs are popular. Can use kernels with LR and LDA as well, but computations are more expensive. 
+
+
+
+
+
+## Homework:
+- Conceptual: 1--3
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+```
+roc_curve = RocCurveDisplay.from_estimator # shorthand for the function from_estimator()
+
+```
+
+### Numpy
+```
+
+
+
+```
+
+### Pandas
+```
+
+```
+
+
+### Graphics
+```
+from matplotlib.pyplot import subplots, cm #cm for colormap
+ax.scatter(X[:,0],
+           X[:,1],
+           c=y,
+           cmap=cm.coolwarm);
+
+```
+
+### ISLP and statsmodels
+```
+
+
+```
+
+### sklearn
+
+### Useful code snippets
+
+#### SVM 
+```
+svm_linear_small = SVC(C=0.1, kernel='linear')
+svm_linear_small.fit(X, y)
+fig, ax = subplots(figsize=(8,8))
+plot_svm(X,
+         y,
+         svm_linear_small,
+         ax=ax)
+svm_linear.coef_
+svm_linear.intercept_
+
+### Tuning a parameter
+kfold = skm.KFold(5, 
+                  random_state=0,
+                  shuffle=True)
+grid = skm.GridSearchCV(svm_linear,
+                        {'C':[0.001,0.01,0.1,1,5,10,100]}, # 7 values
+                        refit=True,
+                        cv=kfold,
+                        scoring='accuracy')
+grid.fit(X, y)
+grid.best_params_
+grid.cv_results_
+grid.cv_results_[('mean_test_score')] #[yw] the () can be omitted
+
+###prediciton and test error
+best_ = grid.best_estimator_
+y_test_hat = best_.predict(X_test)
+confusion_table(y_test_hat, y_test)
+confusion_table(y_test, y_test_hat)
+
+#### Radial Basis kernel
+svm_rbf = SVC(kernel="rbf", gamma=1, C=1)
+svm_rbf.fit(X_train, y_train)
+
+kfold = skm.KFold(5, 
+                  random_state=0,
+                  shuffle=True)
+grid = skm.GridSearchCV(svm_rbf,
+                        {'C':[0.1,1,10,100,1000],
+                         'gamma':[0.5,1,2,3,4]},
+                        refit=True,
+                        cv=kfold,
+                        scoring='accuracy');
+grid.fit(X_train, y_train)
+grid.best_params_
+
+
+
+```
+
+#### ROC curve
+```
+fig, ax = subplots(figsize=(8,8))
+roc_curve(best_svm,
+          X_train,
+          y_train,
+          name='Training',
+          color='r',
+          ax=ax);
+```
+#### SVM with multiple classes
+```
+svm_rbf_3 = SVC(kernel="rbf",
+                C=10,
+                gamma=1,
+                decision_function_shape='ovo');
+svm_rbf_3.fit(X, y)
+fig, ax = subplots(figsize=(8,8))
+plot_svm(X,
+         y,
+         svm_rbf_3,
+         scatter_cmap=cm.tab10,
+         ax=ax)
+```
+
