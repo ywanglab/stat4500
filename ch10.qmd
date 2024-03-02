@@ -156,7 +156,7 @@ Most statistical learning method with regularization do not exhibit double desce
 - Maximal margin classifier and SVM that have zero training error often achieve very good test error, this is because they seek smooth minimum norm solutions. 
 
 ## Homework:
-- Conceptual: 1--
+- Conceptual: 1--5
 - Applied: At least one. 
 
 ## Code Snippet
