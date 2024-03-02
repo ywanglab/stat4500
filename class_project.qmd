@@ -7,6 +7,7 @@ to use various ML algorithms to predict a meaningful target $Y$ by *classificati
  **Data set**: real-world stock price and volume data. We could start with just one stock, e.g. APAL, S&P 500,  index, DJ index. 
  
  **Some ideas**: 
+ 
   * Create one model for each stock. 
   * create a single model for all stocks. Needs to embed each stock in a feature space. Research? 
 

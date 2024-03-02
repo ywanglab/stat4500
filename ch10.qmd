@@ -1,0 +1,794 @@
+# Chapter 10: Deep Learning
+
+- NN was popular in the 1980s. Then took a back seat in the 1990s when SVMs, RF, and Boosting were successful. NN reemerged 2010 as CNN and DL started to garner success. By 2020, become dominant and very successful. 
+
+- Part of success due to vast improvements in computing power (GPU computing), more training data sets, and advances in algorithms and software: TensorFlow and PyTorch.
+
+- Three prominent figures: Yann LeCun, Geoffrey Hinton and Yoshua Bengio and their students. Three three scientist received the 2019 ACM Turing Award. 
+
+## Single Layer Neural Network
+The name *neural network* originally derived from thinking of the hidden units as analogous to neurons in the brain. 
+Consider the NN consisting of input layer, one hidden layer and a  single output regression unit. Then 
+the output 
+\begin{align}
+Y=f(X)   = & \beta_0 +\sum_{k=1}^K\beta_k h_k(X) \\
+  = & \beta_0+ \sum_{k=1}^K \beta_k g(w_{k0}+\sum_{j=1}^p w_{kj}X_j)
+\end{align}
+where, 
+
+- $A_k =h_k(X)= g(w_{k0}+\sum_{j=1}^p w_{kj}X_j)$ are the *activations* in the hidden layer: they are simply nonlinear transformation via $g$ of an affine transformation of the input features. Each $A_k$ may be understood as a basis function. The success of NN lies in that $A_k$ are not prescribed, rather are learned from data by learning the coefficients $w_{kj}$. 
+- $g$ is a *activate function*. E.g.: sigmoid (for binary output unit), softmax (for multi-class output), linear (for regression) or ReLU (for hidden layers). The activation functions typically in the hidden layers are *nonlinear*, allowing to model complex nonlinearities and interactions. otherwise the model collapses to a linear model. 
+
+- For regression, the model is  fit by minimizing   the RSS loss $\sum_{i=1}^n (y_i-f(x_i))^2$. **non-convex**
+
+- For classification , if there are $M$ classes, and the logit output for class $m$  is 
+$$
+Z_m = \beta_{m0}+ \sum_{\ell=1}^K\beta_{m\ell}A_\ell
+$$
+where $K$ is the number of activation nodes in the previous layer. The output activation function encodes the *softmax function*
+$$
+f_m(X)= Pr(Y=m|X)=\frac{e^{Z_m}}{\sum_{\ell=0}^M e^{Z_\ell}}
+$$
+
+The model is then fit by minimizing the *negative log-liklihood* (or cross-entropy)
+$$
+-\sum_{i=1}^n \sum_{m=1}^M y_{im}\log(f_m(x_i))
+$$
+where $y_{im}$ is *one-hot* coded. 
+
+## Multi-layer NN
+In theory, a single hidden layer with a large number of units has the ability to approximate most functions (universal approximator). However, with multi-layers each of smaller size, the computation is reduced and better solution is obtained. 
+
+
+## CNN for Image classificaiton
+Clinches its success in CV such as classifying images. The CNN builds up an image in a hierarchical fashion. Edges and shapes are recognized in lower layers and piece together to form more complex shapes, eventually assembling the target image. The hierarchical construction is achieved by *convolution* to discover spatial structure. Convolution allows for parameter sharing and finding common small patterns that occur in different parts of the image (feature translation invariance), typically followed by ReLU, sometimes separately called a *detector layer*) and *pooling* (to summarize, for down-sampling to select a prominent subset and allowing location invariance). 
+
+CNN convolves a small filter (image, typically small, e.g., $3\times 3$) representing a small shape, edge, etc. with an input image by sliding the filer around the input image, **scoring the match** by *dot-product*.  the more match, the higher the score is. Each filter has the same number of channels as that of the input layer.  The filter is typically *learned* by the network via a learning algorithm. The result of the convolution is a new feature map. The convolved image highlights regions of the original image that resemble the convolution filter. 
+
+**Architecture of a CNN** 
+- many convolve-then-pool layers. Sometimes, we repeat several convolve layers before a pool layer. This effectively increases the dimension of the filter. 
+- each filter creates a new channel in the convolution layer. 
+- As pooling reduces the size, the number of filters/channel is typically increased. 
+- network can be very deep. 
+- As pooling has reduced each channel feature map down to a few pixels in each dimension, at the point, the 3D feature maps are *flattened*, and fed into one or more *FC* layers before reaching to the output layey. 
+
+
+
+## RNN and LSTM
+There are many sequence data such as sentence, time series, speech, music etc. RNN build models that take into account the sequential nature of the data and build a memory of the past. 
+
+- the feature for each observation is a *sequence* of vectors $X=\{X_1, X_2, \cdots, X_L \}$
+- the target $Y$: a single variable (e.g. binary variable), one-hot vector (multiclass). Can also be a sequence  (`seq2seq`), e.g., translation in a different language.
+
+- The hidden layer is a sequence of vectors $A_\ell$ receiving $X_\ell$ and $A_{\ell-1}$ as inputs and output $O_\ell$. The weight matrices are shared at different time step, hence the name *recurrent*. $A_\ell$ accumulates a history of what has been seen and  represents an evolving model that is updated when $X_\ell$ is processed. 
+- Suppose $X_\ell=(X_{\ell 1},\cdots, X_{\ell p} )$, and $A_\ell=(A_{\ell 1}), \cdots, A_{\ell K}$, then $A_{\ell k}$ and $O_\ell$ are computed by 
+$$
+A_{\ell k} = g \left(w_{k0} + \sum_{j=1}^p w_{kj}X_{\ell j} + \sum_{s=1}^K u_{ks}A_{\ell-1 s}   \right)
+$$
+$$
+O_\ell = \beta_0 + \sum_{k=1}^{K} \beta_k A_{\ell k}
+$$
+If we are only interested in the predicting $O_L$ at the last unit, then for squared error loss, and $n$ sequence/response pairs (examples), we minimize
+$$
+\sum_{i=1}^n (y_i-O_{iL})^2=\sum_{i=1}^n \left( y_i- ( \beta_0+ \sum_{k=1}^K \beta_k g(w_{k0} + \sum_{j=1}^p w_{kj}x^{[i]}_{\ell j} + \sum_{s=1}^K u_{ks}a^{[i]}_{\ell-1 s} )) \right)^2
+$$
+
+- Deep RNN: having more than one hidden layers in an RNN. The sequence $A_\ell$ is treated as an input sequence to the next hidden layers. 
+- in LSTM, two tracks of hidden layer activation are maintained; each $A_\ell$ receive the short memory $A_{\ell -1}$, as well as from a long memory that reaches further back in time. 
+- bi-drectional RNN
+
+## Applications
+ 
+### Language models
+Application: Sentiment Analysis (document classification)
+
+#### Bag-of-words
+
+How to create features for a document contains a sequence of $L$ words? 
+
+- Form a dictionary, e.g. most frequently used 10K words e.g., occuring in the training documents
+- create a binary vector of length $p=10K$ for each document, and score 1 in every position that the corresponding word occurred. (Bag-of-words)
+- With $n$ documents, this will create a $n \times p$ *sparse* feature matrix.
+- Bag-of-words are *unigrams*, we can also use *bigrams* (occurrences of adjacent word pairs), and in general $m$-grams$, to take into account the *context*. 
+- one could also record the relative frequency of words. 
+
+#### Word embeddings
+- Each document is represented as a sequence of words $\{{\mathcal W}_\ell \}_{\ell=1}^L$. Typically we truncate/pad the documents to the same number of $L$ words (e.g. L= 512)
+- Each word is represented as a *one-hot* encoded binary vector of $X_\ell$ of length $10K$, extremely sparse, would not work well. 
+- Use an embedding layer (either pre-trained (trained on large corpus by such as PCA, such as `word2vec`, or `GloVe`) or learned specifically as part of the optimization) to obtain a  lower-dimensional *word embedding* matrix ${\mathbf E}$ ($m\times 10K$) to convert each word's binary feature vector of length 10K to a real feature vector of dimension of length $m$ (e.g. 128, 256, 512, 1024. ) 
+
+### Transfering leraning
+By freezing the weights of one or a few top layers of a pretrained NN, one can train a new model by only training the last few layers with much **less** training data, yet obtain a good new model. This is because the feature maps (knowledge) learned in the hidden layer may be transferred to a similar task. 
+
+
+### Time Series
+- *autocorrelation* at lag $\ell$: is the correlation of all pairs $(v_t, v_{t-\ell})$ that are $\ell$ time interval apart. 
+- order-L autoregression model ($AR(L)$): 
+  $$
+  \hat{v}_t= \hat{\beta}_0 + \hat{\beta}_1 v_{t-1} + \cdots +  \hat{\beta}_L v_{t-L}. 
+  $$
+The model can be fit by OLS. 
+- Use RNN to model a time series by exacting many short mini-series of the form $X=\{ X_1, X_2, \cdots, X_L\}$, and a corresponding target $Y$. 
+- time series can also be modelled using 1-D CNN. 
+
+## When to use Deep Learning
+- CNN big success in CV: e.g. image recolonization
+- RNN success in sequence data: e.g.: language translation
+- when dataset is large, overfitting is not a problem 
+- Occam's razor: among algorithms performing equally well, the simpler is preferred as it is easier to interpret. 
+
+## Fitting a NN: Gradient Descent
+Let the loss be $R(\theta)$, where $\theta$ is the parameter to be optimized such that the loss is minimized. The loss $R$ is typically a *non-convex* function of the parameters, hence there might be multiple solutions and many local minima. The gradient method updates the parameter by 
+$$
+\theta^{t+1} = \theta_t - \rho \nabla R(\theta^t)
+$$
+where $\rho$ is a *learning rate*, a hyper-parameter, e.g. $\rho=0.01$; and 
+$\nabla R(\theta^t) =\frac{\partial R(\theta)}{\partial \theta}|_{\theta = \theta^t}$ is the gradient of $R$. The gradient can be found by the *backproparation* using the *chain rule*. The backpropation distributes a fraction of  residual $y_i-f_\theta(x_i)$ at each observation $i$ to each parameter via the hidden units.  Modern software such as Tensorflow or PyTorch can easily compute the gradient of a function. 
+
+When overfitting is detected, training stops. Since $R$ is non-convex, in general we can hope to end up at a good local minimum. 
+
+- the learning rate $\rho$ must be carefully chosen, typically cannot be too large. *Early stopping* ( a kind of regularization) may help. 
+- minibatch: rather than using *all* data each step to update the parameter, draw a random minibatch sample at each step to update the parameter via gradient descent. Such a method is called *SGD*.  Minibatch size is a hyperparameter, e.g. 128. It balances bias and variance. It turns out SGD imposes a  regularization similar to ridge. 
+- epoch: One epoch sweeps through the entire training data set with the number of minibatch subsets that is determined by     
+$$ \text{number of minibatches in one epoch} = \frac{n}{\text{minibatch size}} $$
+- regularization: lasso, ridge; the hyperparameter $\lambda$ may vary for different layers. 
+- dropout: at each SGD update, randomly remove units (by setting their activations zero) with probability $\phi$ (reduce number of variables hence variance $\phi$ may vary for different layers), and scale up those retained by $1/(1-\phi)$ to compensate. Dropout has similar effect to ridge. 
+- data augmentation: make many copies of $(x_i, y_i)$, distort each copy by
+  * adding a small amount of noise (e.g. Gaussian) to the $x_i$, 
+  * zooming, horizontal and vertical shifting, shearing, small rotation, flipping. 
+
+  but leave $y_i$ alone. This effectively has increased the training set.  This make the model *robust* to small perturbation in $x_i$, equivalent to ridge. especially effective with SGD in CV with minibatch where augmented images are added on-the-fly without the need to store them. 
+
+## Interpolation and Double Descent
+
+
+- For a OLS model, When the degree of freedom of a model $d<=n$, the number of examples,  we see usual bias-variance trade-off. When $d=n$, it's an interpolating polynomial, very wiggly. 
+- when $d>n$, the training error is zero, and there are no unique solutions. Among the zero-residual solutions, if pick the *minimum-norm* (hence the smoothest) solution, with the increased dof, it's easy for the model not only fit the training data, but also decreased  $\sum_{j=1}^d \hat{\beta}_j^2$ (there is no need to have large $\beta_j$ to fit the training data), leads to solutions actually generalize well with small variance (on test data). An interpolating model may perform better than a slightly less complex model that does not interpolate the data. This phenomenon is called *double descent*. 
+
+Such a minimum norm solution may be obtained by SGD with a small learning rate. In this case, the SGD solution path is similar to ridge path. 
+- By analogy, deep and wide NN fit by SGD down to zero training erro often give good solutions that generalize well. 
+- In particular cases with high signal-to-noise-ratio (SNR = $\frac{Var[f(x)]}{\sigma^2}$), where $f$ is the signal and $\sigma^2$ is the noise variance (irreducible error).  e.g., image recognition, the NN is less prone to overfitting. 
+
+- Double descent doesn't contradict the bias-variance trade-off. rather it reveas that the number of basis functions does not properly capture the true model "complexity". In other words, a minimum norm solution with $d$ dof has lower flexibility than the model with $d$ dof. 
+
+Most statistical learning method with regularization do not exhibit double descent, as they do not interpolate data, but still achieve good result. 
+
+- Maximal margin classifier and SVM that have zero training error often achieve very good test error, this is because they seek smooth minimum norm solutions. 
+
+## Homework:
+- Conceptual: 1--
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+```
+#### in Windows the code below is true. 
+'logs\\hitters\\version_0\\metrics.csv' == r'logs\hitters\version_0\metrics.csv'
+del Hitters  # delete the object
+
+[f for f in glob('book_images/*')] # get a list of file names from the dir: book_images
+
+' '.join(lookup[i] for i in sample_review)
+
+```
+
+### Numpy
+```
+X_test.astype(np.float32)
+coefs = np.squeeze(coefs)
+
+```
+
+### Pandas
+```
+Y = Hitters['Salary'].to_numpy()
+
+labs = json.load(open('imagenet_class_index.json'))
+class_labels = pd.DataFrame([(int(k), v[1]) for k, v in 
+                           labs.items()],
+                           columns=['idx', 'label'])
+class_labels = class_labels.set_index('idx')
+class_labels = class_labels.sort_index() # sort the rows of a pandas dataframe by index
+
+img_df = img_df.sort_values(by='prob', ascending=False)[:3]
+img_df.reset_index().drop(columns=['idx'])
+
+pd.merge(X, 
+                 pd.get_dummies(NYSE['day_of_week']),
+                 on='date')
+                 
+X = X.reindex(columns=ordered_cols)                 
+
+```
+
+
+### Graphics
+```
+
+
+```
+
+### ISLP and statsmodels
+```
+
+
+```
+
+### sklearn
+#### Linear Regression
+```
+hit_lm = LinearRegression().fit(X_train, Y_train)
+Yhat_test = hit_lm.predict(X_test)
+np.abs(Yhat_test - Y_test).mean()
+
+M.score(X[~train], Y[~train])  # M is a lm, .score for R^2. 
+```
+#### Lasso
+```
+scaler = StandardScaler(with_mean=True, with_std=True)
+lasso = Lasso(warm_start=True, max_iter=30000)
+standard_lasso = Pipeline(steps=[('scaler', scaler),
+                                 ('lasso', lasso)])
+
+### Calculate the lambda values
+X_s = scaler.fit_transform(X_train)
+n = X_s.shape[0]
+lam_max = np.fabs(X_s.T.dot(Y_train - Y_train.mean())).max() / n 
+param_grid = {'alpha': np.exp(np.linspace(0, np.log(0.01), 100))
+             * lam_max}
+             
+
+cv = KFold(10,
+           shuffle=True,
+           random_state=1)
+grid = GridSearchCV(lasso,
+                    param_grid,
+                    cv=cv,
+                    scoring='neg_mean_absolute_error')
+grid.fit(X_train, Y_train);
+
+trained_lasso = grid.best_estimator_
+Yhat_test = trained_lasso.predict(X_test)
+np.fabs(Yhat_test - Y_test).mean()
+```
+
+#### torch for non-linear regression
+```
+class HittersModel(nn.Module):
+
+    def __init__(self, input_size): #input_size = feature_dim
+        super(HittersModel, self).__init__()
+        self.flatten = nn.Flatten()
+        self.sequential = nn.Sequential(
+            nn.Linear(input_size, 50),
+            nn.ReLU(),
+            nn.Dropout(0.4),
+            nn.Linear(50, 1))
+
+    def forward(self, x):
+        x = self.flatten(x)
+        return torch.flatten(self.sequential(x))
+
+hit_model = HittersModel(X.shape[1])
+
+summary(hit_model, 
+        input_size=X_train.shape,
+        col_names=['input_size',
+                   'output_size',
+                   'num_params']) # indicate the columns included in the summary
+#### Form dataset
+X_train_t = torch.tensor(X_train.astype(np.float32))
+Y_train_t = torch.tensor(Y_train.astype(np.float32))
+hit_train = TensorDataset(X_train_t, Y_train_t)
+X_test_t = torch.tensor(X_test.astype(np.float32))
+Y_test_t = torch.tensor(Y_test.astype(np.float32))
+hit_test = TensorDataset(X_test_t, Y_test_t)
+
+max_num_workers = rec_num_workers()
+
+#### Form data module
+hit_dm = SimpleDataModule(hit_train,
+                          hit_test, #test dataset
+                          batch_size=32,
+                          num_workers=min(4, max_num_workers),
+                          validation=hit_test)
+### setup optimizer, loss function and additional error metrics
+hit_module = SimpleModule.regression(hit_model, # using default square loss for training
+                           metrics={'mae':MeanAbsoluteError()}) # additional metric
+#### set up traning logger
+hit_logger = CSVLogger('logs', name='hitters')
+
+#### Training the model
+hit_trainer = Trainer(deterministic=False, # deterministic=True is not working when using GPU
+                      max_epochs=50,
+                      log_every_n_steps=5,
+                      logger=hit_logger,
+                      callbacks=[ErrorTracker()])
+hit_trainer.fit(hit_module, datamodule=hit_dm)
+
+#### Evaluate the test error 
+hit_trainer.test(hit_module, datamodule=hit_dm)
+
+### Make prediction
+hit_model.eval() 
+preds = hit_module(X_test_t)
+torch.abs(Y_test_t - preds).mean()
+
+
+```
+#### Torch for nonlinear classificaiton
+```
+### Data Module
+mnist_dm = SimpleDataModule(mnist_train,
+                            mnist_test,
+                            validation=0.2,
+                            num_workers=max_num_workers,
+                            batch_size=256)
+class MNISTModel(nn.Module):
+    def __init__(self):
+        super(MNISTModel, self).__init__()
+        self.layer1 = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(28*28, 256),
+            nn.ReLU(),
+            nn.Dropout(0.4))
+        self.layer2 = nn.Sequential(
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(0.3))
+        self._forward = nn.Sequential(
+            self.layer1,
+            self.layer2,
+            nn.Linear(128, 10))
+    def forward(self, x):
+        return self._forward(x)
+
+mnist_model = MNISTModel()
+summary(mnist_model,
+        input_data=X_, #also ok X_.shape or [256, 1, 28, 28]
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+### Setup loss, optimizer, additional metrics
+mnist_module = SimpleModule.classification(mnist_model,
+                                           num_classes=10)
+mnist_logger = CSVLogger('logs', name='MNIST')
+
+### Model training
+mnist_trainer = Trainer(deterministic=False,
+                        max_epochs=30,
+                        logger=mnist_logger,
+                        callbacks=[ErrorTracker()])
+mnist_trainer.fit(mnist_module,
+                  datamodule=mnist_dm)
+
+### Evaluating test error
+mnist_trainer.test(mnist_module,
+                   datamodule=mnist_dm)
+                   
+
+```
+
+#### Using Torch for multi-class Logistic Regression
+```
+class MNIST_MLR(nn.Module):
+    def __init__(self):
+        super(MNIST_MLR, self).__init__()
+        self.linear = nn.Sequential(nn.Flatten(),
+                                    nn.Linear(784, 10))
+    def forward(self, x):
+        return self.linear(x)
+
+mlr_model = MNIST_MLR()
+mlr_module = SimpleModule.classification(mlr_model,
+                                         num_classes=10)
+mlr_logger = CSVLogger('logs', name='MNIST_MLR')
+
+mlr_trainer = Trainer(deterministic=False,
+                      max_epochs=30,
+                      callbacks=[ErrorTracker()])
+mlr_trainer.fit(mlr_module, datamodule=mnist_dm)
+mlr_trainer.test(mlr_module,
+                 datamodule=mnist_dm)
+
+```
+#### Torch for classificaiton (Binary Sentiment Analsyis)
+```
+max_num_workers=10
+(imdb_train,
+ imdb_test) = load_tensor(root='data/IMDB')
+imdb_dm = SimpleDataModule(imdb_train,
+                           imdb_test,
+                           validation=2000,
+                           num_workers=min(6, max_num_workers),
+                           batch_size=512)
+                           
+class IMDBModel(nn.Module):
+
+    def __init__(self, input_size):
+        super(IMDBModel, self).__init__()
+        self.dense1 = nn.Linear(input_size, 16)
+        self.activation = nn.ReLU()
+        self.dense2 = nn.Linear(16, 16)
+        self.output = nn.Linear(16, 1)
+
+    def forward(self, x):
+        val = x
+        for _map in [self.dense1,
+                     self.activation,
+                     self.dense2,
+                     self.activation,
+                     self.output]:
+            val = _map(val)
+        return torch.flatten(val)
+
+imdb_model = IMDBModel(imdb_test.tensors[0].size()[1])
+summary(imdb_model,
+        input_size=imdb_test.tensors[0].size(),
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+
+
+imdb_optimizer = RMSprop(imdb_model.parameters(), lr=0.001)
+imdb_module = SimpleModule.binary_classification(
+                         imdb_model,
+                         optimizer=imdb_optimizer)
+
+imdb_logger = CSVLogger('logs', name='IMDB')
+imdb_trainer = Trainer(deterministic=False,
+                       max_epochs=30,
+                       logger=imdb_logger,
+                       callbacks=[ErrorTracker()])
+imdb_trainer.fit(imdb_module,
+                 datamodule=imdb_dm)
+                 
+test_results = imdb_trainer.test(imdb_module, datamodule=imdb_dm)
+
+```
+
+#### Torch with CNN
+```
+cifar_dm = SimpleDataModule(cifar_train, #torch TensorDataSet
+                            cifar_test,
+                            validation=0.2,
+                            num_workers=max_num_workers,
+                            batch_size=128)
+
+class BuildingBlock(nn.Module):
+
+    def __init__(self,
+                 in_channels,
+                 out_channels):
+
+        super(BuildingBlock, self).__init__()
+        self.conv = nn.Conv2d(in_channels=in_channels,
+                              out_channels=out_channels,
+                              kernel_size=(3,3),
+                              padding='same')
+        self.activation = nn.ReLU()
+        self.pool = nn.MaxPool2d(kernel_size=(2,2))
+
+    def forward(self, x):
+        return self.pool(self.activation(self.conv(x)))
+
+class CIFARModel(nn.Module):
+
+    def __init__(self):
+        super(CIFARModel, self).__init__()
+        sizes = [(3,32),
+                 (32,64),
+                 (64,128),
+                 (128,256)]
+        self.conv = nn.Sequential(*[BuildingBlock(in_, out_)
+                                    for in_, out_ in sizes])
+
+        self.output = nn.Sequential(nn.Dropout(0.5),
+                                    nn.Linear(2*2*256, 512),
+                                    nn.ReLU(),
+                                    nn.Linear(512, 100))
+    def forward(self, x):
+        val = self.conv(x)
+        val = torch.flatten(val, start_dim=1) # flatten starting from dim=1 (default), the first dim is batch dim
+        return self.output(val)
+
+cifar_model = CIFARModel()
+summary(cifar_model,
+        input_data=X_,
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+
+### define loss, optimizer, etc
+cifar_optimizer = RMSprop(cifar_model.parameters(), lr=0.001)
+cifar_module = SimpleModule.classification(cifar_model,
+                                    num_classes=100,
+                                    optimizer=cifar_optimizer)
+cifar_logger = CSVLogger('logs', name='CIFAR100')
+
+# Training
+cifar_trainer = Trainer(deterministic=False,
+                        max_epochs=30,
+                        logger=cifar_logger,
+                        callbacks=[ErrorTracker()])
+cifar_trainer.fit(cifar_module,
+                  datamodule=cifar_dm)
+
+cifar_trainer.test(cifar_module,
+                   datamodule=cifar_dm)
+                   
+```
+#### Transfer learning 
+```
+### Pre-processing
+resize = Resize((232,232), antialias=True) #target size: (232,232)
+crop = CenterCrop(224) #centered and cropped to target size 224
+normalize = Normalize([0.485,0.456,0.406],   # mean for each channel
+                      [0.229,0.224,0.225])   # std for each channel
+imgfiles = sorted([f for f in glob('book_images/*')])
+imgs = torch.stack([torch.div(crop(resize(read_image(f))), 255) # element-wise div by 255
+                    for f in imgfiles])
+imgs = normalize(imgs)
+
+resnet_model = resnet50(weights=ResNet50_Weights.DEFAULT) # get the model
+resnet_model.eval()
+img_preds = resnet_model(imgs) #logit values
+
+img_probs = np.exp(np.asarray(img_preds.detach())) # convert to propbabilities 
+img_probs /= img_probs.sum(1)[:,None] # the sum is along the row. 
+
+
+```
+####  RNN/LSTM with Torch for Documenation Classification
+```
+imdb_seq_dm = SimpleDataModule(imdb_seq_train,
+                               imdb_seq_test,
+                               validation=2000,
+                               batch_size=300,
+                               num_workers=min(6, max_num_workers)
+                               )
+
+
+class LSTMModel(nn.Module):
+    def __init__(self, input_size):
+        super(LSTMModel, self).__init__()
+        self.embedding = nn.Embedding(input_size, 32)
+        self.lstm = nn.LSTM(input_size=32,
+                            hidden_size=32,
+                            batch_first=True)
+        self.dense = nn.Linear(32, 1)
+    def forward(self, x):
+        val, (h_n, c_n) = self.lstm(self.embedding(x))
+        return torch.flatten(self.dense(val[:,-1])) # select the last time step of val
+
+lstm_model = LSTMModel(X_test.shape[-1])
+summary(lstm_model,
+        input_data=imdb_seq_train.tensors[0][:10],
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+        
+lstm_module = SimpleModule.binary_classification(lstm_model)
+lstm_logger = CSVLogger('logs', name='IMDB_LSTM')
+
+lstm_trainer = Trainer(deterministic=False,
+                       max_epochs=20,
+                       logger=lstm_logger,
+                       callbacks=[ErrorTracker()])
+lstm_trainer.fit(lstm_module,
+                 datamodule=imdb_seq_dm)
+lstm_trainer.test(lstm_module, datamodule=imdb_seq_dm)
+
+```
+#### RNN/LSTM with Torch for Time Seires Prediciton
+```
+class NYSEModel(nn.Module):
+    def __init__(self):
+        super(NYSEModel, self).__init__()
+        self.rnn = nn.RNN(3, # number of features
+                          12,
+                          batch_first=True)
+        self.dense = nn.Linear(12, 1)
+        self.dropout = nn.Dropout(0.1)
+    def forward(self, x):
+        val, h_n = self.rnn(x)
+        val = self.dense(self.dropout(val[:,-1]))
+        return torch.flatten(val)
+nyse_model = NYSEModel()
+
+datasets = []
+for mask in [train, ~train]:
+    X_rnn_t = torch.tensor(X_rnn[mask].astype(np.float32))
+    Y_t = torch.tensor(Y[mask].astype(np.float32))
+    datasets.append(TensorDataset(X_rnn_t, Y_t))
+nyse_train, nyse_test = datasets
+
+nyse_dm = SimpleDataModule(nyse_train,
+                           nyse_test,
+                           num_workers=min(4, max_num_workers),
+                           validation=nyse_test,
+                           batch_size=64)
+
+nyse_optimizer = RMSprop(nyse_model.parameters(),
+                         lr=0.001)
+nyse_module = SimpleModule.regression(nyse_model,
+                                      optimizer=nyse_optimizer,
+                                      metrics={'r2':R2Score()})                           
+
+nyse_trainer = Trainer(deterministic=False,
+                       max_epochs=200,
+                       callbacks=[ErrorTracker()])
+nyse_trainer.fit(nyse_module,
+                 datamodule=nyse_dm)
+nyse_trainer.test(nyse_module,
+                  datamodule=nyse_dm)
+
+```
+#### Linear and Nonlinear AR with Torch
+```
+### Nonlinear-AR model
+day_dm = SimpleDataModule(day_train,
+                          day_test,
+                          num_workers=min(4, max_num_workers),
+                          validation=day_test,
+                          batch_size=64)
+
+class NonLinearARModel(nn.Module):
+def __init__(self):
+    super(NonLinearARModel, self).__init__()
+    self._forward = nn.Sequential(nn.Flatten(), #flatten a multi-dim tensor into a 1-d tensor while keeping the batch size
+    nn.Linear(20, 32),
+    nn.ReLU(),
+    nn.Dropout(0.5),
+    nn.Linear(32, 1))
+def forward(self, x):
+    return torch.flatten(self._forward(x))
+
+nl_model = NonLinearARModel()
+nl_optimizer = RMSprop(nl_model.parameters(),
+                           lr=0.001)
+nl_module = SimpleModule.regression(nl_model,
+                                        optimizer=nl_optimizer,
+                                        metrics={'r2':R2Score()})
+                                        
+nl_trainer = Trainer(deterministic=False,
+                         max_epochs=20,
+                         callbacks=[ErrorTracker()])
+nl_trainer.fit(nl_module, datamodule=day_dm)
+nl_trainer.test(nl_module, datamodule=day_dm) 
+
+```
+
+
+
+
+### Useful code snippets
+
+#### Plotting training/validation learning curve
+```
+def summary_plot(results,
+                 ax,
+                 col='loss',
+                 valid_legend='Validation',
+                 training_legend='Training',
+                 ylabel='Loss',
+                 fontsize=20):
+    for (column,
+         color,
+         label) in zip([f'train_{col}_epoch',
+                        f'valid_{col}'],
+                       ['black',
+                        'red'],
+                       [training_legend,
+                        valid_legend]):
+        results.plot(x='epoch',
+                     y=column,
+                     label=label,
+                     marker='o',
+                     color=color,
+                     ax=ax)
+    ax.set_xlabel('Epoch')
+    ax.set_ylabel(ylabel)
+    return ax
+    
+fig, ax = subplots(1, 1, figsize=(6, 6))
+ax = summary_plot(hit_results,
+                  ax,
+                  col='mae',
+                  ylabel='MAE',
+                  valid_legend='Validation (=Test)')
+ax.set_ylim([0, 400])
+ax.set_xticks(np.linspace(0, 50, 11).astype(int));
+
+```
+#### Viewing a set of images
+```
+fig, axes = subplots(5, 5, figsize=(10,10))
+rng = np.random.default_rng(4)
+indices = rng.choice(np.arange(len(cifar_train)), 25,
+                     replace=False).reshape((5,5))
+for i in range(5):
+    for j in range(5):
+        idx = indices[i,j]
+        axes[i,j].imshow(np.transpose(cifar_train[idx][0],
+                                      [1,2,0]), # transpose the channel to the last dim for display 
+                                      interpolation=None)
+        axes[i,j].set_xticks([])
+        axes[i,j].set_yticks([])
+```
+#### using sk-learn LogisticRegression() with Lasso
+```
+#### Defining the \lambda
+lam_max = np.abs(X_train.T * (Y_train - Y_train.mean())).max() # this is not divided by n, different that in the Lasso chapter 6. 
+lam_val = lam_max * np.exp(np.linspace(np.log(1),
+                                       np.log(1e-4), 50))
+                                       
+logit = LogisticRegression(penalty='l1', 
+                           C=1/lam_max,
+                           solver='liblinear',
+                           warm_start=True,
+                           fit_intercept=True)
+                           
+coefs = []
+intercepts = []
+
+for l in lam_val:
+    logit.C = 1/l
+    logit.fit(X_train, Y_train)
+    coefs.append(logit.coef_.copy())
+    intercepts.append(logit.intercept_)   
+    
+
+```
+#### Viewing the Lasso results with lambda values
+```
+fig, axes = subplots(1, 2, figsize=(16, 8), sharey=True)
+for ((X_, Y_),
+     data_,
+     color) in zip([(X_train, Y_train),
+                    (X_valid, Y_valid),
+                    (X_test, Y_test)],
+                    ['Training', 'Validation', 'Test'],
+                    ['black', 'red', 'blue']):
+    linpred_ = X_ * coefs.T + intercepts[None,:]
+    label_ = np.array(linpred_ > 0)
+    accuracy_ = np.array([np.mean(Y_ == l) for l in label_.T])
+    axes[0].plot(-np.log(lam_val / X_train.shape[0]), #lambda is rescaled by diving N for only plotting. WHy?
+                 accuracy_,
+                 '.--',
+                 color=color,
+                 markersize=13,
+                 linewidth=2,
+                 label=data_)
+axes[0].legend()
+axes[0].set_xlabel(r'$-\log(\lambda)$', fontsize=20)
+axes[0].set_ylabel('Accuracy', fontsize=20)
+```
+#### Insert lags to a time series
+```
+for lag in range(1, 6):
+    for col in cols:
+        newcol = np.zeros(X.shape[0]) * np.nan
+        newcol[lag:] = X[col].values[:-lag]
+        X.insert(len(X.columns), "{0}_{1}".format(col, lag), newcol)#insert at the end
+X.insert(len(X.columns), 'train', NYSE['train']) #insert the col training identifier 
+
+X = X.dropna() # drop rows with nan
+```
+
+#### Preparing time series data for RNN in Torch
+```
+Y, train = X['log_volume'], X['train']
+X = X.drop(columns=['train'] + cols)
+
+ordered_cols = []
+for lag in range(5,0,-1):
+    for col in cols:
+        ordered_cols.append('{0}_{1}'.format(col, lag))
+X = X.reindex(columns=ordered_cols)
+
+X_rnn = X.to_numpy().reshape((-1,5,3))
+
+
+
+```

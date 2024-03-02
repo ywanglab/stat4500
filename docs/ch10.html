@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.398">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>stat4500notes - 10&nbsp; Chapter 10: Deep Learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./class_project.html" rel="next">
+<link href="./ch9.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch10.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10: Deep Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">stat4500notes</a> 
+        <div class="sidebar-tools-main">
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.pdf">
+              <i class="bi bi-bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.docx">
+              <i class="bi bi-bi-file-word pe-1"></i>
+            Download Docx
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3: Linear Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Moving Beyond Linearity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8: Tree-Based Methods</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9: Support Vector Machine</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch10.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10: Deep Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./class_project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#single-layer-neural-network" id="toc-single-layer-neural-network" class="nav-link active" data-scroll-target="#single-layer-neural-network"><span class="header-section-number">10.1</span> Single Layer Neural Network</a></li>
+  <li><a href="#multi-layer-nn" id="toc-multi-layer-nn" class="nav-link" data-scroll-target="#multi-layer-nn"><span class="header-section-number">10.2</span> Multi-layer NN</a></li>
+  <li><a href="#cnn-for-image-classificaiton" id="toc-cnn-for-image-classificaiton" class="nav-link" data-scroll-target="#cnn-for-image-classificaiton"><span class="header-section-number">10.3</span> CNN for Image classificaiton</a></li>
+  <li><a href="#rnn-and-lstm" id="toc-rnn-and-lstm" class="nav-link" data-scroll-target="#rnn-and-lstm"><span class="header-section-number">10.4</span> RNN and LSTM</a></li>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">10.5</span> Applications</a>
+  <ul class="collapse">
+  <li><a href="#language-models" id="toc-language-models" class="nav-link" data-scroll-target="#language-models"><span class="header-section-number">10.5.1</span> Language models</a></li>
+  <li><a href="#transfering-leraning" id="toc-transfering-leraning" class="nav-link" data-scroll-target="#transfering-leraning"><span class="header-section-number">10.5.2</span> Transfering leraning</a></li>
+  <li><a href="#time-series" id="toc-time-series" class="nav-link" data-scroll-target="#time-series"><span class="header-section-number">10.5.3</span> Time Series</a></li>
+  </ul></li>
+  <li><a href="#when-to-use-deep-learning" id="toc-when-to-use-deep-learning" class="nav-link" data-scroll-target="#when-to-use-deep-learning"><span class="header-section-number">10.6</span> When to use Deep Learning</a></li>
+  <li><a href="#fitting-a-nn-gradient-descent" id="toc-fitting-a-nn-gradient-descent" class="nav-link" data-scroll-target="#fitting-a-nn-gradient-descent"><span class="header-section-number">10.7</span> Fitting a NN: Gradient Descent</a></li>
+  <li><a href="#interpolation-and-double-descent" id="toc-interpolation-and-double-descent" class="nav-link" data-scroll-target="#interpolation-and-double-descent"><span class="header-section-number">10.8</span> Interpolation and Double Descent</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">10.9</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">10.10</span> Code Snippet</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">10.10.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">10.10.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">10.10.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">10.10.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">10.10.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">10.10.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">10.10.7</span> Useful code snippets</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10: Deep Learning</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li><p>NN was popular in the 1980s. Then took a back seat in the 1990s when SVMs, RF, and Boosting were successful. NN reemerged 2010 as CNN and DL started to garner success. By 2020, become dominant and very successful.</p></li>
+<li><p>Part of success due to vast improvements in computing power (GPU computing), more training data sets, and advances in algorithms and software: TensorFlow and PyTorch.</p></li>
+<li><p>Three prominent figures: Yann LeCun, Geoffrey Hinton and Yoshua Bengio and their students. Three three scientist received the 2019 ACM Turing Award.</p></li>
+</ul>
+<section id="single-layer-neural-network" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="single-layer-neural-network"><span class="header-section-number">10.1</span> Single Layer Neural Network</h2>
+<p>The name <em>neural network</em> originally derived from thinking of the hidden units as analogous to neurons in the brain. Consider the NN consisting of input layer, one hidden layer and a single output regression unit. Then the output <span class="math display">\[\begin{align}
+Y=f(X)   = &amp; \beta_0 +\sum_{k=1}^K\beta_k h_k(X) \\
+  = &amp; \beta_0+ \sum_{k=1}^K \beta_k g(w_{k0}+\sum_{j=1}^p w_{kj}X_j)
+\end{align}\]</span> where,</p>
+<ul>
+<li><p><span class="math inline">\(A_k =h_k(X)= g(w_{k0}+\sum_{j=1}^p w_{kj}X_j)\)</span> are the <em>activations</em> in the hidden layer: they are simply nonlinear transformation via <span class="math inline">\(g\)</span> of an affine transformation of the input features. Each <span class="math inline">\(A_k\)</span> may be understood as a basis function. The success of NN lies in that <span class="math inline">\(A_k\)</span> are not prescribed, rather are learned from data by learning the coefficients <span class="math inline">\(w_{kj}\)</span>.</p></li>
+<li><p><span class="math inline">\(g\)</span> is a <em>activate function</em>. E.g.: sigmoid (for binary output unit), softmax (for multi-class output), linear (for regression) or ReLU (for hidden layers). The activation functions typically in the hidden layers are <em>nonlinear</em>, allowing to model complex nonlinearities and interactions. otherwise the model collapses to a linear model.</p></li>
+<li><p>For regression, the model is fit by minimizing the RSS loss <span class="math inline">\(\sum_{i=1}^n (y_i-f(x_i))^2\)</span>. <strong>non-convex</strong></p></li>
+<li><p>For classification , if there are <span class="math inline">\(M\)</span> classes, and the logit output for class <span class="math inline">\(m\)</span> is <span class="math display">\[
+Z_m = \beta_{m0}+ \sum_{\ell=1}^K\beta_{m\ell}A_\ell
+\]</span> where <span class="math inline">\(K\)</span> is the number of activation nodes in the previous layer. The output activation function encodes the <em>softmax function</em> <span class="math display">\[
+f_m(X)= Pr(Y=m|X)=\frac{e^{Z_m}}{\sum_{\ell=0}^M e^{Z_\ell}}
+\]</span></p></li>
+</ul>
+<p>The model is then fit by minimizing the <em>negative log-liklihood</em> (or cross-entropy) <span class="math display">\[
+-\sum_{i=1}^n \sum_{m=1}^M y_{im}\log(f_m(x_i))
+\]</span> where <span class="math inline">\(y_{im}\)</span> is <em>one-hot</em> coded.</p>
+</section>
+<section id="multi-layer-nn" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="multi-layer-nn"><span class="header-section-number">10.2</span> Multi-layer NN</h2>
+<p>In theory, a single hidden layer with a large number of units has the ability to approximate most functions (universal approximator). However, with multi-layers each of smaller size, the computation is reduced and better solution is obtained.</p>
+</section>
+<section id="cnn-for-image-classificaiton" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="cnn-for-image-classificaiton"><span class="header-section-number">10.3</span> CNN for Image classificaiton</h2>
+<p>Clinches its success in CV such as classifying images. The CNN builds up an image in a hierarchical fashion. Edges and shapes are recognized in lower layers and piece together to form more complex shapes, eventually assembling the target image. The hierarchical construction is achieved by <em>convolution</em> to discover spatial structure. Convolution allows for parameter sharing and finding common small patterns that occur in different parts of the image (feature translation invariance), typically followed by ReLU, sometimes separately called a <em>detector layer</em>) and <em>pooling</em> (to summarize, for down-sampling to select a prominent subset and allowing location invariance).</p>
+<p>CNN convolves a small filter (image, typically small, e.g., <span class="math inline">\(3\times 3\)</span>) representing a small shape, edge, etc. with an input image by sliding the filer around the input image, <strong>scoring the match</strong> by <em>dot-product</em>. the more match, the higher the score is. Each filter has the same number of channels as that of the input layer. The filter is typically <em>learned</em> by the network via a learning algorithm. The result of the convolution is a new feature map. The convolved image highlights regions of the original image that resemble the convolution filter.</p>
+<p><strong>Architecture of a CNN</strong> - many convolve-then-pool layers. Sometimes, we repeat several convolve layers before a pool layer. This effectively increases the dimension of the filter. - each filter creates a new channel in the convolution layer. - As pooling reduces the size, the number of filters/channel is typically increased. - network can be very deep. - As pooling has reduced each channel feature map down to a few pixels in each dimension, at the point, the 3D feature maps are <em>flattened</em>, and fed into one or more <em>FC</em> layers before reaching to the output layey.</p>
+</section>
+<section id="rnn-and-lstm" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="rnn-and-lstm"><span class="header-section-number">10.4</span> RNN and LSTM</h2>
+<p>There are many sequence data such as sentence, time series, speech, music etc. RNN build models that take into account the sequential nature of the data and build a memory of the past.</p>
+<ul>
+<li><p>the feature for each observation is a <em>sequence</em> of vectors <span class="math inline">\(X=\{X_1, X_2, \cdots, X_L \}\)</span></p></li>
+<li><p>the target <span class="math inline">\(Y\)</span>: a single variable (e.g.&nbsp;binary variable), one-hot vector (multiclass). Can also be a sequence (<code>seq2seq</code>), e.g., translation in a different language.</p></li>
+<li><p>The hidden layer is a sequence of vectors <span class="math inline">\(A_\ell\)</span> receiving <span class="math inline">\(X_\ell\)</span> and <span class="math inline">\(A_{\ell-1}\)</span> as inputs and output <span class="math inline">\(O_\ell\)</span>. The weight matrices are shared at different time step, hence the name <em>recurrent</em>. <span class="math inline">\(A_\ell\)</span> accumulates a history of what has been seen and represents an evolving model that is updated when <span class="math inline">\(X_\ell\)</span> is processed.</p></li>
+<li><p>Suppose <span class="math inline">\(X_\ell=(X_{\ell 1},\cdots, X_{\ell p} )\)</span>, and <span class="math inline">\(A_\ell=(A_{\ell 1}), \cdots, A_{\ell K}\)</span>, then <span class="math inline">\(A_{\ell k}\)</span> and <span class="math inline">\(O_\ell\)</span> are computed by <span class="math display">\[
+A_{\ell k} = g \left(w_{k0} + \sum_{j=1}^p w_{kj}X_{\ell j} + \sum_{s=1}^K u_{ks}A_{\ell-1 s}   \right)
+\]</span> <span class="math display">\[
+O_\ell = \beta_0 + \sum_{k=1}^{K} \beta_k A_{\ell k}
+\]</span> If we are only interested in the predicting <span class="math inline">\(O_L\)</span> at the last unit, then for squared error loss, and <span class="math inline">\(n\)</span> sequence/response pairs (examples), we minimize <span class="math display">\[
+\sum_{i=1}^n (y_i-O_{iL})^2=\sum_{i=1}^n \left( y_i- ( \beta_0+ \sum_{k=1}^K \beta_k g(w_{k0} + \sum_{j=1}^p w_{kj}x^{[i]}_{\ell j} + \sum_{s=1}^K u_{ks}a^{[i]}_{\ell-1 s} )) \right)^2
+\]</span></p></li>
+<li><p>Deep RNN: having more than one hidden layers in an RNN. The sequence <span class="math inline">\(A_\ell\)</span> is treated as an input sequence to the next hidden layers.</p></li>
+<li><p>in LSTM, two tracks of hidden layer activation are maintained; each <span class="math inline">\(A_\ell\)</span> receive the short memory <span class="math inline">\(A_{\ell -1}\)</span>, as well as from a long memory that reaches further back in time.</p></li>
+<li><p>bi-drectional RNN</p></li>
+</ul>
+</section>
+<section id="applications" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="applications"><span class="header-section-number">10.5</span> Applications</h2>
+<section id="language-models" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="language-models"><span class="header-section-number">10.5.1</span> Language models</h3>
+<p>Application: Sentiment Analysis (document classification)</p>
+<section id="bag-of-words" class="level4" data-number="10.5.1.1">
+<h4 data-number="10.5.1.1" class="anchored" data-anchor-id="bag-of-words"><span class="header-section-number">10.5.1.1</span> Bag-of-words</h4>
+<p>How to create features for a document contains a sequence of <span class="math inline">\(L\)</span> words?</p>
+<ul>
+<li>Form a dictionary, e.g.&nbsp;most frequently used 10K words e.g., occuring in the training documents</li>
+<li>create a binary vector of length <span class="math inline">\(p=10K\)</span> for each document, and score 1 in every position that the corresponding word occurred. (Bag-of-words)</li>
+<li>With <span class="math inline">\(n\)</span> documents, this will create a <span class="math inline">\(n \times p\)</span> <em>sparse</em> feature matrix.</li>
+<li>Bag-of-words are <em>unigrams</em>, we can also use <em>bigrams</em> (occurrences of adjacent word pairs), and in general <span class="math inline">\(m\)</span>-grams$, to take into account the <em>context</em>.</li>
+<li>one could also record the relative frequency of words.</li>
+</ul>
+</section>
+<section id="word-embeddings" class="level4" data-number="10.5.1.2">
+<h4 data-number="10.5.1.2" class="anchored" data-anchor-id="word-embeddings"><span class="header-section-number">10.5.1.2</span> Word embeddings</h4>
+<ul>
+<li>Each document is represented as a sequence of words <span class="math inline">\(\{{\mathcal W}_\ell \}_{\ell=1}^L\)</span>. Typically we truncate/pad the documents to the same number of <span class="math inline">\(L\)</span> words (e.g.&nbsp;L= 512)</li>
+<li>Each word is represented as a <em>one-hot</em> encoded binary vector of <span class="math inline">\(X_\ell\)</span> of length <span class="math inline">\(10K\)</span>, extremely sparse, would not work well.</li>
+<li>Use an embedding layer (either pre-trained (trained on large corpus by such as PCA, such as <code>word2vec</code>, or <code>GloVe</code>) or learned specifically as part of the optimization) to obtain a lower-dimensional <em>word embedding</em> matrix <span class="math inline">\({\mathbf E}\)</span> (<span class="math inline">\(m\times 10K\)</span>) to convert each word’s binary feature vector of length 10K to a real feature vector of dimension of length <span class="math inline">\(m\)</span> (e.g.&nbsp;128, 256, 512, 1024. )</li>
+</ul>
+</section>
+</section>
+<section id="transfering-leraning" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="transfering-leraning"><span class="header-section-number">10.5.2</span> Transfering leraning</h3>
+<p>By freezing the weights of one or a few top layers of a pretrained NN, one can train a new model by only training the last few layers with much <strong>less</strong> training data, yet obtain a good new model. This is because the feature maps (knowledge) learned in the hidden layer may be transferred to a similar task.</p>
+</section>
+<section id="time-series" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="time-series"><span class="header-section-number">10.5.3</span> Time Series</h3>
+<ul>
+<li><em>autocorrelation</em> at lag <span class="math inline">\(\ell\)</span>: is the correlation of all pairs <span class="math inline">\((v_t, v_{t-\ell})\)</span> that are <span class="math inline">\(\ell\)</span> time interval apart.</li>
+<li>order-L autoregression model (<span class="math inline">\(AR(L)\)</span>): <span class="math display">\[
+\hat{v}_t= \hat{\beta}_0 + \hat{\beta}_1 v_{t-1} + \cdots +  \hat{\beta}_L v_{t-L}.
+\]</span> The model can be fit by OLS.</li>
+<li>Use RNN to model a time series by exacting many short mini-series of the form <span class="math inline">\(X=\{ X_1, X_2, \cdots, X_L\}\)</span>, and a corresponding target <span class="math inline">\(Y\)</span>.</li>
+<li>time series can also be modelled using 1-D CNN.</li>
+</ul>
+</section>
+</section>
+<section id="when-to-use-deep-learning" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="when-to-use-deep-learning"><span class="header-section-number">10.6</span> When to use Deep Learning</h2>
+<ul>
+<li>CNN big success in CV: e.g.&nbsp;image recolonization</li>
+<li>RNN success in sequence data: e.g.: language translation</li>
+<li>when dataset is large, overfitting is not a problem</li>
+<li>Occam’s razor: among algorithms performing equally well, the simpler is preferred as it is easier to interpret.</li>
+</ul>
+</section>
+<section id="fitting-a-nn-gradient-descent" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="fitting-a-nn-gradient-descent"><span class="header-section-number">10.7</span> Fitting a NN: Gradient Descent</h2>
+<p>Let the loss be <span class="math inline">\(R(\theta)\)</span>, where <span class="math inline">\(\theta\)</span> is the parameter to be optimized such that the loss is minimized. The loss <span class="math inline">\(R\)</span> is typically a <em>non-convex</em> function of the parameters, hence there might be multiple solutions and many local minima. The gradient method updates the parameter by <span class="math display">\[
+\theta^{t+1} = \theta_t - \rho \nabla R(\theta^t)
+\]</span> where <span class="math inline">\(\rho\)</span> is a <em>learning rate</em>, a hyper-parameter, e.g.&nbsp;<span class="math inline">\(\rho=0.01\)</span>; and <span class="math inline">\(\nabla R(\theta^t) =\frac{\partial R(\theta)}{\partial \theta}|_{\theta = \theta^t}\)</span> is the gradient of <span class="math inline">\(R\)</span>. The gradient can be found by the <em>backproparation</em> using the <em>chain rule</em>. The backpropation distributes a fraction of residual <span class="math inline">\(y_i-f_\theta(x_i)\)</span> at each observation <span class="math inline">\(i\)</span> to each parameter via the hidden units. Modern software such as Tensorflow or PyTorch can easily compute the gradient of a function.</p>
+<p>When overfitting is detected, training stops. Since <span class="math inline">\(R\)</span> is non-convex, in general we can hope to end up at a good local minimum.</p>
+<ul>
+<li>the learning rate <span class="math inline">\(\rho\)</span> must be carefully chosen, typically cannot be too large. <em>Early stopping</em> ( a kind of regularization) may help.</li>
+<li>minibatch: rather than using <em>all</em> data each step to update the parameter, draw a random minibatch sample at each step to update the parameter via gradient descent. Such a method is called <em>SGD</em>. Minibatch size is a hyperparameter, e.g.&nbsp;128. It balances bias and variance. It turns out SGD imposes a regularization similar to ridge.</li>
+<li>epoch: One epoch sweeps through the entire training data set with the number of minibatch subsets that is determined by<br>
+<span class="math display">\[ \text{number of minibatches in one epoch} = \frac{n}{\text{minibatch size}} \]</span></li>
+<li>regularization: lasso, ridge; the hyperparameter <span class="math inline">\(\lambda\)</span> may vary for different layers.</li>
+<li>dropout: at each SGD update, randomly remove units (by setting their activations zero) with probability <span class="math inline">\(\phi\)</span> (reduce number of variables hence variance <span class="math inline">\(\phi\)</span> may vary for different layers), and scale up those retained by <span class="math inline">\(1/(1-\phi)\)</span> to compensate. Dropout has similar effect to ridge.</li>
+<li>data augmentation: make many copies of <span class="math inline">\((x_i, y_i)\)</span>, distort each copy by
+<ul>
+<li>adding a small amount of noise (e.g.&nbsp;Gaussian) to the <span class="math inline">\(x_i\)</span>,</li>
+<li>zooming, horizontal and vertical shifting, shearing, small rotation, flipping.</li>
+</ul>
+but leave <span class="math inline">\(y_i\)</span> alone. This effectively has increased the training set. This make the model <em>robust</em> to small perturbation in <span class="math inline">\(x_i\)</span>, equivalent to ridge. especially effective with SGD in CV with minibatch where augmented images are added on-the-fly without the need to store them.</li>
+</ul>
+</section>
+<section id="interpolation-and-double-descent" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="interpolation-and-double-descent"><span class="header-section-number">10.8</span> Interpolation and Double Descent</h2>
+<ul>
+<li>For a OLS model, When the degree of freedom of a model <span class="math inline">\(d&lt;=n\)</span>, the number of examples, we see usual bias-variance trade-off. When <span class="math inline">\(d=n\)</span>, it’s an interpolating polynomial, very wiggly.</li>
+<li>when <span class="math inline">\(d&gt;n\)</span>, the training error is zero, and there are no unique solutions. Among the zero-residual solutions, if pick the <em>minimum-norm</em> (hence the smoothest) solution, with the increased dof, it’s easy for the model not only fit the training data, but also decreased <span class="math inline">\(\sum_{j=1}^d \hat{\beta}_j^2\)</span> (there is no need to have large <span class="math inline">\(\beta_j\)</span> to fit the training data), leads to solutions actually generalize well with small variance (on test data). An interpolating model may perform better than a slightly less complex model that does not interpolate the data. This phenomenon is called <em>double descent</em>.</li>
+</ul>
+<p>Such a minimum norm solution may be obtained by SGD with a small learning rate. In this case, the SGD solution path is similar to ridge path. - By analogy, deep and wide NN fit by SGD down to zero training erro often give good solutions that generalize well. - In particular cases with high signal-to-noise-ratio (SNR = <span class="math inline">\(\frac{Var[f(x)]}{\sigma^2}\)</span>), where <span class="math inline">\(f\)</span> is the signal and <span class="math inline">\(\sigma^2\)</span> is the noise variance (irreducible error). e.g., image recognition, the NN is less prone to overfitting.</p>
+<ul>
+<li>Double descent doesn’t contradict the bias-variance trade-off. rather it reveas that the number of basis functions does not properly capture the true model “complexity”. In other words, a minimum norm solution with <span class="math inline">\(d\)</span> dof has lower flexibility than the model with <span class="math inline">\(d\)</span> dof.</li>
+</ul>
+<p>Most statistical learning method with regularization do not exhibit double descent, as they do not interpolate data, but still achieve good result.</p>
+<ul>
+<li>Maximal margin classifier and SVM that have zero training error often achieve very good test error, this is because they seek smooth minimum norm solutions.</li>
+</ul>
+</section>
+<section id="homework" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="homework"><span class="header-section-number">10.9</span> Homework:</h2>
+<ul>
+<li>Conceptual: 1–</li>
+<li>Applied: At least one.</li>
+</ul>
+</section>
+<section id="code-snippet" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">10.10</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="10.10.1">
+<h3 data-number="10.10.1" class="anchored" data-anchor-id="python"><span class="header-section-number">10.10.1</span> Python</h3>
+<pre><code>#### in Windows the code below is true. 
+'logs\\hitters\\version_0\\metrics.csv' == r'logs\hitters\version_0\metrics.csv'
+del Hitters  # delete the object
+
+[f for f in glob('book_images/*')] # get a list of file names from the dir: book_images
+
+' '.join(lookup[i] for i in sample_review)
+</code></pre>
+</section>
+<section id="numpy" class="level3" data-number="10.10.2">
+<h3 data-number="10.10.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">10.10.2</span> Numpy</h3>
+<pre><code>X_test.astype(np.float32)
+coefs = np.squeeze(coefs)
+</code></pre>
+</section>
+<section id="pandas" class="level3" data-number="10.10.3">
+<h3 data-number="10.10.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">10.10.3</span> Pandas</h3>
+<pre><code>Y = Hitters['Salary'].to_numpy()
+
+labs = json.load(open('imagenet_class_index.json'))
+class_labels = pd.DataFrame([(int(k), v[1]) for k, v in 
+                           labs.items()],
+                           columns=['idx', 'label'])
+class_labels = class_labels.set_index('idx')
+class_labels = class_labels.sort_index() # sort the rows of a pandas dataframe by index
+
+img_df = img_df.sort_values(by='prob', ascending=False)[:3]
+img_df.reset_index().drop(columns=['idx'])
+
+pd.merge(X, 
+                 pd.get_dummies(NYSE['day_of_week']),
+                 on='date')
+                 
+X = X.reindex(columns=ordered_cols)                 
+</code></pre>
+</section>
+<section id="graphics" class="level3" data-number="10.10.4">
+<h3 data-number="10.10.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">10.10.4</span> Graphics</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="10.10.5">
+<h3 data-number="10.10.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">10.10.5</span> ISLP and statsmodels</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="10.10.6">
+<h3 data-number="10.10.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">10.10.6</span> sklearn</h3>
+<section id="linear-regression" class="level4" data-number="10.10.6.1">
+<h4 data-number="10.10.6.1" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">10.10.6.1</span> Linear Regression</h4>
+<pre><code>hit_lm = LinearRegression().fit(X_train, Y_train)
+Yhat_test = hit_lm.predict(X_test)
+np.abs(Yhat_test - Y_test).mean()
+
+M.score(X[~train], Y[~train])  # M is a lm, .score for R^2. </code></pre>
+</section>
+<section id="lasso" class="level4" data-number="10.10.6.2">
+<h4 data-number="10.10.6.2" class="anchored" data-anchor-id="lasso"><span class="header-section-number">10.10.6.2</span> Lasso</h4>
+<pre><code>scaler = StandardScaler(with_mean=True, with_std=True)
+lasso = Lasso(warm_start=True, max_iter=30000)
+standard_lasso = Pipeline(steps=[('scaler', scaler),
+                                 ('lasso', lasso)])
+
+### Calculate the lambda values
+X_s = scaler.fit_transform(X_train)
+n = X_s.shape[0]
+lam_max = np.fabs(X_s.T.dot(Y_train - Y_train.mean())).max() / n 
+param_grid = {'alpha': np.exp(np.linspace(0, np.log(0.01), 100))
+             * lam_max}
+             
+
+cv = KFold(10,
+           shuffle=True,
+           random_state=1)
+grid = GridSearchCV(lasso,
+                    param_grid,
+                    cv=cv,
+                    scoring='neg_mean_absolute_error')
+grid.fit(X_train, Y_train);
+
+trained_lasso = grid.best_estimator_
+Yhat_test = trained_lasso.predict(X_test)
+np.fabs(Yhat_test - Y_test).mean()</code></pre>
+</section>
+<section id="torch-for-non-linear-regression" class="level4" data-number="10.10.6.3">
+<h4 data-number="10.10.6.3" class="anchored" data-anchor-id="torch-for-non-linear-regression"><span class="header-section-number">10.10.6.3</span> torch for non-linear regression</h4>
+<pre><code>class HittersModel(nn.Module):
+
+    def __init__(self, input_size): #input_size = feature_dim
+        super(HittersModel, self).__init__()
+        self.flatten = nn.Flatten()
+        self.sequential = nn.Sequential(
+            nn.Linear(input_size, 50),
+            nn.ReLU(),
+            nn.Dropout(0.4),
+            nn.Linear(50, 1))
+
+    def forward(self, x):
+        x = self.flatten(x)
+        return torch.flatten(self.sequential(x))
+
+hit_model = HittersModel(X.shape[1])
+
+summary(hit_model, 
+        input_size=X_train.shape,
+        col_names=['input_size',
+                   'output_size',
+                   'num_params']) # indicate the columns included in the summary
+#### Form dataset
+X_train_t = torch.tensor(X_train.astype(np.float32))
+Y_train_t = torch.tensor(Y_train.astype(np.float32))
+hit_train = TensorDataset(X_train_t, Y_train_t)
+X_test_t = torch.tensor(X_test.astype(np.float32))
+Y_test_t = torch.tensor(Y_test.astype(np.float32))
+hit_test = TensorDataset(X_test_t, Y_test_t)
+
+max_num_workers = rec_num_workers()
+
+#### Form data module
+hit_dm = SimpleDataModule(hit_train,
+                          hit_test, #test dataset
+                          batch_size=32,
+                          num_workers=min(4, max_num_workers),
+                          validation=hit_test)
+### setup optimizer, loss function and additional error metrics
+hit_module = SimpleModule.regression(hit_model, # using default square loss for training
+                           metrics={'mae':MeanAbsoluteError()}) # additional metric
+#### set up traning logger
+hit_logger = CSVLogger('logs', name='hitters')
+
+#### Training the model
+hit_trainer = Trainer(deterministic=False, # deterministic=True is not working when using GPU
+                      max_epochs=50,
+                      log_every_n_steps=5,
+                      logger=hit_logger,
+                      callbacks=[ErrorTracker()])
+hit_trainer.fit(hit_module, datamodule=hit_dm)
+
+#### Evaluate the test error 
+hit_trainer.test(hit_module, datamodule=hit_dm)
+
+### Make prediction
+hit_model.eval() 
+preds = hit_module(X_test_t)
+torch.abs(Y_test_t - preds).mean()
+
+</code></pre>
+</section>
+<section id="torch-for-nonlinear-classificaiton" class="level4" data-number="10.10.6.4">
+<h4 data-number="10.10.6.4" class="anchored" data-anchor-id="torch-for-nonlinear-classificaiton"><span class="header-section-number">10.10.6.4</span> Torch for nonlinear classificaiton</h4>
+<pre><code>### Data Module
+mnist_dm = SimpleDataModule(mnist_train,
+                            mnist_test,
+                            validation=0.2,
+                            num_workers=max_num_workers,
+                            batch_size=256)
+class MNISTModel(nn.Module):
+    def __init__(self):
+        super(MNISTModel, self).__init__()
+        self.layer1 = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(28*28, 256),
+            nn.ReLU(),
+            nn.Dropout(0.4))
+        self.layer2 = nn.Sequential(
+            nn.Linear(256, 128),
+            nn.ReLU(),
+            nn.Dropout(0.3))
+        self._forward = nn.Sequential(
+            self.layer1,
+            self.layer2,
+            nn.Linear(128, 10))
+    def forward(self, x):
+        return self._forward(x)
+
+mnist_model = MNISTModel()
+summary(mnist_model,
+        input_data=X_, #also ok X_.shape or [256, 1, 28, 28]
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+### Setup loss, optimizer, additional metrics
+mnist_module = SimpleModule.classification(mnist_model,
+                                           num_classes=10)
+mnist_logger = CSVLogger('logs', name='MNIST')
+
+### Model training
+mnist_trainer = Trainer(deterministic=False,
+                        max_epochs=30,
+                        logger=mnist_logger,
+                        callbacks=[ErrorTracker()])
+mnist_trainer.fit(mnist_module,
+                  datamodule=mnist_dm)
+
+### Evaluating test error
+mnist_trainer.test(mnist_module,
+                   datamodule=mnist_dm)
+                   
+</code></pre>
+</section>
+<section id="using-torch-for-multi-class-logistic-regression" class="level4" data-number="10.10.6.5">
+<h4 data-number="10.10.6.5" class="anchored" data-anchor-id="using-torch-for-multi-class-logistic-regression"><span class="header-section-number">10.10.6.5</span> Using Torch for multi-class Logistic Regression</h4>
+<pre><code>class MNIST_MLR(nn.Module):
+    def __init__(self):
+        super(MNIST_MLR, self).__init__()
+        self.linear = nn.Sequential(nn.Flatten(),
+                                    nn.Linear(784, 10))
+    def forward(self, x):
+        return self.linear(x)
+
+mlr_model = MNIST_MLR()
+mlr_module = SimpleModule.classification(mlr_model,
+                                         num_classes=10)
+mlr_logger = CSVLogger('logs', name='MNIST_MLR')
+
+mlr_trainer = Trainer(deterministic=False,
+                      max_epochs=30,
+                      callbacks=[ErrorTracker()])
+mlr_trainer.fit(mlr_module, datamodule=mnist_dm)
+mlr_trainer.test(mlr_module,
+                 datamodule=mnist_dm)
+</code></pre>
+</section>
+<section id="torch-for-classificaiton-binary-sentiment-analsyis" class="level4" data-number="10.10.6.6">
+<h4 data-number="10.10.6.6" class="anchored" data-anchor-id="torch-for-classificaiton-binary-sentiment-analsyis"><span class="header-section-number">10.10.6.6</span> Torch for classificaiton (Binary Sentiment Analsyis)</h4>
+<pre><code>max_num_workers=10
+(imdb_train,
+ imdb_test) = load_tensor(root='data/IMDB')
+imdb_dm = SimpleDataModule(imdb_train,
+                           imdb_test,
+                           validation=2000,
+                           num_workers=min(6, max_num_workers),
+                           batch_size=512)
+                           
+class IMDBModel(nn.Module):
+
+    def __init__(self, input_size):
+        super(IMDBModel, self).__init__()
+        self.dense1 = nn.Linear(input_size, 16)
+        self.activation = nn.ReLU()
+        self.dense2 = nn.Linear(16, 16)
+        self.output = nn.Linear(16, 1)
+
+    def forward(self, x):
+        val = x
+        for _map in [self.dense1,
+                     self.activation,
+                     self.dense2,
+                     self.activation,
+                     self.output]:
+            val = _map(val)
+        return torch.flatten(val)
+
+imdb_model = IMDBModel(imdb_test.tensors[0].size()[1])
+summary(imdb_model,
+        input_size=imdb_test.tensors[0].size(),
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+
+
+imdb_optimizer = RMSprop(imdb_model.parameters(), lr=0.001)
+imdb_module = SimpleModule.binary_classification(
+                         imdb_model,
+                         optimizer=imdb_optimizer)
+
+imdb_logger = CSVLogger('logs', name='IMDB')
+imdb_trainer = Trainer(deterministic=False,
+                       max_epochs=30,
+                       logger=imdb_logger,
+                       callbacks=[ErrorTracker()])
+imdb_trainer.fit(imdb_module,
+                 datamodule=imdb_dm)
+                 
+test_results = imdb_trainer.test(imdb_module, datamodule=imdb_dm)
+</code></pre>
+</section>
+<section id="torch-with-cnn" class="level4" data-number="10.10.6.7">
+<h4 data-number="10.10.6.7" class="anchored" data-anchor-id="torch-with-cnn"><span class="header-section-number">10.10.6.7</span> Torch with CNN</h4>
+<pre><code>cifar_dm = SimpleDataModule(cifar_train, #torch TensorDataSet
+                            cifar_test,
+                            validation=0.2,
+                            num_workers=max_num_workers,
+                            batch_size=128)
+
+class BuildingBlock(nn.Module):
+
+    def __init__(self,
+                 in_channels,
+                 out_channels):
+
+        super(BuildingBlock, self).__init__()
+        self.conv = nn.Conv2d(in_channels=in_channels,
+                              out_channels=out_channels,
+                              kernel_size=(3,3),
+                              padding='same')
+        self.activation = nn.ReLU()
+        self.pool = nn.MaxPool2d(kernel_size=(2,2))
+
+    def forward(self, x):
+        return self.pool(self.activation(self.conv(x)))
+
+class CIFARModel(nn.Module):
+
+    def __init__(self):
+        super(CIFARModel, self).__init__()
+        sizes = [(3,32),
+                 (32,64),
+                 (64,128),
+                 (128,256)]
+        self.conv = nn.Sequential(*[BuildingBlock(in_, out_)
+                                    for in_, out_ in sizes])
+
+        self.output = nn.Sequential(nn.Dropout(0.5),
+                                    nn.Linear(2*2*256, 512),
+                                    nn.ReLU(),
+                                    nn.Linear(512, 100))
+    def forward(self, x):
+        val = self.conv(x)
+        val = torch.flatten(val, start_dim=1) # flatten starting from dim=1 (default), the first dim is batch dim
+        return self.output(val)
+
+cifar_model = CIFARModel()
+summary(cifar_model,
+        input_data=X_,
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+
+### define loss, optimizer, etc
+cifar_optimizer = RMSprop(cifar_model.parameters(), lr=0.001)
+cifar_module = SimpleModule.classification(cifar_model,
+                                    num_classes=100,
+                                    optimizer=cifar_optimizer)
+cifar_logger = CSVLogger('logs', name='CIFAR100')
+
+# Training
+cifar_trainer = Trainer(deterministic=False,
+                        max_epochs=30,
+                        logger=cifar_logger,
+                        callbacks=[ErrorTracker()])
+cifar_trainer.fit(cifar_module,
+                  datamodule=cifar_dm)
+
+cifar_trainer.test(cifar_module,
+                   datamodule=cifar_dm)
+                   </code></pre>
+</section>
+<section id="transfer-learning" class="level4" data-number="10.10.6.8">
+<h4 data-number="10.10.6.8" class="anchored" data-anchor-id="transfer-learning"><span class="header-section-number">10.10.6.8</span> Transfer learning</h4>
+<pre><code>### Pre-processing
+resize = Resize((232,232), antialias=True) #target size: (232,232)
+crop = CenterCrop(224) #centered and cropped to target size 224
+normalize = Normalize([0.485,0.456,0.406],   # mean for each channel
+                      [0.229,0.224,0.225])   # std for each channel
+imgfiles = sorted([f for f in glob('book_images/*')])
+imgs = torch.stack([torch.div(crop(resize(read_image(f))), 255) # element-wise div by 255
+                    for f in imgfiles])
+imgs = normalize(imgs)
+
+resnet_model = resnet50(weights=ResNet50_Weights.DEFAULT) # get the model
+resnet_model.eval()
+img_preds = resnet_model(imgs) #logit values
+
+img_probs = np.exp(np.asarray(img_preds.detach())) # convert to propbabilities 
+img_probs /= img_probs.sum(1)[:,None] # the sum is along the row. 
+
+</code></pre>
+</section>
+<section id="rnnlstm-with-torch-for-documenation-classification" class="level4" data-number="10.10.6.9">
+<h4 data-number="10.10.6.9" class="anchored" data-anchor-id="rnnlstm-with-torch-for-documenation-classification"><span class="header-section-number">10.10.6.9</span> RNN/LSTM with Torch for Documenation Classification</h4>
+<pre><code>imdb_seq_dm = SimpleDataModule(imdb_seq_train,
+                               imdb_seq_test,
+                               validation=2000,
+                               batch_size=300,
+                               num_workers=min(6, max_num_workers)
+                               )
+
+
+class LSTMModel(nn.Module):
+    def __init__(self, input_size):
+        super(LSTMModel, self).__init__()
+        self.embedding = nn.Embedding(input_size, 32)
+        self.lstm = nn.LSTM(input_size=32,
+                            hidden_size=32,
+                            batch_first=True)
+        self.dense = nn.Linear(32, 1)
+    def forward(self, x):
+        val, (h_n, c_n) = self.lstm(self.embedding(x))
+        return torch.flatten(self.dense(val[:,-1])) # select the last time step of val
+
+lstm_model = LSTMModel(X_test.shape[-1])
+summary(lstm_model,
+        input_data=imdb_seq_train.tensors[0][:10],
+        col_names=['input_size',
+                   'output_size',
+                   'num_params'])
+        
+lstm_module = SimpleModule.binary_classification(lstm_model)
+lstm_logger = CSVLogger('logs', name='IMDB_LSTM')
+
+lstm_trainer = Trainer(deterministic=False,
+                       max_epochs=20,
+                       logger=lstm_logger,
+                       callbacks=[ErrorTracker()])
+lstm_trainer.fit(lstm_module,
+                 datamodule=imdb_seq_dm)
+lstm_trainer.test(lstm_module, datamodule=imdb_seq_dm)
+</code></pre>
+</section>
+<section id="rnnlstm-with-torch-for-time-seires-prediciton" class="level4" data-number="10.10.6.10">
+<h4 data-number="10.10.6.10" class="anchored" data-anchor-id="rnnlstm-with-torch-for-time-seires-prediciton"><span class="header-section-number">10.10.6.10</span> RNN/LSTM with Torch for Time Seires Prediciton</h4>
+<pre><code>class NYSEModel(nn.Module):
+    def __init__(self):
+        super(NYSEModel, self).__init__()
+        self.rnn = nn.RNN(3, # number of features
+                          12,
+                          batch_first=True)
+        self.dense = nn.Linear(12, 1)
+        self.dropout = nn.Dropout(0.1)
+    def forward(self, x):
+        val, h_n = self.rnn(x)
+        val = self.dense(self.dropout(val[:,-1]))
+        return torch.flatten(val)
+nyse_model = NYSEModel()
+
+datasets = []
+for mask in [train, ~train]:
+    X_rnn_t = torch.tensor(X_rnn[mask].astype(np.float32))
+    Y_t = torch.tensor(Y[mask].astype(np.float32))
+    datasets.append(TensorDataset(X_rnn_t, Y_t))
+nyse_train, nyse_test = datasets
+
+nyse_dm = SimpleDataModule(nyse_train,
+                           nyse_test,
+                           num_workers=min(4, max_num_workers),
+                           validation=nyse_test,
+                           batch_size=64)
+
+nyse_optimizer = RMSprop(nyse_model.parameters(),
+                         lr=0.001)
+nyse_module = SimpleModule.regression(nyse_model,
+                                      optimizer=nyse_optimizer,
+                                      metrics={'r2':R2Score()})                           
+
+nyse_trainer = Trainer(deterministic=False,
+                       max_epochs=200,
+                       callbacks=[ErrorTracker()])
+nyse_trainer.fit(nyse_module,
+                 datamodule=nyse_dm)
+nyse_trainer.test(nyse_module,
+                  datamodule=nyse_dm)
+</code></pre>
+</section>
+<section id="linear-and-nonlinear-ar-with-torch" class="level4" data-number="10.10.6.11">
+<h4 data-number="10.10.6.11" class="anchored" data-anchor-id="linear-and-nonlinear-ar-with-torch"><span class="header-section-number">10.10.6.11</span> Linear and Nonlinear AR with Torch</h4>
+<pre><code>### Nonlinear-AR model
+day_dm = SimpleDataModule(day_train,
+                          day_test,
+                          num_workers=min(4, max_num_workers),
+                          validation=day_test,
+                          batch_size=64)
+
+class NonLinearARModel(nn.Module):
+def __init__(self):
+    super(NonLinearARModel, self).__init__()
+    self._forward = nn.Sequential(nn.Flatten(), #flatten a multi-dim tensor into a 1-d tensor while keeping the batch size
+    nn.Linear(20, 32),
+    nn.ReLU(),
+    nn.Dropout(0.5),
+    nn.Linear(32, 1))
+def forward(self, x):
+    return torch.flatten(self._forward(x))
+
+nl_model = NonLinearARModel()
+nl_optimizer = RMSprop(nl_model.parameters(),
+                           lr=0.001)
+nl_module = SimpleModule.regression(nl_model,
+                                        optimizer=nl_optimizer,
+                                        metrics={'r2':R2Score()})
+                                        
+nl_trainer = Trainer(deterministic=False,
+                         max_epochs=20,
+                         callbacks=[ErrorTracker()])
+nl_trainer.fit(nl_module, datamodule=day_dm)
+nl_trainer.test(nl_module, datamodule=day_dm) 
+</code></pre>
+</section>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="10.10.7">
+<h3 data-number="10.10.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">10.10.7</span> Useful code snippets</h3>
+<section id="plotting-trainingvalidation-learning-curve" class="level4" data-number="10.10.7.1">
+<h4 data-number="10.10.7.1" class="anchored" data-anchor-id="plotting-trainingvalidation-learning-curve"><span class="header-section-number">10.10.7.1</span> Plotting training/validation learning curve</h4>
+<pre><code>def summary_plot(results,
+                 ax,
+                 col='loss',
+                 valid_legend='Validation',
+                 training_legend='Training',
+                 ylabel='Loss',
+                 fontsize=20):
+    for (column,
+         color,
+         label) in zip([f'train_{col}_epoch',
+                        f'valid_{col}'],
+                       ['black',
+                        'red'],
+                       [training_legend,
+                        valid_legend]):
+        results.plot(x='epoch',
+                     y=column,
+                     label=label,
+                     marker='o',
+                     color=color,
+                     ax=ax)
+    ax.set_xlabel('Epoch')
+    ax.set_ylabel(ylabel)
+    return ax
+    
+fig, ax = subplots(1, 1, figsize=(6, 6))
+ax = summary_plot(hit_results,
+                  ax,
+                  col='mae',
+                  ylabel='MAE',
+                  valid_legend='Validation (=Test)')
+ax.set_ylim([0, 400])
+ax.set_xticks(np.linspace(0, 50, 11).astype(int));
+</code></pre>
+</section>
+<section id="viewing-a-set-of-images" class="level4" data-number="10.10.7.2">
+<h4 data-number="10.10.7.2" class="anchored" data-anchor-id="viewing-a-set-of-images"><span class="header-section-number">10.10.7.2</span> Viewing a set of images</h4>
+<pre><code>fig, axes = subplots(5, 5, figsize=(10,10))
+rng = np.random.default_rng(4)
+indices = rng.choice(np.arange(len(cifar_train)), 25,
+                     replace=False).reshape((5,5))
+for i in range(5):
+    for j in range(5):
+        idx = indices[i,j]
+        axes[i,j].imshow(np.transpose(cifar_train[idx][0],
+                                      [1,2,0]), # transpose the channel to the last dim for display 
+                                      interpolation=None)
+        axes[i,j].set_xticks([])
+        axes[i,j].set_yticks([])</code></pre>
+</section>
+<section id="using-sk-learn-logisticregression-with-lasso" class="level4" data-number="10.10.7.3">
+<h4 data-number="10.10.7.3" class="anchored" data-anchor-id="using-sk-learn-logisticregression-with-lasso"><span class="header-section-number">10.10.7.3</span> using sk-learn LogisticRegression() with Lasso</h4>
+<pre><code>#### Defining the \lambda
+lam_max = np.abs(X_train.T * (Y_train - Y_train.mean())).max() # this is not divided by n, different that in the Lasso chapter 6. 
+lam_val = lam_max * np.exp(np.linspace(np.log(1),
+                                       np.log(1e-4), 50))
+                                       
+logit = LogisticRegression(penalty='l1', 
+                           C=1/lam_max,
+                           solver='liblinear',
+                           warm_start=True,
+                           fit_intercept=True)
+                           
+coefs = []
+intercepts = []
+
+for l in lam_val:
+    logit.C = 1/l
+    logit.fit(X_train, Y_train)
+    coefs.append(logit.coef_.copy())
+    intercepts.append(logit.intercept_)   
+    
+</code></pre>
+</section>
+<section id="viewing-the-lasso-results-with-lambda-values" class="level4" data-number="10.10.7.4">
+<h4 data-number="10.10.7.4" class="anchored" data-anchor-id="viewing-the-lasso-results-with-lambda-values"><span class="header-section-number">10.10.7.4</span> Viewing the Lasso results with lambda values</h4>
+<pre><code>fig, axes = subplots(1, 2, figsize=(16, 8), sharey=True)
+for ((X_, Y_),
+     data_,
+     color) in zip([(X_train, Y_train),
+                    (X_valid, Y_valid),
+                    (X_test, Y_test)],
+                    ['Training', 'Validation', 'Test'],
+                    ['black', 'red', 'blue']):
+    linpred_ = X_ * coefs.T + intercepts[None,:]
+    label_ = np.array(linpred_ &gt; 0)
+    accuracy_ = np.array([np.mean(Y_ == l) for l in label_.T])
+    axes[0].plot(-np.log(lam_val / X_train.shape[0]), #lambda is rescaled by diving N for only plotting. WHy?
+                 accuracy_,
+                 '.--',
+                 color=color,
+                 markersize=13,
+                 linewidth=2,
+                 label=data_)
+axes[0].legend()
+axes[0].set_xlabel(r'$-\log(\lambda)$', fontsize=20)
+axes[0].set_ylabel('Accuracy', fontsize=20)</code></pre>
+</section>
+<section id="insert-lags-to-a-time-series" class="level4" data-number="10.10.7.5">
+<h4 data-number="10.10.7.5" class="anchored" data-anchor-id="insert-lags-to-a-time-series"><span class="header-section-number">10.10.7.5</span> Insert lags to a time series</h4>
+<pre><code>for lag in range(1, 6):
+    for col in cols:
+        newcol = np.zeros(X.shape[0]) * np.nan
+        newcol[lag:] = X[col].values[:-lag]
+        X.insert(len(X.columns), "{0}_{1}".format(col, lag), newcol)#insert at the end
+X.insert(len(X.columns), 'train', NYSE['train']) #insert the col training identifier 
+
+X = X.dropna() # drop rows with nan</code></pre>
+</section>
+<section id="preparing-time-series-data-for-rnn-in-torch" class="level4" data-number="10.10.7.6">
+<h4 data-number="10.10.7.6" class="anchored" data-anchor-id="preparing-time-series-data-for-rnn-in-torch"><span class="header-section-number">10.10.7.6</span> Preparing time series data for RNN in Torch</h4>
+<pre><code>Y, train = X['log_volume'], X['train']
+X = X.drop(columns=['train'] + cols)
+
+ordered_cols = []
+for lag in range(5,0,-1):
+    for col in cols:
+        ordered_cols.append('{0}_{1}'.format(col, lag))
+X = X.reindex(columns=ordered_cols)
+
+X_rnn = X.to_numpy().reshape((-1,5,3))
+
+
+</code></pre>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./ch9.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9: Support Vector Machine</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
