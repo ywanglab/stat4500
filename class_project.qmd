@@ -31,7 +31,7 @@ to use various ML algorithms to predict a meaningful target $Y$ by *classificati
     * Investigate if there is *colinearity* among the variables by calculating *VIF*. 
 
 - classification: predicting directions of the stock price movement.  binary (with two direction), or multinomial (more than two values: e.g., up, same, down), LDA, QDA
-- regularization of the parameters
+- regularization of the parameters: lasso ($L^1$), ridge ($L^2$)
 - selection of variables: forward, backward, mixture, regularization, cross-validation 
 - decision tree: random forest, boosting 
 - SVM: support vector machines

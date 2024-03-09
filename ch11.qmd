@@ -1,0 +1,33 @@
+# Chapter 11: Survival Analysis
+
+Survival Analysis: similar to linear regression, but the outcome variable: *time until an event occurs*, is **censored**: for some $x_i$ (e.g. patient health data), the time to event (such as death) is not available, because the event has not occurred. Ordinary regression solution would discard such a data (of surviving patients) with $x_i$, but Survival Analysis do not, because the fact they survived after the censoring time (e.g. five years) is valuable. 
+
+
+## Homework:
+- Conceptual: 1--
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+
+### Numpy
+
+### Pandas
+
+### Graphics
+```
+
+
+```
+
+### ISLP and statsmodels
+```
+
+
+```
+
+### sklearn
+
+
+### Useful code snippets
+
