@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 1&nbsp; Setting up Python Computing Environment</title>
+<title>stat4500notes - 11&nbsp; Chapter 11: Survival Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch2.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./class_project.html" rel="next">
+<link href="./ch10.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,6 +68,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -80,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch11.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 11: Survival Analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -132,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></span></a>
   </div>
 </li>
@@ -192,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch11.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch11.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 11: Survival Analysis</span></span></a>
   </div>
 </li>
@@ -224,10 +226,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#on-your-own-computer" id="toc-on-your-own-computer" class="nav-link active" data-scroll-target="#on-your-own-computer"><span class="header-section-number">1.1</span> on Your own computer</a></li>
-  <li><a href="#use-google-colab" id="toc-use-google-colab" class="nav-link" data-scroll-target="#use-google-colab"><span class="header-section-number">1.2</span> Use Google Colab</a>
+  <li><a href="#survial-and-censoring-time" id="toc-survial-and-censoring-time" class="nav-link active" data-scroll-target="#survial-and-censoring-time"><span class="header-section-number">11.1</span> Survial and Censoring Time</a></li>
+  <li><a href="#the-survival-curve" id="toc-the-survival-curve" class="nav-link" data-scroll-target="#the-survival-curve"><span class="header-section-number">11.2</span> The Survival Curve</a>
   <ul class="collapse">
-  <li><a href="#how-to-run-a-project-file-from-your-google-drive" id="toc-how-to-run-a-project-file-from-your-google-drive" class="nav-link" data-scroll-target="#how-to-run-a-project-file-from-your-google-drive"><span class="header-section-number">1.2.1</span> How to run a project file from your Google Drive?</a></li>
+  <li><a href="#how-to-estimate-st" id="toc-how-to-estimate-st" class="nav-link" data-scroll-target="#how-to-estimate-st"><span class="header-section-number">11.2.1</span> How to estimate <span class="math inline">\(S(t)\)</span></a></li>
+  </ul></li>
+  <li><a href="#regression-models-with-a-survival-response" id="toc-regression-models-with-a-survival-response" class="nav-link" data-scroll-target="#regression-models-with-a-survival-response"><span class="header-section-number">11.3</span> Regression models with a survival response</a>
+  <ul class="collapse">
+  <li><a href="#connection-with-the-log-rank-test" id="toc-connection-with-the-log-rank-test" class="nav-link" data-scroll-target="#connection-with-the-log-rank-test"><span class="header-section-number">11.3.1</span> Connection with the log-rank test</a></li>
+  <li><a href="#auc-for-survival-analysis-the-c-index" id="toc-auc-for-survival-analysis-the-c-index" class="nav-link" data-scroll-target="#auc-for-survival-analysis-the-c-index"><span class="header-section-number">11.3.2</span> AUC for Survival Analysis: the C-index</a></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">11.4</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">11.5</span> Code Snippet</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">11.5.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">11.5.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">11.5.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">11.5.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">11.5.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">11.5.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">11.5.7</span> Useful code snippets</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -237,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up Python Computing Environment</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 11: Survival Analysis</span></h1>
 </div>
 
 
@@ -254,53 +272,181 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="on-your-own-computer" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="on-your-own-computer"><span class="header-section-number">1.1</span> on Your own computer</h2>
-<ol type="1">
-<li><p>you can either <code>git clone</code> or download a zipped file containing the codes from the site: <a href="https://github.com/intro-stat-learning/ISLP_labs/tree/stable" class="uri">https://github.com/intro-stat-learning/ISLP_labs/tree/stable</a>. If downloaded a zipped file of the codes, unzipped the file to a folder, for example, named <code>islp</code>. If <code>git clone</code> (preferred, you need to have Git installed on your computer, check this link for how to install <code>Git</code> <a href="https://ywanglab.github.io/stat1010/git.html" class="uri">https://ywanglab.github.io/stat1010/git.html</a>), do <code>git clone https://github.com/intro-stat-learning/ISLP_labs.git</code></p></li>
-<li><p>Download and install the following software:</p>
+<p>Survival Analysis: similar to linear regression, but the outcome variable: <em>time until an event occurs</em> (event time, also called survival time, denoted by <span class="math inline">\(T\)</span>), is <strong>censored</strong> at the time (<em>censoring time</em> <span class="math inline">\(C\)</span>) when data is collected: for some <span class="math inline">\(x_i\)</span> (e.g.&nbsp;patient health data), the time to event (such as death) is not available at the time of censoring <span class="math inline">\(C\)</span> (e.g.&nbsp;five years after the study began), because the event has not occurred (e.g.&nbsp;patients drop out of the study, patients still alive). Ordinary regression solution would discard such a data (of surviving patients) with <span class="math inline">\(x_i\)</span>, but Survival Analysis do not, because the fact they survived after the censoring time (e.g.&nbsp;five years) is valuable.</p>
 <ul>
-<li><p><strong>Anaconda</strong>: Download anaconda and install using default installation options</p></li>
-<li><p><strong>Visual Studio Code</strong> (VSC): Download VSC and install</p></li>
-<li><p>start VSC and install VSC extensions in VSC: Python, Jupyter, intellicode</p></li>
-<li><p>(optional) <strong>Quarto</strong> for authoring: Download Quarto and install</p></li>
-</ul></li>
-<li><p>Create a virtual environment named <code>islp</code> for Python. Start an anaconda terminal.</p>
-<pre><code>  conda create -n islp python==3.10
-  conda activate islp
-  conda install pip ipykernel
-  pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2.1.2/requirements.txt</code></pre></li>
-<li><p>You are ready to run the codes using <code>VSC</code> or <code>jupyter lab</code>.</p>
+<li>Applications: medicine study for predicting the survival time of patients after receiving a treatment</li>
+<li>customer churn: (predict) the event when customers cancel subscription to a service</li>
+</ul>
+<section id="survial-and-censoring-time" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="survial-and-censoring-time"><span class="header-section-number">11.1</span> Survial and Censoring Time</h2>
 <ul>
-<li><p>Activate the venv: <code>conda activate islp</code></p></li>
-<li><p>Start a Anaconda terminal, navigate to the folder using the command <code>cd path/to/islp</code>, where <code>path/to/islp</code> means the file path to the folder <code>islp</code>, such as <code>\Users\ywang2\islp</code>. Start VSC by typing <code>code .</code> in the anaconda terminal.</p></li>
-<li><p>open/create a <code>.ipynb</code> or <code>.py</code> file.</p></li>
-<li><p>Select the kernel <code>islp</code></p></li>
-<li><p>Run a code cell by pressing <code>Shift+Enter</code> or click the triangular play button.</p></li>
-<li><p>Continue to run other cells.</p></li>
-<li><p>After finishing using VSC, close the VSC, and deactivate the virtual environment in a conda terminal: <code>conda deactivate</code></p></li>
-</ul></li>
-</ol>
+<li><p>We observe either <span class="math inline">\(T\)</span> or <span class="math inline">\(C\)</span>, i.e., we observe the r.v. <span class="math display">\[
+Y= \min (T,C)
+\]</span></p></li>
+<li><p>Define the <em>status indicator</em> <span class="math display">\[
+\delta = \begin{cases}
+1 &amp; \text{ if } T\le C \\
+0 &amp; \text{ if } T &gt; C
+\end{cases}
+\]</span></p></li>
+<li><p>Data set format: <span class="math inline">\(n\)</span> pairs <span class="math inline">\((y_1,\delta_1), \cdots, (y_n, \delta_n)\)</span>.</p></li>
+<li><p>In general, we assume that conditional on the features, <span class="math inline">\(T\)</span> is <em>independent</em> of <span class="math inline">\(C\)</span>.</p></li>
+<li><p>In some situation, the above assumption is false. For example, When a patient drop out a study because the patient is too sick. In this case obtained <span class="math inline">\(C\)</span> may lead to overestimate of <span class="math inline">\(T\)</span>.</p></li>
+<li><p><em>right censoring</em>: when <span class="math inline">\(Y\le T\)</span>.</p></li>
+<li><p><em>left censoring</em>: when <span class="math inline">\(T\le Y\)</span>.</p></li>
+<li><p><em>interval censoring</em>: The exact <span class="math inline">\(T\)</span> is not know, but we know it falls in some interval.</p></li>
+</ul>
 </section>
-<section id="use-google-colab" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="use-google-colab"><span class="header-section-number">1.2</span> Use Google Colab</h2>
-<p>All you need is a Google account. Sign in your Google account in a browser, and navigate to Google Colab. Google Colab supports both <code>Python</code> and <code>R</code>. <code>Python</code> is the default engine. Change the engine to <code>R</code> in <code>Connect</code>-&gt;<code>change runtime type</code>. Then you are all set. Your file will be saved to your Google Drive or you can choose to send it to your <code>GitHub</code> account (recommended).</p>
-<section id="how-to-run-a-project-file-from-your-google-drive" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="how-to-run-a-project-file-from-your-google-drive"><span class="header-section-number">1.2.1</span> How to run a project file from your Google Drive?</h3>
-<p>Many times, when you run a python file in Colab, it needs to access other files, such as data files in a subdirectory. In this case, it would be convenient to have the same file structure in the Google Colab user home directory. To do this, you can use Google Drive to store your project folder, and then mount the Google Drive in Colab.</p>
-<p>Let’s assume the project folder name, <code>islp/</code>.Here are the steps:</p>
-<ol type="1">
-<li><p><code>git clone</code> the project folder (example: <code>git clone https://github.com/intro-stat-learning/ISLP_labs.git</code>) to your local folder. This step is only needed when you want to clone some remote repo from GitHub.</p></li>
-<li><p><strong>Upload</strong> the folder (ex: <code>islp</code>) to Google Drive.</p></li>
-<li><p><strong>Open the file using Colab</strong>. In Google Drive, double click on the <code>ipynb</code> file, example, <code>ch06.ipynb</code> (or click on the three dots on the right end, and choose <code>open with</code>, then <code>Google Colaborotary</code>), the file will be opened by Google Colab.</p></li>
-<li><p><strong>Mount the Google Drive</strong>. In Google Colab, with the specific file (example, <code>ch06.ipynb</code>) being opened, move your cursor to the first code cell, and then click on the folder icon (this should be the fourth icon) on the upper left border in the Colab browser. This will open the file explorer pane. Typically you would see a folder named <code>sample_data</code> shown. On the top of the pane, click on the Google Drive icon to mount the Google Drive. Google Colab will insert the following code below the cursor in your opened <code>ipynb</code> file:</p>
-<pre><code>from google.colab import drive
-drive.mount('/content/drive')</code></pre>
-<p>Run this code cell by pressing <code>SHIFT+ENTER</code>, and follow the prompts to complete the authentication. Wait for ~10 seconds, your Google Drive will be mounted in Colab, and it will be displayed as a folder named <code>drive</code> in the file explorer pane. You might need to click on the <code>Refresh</code> folder icon to see the folder <code>drive</code>.</p></li>
-<li><p>Open a new code cell below the above code cell, and type the code</p>
-<pre><code>  %cd /content/drive/MyDrive/islp/</code></pre>
-<p>This is to change the directory to the project directory on the Google Drive. Run this code cell, and you are ready to run the file <code>ch06.ipynb</code> from the folder <code>islp</code> on your personal Google Drive, just like it’s on your local computer.</p></li>
-</ol>
+<section id="the-survival-curve" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="the-survival-curve"><span class="header-section-number">11.2</span> The Survival Curve</h2>
+<ul>
+<li>Survival function <span class="math display">\[
+S(t) = Pr(T&gt;t)
+\]</span> is a <em>decreasing function</em> that quantifies the probability of surviving past time <span class="math inline">\(t\)</span>. For example, if <span class="math inline">\(T\)</span> represents the time when a customer churns, then <span class="math inline">\(S(t)\)</span> is the probability a customer cancels later than <span class="math inline">\(t\)</span>. The larger <span class="math inline">\(S(t)\)</span> is, the less likely that the customer will cancel before time <span class="math inline">\(t\)</span>.</li>
+</ul>
+<section id="how-to-estimate-st" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="how-to-estimate-st"><span class="header-section-number">11.2.1</span> How to estimate <span class="math inline">\(S(t)\)</span></h3>
+<section id="kaplan-meier-survival-curve" class="level4" data-number="11.2.1.1">
+<h4 data-number="11.2.1.1" class="anchored" data-anchor-id="kaplan-meier-survival-curve"><span class="header-section-number">11.2.1.1</span> Kaplan-Meier Survival Curve</h4>
+<p>Let <span class="math inline">\(d_1&lt;d_2&lt;\cdots&lt; d_K\)</span> be the unique death (event) times among the non-censored patients, <span class="math inline">\(r_k\)</span> is the number of patients (<em>risk set</em>) at risk (still alive) at <span class="math inline">\(d_k\)</span>, and <span class="math inline">\(q_k\)</span> is the number of patients who died at <span class="math inline">\(d_k\)</span>.</p>
+<p>The idea is to use <em>sequential construction</em>. Use the total probability, <span class="math display">\[
+Pr(T&gt;d_k) =Pr(T&gt;d_k|T&gt;d_{k-1})Pr(T&gt;d_{k-1})+Pr(T&gt;d_k|T\le d_{k-1}) Pr(T\le d_{k-1})
+\]</span> Note <span class="math inline">\(Pr(T&gt;d_k|T\le d_{k-1}) =0\)</span>. Therefore <span class="math display">\[
+S(d_k) = Pr(T&gt;d_k|T&gt;d_{k-1})S(d_{k-1}) = Pr(T&gt;d_k|T&gt;d_{k-1})\times \cdots \times Pr(T&gt;d_2|T&gt;d_{1})Pr(T&gt;d_1)
+\]</span> It is natural to estimate <span class="math display">\[
+\hat{Pr}(T&gt;d_j|T&gt;d_{j-1})=(r_j-q_j)/r_j
+\]</span> This leads to the <em>Kaplan-Meier</em> estimator <span class="math display">\[
+\hat{S}(d_k) =\prod_{j=1}^k\left(\frac{r_j-q_j}{r_j} \right)
+\]</span> for <span class="math inline">\(d_j&lt;d_{k+1}\)</span>, set <span class="math inline">\(\hat{S}(t) =\hat{S}(d_k)\)</span>, this leads to a step function.</p>
+</section>
+<section id="the-log-rank-test-to-compare-the-survial-curves-of-two-groups" class="level4" data-number="11.2.1.2">
+<h4 data-number="11.2.1.2" class="anchored" data-anchor-id="the-log-rank-test-to-compare-the-survial-curves-of-two-groups"><span class="header-section-number">11.2.1.2</span> the log-rank test to compare the survial curves of two groups</h4>
+<p>Further, let <span class="math inline">\(r_{ik}\)</span> be the number of patients who are at risk at <span class="math inline">\(d_k\)</span> and <span class="math inline">\(q_{ik}\)</span> be the number of patients who died at <span class="math inline">\(d_k\)</span>, for group <span class="math inline">\(i\)</span>, <span class="math inline">\(i=1,2\)</span>. <span class="math display">\[r_{1k}+r_{2k} =r_k \qquad q_{1k}+q_{2k}=q_k \]</span> We can construct the following 2X2 table at each <span class="math inline">\(d_k\)</span>:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Group 1</th>
+<th style="text-align: center;">Group 2</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Died</td>
+<td style="text-align: center;"><span class="math inline">\(q_{1k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(q_{2k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(q_k\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Survival</td>
+<td style="text-align: center;"><span class="math inline">\(r_{1k}-q_{1k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{2k} -q_{2k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_k-q_k\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Total</td>
+<td style="text-align: center;"><span class="math inline">\(r_{1k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_{2k}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r_k\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>To test <span class="math inline">\(H_0: E(X)=\mu\)</span> for a rv <span class="math inline">\(X\)</span>, construct the statistic <span class="math display">\[
+W = \frac{X-E(X)}{\sqrt{Var(X)}}
+\]</span> where <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(Var(X)\)</span> are under <span class="math inline">\(H_0\)</span>. Let <span class="math inline">\(X=\sum_{k=1}^K q_{1k}\)</span>, the total death of group 1 up to time <span class="math inline">\(d_K\)</span>. Assume that <span class="math inline">\(q_{1k}\)</span> are uncorrelated. Plug in the formula for <span class="math inline">\(X\)</span>, one can obtain <span class="math display">\[
+W=\frac{\sum_{k=1}^K(q_{1k}-E(q_{1k}))}{\sqrt{\sum_{k=1}^K Var(q_{1k})}} = \frac{\sum_{k=1}^K(q_{1k}- \frac{q_k}{r_k}r_{1k})}{\sqrt{\sum_{k=1}^K \frac{q_k(r_{1k}/r_k)(1-r_{1k}/r_k)(r_k-q_k)}{r_k - 1}  } }
+\]</span> When the sample size is large, <span class="math inline">\(W\)</span> has approximately a standard normal distribution. The null Hypothesis for the log-rank test is that there is no difference between the survival curves in the two groups.</p>
+</section>
+</section>
+</section>
+<section id="regression-models-with-a-survival-response" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="regression-models-with-a-survival-response"><span class="header-section-number">11.3</span> Regression models with a survival response</h2>
+<p>The goal is to predict the survival time <span class="math inline">\(T\)</span>. The observation is <span class="math inline">\((Y, \delta)\)</span>. However fit a regression of <span class="math inline">\(\log Y\)</span> with <span class="math inline">\(Y=\min(T,C)\)</span> on <span class="math inline">\(X\)</span> is not sound because of the censoring. To overcome this difficulty, use the idea of <em>sequential construction</em> again as in Kaplan-Meier survival curve. To this end, define the <em>hazard function</em> (also called <em>hazard rate</em>, or <em>force of mortality</em>) as <span class="math display">\[
+h(t) =\lim_{\Delta t\to 0} \frac{Pr(t&lt;T\le t+\Delta t |T&gt;t)}{\Delta t}
+\]</span> where <span class="math inline">\(T\)</span> is the (true) survival time. The hazard rate is the death rate (in fact the pdf for <span class="math inline">\(T\)</span> conditional on <span class="math inline">\(T&gt;t\)</span>) in the instant after <span class="math inline">\(t\)</span>, given survival up to that time. By definition of <span class="math inline">\(h\)</span>, we can derive <span class="math display">\[
+h(t) =\frac{f(t)}{S(t)}
+\]</span> where <span class="math display">\[f(t)= \lim_{\Delta t \to 0} \frac{Pr(t&lt;T \le t+\Delta t)}{\Delta t}\]</span> is the <em>pdf</em> associated with <span class="math inline">\(T\)</span>. Specifically, <span class="math display">\[
+f(t)=\frac{d}{dt}F(t)=\frac{d}{dt}[1-S(t)]=\frac{d}{dt} [1-\int_{0}^t h(u)du]
+\]</span> The likelihood associated with the <span class="math inline">\(i\)</span>-th observation is [ <span class="math display">\[\begin{align}
+L_i &amp;= \begin{cases}
+f(y_i) &amp; \text{if the }i\text{-th observation is not censored, } \delta_i =1 \\
+S(y_i) &amp; \text{ if the }i\text{-th observation is censored, } \delta_i = 0
+\end{cases}\\
+&amp;=f(y_i)^{\delta_i}S(y_i)^{1-\delta_i}
+\end{align}\]</span> ] Assume the <span class="math inline">\(n\)</span> observations are independent, the likelihood for the data is <span class="math display">\[
+L = \prod_{i=1}^n f(y_i)^{\delta_i}S(y_i)^{1-\delta_i}=\prod_{i=1}^n h(y_i)^{\delta_i}S(y_i).
+\]</span> Some reasonable assumptions for <span class="math inline">\(f\)</span> is:</p>
+<ul>
+<li>Exponential: <span class="math inline">\(f(t) = \lambda \exp (-\lambda t)\)</span></li>
+<li>Gamma or Weibull family</li>
+<li>non-parametrically such as by Kaplan-Meirer estimator.</li>
+</ul>
+<p>With <span class="math inline">\(h(t)\)</span>, define the Cox’s <em>proportional hazard</em> for an individual with feature vector <span class="math inline">\(x_i=(x_{i1}, \cdots,x_{ip})\)</span> by <span class="math display">\[
+h(t|x_i)= h_0(t)\exp \left(\sum_{j=1}^p x_{ij}\beta_j  \right)
+\]</span> where, <span class="math inline">\(h_0(t)\ge 0\)</span> is the <em>baseline hazard</em> function for an individual with features <span class="math inline">\(x_{i1}=\cdots =x_{ip}=0\)</span>. <span class="math inline">\(h_0\)</span> can take any functional form. The term <span class="math inline">\(\sum_{j=1}^px{ij}\beta_j\)</span> is called the <em>relative risk</em>. The model assumes that one-unit increase in <span class="math inline">\(x_{ij}\)</span> corresponds to an increase in <span class="math inline">\(h(t|x_i)\)</span> by a factor of <span class="math inline">\(\exp(\beta_j)\)</span>.</p>
+<ul>
+<li>There is <em>no intercept</em> in the model, as it can be absorbed into <span class="math inline">\(h_0(t)\)</span></li>
+<li>The model can easily handle time-dependent covariate: simply replace <span class="math inline">\(x_{ij}\)</span> with <span class="math inline">\(x_{ij}(t)\)</span> for the <span class="math inline">\(j\)</span>-th covariate of <span class="math inline">\(i\)</span>-th observation .</li>
+<li>To check the proportional hazards assumption: for qualitative feature, plot the log hazard function for each level of the feature, the log hazard functions should differ by a constant. For quantitative feature, we can take a similar approach by stratifying the feature.</li>
+</ul>
+<p>We cannot directly estate <span class="math inline">\(\beta_j\)</span> by maximum likelihood using <span class="math inline">\(h(t|x_i)\)</span> because <span class="math inline">\(h_0\)</span> is not known. But we can use <em>partial likelihood</em>. Use the same “sequential in time” logic, the probability that the <span class="math inline">\(i\)</span>-th observation fails at time <span class="math inline">\(y_i\)</span> is: <span class="math display">\[
+\frac{h_0(y_i)\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} h_0(y_i) \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)}=\frac{\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)}
+\]</span> which is called <em>relative risk function</em> at <span class="math inline">\(y_i\)</span>.</p>
+<p>The <em>partial likelihood</em> (approximation to the likelihood ) over all of the uncensored observations is <span class="math display">\[
+PL(\beta) = \prod _{i:\delta_i = 1} \frac{\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)} = \prod_{i:\delta_i=1}RR_i(\beta)
+\]</span> In the above formula, it is assumed there are <em>no tied failure times</em>. If there are, then the formula needs to be modified. To estimate <span class="math inline">\(\beta\)</span>, simply maximize <span class="math inline">\(PL(\beta)\)</span>. To estimate <span class="math inline">\(\beta\)</span>, simply maximize <span class="math inline">\(PL(\beta)\)</span>. Lasso or ridge penalty terms of <span class="math inline">\(\beta\)</span> can be added to obtain shrinkage estimate.</p>
+<section id="connection-with-the-log-rank-test" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="connection-with-the-log-rank-test"><span class="header-section-number">11.3.1</span> Connection with the log-rank test</h3>
+<ul>
+<li>for the case of a single binary covariate, the <em>score test</em> for <span class="math inline">\(H_0: \beta=0\)</span> in Cox’s hazards model is <em>exactly equal to the log-rank test</em>.</li>
+</ul>
+</section>
+<section id="auc-for-survival-analysis-the-c-index" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="auc-for-survival-analysis-the-c-index"><span class="header-section-number">11.3.2</span> AUC for Survival Analysis: the C-index</h3>
+<ul>
+<li>for each observation, calculate the estimated risk score: <span class="math display">\[
+\hat{\eta}_i = \hat{\beta}_1x_{i1} +\cdots + \hat{\beta}_px_{ip}, \quad i=1, \cdots, n
+\]</span></li>
+<li>compute Harrell’s concordance index (C-index): <span class="math display">\[
+C = \frac{\sum _{i,i':y_i&gt;y_{i'}}I(\hat{\eta}_{i'} &gt;\hat{\eta}_i) \delta_{i'}}{\sum _{i,i':y_i&gt;y_{i'}}\delta_{i'}}
+\]</span> The C-index is the proportion of pairs for which the model correctly predicts the relative survival time, among all pairs for which this can be determined. E.g., <span class="math inline">\(C=0.733\)</span> indicates given two random observations from the test set, the model can predict with <span class="math inline">\(73.3\%\)</span> accuracy which will survive.</li>
+</ul>
+</section>
+</section>
+<section id="homework" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="homework"><span class="header-section-number">11.4</span> Homework:</h2>
+<ul>
+<li>Conceptual: 1–</li>
+<li>Applied: At least one.</li>
+</ul>
+</section>
+<section id="code-snippet" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">11.5</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">11.5.1</span> Python</h3>
+</section>
+<section id="numpy" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">11.5.2</span> Numpy</h3>
+</section>
+<section id="pandas" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">11.5.3</span> Pandas</h3>
+</section>
+<section id="graphics" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">11.5.4</span> Graphics</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="11.5.5">
+<h3 data-number="11.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">11.5.5</span> ISLP and statsmodels</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="11.5.6">
+<h3 data-number="11.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">11.5.6</span> sklearn</h3>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="11.5.7">
+<h3 data-number="11.5.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">11.5.7</span> Useful code snippets</h3>
 
 
 </section>
@@ -699,13 +845,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./ch10.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10: Deep Learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch2.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2: Statistical Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

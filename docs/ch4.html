@@ -194,14 +194,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 11: Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -452,7 +458,7 @@ FNR = \frac{FN}{FN+TP}=\frac{FN}{P}
 FPR=\frac{FP}{FP+TN}=\frac{FP}{N} = \text{Type I error} (\alpha)
 \]</span></p></li>
 <li><p>ROC (receiver operating characteristic curve): plot true positive rate (TPR=1-Type II error) ~ false positive rate (FPR= 1- specificity=Type I error) as a threshold for the posterior probability of positive class changes from 0 to 1. The point on the ROC curve closest to the point (0,1) corresponds to the best classifier.</p></li>
-<li><p>AUC (area under the ROC): Overall performance of a classifier summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example. A larger AUC indicates a better classifier.</p></li>
+<li><p>AUC (area under the ROC): Overall performance of a classifier summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example. A larger AUC indicates a better classifier. More specifically, define the score function for th e <span class="math inline">\(i\)</span>-th observation by <span class="math inline">\(Pr(Y=1|X=x_i)\)</span>. Consider all pairs consisting of one observation in Class 1 and one observation in Class 0, then the AUC is the fraction (probability) of pairs for which the score for the observation in Class 1 exceeds the score for the observations in Class 0.</p></li>
 </ul></li>
 <li><p>class-specific prediction performance</p>
 <ul>

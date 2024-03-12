@@ -1,6 +1,154 @@
 # Chapter 11: Survival Analysis
 
-Survival Analysis: similar to linear regression, but the outcome variable: *time until an event occurs*, is **censored**: for some $x_i$ (e.g. patient health data), the time to event (such as death) is not available, because the event has not occurred. Ordinary regression solution would discard such a data (of surviving patients) with $x_i$, but Survival Analysis do not, because the fact they survived after the censoring time (e.g. five years) is valuable. 
+Survival Analysis: similar to linear regression, but the outcome variable: *time until an event occurs* (event time, also called survival time, denoted by $T$), is **censored** at the time (*censoring time* $C$) when data is collected: for some $x_i$ (e.g. patient health data), the time to event  (such as death) is not available at the time of censoring $C$ (e.g. five years after the study began), because the event has not occurred (e.g. patients drop out of the study, patients still alive). Ordinary regression solution would discard such a data (of surviving patients) with $x_i$, but Survival Analysis do not, because the fact they survived after the censoring time (e.g. five years) is valuable. 
+
+- Applications: medicine study for predicting the survival time of patients after receiving a treatment
+- customer churn: (predict) the event when customers cancel subscription to a service
+
+## Survial and Censoring Time
+- We observe either $T$ or $C$, i.e., we observe the r.v. 
+$$
+Y= \min (T,C)
+$$
+- Define the *status indicator*
+$$
+\delta = \begin{cases}
+1 & \text{ if } T\le C \\
+0 & \text{ if } T > C
+\end{cases}
+$$
+- Data set format: $n$ pairs $(y_1,\delta_1), \cdots, (y_n, \delta_n)$. 
+
+- In general, we assume that conditional on the features, $T$ is *independent* of $C$. 
+- In some situation, the above assumption is false. For example, When a patient drop out a study because the patient is too sick. In this case obtained $C$ may lead to overestimate of $T$. 
+- *right censoring*: when $Y\le T$. 
+- *left censoring*: when $T\le Y$. 
+- *interval censoring*: The exact $T$ is not know, but we know it falls in some interval. 
+
+## The Survival Curve
+- Survival function 
+$$
+S(t) = Pr(T>t)
+$$
+is a *decreasing function* that quantifies the probability of surviving past time $t$. For example, if $T$ represents the time when a customer churns, then $S(t)$ is the probability a customer cancels later than $t$. The larger $S(t)$ is, the less likely that the customer will cancel before time $t$. 
+
+### How to estimate $S(t)$
+#### Kaplan-Meier Survival Curve 
+Let $d_1<d_2<\cdots< d_K$ be the unique death (event) times among the non-censored patients, $r_k$ is the number of patients (*risk set*) at risk (still alive) at $d_k$, and $q_k$ is the number of patients who died at $d_k$. 
+
+The idea is to use *sequential construction*. Use the total probability, 
+$$
+Pr(T>d_k) =Pr(T>d_k|T>d_{k-1})Pr(T>d_{k-1})+Pr(T>d_k|T\le d_{k-1}) Pr(T\le d_{k-1})
+$$
+Note $Pr(T>d_k|T\le d_{k-1}) =0$. Therefore 
+$$
+S(d_k) = Pr(T>d_k|T>d_{k-1})S(d_{k-1}) = Pr(T>d_k|T>d_{k-1})\times \cdots \times Pr(T>d_2|T>d_{1})Pr(T>d_1)
+$$
+It is natural to estimate 
+$$
+\hat{Pr}(T>d_j|T>d_{j-1})=(r_j-q_j)/r_j
+$$
+This leads to the *Kaplan-Meier* estimator
+$$
+\hat{S}(d_k) =\prod_{j=1}^k\left(\frac{r_j-q_j}{r_j} \right)
+$$
+for $d_j<d_{k+1}$, set $\hat{S}(t) =\hat{S}(d_k)$, this leads to a  step function. 
+
+#### the log-rank test to compare the survial curves of two groups
+Further, let $r_{ik}$ be the number of patients who are at risk at $d_k$  and $q_{ik}$ be the number of patients who died at $d_k$, for group $i$, $i=1,2$.
+$$r_{1k}+r_{2k} =r_k \qquad q_{1k}+q_{2k}=q_k $$
+We can construct the following 2X2 table at each $d_k$: 
+
+|   | Group 1 | Group 2 | Total |
+|:--------:|:---------:|:-----------:|:--------:|
+Died | $q_{1k}$ |  $q_{2k}$  | $q_k$ 
+Survival | $r_{1k}-q_{1k}$ |  $r_{2k} -q_{2k}$  | $r_k-q_k$ 
+Total | $r_{1k}$ | $r_{2k}$  | $r_k$
+
+To test $H_0: E(X)=\mu$ for a rv $X$, construct the statistic
+$$ 
+W = \frac{X-E(X)}{\sqrt{Var(X)}}
+$$
+where $E(X)$ and $Var(X)$ are under $H_0$. Let $X=\sum_{k=1}^K q_{1k}$, the total death of group 1 up to time $d_K$. Assume that  $q_{1k}$ are uncorrelated. Plug in the formula for $X$, one can obtain
+$$
+W=\frac{\sum_{k=1}^K(q_{1k}-E(q_{1k}))}{\sqrt{\sum_{k=1}^K Var(q_{1k})}} = \frac{\sum_{k=1}^K(q_{1k}- \frac{q_k}{r_k}r_{1k})}{\sqrt{\sum_{k=1}^K \frac{q_k(r_{1k}/r_k)(1-r_{1k}/r_k)(r_k-q_k)}{r_k - 1}  } }
+$$
+When the sample size is large, $W$ has approximately a standard normal distribution. The null Hypothesis for the log-rank test is that there is no difference between the survival curves in the two groups. 
+
+## Regression models with a survival response
+The goal is to predict the survival time $T$. The observation is $(Y,  \delta)$. However fit a regression of $\log Y$ with $Y=\min(T,C)$ on $X$ is not sound because of the censoring. To overcome this difficulty, use the idea of *sequential construction* again as in Kaplan-Meier survival curve. To this end, define
+the *hazard function* (also called *hazard rate*, or *force of mortality*) as
+$$
+h(t) =\lim_{\Delta t\to 0} \frac{Pr(t<T\le t+\Delta t |T>t)}{\Delta t}
+$$
+where $T$ is the (true) survival time. The hazard rate is the death rate (in fact the pdf for $T$ conditional on $T>t$) in the instant after $t$, given survival up to that time. By definition of $h$, we can derive 
+$$
+h(t) =\frac{f(t)}{S(t)}
+$$
+where 
+$$f(t)= \lim_{\Delta t \to 0} \frac{Pr(t<T \le t+\Delta t)}{\Delta t}$$
+is the *pdf* associated with $T$. Specifically, 
+$$
+f(t)=\frac{d}{dt}F(t)=\frac{d}{dt}[1-S(t)]=\frac{d}{dt} [1-\int_{0}^t h(u)du]
+$$
+The likelihood associated with the $i$-th observation is 
+\[
+\begin{align}
+L_i &= \begin{cases}
+f(y_i) & \text{if the }i\text{-th observation is not censored, } \delta_i =1 \\
+S(y_i) & \text{ if the }i\text{-th observation is censored, } \delta_i = 0
+\end{cases}\\
+&=f(y_i)^{\delta_i}S(y_i)^{1-\delta_i}
+\end{align}
+\]
+Assume the $n$ observations are independent, the likelihood for the data is 
+$$
+L = \prod_{i=1}^n f(y_i)^{\delta_i}S(y_i)^{1-\delta_i}=\prod_{i=1}^n h(y_i)^{\delta_i}S(y_i).
+$$
+Some reasonable assumptions for $f$ is: 
+
+- Exponential: $f(t) = \lambda \exp (-\lambda t)$
+- Gamma or Weibull family
+- non-parametrically such as by Kaplan-Meirer estimator. 
+
+
+With $h(t)$, define the Cox's *proportional hazard* for an individual with feature vector $x_i=(x_{i1}, \cdots,x_{ip})$ by 
+$$
+h(t|x_i)= h_0(t)\exp \left(\sum_{j=1}^p x_{ij}\beta_j  \right)
+$$
+where, $h_0(t)\ge 0$ is the *baseline hazard* function for an individual with features $x_{i1}=\cdots =x_{ip}=0$. $h_0$ can take any functional form.  The term $\sum_{j=1}^px{ij}\beta_j$ is called the *relative risk*. The model assumes that one-unit increase in $x_{ij}$ corresponds to an increase in $h(t|x_i)$ by a factor of $\exp(\beta_j)$. 
+
+- There is *no intercept* in the model, as it can be absorbed into $h_0(t)$
+- The model can easily handle time-dependent covariate: simply replace $x_{ij}$ with $x_{ij}(t)$ for the $j$-th covariate of $i$-th observation . 
+- To check the proportional hazards assumption: for qualitative feature, plot the log hazard function for each level of the feature, the log hazard functions should differ by a constant. For quantitative feature, we can take a similar approach by stratifying the feature. 
+
+We cannot directly estate $\beta_j$ by maximum likelihood using $h(t|x_i)$  because $h_0$ is not known. But we can use *partial likelihood*. Use the same "sequential in time" logic, the probability that the $i$-th observation fails at time $y_i$ is:
+$$
+\frac{h_0(y_i)\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} h_0(y_i) \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)}=\frac{\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)}
+$$
+which is called *relative risk function* at $y_i$. 
+
+The *partial likelihood* (approximation to the likelihood ) over all of the uncensored observations is 
+$$
+PL(\beta) = \prod _{i:\delta_i = 1} \frac{\exp \left(\sum_{j=1}^p x_{ij}\beta_j \right)}{\sum_{i':y_{i'}\ge y_i} \exp\left(  \sum_{j=1}^p x_{i'j}\beta_j \right)} = \prod_{i:\delta_i=1}RR_i(\beta)
+$$
+In the above formula, it is assumed there are *no tied failure times*. If there are, then the formula needs to be modified. To estimate $\beta$, simply maximize $PL(\beta)$. To estimate $\beta$, simply maximize $PL(\beta)$. Lasso or ridge penalty terms of $\beta$ can be added to obtain shrinkage estimate. 
+
+
+
+### Connection with the log-rank test
+- for the case of  a single binary covariate, the *score test* for $H_0: \beta=0$ in Cox's hazards model is *exactly equal to the log-rank test*. 
+
+### AUC for Survival Analysis: the C-index
+- for each observation, calculate the estimated risk score:
+$$
+\hat{\eta}_i = \hat{\beta}_1x_{i1} +\cdots + \hat{\beta}_px_{ip}, \quad i=1, \cdots, n
+$$
+- compute Harrell's concordance index (C-index): 
+$$
+C = \frac{\sum _{i,i':y_i>y_{i'}}I(\hat{\eta}_{i'} >\hat{\eta}_i) \delta_{i'}}{\sum _{i,i':y_i>y_{i'}}\delta_{i'}}
+$$
+The C-index is the proportion of pairs for which the model correctly predicts the relative survival time, among all pairs for which this can be determined. E.g., $C=0.733$ indicates given two random observations from the test set, the model can predict with $73.3\%$ accuracy which will  survive. 
 
 
 ## Homework:

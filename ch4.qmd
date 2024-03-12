@@ -251,7 +251,7 @@ For poisson distribution, assume $Y$ follows a poisson distribution.
     to 1. The point on the ROC curve closest to the point (0,1)
     corresponds to the best classifier.
   *   AUC (area under the ROC): Overall performance of a classifier summarized over all thresholds. AUC measures the probability a random positive example is ranked higher than a random negative example.   A larger AUC indicates a better
-    classifier.
+    classifier. More specifically,  define the score function for th e $i$-th observation by $Pr(Y=1|X=x_i)$. Consider all pairs consisting of one observation in Class 1 and one observation in Class 0, then the AUC is the fraction (probability) of pairs for which the score for the observation in Class 1 exceeds the score for the observations in Class 0. 
     
 - class-specific prediction performance 
   *  $$\text{precision} = \frac{TP}{TP+FP}=\frac{TP}{\text{predicted postives}}=1-\text{false discovery proportion}$$
