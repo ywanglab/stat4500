@@ -157,10 +157,36 @@ The C-index is the proportion of pairs for which the model correctly predicts th
 
 ## Code Snippet
 ### Python
+```
+rng = np.random.default_rng(10)
+N = 2000
+Operators = rng.choice(np.arange(5, 16),
+                       N,
+                       replace=True)
+                       
+np.clip(W, 0, 1000)
+D['Failed'] = rng.choice([1, 0],
+                         N,
+                         p=[0.9, 0.1])
+
+```
 
 ### Numpy
 
 ### Pandas
+```
+BrainCancer['sex'].value_counts()
+
+#### return mean or mode of columns of a df
+def representative(series):
+    if hasattr(series.dtype, 'categories'): # hasattr(object, attribute)
+        return pd.Series.mode(series)
+    else:
+        return series.mean()
+modal_data = cleaned.apply(representative, axis=0)
+
+
+```
 
 ### Graphics
 ```
@@ -170,7 +196,63 @@ The C-index is the proportion of pairs for which the model correctly predicts th
 
 ### ISLP and statsmodels
 ```
+from lifelines import \
+     (KaplanMeierFitter,
+      CoxPHFitter)
+from lifelines.statistics import \
+     (logrank_test,
+      multivariate_logrank_test)
+from ISLP.survival import sim_time
 
+### Kaplan-Meier estimator
+fig, ax = subplots(figsize=(8,8))
+km = KaplanMeierFitter()
+km_brain = km.fit(BrainCancer['time'], BrainCancer['status'])
+km_brain.plot(label='Kaplan Meier estimate', ax=ax)
+```
+
+#### stratified K-M estimator
+```
+fig, ax = subplots(figsize=(8,8))
+by_sex = {}
+for sex, df in BrainCancer.groupby('sex'):
+    by_sex[sex] = df
+    km_sex = km.fit(df['time'], df['status'])
+    km_sex.plot(label='Sex=%s' % sex, ax=ax)
+```
+
+#### Log-rank test
+```
+logrank_test(by_sex['Male']['time'],
+             by_sex['Female']['time'],
+             by_sex['Male']['status'],
+             by_sex['Female']['status'])
+
+```
+#### Cox proportional Hazards model
+```
+coxph = CoxPHFitter # shorthand
+sex_df = BrainCancer[['time', 'status', 'sex']]
+model_df = MS(['time', 'status', 'sex'],
+              intercept=False).fit_transform(sex_df) #MS has coded 'sex` column to binary. Male[1] Female[0]
+cox_fit = coxph().fit(model_df,
+                      'time',
+                      'status')
+cox_fit.summary[['coef', 'se(coef)', 'p']]
+
+cox_fit.log_likelihood_ratio_test()
+
+# fit all variables
+all_MS = MS(cleaned.columns, intercept=False)
+all_df = all_MS.fit_transform(cleaned)
+fit_all = coxph().fit(all_df,
+                      'time',
+                      'status')
+fit_all.summary[['coef', 'se(coef)', 'p']]
+modal_X = all_MS.transform(modal_df)
+predicted_survival = fit_all.predict_survival_function(modal_X)
+fig, ax = subplots(figsize=(8, 8))
+predicted_survival.plot(ax=ax);
 
 ```
 
