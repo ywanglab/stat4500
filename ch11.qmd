@@ -19,7 +19,7 @@ $$
 $$
 - Data set format: $n$ pairs $(y_1,\delta_1), \cdots, (y_n, \delta_n)$. 
 
-- In general, we assume that conditional on the features, $T$ is *independent* of $C$. 
+- *independent censoring*: In general, we assume that conditional on the features, $T$ is *independent* of $C$. 
 - In some situation, the above assumption is false. For example, When a patient drop out a study because the patient is too sick. In this case obtained $C$ may lead to overestimate of $T$. 
 - *right censoring*: when $Y\le T$. 
 - *left censoring*: when $T\le Y$. 

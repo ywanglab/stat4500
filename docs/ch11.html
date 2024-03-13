@@ -290,7 +290,7 @@ Y= \min (T,C)
 \end{cases}
 \]</span></p></li>
 <li><p>Data set format: <span class="math inline">\(n\)</span> pairs <span class="math inline">\((y_1,\delta_1), \cdots, (y_n, \delta_n)\)</span>.</p></li>
-<li><p>In general, we assume that conditional on the features, <span class="math inline">\(T\)</span> is <em>independent</em> of <span class="math inline">\(C\)</span>.</p></li>
+<li><p><em>independent censoring</em>: In general, we assume that conditional on the features, <span class="math inline">\(T\)</span> is <em>independent</em> of <span class="math inline">\(C\)</span>.</p></li>
 <li><p>In some situation, the above assumption is false. For example, When a patient drop out a study because the patient is too sick. In this case obtained <span class="math inline">\(C\)</span> may lead to overestimate of <span class="math inline">\(T\)</span>.</p></li>
 <li><p><em>right censoring</em>: when <span class="math inline">\(Y\le T\)</span>.</p></li>
 <li><p><em>left censoring</em>: when <span class="math inline">\(T\le Y\)</span>.</p></li>
@@ -425,12 +425,34 @@ C = \frac{\sum _{i,i':y_i&gt;y_{i'}}I(\hat{\eta}_{i'} &gt;\hat{\eta}_i) \delta_{
 <h2 data-number="11.5" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">11.5</span> Code Snippet</h2>
 <section id="python" class="level3" data-number="11.5.1">
 <h3 data-number="11.5.1" class="anchored" data-anchor-id="python"><span class="header-section-number">11.5.1</span> Python</h3>
+<pre><code>rng = np.random.default_rng(10)
+N = 2000
+Operators = rng.choice(np.arange(5, 16),
+                       N,
+                       replace=True)
+                       
+np.clip(W, 0, 1000)
+D['Failed'] = rng.choice([1, 0],
+                         N,
+                         p=[0.9, 0.1])
+</code></pre>
 </section>
 <section id="numpy" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">11.5.2</span> Numpy</h3>
 </section>
 <section id="pandas" class="level3" data-number="11.5.3">
 <h3 data-number="11.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">11.5.3</span> Pandas</h3>
+<pre><code>BrainCancer['sex'].value_counts()
+
+#### return mean or mode of columns of a df
+def representative(series):
+    if hasattr(series.dtype, 'categories'): # hasattr(object, attribute)
+        return pd.Series.mode(series)
+    else:
+        return series.mean()
+modal_data = cleaned.apply(representative, axis=0)
+
+</code></pre>
 </section>
 <section id="graphics" class="level3" data-number="11.5.4">
 <h3 data-number="11.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">11.5.4</span> Graphics</h3>
@@ -439,8 +461,62 @@ C = \frac{\sum _{i,i':y_i&gt;y_{i'}}I(\hat{\eta}_{i'} &gt;\hat{\eta}_i) \delta_{
 </section>
 <section id="islp-and-statsmodels" class="level3" data-number="11.5.5">
 <h3 data-number="11.5.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">11.5.5</span> ISLP and statsmodels</h3>
-<pre><code>
+<pre><code>from lifelines import \
+     (KaplanMeierFitter,
+      CoxPHFitter)
+from lifelines.statistics import \
+     (logrank_test,
+      multivariate_logrank_test)
+from ISLP.survival import sim_time
+
+### Kaplan-Meier estimator
+fig, ax = subplots(figsize=(8,8))
+km = KaplanMeierFitter()
+km_brain = km.fit(BrainCancer['time'], BrainCancer['status'])
+km_brain.plot(label='Kaplan Meier estimate', ax=ax)</code></pre>
+<section id="stratified-k-m-estimator" class="level4" data-number="11.5.5.1">
+<h4 data-number="11.5.5.1" class="anchored" data-anchor-id="stratified-k-m-estimator"><span class="header-section-number">11.5.5.1</span> stratified K-M estimator</h4>
+<pre><code>fig, ax = subplots(figsize=(8,8))
+by_sex = {}
+for sex, df in BrainCancer.groupby('sex'):
+    by_sex[sex] = df
+    km_sex = km.fit(df['time'], df['status'])
+    km_sex.plot(label='Sex=%s' % sex, ax=ax)</code></pre>
+</section>
+<section id="log-rank-test" class="level4" data-number="11.5.5.2">
+<h4 data-number="11.5.5.2" class="anchored" data-anchor-id="log-rank-test"><span class="header-section-number">11.5.5.2</span> Log-rank test</h4>
+<pre><code>logrank_test(by_sex['Male']['time'],
+             by_sex['Female']['time'],
+             by_sex['Male']['status'],
+             by_sex['Female']['status'])
 </code></pre>
+</section>
+<section id="cox-proportional-hazards-model" class="level4" data-number="11.5.5.3">
+<h4 data-number="11.5.5.3" class="anchored" data-anchor-id="cox-proportional-hazards-model"><span class="header-section-number">11.5.5.3</span> Cox proportional Hazards model</h4>
+<pre><code>coxph = CoxPHFitter # shorthand
+sex_df = BrainCancer[['time', 'status', 'sex']]
+model_df = MS(['time', 'status', 'sex'],
+              intercept=False).fit_transform(sex_df) #MS has coded 'sex` column to binary. Male[1] Female[0]
+cox_fit = coxph().fit(model_df,
+                      'time',
+                      'status')
+cox_fit.summary[['coef', 'se(coef)', 'p']]
+
+cox_fit.log_likelihood_ratio_test()
+
+# fit all variables
+all_MS = MS(cleaned.columns, intercept=False)
+all_df = all_MS.fit_transform(cleaned)
+fit_all = coxph().fit(all_df,
+                      'time',
+                      'status')
+fit_all.summary[['coef', 'se(coef)', 'p']]
+modal_X = all_MS.transform(modal_df)
+predicted_survival = fit_all.predict_survival_function(modal_X)
+fig, ax = subplots(figsize=(8, 8))
+predicted_survival.plot(ax=ax);
+</code></pre>
+</section>
 </section>
 <section id="sklearn" class="level3" data-number="11.5.6">
 <h3 data-number="11.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">11.5.6</span> sklearn</h3>
