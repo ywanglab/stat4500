@@ -152,7 +152,7 @@ The C-index is the proportion of pairs for which the model correctly predicts th
 
 
 ## Homework:
-- Conceptual: 1--
+- Conceptual: 1--6, 8, 9
 - Applied: At least one. 
 
 ## Code Snippet
