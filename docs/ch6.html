@@ -200,14 +200,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -423,11 +429,11 @@ p(\beta|X,Y)\propto f(Y|X,\beta) p(\beta|X)=f(Y|X,\beta)p(\beta)
 <p>We then use OLS to fit a linear regression model <span id="eq-PCAR"><span class="math display">\[
 y_i =\theta_0 +\sum_{m=1}^M \theta_m z_{im}+\epsilon_i, \qquad i=1,2,\cdots, n
 \tag{6.2}\]</span></span></p>
-<p>After substitute <a href="#eq-PCA" class="quarto-xref">Equation&nbsp;<span>6.1</span></a> into equation <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span>6.2</span></a>, one can find that <span class="math display">\[
+<p>After substitute <a href="#eq-PCA" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-PCA</span></a> into equation <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-PCAR</span></a>, one can find that <span class="math display">\[
 \sum_{m=1}^M \theta_mz_{im} =\sum_{j=1}^p \beta_jx_{ij}
 \]</span> with <span id="eq-pcar-beta"><span class="math display">\[
 \beta_j = \sum_{m=1}^M \theta_m\phi_{mj}.
-\tag{6.3}\]</span></span> Eq. <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span>6.3</span></a> has the potential to bias the coefficient estimates, but selecting <span class="math inline">\(M&lt;&lt; p\)</span> can significantly reduce the variance. So model <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span>6.2</span></a> is a special case of linear regression subject to the constants <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span>6.3</span></a>.</p>
+\tag{6.3}\]</span></span> Eq. <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-pcar-beta</span></a> has the potential to bias the coefficient estimates, but selecting <span class="math inline">\(M&lt;&lt; p\)</span> can significantly reduce the variance. So model <a href="#eq-PCAR" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-PCAR</span></a> is a special case of linear regression subject to the constants <a href="#eq-pcar-beta" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-pcar-beta</span></a>.</p>
 <p>PCR and ridge are closely related and one can think of ridge regression as a continuous version of PCR.</p>
 </section>
 <section id="partial-least-squares" class="level3" data-number="6.5.2">

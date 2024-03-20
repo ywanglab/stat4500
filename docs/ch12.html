@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 14&nbsp; Summary</title>
+<title>stat4500notes - 12&nbsp; Chapter 12: Unsupervised Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
-<link href="./class_project.html" rel="prev">
+<link href="./class_project.html" rel="next">
+<link href="./ch11.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,6 +68,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -80,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./summary.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch12.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -198,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch12.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch12.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span></a>
   </div>
 </li>
@@ -210,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link active">
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
@@ -226,14 +228,38 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#pca" id="toc-pca" class="nav-link active" data-scroll-target="#pca"><span class="header-section-number">12.1</span> PCA</a></li>
+  <li><a href="#clustering-finding-subgroups-or-clusters" id="toc-clustering-finding-subgroups-or-clusters" class="nav-link" data-scroll-target="#clustering-finding-subgroups-or-clusters"><span class="header-section-number">12.2</span> Clustering: finding subgroups or clusters</a>
+  <ul class="collapse">
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">12.2.1</span> K-means clustering</a></li>
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering"><span class="header-section-number">12.2.2</span> Hierarchical clustering</a></li>
+  <li><a href="#types-of-linkage" id="toc-types-of-linkage" class="nav-link" data-scroll-target="#types-of-linkage"><span class="header-section-number">12.2.3</span> Types of linkage</a></li>
+  <li><a href="#choice-of-dissimilarity-measure" id="toc-choice-of-dissimilarity-measure" class="nav-link" data-scroll-target="#choice-of-dissimilarity-measure"><span class="header-section-number">12.2.4</span> Choice of dissimilarity measure</a></li>
+  </ul></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">12.3</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">12.4</span> Code Snippet</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">12.4.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">12.4.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">12.4.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">12.4.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">12.4.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">12.4.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">12.4.7</span> Useful code snippets</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></h1>
 </div>
 
 
@@ -250,9 +276,126 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>In summary, this book has no content whatsoever.</p>
+<p>Unsupervised learning only observes features <span class="math inline">\(X_1, X_2, \cdots, X_p\)</span> (<strong>unlabeled data</strong>), no associated response <span class="math inline">\(Y\)</span>. Obtaining such data may be easier (and cheaper) in contrast to <strong>labeled data</strong> which may require <em>costly</em> human intervention. The goal is to learn interesting information about the predictors. For instance, 1) reduce the dimension to 2 or 3 to visualize data 2) discover subgroups (clustering).</p>
+<p>Two methods: - PCA: for data visualization and pre-processing for supervised learning - clustering: discovering unknown subgroups.</p>
+<p>Challenges: - no simple goal (response), hence may be more subjective</p>
+<p>Important Applications: - discover subgroups by the data itself: such as movie viewers, shoppers, patients</p>
+<section id="pca" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="pca"><span class="header-section-number">12.1</span> PCA</h2>
+<p>PCA produces a low-dimensional representation of a dataset that explains a good fracton of the variance. It finds a sequence of new variables each of which is a linear combination of the original variables. Those new variables are mutually uncorrelated and are ordered in a decreasing order of variance.</p>
+<ul>
+<li>PCA is used for data visualization and pre-processing for supervised learning, such as PCR.</li>
+<li><em>first PCA</em>: is the result choosing the loadings <span class="math inline">\(\phi_{j1}\)</span>, for <span class="math inline">\(1\le j \le p\)</span> such that the new variable <span class="math inline">\(Z_1\)</span> has teh largest sample variance. <span class="math display">\[
+Z_1 =\phi_{11}X_1 +\phi_{21}X_2+\cdots +\phi_{p1}X_p
+\]</span> has the largest variance, where the coefficients <span class="math inline">\(\phi_{11}, \cdots, \phi_{p1}\)</span> are the PCA <em>loadings</em> <strong>normalized</strong> such that <span class="math inline">\(\sum_{j=1}^p \phi_{j1}^2=1\)</span>. The normalization avoid the variance of <span class="math inline">\(Z_1\)</span> becomes arbitrary large. The vector <span class="math inline">\(\phi_1=(\phi_{11}, \cdots, \phi_{p1})^T\)</span> is called the <em>PCA loading vector</em> or (PCA direction) in the feature space along which data vary the most. If we project the <span class="math inline">\(N\)</span> data points <span class="math inline">\(x_1, \cdots, x_N\)</span> onto this direction, then the projected values are the principle component <strong>scores</strong> <span class="math inline">\(z_{11} , z_{21}, \cdots, z_{n1}\)</span> for each of the data points.</li>
+</ul>
+<p>The first PCA loading vector <span class="math inline">\(\phi_1\)</span> defines a direction (line) in the <span class="math inline">\(p\)</span>-dimensional feature space that is <em>closest</em> to the <span class="math inline">\(n\)</span> observations in terms of the average squared Euclidean distance. Similarly the first two PCA loading vectors span the plane that is closest to the <span class="math inline">\(n\)</span> observations, in terms of the average squared Euclidean distance.</p>
+<ul>
+<li><p>second PCA: similarly, <span class="math inline">\(Z_2\)</span> is a linear combination of the original variables that is uncorrelated from <span class="math inline">\(Z_1\)</span> and has the second largest sample variance. The uncorrelation of <span class="math inline">\(Z_2\)</span> and <span class="math inline">\(Z_1\)</span> is equivalent to <span class="math inline">\(\phi_2\)</span> is orthogonal to <span class="math inline">\(\phi_1\)</span>.</p></li>
+<li><p>PCA <em>biplot</em>: display both PCA scores and loadings of the first two PCA for each data points.</p></li>
+<li><p>Scaling the variables matters. If the variables are in different units, it is recommended to scale them to have s.d equal to one.</p></li>
+<li><p>PCA may be understood as converting the original (<strong>demeaned</strong>) variables <span class="math inline">\(X=(X_1, X_2, \cdots, X_p)^T\)</span> to new variables <span class="math inline">\(Z=(Z_1, \cdots, Z_p)^T=V^TX\)</span> via an orthogonal transformation matrix <span class="math inline">\(V\)</span>, in order to un-correlate the original variables, such that the new variables <span class="math inline">\(Z\)</span> are uncorrelated, that is ( Note that, <span class="math inline">\({\bf Z}\)</span> and <span class="math inline">\({\bf X}\)</span> are both data matrix of size <span class="math inline">\(N\times p\)</span>, and <span class="math inline">\({\bf Z}={\bf X}V\)</span> ) <span class="math display">\[
+{\bf Z}^T{\bf Z} = V^T({\bf X}^T{\bf X})V= D^2.
+\]</span> where <span class="math inline">\(V\)</span> and <span class="math inline">\(D\)</span> are defined by the eigen-decomposition of <span id="eq-eigen-decom"><span class="math display">\[
+{\bf X}^T{\bf X}=VD^2V^T
+\tag{12.1}\]</span></span> that is, <span class="math inline">\(V=[v_1, \cdots, v_p]\)</span> is an <span class="math inline">\(p\times p\)</span> orthogonal matrix formed by the orthonormal eigenvectors of the matrix <span class="math inline">\({\bf X}^T{\bf X}\)</span> which is the sample covariance matrix (multiplied by <span class="math inline">\(N-1\)</span>) , and <span class="math inline">\(D\)</span> is a <span class="math inline">\(p\times p\)</span> diagonal matrix of singular values of <span class="math inline">\({\bf X}\)</span> (or equivalently, square roots of the eigenvalues of <span class="math inline">\({\bf X}^T{\bf X}\)</span>). The <span class="math inline">\(v_j\)</span>’s are called the <em>right singular vector</em> of <span class="math inline">\({\bf X}\)</span> and are ordered in decreasing order of the singular values <span class="math inline">\(d_j\)</span>.</p></li>
+<li><p>total variance: The total variance <span class="math display">\[
+\sum_{j=1}^p Var[X_j] = \sum_{j=1}^pVar[Z_j]=tr({\bf Z}^T{\bf Z})=tr({\bf X}^T{\bf X})
+\]</span> The proportion Variance explained by the <span class="math inline">\(m\)</span>-th PCA is given by (assuming the data are centered) <span class="math display">\[
+PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
+\]</span> and <span class="math inline">\(\sum_{m=1}^p PVE_m = 1\)</span>.</p></li>
+<li><p>How many PCA’s to choose? no simple unswer, as the cross-validation can not be used because we have to use the entire data set. The <em>“scree plot”</em> can be used to look for an “elbow”.</p></li>
+<li><p>SVD: The construction of <span class="math inline">\(V\)</span> and <span class="math inline">\(D\)</span> in <a href="#eq-eigen-decom" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-eigen-decom</span></a> allows the further construction of the SVD of <span class="math inline">\({\bf X}\)</span> by <span id="eq-svd"><span class="math display">\[{\bf X}=UDV^T =\sum_{j=1}^p d_ju_jv_j^T = \sum_{j=1}^p {\bf X}v_jv_j^T.  \tag{12.2}\]</span></span> The <span class="math inline">\(N\times p\)</span> matrix <span class="math inline">\(U\)</span> consists of orthonormal vectors <span class="math inline">\(u_j=\frac{{\bf X}v_j}{d_j}\)</span>, and spans the column space of <span class="math inline">\({\bf X}\)</span>. The <span class="math inline">\(v_j\)</span> spans the row space of <span class="math inline">\({\bf X}\)</span>.</p></li>
+</ul>
+</section>
+<section id="clustering-finding-subgroups-or-clusters" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="clustering-finding-subgroups-or-clusters"><span class="header-section-number">12.2</span> Clustering: finding subgroups or clusters</h2>
+<p>Seek a partition of the data into distinct subgroups so that the observations are quite similar to each other within each subgroup. Clustering looks for <em>homogeneous subgroups</em> among the observations. Example: market segmentation.</p>
+<p>similarity are domain-specifically defined.</p>
+<section id="k-means-clustering" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">12.2.1</span> K-means clustering</h3>
+<p>Partition data into a pre-specific number of clusters. Let <span class="math inline">\(C_k\)</span>, <span class="math inline">\(1\le k \le K\)</span> denotes the mutually disjoint sets of indices of the observations and their union is the entire data set. The goal is to find K-clusters such that the <em>within-cluster variation</em> (<span class="math inline">\(WCV(C_k)\)</span>) is least, i.e., we want to solve minimize the total WCV of all <span class="math inline">\(K\)</span> clusters <span id="eq-clustering-var"><span class="math display">\[
+\min_{C_1, \cdots, C_K} \left\{ \sum_{k=1}^K WCV(C_k) \right\}.
+\tag{12.3}\]</span></span> where, <span class="math display">\[
+WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
+\]</span> ** K-means Algorithm**:</p>
+<ol type="1">
+<li>initial clustering: randomly assign a cluster to an observation.</li>
+<li>Iterate until the cluster assignments stop changing: 2.1 (centering) For each of the <span class="math inline">\(K\)</span> cluster, computer <em>centroid</em>, which is simply the average of all <span class="math inline">\(p\)</span>-feature observations in the <span class="math inline">\(k\)</span>-the cluster. 2.2 (clustering assignment) Assign each observation to the cluster whose centro id is the closest (in terms of Euclidean distance).</li>
+</ol>
+<ul>
+<li><p>The algorithm is guaranteed to reduce the total variance in <a href="#eq-clustering-var" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-clustering-var</span></a> at each step. This can be seen from <span class="math display">\[
+\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2=2\sum_{i\in C_k}\sum_{j=1}^p (x_{ij}-\bar{x}_{kj})^2
+\]</span> where <span class="math inline">\(\bar{x}_{kj}=\frac{1}{|C_k|}\sum_{i\in C_k}x_{ij}\)</span> is the mean for feature <span class="math inline">\(j\)</span> in cluster <span class="math inline">\(C_k\)</span>.</p></li>
+<li><p>But it is not guaranteed to give the global minimum.</p></li>
+<li><p>In practice, multiple times of the K-clustering should be performed and the best one can be chosen.</p></li>
+</ul>
+</section>
+<section id="hierarchical-clustering" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="hierarchical-clustering"><span class="header-section-number">12.2.2</span> Hierarchical clustering</h3>
+<p>Ends up with a tree-like <em>dendrogram</em> of the observations, that allows us to view at once the clusterings obtained for each possible number of clusters, from 1 to <span class="math inline">\(n\)</span>.</p>
+<p>The most common type of hierarchical clustering uses a <em>bottom-up</em> or <em>agglomerative</em> clustering: a dendrogram is built starting from the leaves and combining clusters up to the trunk.</p>
+<p><strong>Algorithm</strong>: 1. start with each point in its own cluster. 2. identify the <em>closest</em> two clusters and merge them. 3. repeat 4. Ends when all points are in a single cluster.</p>
+<p>In general scaling is recommended.</p>
+</section>
+<section id="types-of-linkage" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="types-of-linkage"><span class="header-section-number">12.2.3</span> Types of linkage</h3>
+<ul>
+<li>Complete: maximal inter-cluster dissimilarity: use the maximum pairwise dissimilarities between observations in two clusters.</li>
+<li>single: Minimal inter-cluster dissimilarity.</li>
+<li>Average: mean inter-cluster dissimilarity.</li>
+<li>Centroid: dissimilarity between the centroid of two classes. May result in undesirable <em>inversions</em>.</li>
+</ul>
+</section>
+<section id="choice-of-dissimilarity-measure" class="level3" data-number="12.2.4">
+<h3 data-number="12.2.4" class="anchored" data-anchor-id="choice-of-dissimilarity-measure"><span class="header-section-number">12.2.4</span> Choice of dissimilarity measure</h3>
+<ul>
+<li>Euclidean distance</li>
+<li>correlation-based distance: correlation between two observations (not the ususal correlation between variables)</li>
+</ul>
+</section>
+</section>
+<section id="homework" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="homework"><span class="header-section-number">12.3</span> Homework:</h2>
+<ul>
+<li>Conceptual: 1–</li>
+<li>Applied: At least one.</li>
+</ul>
+</section>
+<section id="code-snippet" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">12.4</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="python"><span class="header-section-number">12.4.1</span> Python</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="numpy" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">12.4.2</span> Numpy</h3>
+</section>
+<section id="pandas" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">12.4.3</span> Pandas</h3>
+<pre><code>
+
+</code></pre>
+</section>
+<section id="graphics" class="level3" data-number="12.4.4">
+<h3 data-number="12.4.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">12.4.4</span> Graphics</h3>
+<pre><code>
+</code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="12.4.5">
+<h3 data-number="12.4.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">12.4.5</span> ISLP and statsmodels</h3>
+<pre><code></code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="12.4.6">
+<h3 data-number="12.4.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">12.4.6</span> sklearn</h3>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="12.4.7">
+<h3 data-number="12.4.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">12.4.7</span> Useful code snippets</h3>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -647,13 +790,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./class_project.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span>
+      <a href="./ch11.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chapter 11: Survival Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

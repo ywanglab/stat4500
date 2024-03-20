@@ -200,14 +200,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -286,12 +292,12 @@ ul.task-list li input[type="checkbox"] {
 RSS =\sum_{j=1}^J \sum_{i\in R_j}(y_i-\hat{y}_{R_j})^2
 \tag{8.1}\]</span></span> where, <span class="math inline">\(\hat{y}_{R_j}\)</span> is the mean response for the training observations in the <span class="math inline">\(j\)</span>-th box <span class="math inline">\(R_j\)</span> that corresponds to the <span class="math inline">\(j\)</span>-th leaf node.</p>
 <p>The first node (root) is the most important predictor, and so on.</p>
-<p>It is computationally intractable to consider every possible partition of the feature space into <span class="math inline">\(J\)</span> boxes in objective <a href="#eq-tree-objective" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>. The solution is to use a <em>top-down</em> and <em>greedy</em> <strong>recursive binary splitting</strong>. It is greedy (myopic) because at each step of the tree-building process, the best split is decided at that particular step by choosing a predictor <span class="math inline">\(X_j\)</span> (consider all predictors) and a cut-point <span class="math inline">\(s\)</span> (consider all values of that predictor) that leads to the greatest reduction in RSS, rather than looking ahead and picking a split that will lead to a better tree in some future step. The greedy splitting amounts to at each step, only the current region is split by a feature. This process is repeated within each of the resulting regions, until a stopping criterion.</p>
+<p>It is computationally intractable to consider every possible partition of the feature space into <span class="math inline">\(J\)</span> boxes in objective <a href="#eq-tree-objective" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-tree-objective</span></a>. The solution is to use a <em>top-down</em> and <em>greedy</em> <strong>recursive binary splitting</strong>. It is greedy (myopic) because at each step of the tree-building process, the best split is decided at that particular step by choosing a predictor <span class="math inline">\(X_j\)</span> (consider all predictors) and a cut-point <span class="math inline">\(s\)</span> (consider all values of that predictor) that leads to the greatest reduction in RSS, rather than looking ahead and picking a split that will lead to a better tree in some future step. The greedy splitting amounts to at each step, only the current region is split by a feature. This process is repeated within each of the resulting regions, until a stopping criterion.</p>
 <p><strong>Stopping criterion</strong>: - max number of observations in each leaf - max number of depth - RSS decrease smaller than a threshold.</p>
 </section>
 <section id="classificaiton-tree" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="classificaiton-tree"><span class="header-section-number">8.2</span> Classificaiton tree</h2>
-<p>For a Classification tree: An example is classified as the class which is the mode of the examples in the leaf node. The training objective is similar to <a href="#eq-tree-objective" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>, but with RSS replaced with</p>
+<p>For a Classification tree: An example is classified as the class which is the mode of the examples in the leaf node. The training objective is similar to <a href="#eq-tree-objective" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-tree-objective</span></a>, but with RSS replaced with</p>
 <ul>
 <li>classification error rate <span class="math inline">\(E=1- \max_k(\hat{p}_{mk})\)</span>, where <span class="math inline">\(\hat{p}_{mk}\)</span> is the fraction of training examples in the <span class="math inline">\(m\)</span>th region that are in the <span class="math inline">\(k\)</span>-th class. But this measure is not sufficiently sensitive for tree-growing (node-splitting).</li>
 <li>Gini index that measures node purity (total variance): <span class="math inline">\(G=\sum_{k=1}^K\hat{p}_{mk}(1-\hat{p}_{mk})\)</span>. The Gini index takes on small value if all of the <span class="math inline">\(\hat{p}_{mk}\)</span>’s are close to zero or one, indicating that a node contains predominantly observations from a single class.</li>

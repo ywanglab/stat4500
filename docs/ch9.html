@@ -200,14 +200,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -349,7 +355,7 @@ K(x_i,x_i')=\exp(-\gamma \sum_{j=1}^p (x_{ij}-x_{i'j})^2)
 <h2 data-number="9.6" class="anchored" data-anchor-id="svm-vs.-logistic-regression"><span class="header-section-number">9.6</span> SVM vs.&nbsp;Logistic Regression</h2>
 <p>SVM can be viewed as minimizing the following <em>hinge loss</em> <span class="math display">\[
 \text{minimize}_{\beta_0, \beta_1, \cdots, \beta_p} \left\{\sum_{i=1}^n \max[0, 1-y_if(x_i)] +\lambda\sum_{j=1}^p \beta_j^2 \right\}
-\]</span> When <span class="math inline">\(\lambda\)</span> is large, then <span class="math inline">\(\beta_j\)</span>’s are small, more violations to the margin are tolerated, and a low-variance and high-bias classier will result. A small value of <span class="math inline">\(\lambda\)</span> amounts to a small value of <span class="math inline">\(C\)</span> in <a href="#eq-svc" class="quarto-xref">Equation&nbsp;<span>9.1</span></a>.</p>
+\]</span> When <span class="math inline">\(\lambda\)</span> is large, then <span class="math inline">\(\beta_j\)</span>’s are small, more violations to the margin are tolerated, and a low-variance and high-bias classier will result. A small value of <span class="math inline">\(\lambda\)</span> amounts to a small value of <span class="math inline">\(C\)</span> in <a href="#eq-svc" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-svc</span></a>.</p>
 <p>The hinge loss function is very similar to the negative log-likelihood loss for the logistic regression. The loss function <span class="math inline">\(\text{minimize}_{\beta_0, \beta_1, \cdots, \beta_p} \sum_{i=1}^n \max[0, 1-y_if(x_i)]\)</span> is zero when <span class="math inline">\(y_i(\beta_0+\beta_1x_{i1}+\cdots +\beta_px_{ip})\ge 1\)</span>; Theses corresponds to when an observation in <strong>on the correct side of the margin</strong>. In contrast, the loss function for logistic equation is not exactly zero anywhere, but it is very small for observations that are far from the decision boundary.</p>
 <ul>
 <li>When classes are nearly separable, SVM does better than LR, so does LDA. When not, LR is preferred.</li>

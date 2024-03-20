@@ -200,14 +200,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ch12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./class_project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Class Project</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -366,7 +372,7 @@ F=\frac{\text{SSB/df(B)}}{\text{SSW/df(W)}}=\frac{(\text{TSS}-\text{RSS})/p}{\te
 H_0: \beta_{p-q+1} = \beta_{p-q+2}=\cdots = \beta_p=0
 \tag{3.2}\]</span></span> In this case, use <span class="math display">\[
 F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
-\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a second model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables. When <span class="math inline">\(q=1\)</span>, <span class="math inline">\(F\)</span>-statistic in <a href="#eq-subset-hypothesis" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> is the square of the <span class="math inline">\(t\)</span>-statistic of that variable. The <span class="math inline">\(t\)</span>-statistic reported in a regression model gives the <em>partial effect</em> of adding that variable, while holding other variables fixed.</p>
+\]</span> where, <span class="math inline">\(\text{RSS}_0\)</span> is the residual sum of squares of a second model that uses all variables <em>except</em> those last <span class="math inline">\(q\)</span> variables. When <span class="math inline">\(q=1\)</span>, <span class="math inline">\(F\)</span>-statistic in <a href="#eq-subset-hypothesis" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-subset-hypothesis</span></a> is the square of the <span class="math inline">\(t\)</span>-statistic of that variable. The <span class="math inline">\(t\)</span>-statistic reported in a regression model gives the <em>partial effect</em> of adding that variable, while holding other variables fixed.</p>
 </section>
 <section id="assess-the-accuracy-of-the-future-prediciton" class="level3" data-number="3.2.3">
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="assess-the-accuracy-of-the-future-prediciton"><span class="header-section-number">3.2.3</span> Assess the accuracy of the future prediciton</h3>
@@ -385,7 +391,7 @@ F = \frac{(\text{RSS}_0-\text{RSS})/q}{\text{RSS}/(n-p-1)}\sim F_{q,n-p-1}
 R^2 =\frac{\text{TSS}-\text{RSS}}{\text{TSS}} = 1-\frac{\text{RSS}}{\text{TSS}}
 \]</span> where, <span class="math inline">\(\text{TSS}=\sum_{i=1}^n(y_i- \bar{y})\)</span>. When <span class="math inline">\(R^2\)</span> is near 0 indicates that 1) either the linear model is wrong 2) or th error variance <span class="math inline">\(\sigma^2\)</span> is high, or both. <span class="math inline">\(R^2\)</span> measures the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. If computed on the training set, when adding more variables, the RSS always decrease, hence <span class="math inline">\(R^2\)</span> will always increase.</p></li>
 </ul>
-<p>For simple linear regression, <span class="math inline">\(R^2=r_{xy}^2\)</span>, where the <em>sample correlation</em> measures the linear relationship between variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. See the formula <span class="math inline">\(r_{xy}\)</span> above <a href="#eq-correlation-rxy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. For multiple linear regression, <span class="math inline">\(R^2=(\text{Cor}(Y, \hat{Y}))^2\)</span>. The fitted linear model maximizes this correlation among all possible linear models.</p>
+<p>For simple linear regression, <span class="math inline">\(R^2=r_{xy}^2\)</span>, where the <em>sample correlation</em> measures the linear relationship between variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. See the formula <span class="math inline">\(r_{xy}\)</span> above <a href="#eq-correlation-rxy" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-correlation-rxy</span></a>. For multiple linear regression, <span class="math inline">\(R^2=(\text{Cor}(Y, \hat{Y}))^2\)</span>. The fitted linear model maximizes this correlation among all possible linear models.</p>
 </section>
 </section>
 <section id="model-selectionvariable-selections-balance-training-errors-with-model-size" class="level2" data-number="3.3">

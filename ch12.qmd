@@ -1,0 +1,152 @@
+# Chapter 12: Unsupervised Learning 
+Unsupervised learning only observes features $X_1, X_2, \cdots, X_p$ (**unlabeled data**), no associated response $Y$. Obtaining such data may be easier (and cheaper) in contrast to **labeled data** which may require *costly* human intervention. The goal is to learn interesting information about the predictors. For instance, 1) reduce the dimension to 2 or 3 to visualize data 2) discover subgroups (clustering). 
+
+Two methods: 
+- PCA: for data visualization and pre-processing for supervised learning
+- clustering: discovering unknown subgroups. 
+
+Challenges: 
+- no simple goal (response), hence may be more subjective
+
+Important Applications:
+- discover subgroups by the data itself: such as movie viewers, shoppers, patients
+
+## PCA
+PCA produces a low-dimensional representation of a dataset that explains a good fracton of the variance. It finds a sequence of new variables each of which is a linear combination of the original variables. Those new variables are mutually uncorrelated and are ordered in a decreasing order of variance. 
+
+- PCA is used for data visualization and pre-processing for supervised learning, such as PCR. 
+- *first PCA*: is the result choosing the loadings $\phi_{j1}$, for $1\le j \le p$ such that the new variable $Z_1$ has teh largest sample variance. 
+$$
+Z_1 =\phi_{11}X_1 +\phi_{21}X_2+\cdots +\phi_{p1}X_p
+$$
+has the largest variance, where the coefficients $\phi_{11}, \cdots, \phi_{p1}$ are the PCA *loadings* **normalized** such that $\sum_{j=1}^p \phi_{j1}^2=1$. The normalization avoid the variance of $Z_1$ becomes arbitrary large.  The vector $\phi_1=(\phi_{11}, \cdots, \phi_{p1})^T$ is called the *PCA loading vector* or (PCA direction) in the feature space along which data vary the most. If we project the $N$ data points $x_1, \cdots, x_N$ onto this direction, then the projected values are the principle component **scores** $z_{11} , z_{21}, \cdots, z_{n1}$ for each of the data points. 
+
+ The first PCA loading vector $\phi_1$ defines a direction (line) in the $p$-dimensional feature space that is *closest* to the $n$ observations in terms of the average squared Euclidean distance. Similarly the first two PCA loading vectors span the plane that is closest to the $n$ observations, in terms of the average squared Euclidean distance. 
+
+- second PCA: similarly, $Z_2$ is a linear combination of the original variables that is uncorrelated from $Z_1$ and has the second largest sample variance. The uncorrelation of $Z_2$ and $Z_1$ is equivalent to $\phi_2$ is orthogonal to $\phi_1$. 
+
+- PCA *biplot*: display both PCA scores and loadings of the first two PCA for each data points.
+
+- Scaling the variables matters. If the variables are in different units, it is recommended to scale them to have s.d equal to one. 
+
+- PCA may be understood as   converting the original (**demeaned**) variables   $X=(X_1, X_2, \cdots, X_p)^T$  to new variables $Z=(Z_1, \cdots, Z_p)^T=V^TX$ via an orthogonal transformation matrix $V$, in order to  un-correlate the original variables, such that the new variables $Z$ are uncorrelated, that is ( Note that,  ${\bf Z}$ and ${\bf X}$ are both data matrix of size $N\times p$, and  ${\bf Z}={\bf X}V$ )
+$$
+{\bf Z}^T{\bf Z} = V^T({\bf X}^T{\bf X})V= D^2. 
+$$
+where $V$ and $D$ are defined by the eigen-decomposition of 
+$$
+{\bf X}^T{\bf X}=VD^2V^T
+$${#eq-eigen-decom}
+that is, $V=[v_1, \cdots, v_p]$ is an $p\times p$ orthogonal matrix  formed by the orthonormal eigenvectors of the matrix ${\bf X}^T{\bf X}$ which is the  sample covariance matrix (multiplied by $N-1$) , and $D$ is a $p\times p$ diagonal matrix of singular values of ${\bf X}$ (or equivalently, square roots of the eigenvalues of ${\bf X}^T{\bf X}$).  The $v_j$'s are called the *right singular vector* of ${\bf X}$ and are ordered in decreasing order of the singular values $d_j$. 
+
+- total variance: The total variance 
+$$
+\sum_{j=1}^p Var[X_j] = \sum_{j=1}^pVar[Z_j]=tr({\bf Z}^T{\bf Z})=tr({\bf X}^T{\bf X})
+$$
+The proportion Variance explained by the $m$-th PCA is given by (assuming the data are centered)
+$$
+PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
+$$
+and $\sum_{m=1}^p PVE_m = 1$. 
+
+- How many PCA's to choose? no simple unswer, as the cross-validation can not be used because we have to use the entire data set. The *"scree plot"* can be used to look for an "elbow". 
+
+- SVD: The construction of $V$ and $D$ in @eq-eigen-decom allows the further construction of 
+the SVD of ${\bf X}$  by 
+$${\bf X}=UDV^T =\sum_{j=1}^p d_ju_jv_j^T = \sum_{j=1}^p {\bf X}v_jv_j^T. $${#eq-svd}
+The $N\times p$ matrix $U$ consists of orthonormal vectors $u_j=\frac{{\bf X}v_j}{d_j}$, and spans the column space of ${\bf X}$. The $v_j$ spans the row space of ${\bf X}$. 
+
+## Clustering: finding subgroups or clusters 
+Seek a partition of the data into distinct subgroups so that the observations are quite similar to each other within each subgroup. Clustering looks for *homogeneous subgroups* among the observations. 
+Example: market segmentation. 
+
+similarity are  domain-specifically defined. 
+
+### K-means clustering
+Partition data into a pre-specific number of clusters. Let $C_k$, $1\le k \le K$ denotes the mutually disjoint sets of indices of the observations and their union is the entire data set. The goal is to find K-clusters such that the *within-cluster variation* ($WCV(C_k)$) is least, i.e., we want to solve minimize the total WCV of all $K$ clusters 
+$$
+\min_{C_1, \cdots, C_K} \left\{ \sum_{k=1}^K WCV(C_k) \right\}.
+$${#eq-clustering-var}
+where, 
+$$
+WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
+$$
+** K-means Algorithm**:
+
+1. initial clustering: randomly assign a cluster to an observation. 
+2. Iterate until the cluster assignments stop changing:
+  2.1 (centering) For each of the $K$ cluster, computer *centroid*, which is simply the average of all $p$-feature observations in the $k$-the cluster. 
+  2.2 (clustering assignment) Assign each observation to the cluster whose centro id is the closest (in terms of Euclidean distance). 
+
+- The algorithm is guaranteed to reduce the total variance in @eq-clustering-var at each step. This can be seen from 
+$$
+\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2=2\sum_{i\in C_k}\sum_{j=1}^p (x_{ij}-\bar{x}_{kj})^2
+$$
+where $\bar{x}_{kj}=\frac{1}{|C_k|}\sum_{i\in C_k}x_{ij}$ is the mean for feature $j$ in cluster $C_k$. 
+
+- But it is not guaranteed to give the global minimum. 
+
+- In practice, multiple times of the K-clustering should be performed and the best one can be chosen. 
+
+### Hierarchical clustering
+Ends up with a tree-like *dendrogram* of the observations, that allows us to view at once the clusterings obtained for each possible number of clusters, from 1 to $n$. 
+
+The most common type of hierarchical clustering uses a *bottom-up* or *agglomerative* clustering: a dendrogram is built starting from the leaves and combining clusters up to the trunk. 
+
+**Algorithm**:
+1. start with each point in its own cluster.
+2. identify the *closest* two clusters and merge them. 
+3. repeat
+4. Ends when all points are in a single cluster. 
+
+In general scaling is recommended. 
+
+### Types of linkage
+- Complete: maximal inter-cluster dissimilarity: use the maximum pairwise dissimilarities between observations in two clusters. 
+- single: Minimal inter-cluster dissimilarity. 
+- Average: mean inter-cluster dissimilarity. 
+- Centroid: dissimilarity between the centroid of two classes. May result in undesirable *inversions*. 
+
+### Choice of dissimilarity measure
+- Euclidean distance
+- correlation-based distance: correlation between two observations (not the ususal correlation  between variables)
+
+
+
+## Homework:
+- Conceptual: 1--
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+```
+
+
+```
+
+### Numpy
+
+### Pandas
+```
+
+
+
+```
+
+### Graphics
+```
+
+
+```
+
+### ISLP and statsmodels
+```
+
+```
+
+
+### sklearn
+
+
+### Useful code snippets
+
