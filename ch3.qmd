@@ -36,7 +36,7 @@ where,
 $$
 \hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
 $$
-That is, the fitted values are linear combinations of the response values when there is no intercept. 
+That is, the fitted values are linear combinations of the response values when there is no intercept. In linear regression, scaling variables has no effect, multiplying a variable by a factor of $c$, will simply lead to multiplying the corresponding coefficient estimate by a factor of $1/c$. 
 
 ### Assessing the accuracy of the coefficients
 Let $\sigma^2=\text{Var}(\epsilon)$, that is, $\sigma^2$ is the variance of $Y$, (estimated by $\sigma^2\approx =\text{RSE} =\text{RSS}/(n-p-1)$. )  Assume each observation have *common variance* (homoscedasticity) and are *uncorrelated*,   then the standard errors under repeated sampling

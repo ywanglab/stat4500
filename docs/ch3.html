@@ -309,7 +309,7 @@ r_{xy} = \frac{\text{cov}(x,y)}{\sigma_x\sigma_y}=\frac{(x_i-\bar{x})(y_i-\bar{y
 \hat{y}_i=x_i \hat{\beta}=\sum_{i=1}^n a_i y_i
 \]</span> where, <span class="math display">\[
 \hat{\beta} =\frac{\sum_{i=1}^n x_iy_i}{ \sum_{i=1}^{n} x_i^2}
-\]</span> That is, the fitted values are linear combinations of the response values when there is no intercept.</p>
+\]</span> That is, the fitted values are linear combinations of the response values when there is no intercept. In linear regression, scaling variables has no effect, multiplying a variable by a factor of <span class="math inline">\(c\)</span>, will simply lead to multiplying the corresponding coefficient estimate by a factor of <span class="math inline">\(1/c\)</span>.</p>
 <section id="assessing-the-accuracy-of-the-coefficients" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="assessing-the-accuracy-of-the-coefficients"><span class="header-section-number">3.1.1</span> Assessing the accuracy of the coefficients</h3>
 <p>Let <span class="math inline">\(\sigma^2=\text{Var}(\epsilon)\)</span>, that is, <span class="math inline">\(\sigma^2\)</span> is the variance of <span class="math inline">\(Y\)</span>, (estimated by <span class="math inline">\(\sigma^2\approx =\text{RSE} =\text{RSS}/(n-p-1)\)</span>. ) Assume each observation have <em>common variance</em> (homoscedasticity) and are <em>uncorrelated</em>, then the standard errors under repeated sampling <span class="math display">\[

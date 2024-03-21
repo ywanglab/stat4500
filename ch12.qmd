@@ -1,5 +1,5 @@
 # Chapter 12: Unsupervised Learning 
-Unsupervised learning only observes features $X_1, X_2, \cdots, X_p$ (**unlabeled data**), no associated response $Y$. Obtaining such data may be easier (and cheaper) in contrast to **labeled data** which may require *costly* human intervention. The goal is to learn interesting information about the predictors. For instance, 1) reduce the dimension to 2 or 3 to visualize data 2) discover subgroups (clustering). 
+Unsupervised learning only observes features $X_1, X_2, \cdots, X_p$ (**unlabeled data**), no associated response $Y$. Obtaining such data may be easier (and cheaper) in contrast to **labeled data** which may require *costly* human intervention. The goal is to learn interesting information about the predictors. For instance, 1) reduce the dimension to 2 or 3 to visualize data in EDA 2) discover subgroups (clustering). 
 
 Two methods: 
 - PCA: for data visualization and pre-processing for supervised learning
@@ -12,7 +12,7 @@ Important Applications:
 - discover subgroups by the data itself: such as movie viewers, shoppers, patients
 
 ## PCA
-PCA produces a low-dimensional representation of a dataset that explains a good fracton of the variance. It finds a sequence of new variables each of which is a linear combination of the original variables. Those new variables are mutually uncorrelated and are ordered in a decreasing order of variance. 
+PCA produces a low-dimensional representation of a dataset that explains a good fraction of the variance. It finds a sequence of new variables each of which is a linear combination of the original variables. Those new variables are mutually uncorrelated and are ordered in a decreasing order of variance. 
 
 - PCA is used for data visualization and pre-processing for supervised learning, such as PCR. 
 - *first PCA*: is the result choosing the loadings $\phi_{j1}$, for $1\le j \le p$ such that the new variable $Z_1$ has teh largest sample variance. 
@@ -21,11 +21,13 @@ Z_1 =\phi_{11}X_1 +\phi_{21}X_2+\cdots +\phi_{p1}X_p
 $$
 has the largest variance, where the coefficients $\phi_{11}, \cdots, \phi_{p1}$ are the PCA *loadings* **normalized** such that $\sum_{j=1}^p \phi_{j1}^2=1$. The normalization avoid the variance of $Z_1$ becomes arbitrary large.  The vector $\phi_1=(\phi_{11}, \cdots, \phi_{p1})^T$ is called the *PCA loading vector* or (PCA direction) in the feature space along which data vary the most. If we project the $N$ data points $x_1, \cdots, x_N$ onto this direction, then the projected values are the principle component **scores** $z_{11} , z_{21}, \cdots, z_{n1}$ for each of the data points. 
 
- The first PCA loading vector $\phi_1$ defines a direction (line) in the $p$-dimensional feature space that is *closest* to the $n$ observations in terms of the average squared Euclidean distance. Similarly the first two PCA loading vectors span the plane that is closest to the $n$ observations, in terms of the average squared Euclidean distance. 
+
 
 - second PCA: similarly, $Z_2$ is a linear combination of the original variables that is uncorrelated from $Z_1$ and has the second largest sample variance. The uncorrelation of $Z_2$ and $Z_1$ is equivalent to $\phi_2$ is orthogonal to $\phi_1$. 
 
-- PCA *biplot*: display both PCA scores and loadings of the first two PCA for each data points.
+- Each loading vector and the corresponding PC are unique up to sign flips, this is because the after flipping the sign, the loading vector still defines the same direction. 
+
+- PCA *biplot*: display both PCA scores and loadings of the first two PCA for each data points. The middle point $(0,0)$ indicate an observation with average levels of both principal components. 
 
 - Scaling the variables matters. If the variables are in different units, it is recommended to scale them to have s.d equal to one. 
 
@@ -39,31 +41,89 @@ $$
 $${#eq-eigen-decom}
 that is, $V=[v_1, \cdots, v_p]$ is an $p\times p$ orthogonal matrix  formed by the orthonormal eigenvectors of the matrix ${\bf X}^T{\bf X}$ which is the  sample covariance matrix (multiplied by $N-1$) , and $D$ is a $p\times p$ diagonal matrix of singular values of ${\bf X}$ (or equivalently, square roots of the eigenvalues of ${\bf X}^T{\bf X}$).  The $v_j$'s are called the *right singular vector* of ${\bf X}$ and are ordered in decreasing order of the singular values $d_j$. 
 
-- total variance: The total variance 
-$$
-\sum_{j=1}^p Var[X_j] = \sum_{j=1}^pVar[Z_j]=tr({\bf Z}^T{\bf Z})=tr({\bf X}^T{\bf X})
-$$
-The proportion Variance explained by the $m$-th PCA is given by (assuming the data are centered)
-$$
-PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
-$$
-and $\sum_{m=1}^p PVE_m = 1$. 
 
-- How many PCA's to choose? no simple unswer, as the cross-validation can not be used because we have to use the entire data set. The *"scree plot"* can be used to look for an "elbow". 
 
 - SVD: The construction of $V$ and $D$ in @eq-eigen-decom allows the further construction of 
 the SVD of ${\bf X}$  by 
 $${\bf X}=UDV^T =\sum_{j=1}^p d_ju_jv_j^T = \sum_{j=1}^p {\bf X}v_jv_j^T. $${#eq-svd}
 The $N\times p$ matrix $U$ consists of orthonormal vectors $u_j=\frac{{\bf X}v_j}{d_j}$, and spans the column space of ${\bf X}$. The $v_j$ spans the row space of ${\bf X}$. 
 
+Note with the SVD of ${\bf X}=UDV^T$, ${\bf Z}= [z_1, \cdots, z_p]={\bf X}V=UD$. 
+
+- PCA can also be understood as the solution to the following optimization problem to find the best $M$-dimensional approximation $x_{ij}\approx \sum_{m=1}^M a_{im} b_{jm}$, assuming the data matrix is centered
+$$
+\min_{{\bf A}\in \mathbb{R}^{n\times M}, {\bf B}\in \mathbb{R}^{p\times M}} \left\{ \sum_{j=1}^p\sum_{i=1}^n \left(x_{ij} - \sum_{m=1}^M a_{im} b_{jm}   \right) \right\}.
+$$ {#eq-pca-approx}
+It turns out that $\hat{\bf A}$ and $\hat{\bf B}$ solved the above problem are in fact the first $M$ PCA scores and loading vectors. 
+
+Thus, the first PCA loading vector $\phi_1$ defines a direction (line) in the $p$-dimensional feature space that is *closest* to the $n$ observations in terms of the average squared Euclidean distance. Similarly the first two PCA loading vectors span the plane that is closest to the $n$ observations, in terms of the average squared Euclidean distance. 
+
+- total variance: The total variance 
+$$
+\sum_{j=1}^p Var[X_j] = \sum_{j=1}^pVar[Z_j]=tr({\bf Z}^T{\bf Z})=tr({\bf X}^T{\bf X})
+$$
+The Proportion of Variance explained by the $m$-th PCA is given by (assuming the data are centered)
+$$
+PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
+$${#eq-PVE}
+and $\sum_{m=1}^p PVE_m = 1$. 
+
+The total variance of the data can be decomposed as 
+$$
+\text{var. of data }= \text{var. of first M PCs } + \text{MSE of M-dim approximation}
+$$
+i.e., 
+$$
+\sum_{j=1}^p\frac{1}{n} \sum_{i=1}^n x_{ij}^2 = \sum_{m=1}^M\frac{1}{n} \sum_{i=1}^n z_{im}^2 + \frac{1}{n} \sum_{j=1}^p \sum_{i=1}^n \left( x_{ij}- \sum_{m=1}^M z_{im}\phi_{jm}\right)^2
+$$
+So maximizing the variance of the first $M$-PCs, is equivalent to minimize the MSE of the $M$-dim approximation, and vice versa.  Using the PVE defined in @eq-PVE and diving the above equation by the total variance, we obtain
+$$
+1-\frac{\sum_{j=1}^p \sum_{i=1}^n \left( x_{ij}- \sum_{m=1}^M z_{im}\phi_{jm}\right)^2}{\sum_{j=1}^p \sum_{i=1}^n x_{ij}^2}=1-\frac{RSS}{RSS}=R^2
+$$
+So the PVE explained by the first $M$ principle components can be interpreted as the $R^2$ of the approximation for ${\bf X} $ using the first $M$ PC's. 
+
+- How many PCA's to choose? no simple answer, as the cross-validation can not be used because we have to use the entire data set. The *"scree plot"* which plots PVE of each PC's can be used to look for an "elbow". Note 
+$X=VZ$. If you $M<p$ PCA is chosen, then 
+$$x_i=(x_{i1}, \cdots, x_{ip})^T \approx \sum_{m=1}^M v_m z_{im},\qquad x_{ij}\approx \sum_{m=1}^M v_{jm} z_{im}
+$$
+
+## Matrix completion by using PCA to  impute missing values
+Missing values may be simply dropped or replaced with mean or median. But we can do better by exploiting the correlation between the variables, if the missingness is random (nor informative, such as missing value was because it was too large). Consider a modified version of @eq-pca-approx, 
+$$
+\min_{{\bf A}\in \mathbb{R}^{n\times M}, {\bf B}\in \mathbb{R}^{p\times M}} \left\{ \sum_{(i,j)\in \mathcal{O}} \left(x_{ij} - \sum_{m=1}^M a_{im} b_{jm}   \right) \right\}.
+$$
+where $\mathcal{O}$ is the set of all *observed* indices $(i,j)$, a subset of all possible $n\times p$ pairs. The problem can be solved approximately using the "Hard-Impute" algorithm. The algorithm not only estimates $\hat{a}_{im}$ and $\hat{b}_{jm}$, but can approximately recover the $M$ PC scores and loadings. 
+
+**(Hard-Impute) Algorithm**:
+
+1. Create a complete matrix $\tilde{\bf X}$ with missing elements $\tilde{x}_{ij}$ replaced by the mean $\bar{x}_j$ of the observed for the $j$-th variable. 
+2. repeat *a)-(c) until the objective @eq-matrix-complete fails to decarese:
+  (a) Solve 
+  $$
+\min_{{\bf A}\in \mathbb{R}^{n\times M}, {\bf B}\in \mathbb{R}^{p\times M}} \left\{ \sum_{j=1}^p\sum_{i=1}^n \left(\tilde{x}_{ij} - \sum_{m=1}^M a_{im} b_{jm}   \right) \right\}.
+$$ 
+by computing the PC's of $\tilde{\bf X}$. 
+  (b) imputing the missing values by set $\tilde{x}_{ij}\leftarrow \sum_{m=1}^M \hat{a}_{im}\hat{b}_{jm}$ for a fixed $M$. 
+  (c) Computing the objective error using the observed data (a supervised way) 
+  $$
+  \sum_{(i,j)\in \mathcal{O}} \left(x_{ij} - \sum_{m=1}^M \hat{a}_{im} \hat{b}_{jm}   \right)
+  $${#eq-matrix-complete}
+3. Return the estimated missing entries $\tilde{x}_{ij}, (i,j)\notin \mathcal{O}$. 
+
+
+The algorithm may be used in powering a recommender systems. 
+
+
 ## Clustering: finding subgroups or clusters 
 Seek a partition of the data into distinct subgroups so that the observations are quite similar to each other within each subgroup. Clustering looks for *homogeneous subgroups* among the observations. 
-Example: market segmentation. 
+Example: market segmentation, gene expressions
 
 similarity are  domain-specifically defined. 
 
+There are two types of clustering tasks: 1) cluster observations on the basis of the features in order to identify subgroups among observations. 2) Cluster the features on the basis of the observations in order to discover subgroups among features. 
+
 ### K-means clustering
-Partition data into a pre-specific number of clusters. Let $C_k$, $1\le k \le K$ denotes the mutually disjoint sets of indices of the observations and their union is the entire data set. The goal is to find K-clusters such that the *within-cluster variation* ($WCV(C_k)$) is least, i.e., we want to solve minimize the total WCV of all $K$ clusters 
+Partition data into a pre-specific number of  disjoint clusters. Let $C_k$, $1\le k \le K$ denotes the mutually *disjoint* sets of indices of the observations and their union is the entire data set. The goal is to find K-clusters such that the *within-cluster variation* ($WCV(C_k)$) is least, i.e., we want to solve minimize the total WCV of all $K$ clusters 
 $$
 \min_{C_1, \cdots, C_K} \left\{ \sum_{k=1}^K WCV(C_k) \right\}.
 $${#eq-clustering-var}
@@ -71,7 +131,9 @@ where,
 $$
 WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
 $$
-** K-means Algorithm**:
+The problem is difficult to solve because there are $K^n$ (each data point can have $K$ choices ) ways to partition $n$ data points into $K$ clusters. 
+
+**K-means Algorithm**:
 
 1. initial clustering: randomly assign a cluster to an observation. 
 2. Iterate until the cluster assignments stop changing:
@@ -84,9 +146,9 @@ $$
 $$
 where $\bar{x}_{kj}=\frac{1}{|C_k|}\sum_{i\in C_k}x_{ij}$ is the mean for feature $j$ in cluster $C_k$. 
 
-- But it is not guaranteed to give the global minimum. 
+- But it is not guaranteed to give the global minimum. It only finds a local minimum. 
 
-- In practice, multiple times of the K-clustering should be performed and the best one can be chosen. 
+- In practice, multiple times of the K-clustering should be performed and the best one can be chosen, this is because K-means only finds a local minimum that depends on the initial clustering. 
 
 ### Hierarchical clustering
 Ends up with a tree-like *dendrogram* of the observations, that allows us to view at once the clusterings obtained for each possible number of clusters, from 1 to $n$. 
