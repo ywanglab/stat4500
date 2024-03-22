@@ -183,7 +183,7 @@ But PLS identifies these new features in a *supervised way*, that is, PLS uses $
 First PLS standardizes the $p$ predictors. PLS identifies the first component 
 $Z_1 = \sum_{j=1}^p \phi_{1j}X_j$ by choosing $\phi_{1j}=<X_j, Y>$, the coefficient from the simple linear regression of $Y$ onto $X_j$. Since this coefficient is equal to the correlation between $Y$ and $X_j$, PLS places the highest weight on the variables that are most strongly related to $Y$. The PLS direction does not fit the predictors as closely as does PCA, but it does a better job explaining the response. 
 
-Next, PLS orthogonality each $X_j$ with respect to $Z_1$, that is, replace each $X_j$ with the residual by regressing $X_j$ on $Z_1$, and then repeat the same process. 
+Next, PLS orthogonalize each $X_j$ with respect to $Z_1$, that is, replace each $X_j$ with the residual by regressing $X_j$ on $Z_1$, and then form the new direction $Z_2$ using the residuals of the $X$ variables. This amounts to using the informaton of $X$ not explained by $Z_1$. And the process repeats. 
 
 When $p$ is large, especially $p>n$, the forward selection method, shrinkage methods (lasso or ridge), PCR, PLR fit a *less flexible* model, hence particularly useful in performing regression in high-dimensional settings. 
 

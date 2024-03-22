@@ -1592,7 +1592,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, breakable, colback=white, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, coltitle=black, colframe=quarto-callout-note-color-frame, toprule=.15mm, titlerule=0mm, leftrule=.75mm, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, breakable, titlerule=0mm, opacityback=0, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, coltitle=black, bottomrule=.15mm, toprule=.15mm, opacitybacktitle=0.6, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1659,7 +1659,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, breakable, colback=white, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, coltitle=black, colframe=quarto-callout-note-color-frame, toprule=.15mm, titlerule=0mm, leftrule=.75mm, bottomtitle=1mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, breakable, titlerule=0mm, opacityback=0, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, coltitle=black, bottomrule=.15mm, toprule=.15mm, opacitybacktitle=0.6, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.
@@ -2795,9 +2795,11 @@ the variables that are most strongly related to \(Y\). The PLS direction
 does not fit the predictors as closely as does PCA, but it does a better
 job explaining the response.
 
-Next, PLS orthogonality each \(X_j\) with respect to \(Z_1\), that is,
+Next, PLS orthogonalize each \(X_j\) with respect to \(Z_1\), that is,
 replace each \(X_j\) with the residual by regressing \(X_j\) on \(Z_1\),
-and then repeat the same process.
+and then form the new direction \(Z_2\) using the residuals of the \(X\)
+variables. This amounts to using the informaton of \(X\) not explained
+by \(Z_1\). And the process repeats.
 
 When \(p\) is large, especially \(p>n\), the forward selection method,
 shrinkage methods (lasso or ridge), PCR, PLR fit a \emph{less flexible}
@@ -5951,7 +5953,8 @@ order of variance.
 \end{itemize}
 
 Note with the SVD of \({\bf X}=UDV^T\),
-\({\bf Z}= [z_1, \cdots, z_p]={\bf X}V=UD\).
+\({\bf Z}= [z_1, \cdots, z_p]={\bf X}V=UD\).Hence, \(z_i, z_j\) are
+orthogonal.
 
 \begin{itemize}
 \tightlist
@@ -6082,6 +6085,8 @@ basis of the features in order to identify subgroups among observations.
 2) Cluster the features on the basis of the observations in order to
 discover subgroups among features.
 
+Clustering often are not robust.
+
 \subsection{K-means clustering}\label{k-means-clustering}
 
 Partition data into a pre-specific number of disjoint clusters. Let
@@ -6135,19 +6140,45 @@ into \(K\) clusters.
 
 Ends up with a tree-like \emph{dendrogram} of the observations, that
 allows us to view at once the clusterings obtained for each possible
-number of clusters, from 1 to \(n\).
+number of clusters, from 1 (no cut line) to \(n\) (cut at height 0).
+After a horizontal cut line is drawn, the distinct sets of observations
+beneath the cut can be interpreted as clusters. The cut height serves
+the same role as \(K\) in K-means clustering.
 
 The most common type of hierarchical clustering uses a \emph{bottom-up}
 or \emph{agglomerative} clustering: a dendrogram is built starting from
 the leaves and combining clusters up to the trunk.
 
+The term \emph{hierarchical} refers to the fact that clusters obtained
+by cutting the deprogram at a given height are necessarily nested within
+the clusters obtained by cutting at a greater height. However, this
+assumption may be unrealistic. for example, our observations correspond
+to a group of men and women, evenly split among Americans, Japanese, and
+French. We can imagine a scenario in which the best division into two
+groups might split these people by gender, and the best division into
+three groups might split them by nationality. In this case, the ture
+clusters are not nested, in the sense that the best divsion into three
+groups does not result from taking the best division into two groups and
+splitting up one of those groups.
+
+So hierarchical clustering can sometiems yield \emph{worse} results than
+K-means clustering.
+
 \textbf{Algorithm}: 1. start with each point in its own cluster. 2.
-identify the \emph{closest} two clusters and merge them. 3. repeat 4.
-Ends when all points are in a single cluster.
+identify the \emph{closest} two clusters and merge them. The height of a
+fusion point of these two clusters, indicate how different they are.
+Note one can not conclude the similarity of two observations based on
+their horizontal proximity. 3. repeat 4. Ends when all points are in a
+single cluster.
 
 In general scaling is recommended.
 
 \subsection{Types of linkage}\label{types-of-linkage}
+
+Linkage is used to calculate the dissimilarity between a pair of
+clusters with more than one observations. Average and complete linkages
+are generally preferred, as they tend to yield more balanced
+dendrograms.
 
 \begin{itemize}
 \tightlist
@@ -6155,16 +6186,19 @@ In general scaling is recommended.
   Complete: maximal inter-cluster dissimilarity: use the maximum
   pairwise dissimilarities between observations in two clusters.
 \item
-  single: Minimal inter-cluster dissimilarity.
+  single: Minimal inter-cluster dissimilarity. Single linkage can result
+  in extended, trailing clusters in which single observations are fused
+  one-at-a-time.
 \item
   Average: mean inter-cluster dissimilarity.
 \item
-  Centroid: dissimilarity between the centroid of two classes. May
-  result in undesirable \emph{inversions}.
+  Centroid: dissimilarity between the centroids of two classes. May
+  result in undesirable \emph{inversions}, where two clusters are fused
+  at a height \emph{below} either of the individual clusters.
 \end{itemize}
 
-\subsection{Choice of dissimilarity
-measure}\label{choice-of-dissimilarity-measure}
+\subsection{Choice of dissimilarity measure and variable
+scaling}\label{choice-of-dissimilarity-measure-and-variable-scaling}
 
 \begin{itemize}
 \tightlist
@@ -6172,7 +6206,14 @@ measure}\label{choice-of-dissimilarity-measure}
   Euclidean distance
 \item
   correlation-based distance: correlation between two observations (not
-  the ususal correlation between variables)
+  the usual correlation between variables). Correlation-based distance
+  focuses on the shapes of observation profiles rather than their
+  magnitudes.
+\item
+  one should carefully consider if the variables need to be scaled. If
+  the variables are scaled to have standard deviation one before the
+  inter-observation dissimilarities are computed, then each variable
+  will in effect be given equal importance.
 \end{itemize}
 
 \section{Homework:}\label{homework-8}
@@ -6195,17 +6236,53 @@ measure}\label{choice-of-dissimilarity-measure}
 
 \subsection{Numpy}\label{numpy-10}
 
+\begin{verbatim}
+pcaUS.explained_variance_ratio_.cumsum()
+
+U, D, V = np.linalg.svd(X, full_matrices=False)#note V is the V^T in the math formula
+
+np.linalg.norm(V, 2, axis=1)
+
+np.allclose(U.dot(np.diag(D)).dot(V)-X, 0)
+
+r_idx = np.random.choice(np.arange(X.shape[0]),
+                         n_omit,
+                         replace=False)
+
+Xbar = np.nanmean(Xhat, axis=0) # ignoring nan
+
+ismiss = np.isnan(Xna)
+
+np.corrcoef(Xapp[ismiss], X[ismiss])
+
+np.random.standard_normal((50,2));
+
+np.multiply.outer(np.ones(X.shape[0]), X[0]) #make X.shape[0] copies of the first row X[0]
+
+#computing pairwise distance between rows of X:
+D = np.zeros((X.shape[0], X.shape[0]));
+for i in range(X.shape[0]):
+    x_ = np.multiply.outer(np.ones(X.shape[0]), X[i]) # each row of X is one point (obs)
+    D[i] = np.sqrt(np.sum((X - x_)**2, 1)); # D[i]: ith row of D. distance from the i-th row of X.
+\end{verbatim}
+
 \subsection{Pandas}\label{pandas-10}
 
 \begin{verbatim}
+USArrests.mean() # column means
+USArrests.var() # colmn variance
 
-
+pd.crosstab(nci_labs['label'],
+            pd.Series(comp_cut.reshape(-1), name='Complete'))
 \end{verbatim}
 
 \subsection{Graphics}\label{graphics-10}
 
 \begin{verbatim}
+ax.set_xticks(ticks)
 
+
+ax.axhline(140, c='r', linewidth=4);
 \end{verbatim}
 
 \subsection{ISLP and statsmodels}\label{islp-and-statsmodels-8}
@@ -6214,6 +6291,242 @@ measure}\label{choice-of-dissimilarity-measure}
 \end{verbatim}
 
 \subsection{sklearn}\label{sklearn-8}
+
+\subsubsection{PCA}\label{pca-1}
+
+\begin{verbatim}
+scaler = StandardScaler(with_std=True,
+                        with_mean=True)
+USArrests_scaled = scaler.fit_transform(USArrests)
+pcaUS = PCA()
+pcaUS.fit(USArrests_scaled)
+pcaUS.mean_
+scores = pcaUS.transform(USArrests_scaled)
+pcaUS.components_  # loadings
+scores.std(0, ddof=1) #axis=0, divided by N-ddof=N-1
+pcaUS.explained_variance_
+pcaUS.explained_variance_ratio_
+pcaUS.n_components_
+
+\end{verbatim}
+
+\subsubsection{PCA plot}\label{pca-plot}
+
+\begin{verbatim}
+fig, axes = plt.subplots(1, 2, figsize=(15,6))
+ax = axes[0]
+ax.scatter(nci_scores[:,0],
+           nci_scores[:,1],
+           c=nci_groups,
+           marker='o',
+           s=50)
+ax.set_xlabel('PC1'); ax.set_ylabel('PC2')
+\end{verbatim}
+
+\subsubsection{PCA biplot}\label{pca-biplot}
+
+\begin{verbatim}
+scale_arrow = s_ = 2
+scores[:,1] *= -1      #flip the scores and loadings at the same time. 
+pcaUS.components_[1] *= -1 # flip the y-axis
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+ax.scatter(scores[:,0], scores[:,1])
+ax.set_xlabel('PC%d' % (i+1))
+ax.set_ylabel('PC%d' % (j+1))
+for k in range(pcaUS.components_.shape[1]):
+    ax.arrow(0, 0, s_*pcaUS.components_[i,k], s_*pcaUS.components_[j,k])
+    ax.text(s_*pcaUS.components_[i,k],
+            s_*pcaUS.components_[j,k],
+            USArrests.columns[k])
+\end{verbatim}
+
+\subsubsection{PCA plot for variance
+explained}\label{pca-plot-for-variance-explained}
+
+\begin{verbatim}
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+ticks = np.arange(pcaUS.n_components_)+1
+ax = axes[0]
+ax.plot(ticks,
+        pcaUS.explained_variance_ratio_,
+        marker='o')
+ax.set_xlabel('Principal Component');
+ax.set_ylabel('Proportion of Variance Explained')
+ax.set_ylim([0,1])
+ax.set_xticks(ticks)
+
+ax = axes[1]
+ax.plot(ticks,
+        pcaUS.explained_variance_ratio_.cumsum(),
+        marker='o')
+ax.set_xlabel('Principal Component')
+ax.set_ylabel('Cumulative Proportion of Variance Explained')
+ax.set_ylim([0, 1])
+ax.set_xticks(ticks)
+fig
+\end{verbatim}
+
+\subsubsection{Matrix completion}\label{matrix-completion}
+
+\begin{verbatim}
+def low_rank(X, M=1): #low rank approx to X
+    U, D, V = np.linalg.svd(X)
+    L = U[:,:M] * D[None,:M]
+    return L.dot(V[:M])
+    
+Xhat = Xna.copy()
+Xbar = np.nanmean(Xhat, axis=0) 
+Xhat[r_idx, c_idx] = Xbar[c_idx]
+
+thresh = 1e-7
+rel_err = 1
+count = 0
+ismiss = np.isnan(Xna)#Xna: original matrix with nan; Xhat: matrix completed with imputed values
+mssold = np.mean(Xhat[~ismiss]**2)
+mss0 = np.mean(Xna[~ismiss]**2)
+
+while rel_err > thresh:
+    count += 1
+    # Step 2(a)
+    Xapp = low_rank(Xhat, M=1)
+    # Step 2(b)
+    Xhat[ismiss] = Xapp[ismiss]
+    # Step 2(c)
+    mss = np.mean(((Xna - Xapp)[~ismiss])**2)
+    rel_err = (mssold - mss) / mss0
+    mssold = mss
+    print("Iteration: {0}, MSS:{1:.3f}, Rel.Err {2:.2e}"
+          .format(count, mss, rel_err))
+          
+np.corrcoef(Xapp[ismiss], X[ismiss])
+\end{verbatim}
+
+\subsection{K-Clustering}\label{k-clustering}
+
+\begin{verbatim}
+from sklearn.cluster import \
+     (KMeans,
+      AgglomerativeClustering)
+      
+kmeans = KMeans(n_clusters=2,
+                random_state=2,
+                n_init=20).fit(X)
+                
+kmeans.labels_  #cluster assignments                
+                
+\end{verbatim}
+
+\subsection{Hierarchical Clustering}\label{hierarchical-clustering-1}
+
+\begin{verbatim}
+from sklearn.cluster import \
+     (KMeans,
+      AgglomerativeClustering)
+from scipy.cluster.hierarchy import \
+     (dendrogram,
+      cut_tree)
+from ISLP.cluster import compute_linkage
+
+HClust = AgglomerativeClustering
+hc_comp = HClust(distance_threshold=0, # same as None. min. distance to not merge
+                 n_clusters=None,
+                 linkage='complete')
+hc_comp.fit(X)
+
+hc_avg = HClust(distance_threshold=0,
+                n_clusters=None,
+                linkage='average');
+hc_avg.fit(X)
+hc_sing = HClust(distance_threshold=0,
+                 n_clusters=None,
+                 linkage='single');
+hc_sing.fit(X);
+
+cut_tree(linkage_comp, n_clusters=4).T #linkage_comp is the linkage-matrix represenation
+
+cut_tree(linkage_comp, height=5).T
+\end{verbatim}
+
+\subsubsection{Use precomputed matrix for hierarchical
+clustering}\label{use-precomputed-matrix-for-hierarchical-clustering}
+
+\begin{verbatim}
+D = np.zeros((X.shape[0], X.shape[0]));
+for i in range(X.shape[0]):
+    x_ = np.multiply.outer(np.ones(X.shape[0]), X[i]) # each row of X is one point (obs)
+    D[i] = np.sqrt(np.sum((X - x_)**2, 1)); # D[i]: ith row of D. distance from the i-th row of X.
+    
+hc_sing_pre = HClust(distance_threshold=0,
+                     n_clusters=None,
+                     metric='precomputed',
+                     linkage='single')
+hc_sing_pre.fit(D) # use precomputed distance matrix
+    
+\end{verbatim}
+
+\subsubsection{Plotting dendrogram}\label{plotting-dendrogram}
+
+\begin{verbatim}
+cargs = {'color_threshold':-np.inf, # not using the default coloring method
+         'above_threshold_color':'black'}
+linkage_comp = compute_linkage(hc_comp) # compute teh linkage-matrix representation
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp,
+           ax=ax,
+           **cargs);
+# coloring           
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp,
+           ax=ax,
+           color_threshold=4,
+           above_threshold_color='black');
+
+
+dendrogram(linkage_pca,
+           labels=np.asarray(nci_labs),
+           leaf_font_size=10,
+           ax=ax,
+           **cargs)
+\end{verbatim}
+
+\subsubsection{a function to plot
+dendrogram}\label{a-function-to-plot-dendrogram}
+
+\begin{verbatim}
+def plot_nci(linkage, ax, cut=-np.inf):
+    cargs = {'above_threshold_color':'black',
+             'color_threshold':cut}
+    hc = HClust(n_clusters=None,
+                distance_threshold=0,
+                linkage=linkage.lower()).fit(nci_scaled)
+    linkage_ = compute_linkage(hc)
+    dendrogram(linkage_,
+               ax=ax,
+               labels=np.asarray(nci_labs),
+               leaf_font_size=10,
+               **cargs)
+    ax.set_title('%s Linkage' % linkage)
+    return hc
+    
+plot_nci('Complete', ax, cut=140)
+ax.axhline(140, c='r', linewidth=4);
+    
+\end{verbatim}
+
+\subsubsection{Use scaled features for hierarchical
+clustering}\label{use-scaled-features-for-hierarchical-clustering}
+
+\begin{verbatim}
+scaler = StandardScaler()
+X_scale = scaler.fit_transform(X)
+hc_comp_scale = HClust(distance_threshold=0,
+                       n_clusters=None,
+                       linkage='complete').fit(X_scale)
+linkage_comp_scale = compute_linkage(hc_comp_scale)
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp_scale, ax=ax, **cargs)
+ax.set_title("Hierarchical Clustering with Scaled Features");
+\end{verbatim}
 
 \subsection{Useful code snippets}\label{useful-code-snippets-5}
 

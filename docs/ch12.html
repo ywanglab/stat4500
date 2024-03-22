@@ -239,7 +239,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">12.3.1</span> K-means clustering</a></li>
   <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering"><span class="header-section-number">12.3.2</span> Hierarchical clustering</a></li>
   <li><a href="#types-of-linkage" id="toc-types-of-linkage" class="nav-link" data-scroll-target="#types-of-linkage"><span class="header-section-number">12.3.3</span> Types of linkage</a></li>
-  <li><a href="#choice-of-dissimilarity-measure" id="toc-choice-of-dissimilarity-measure" class="nav-link" data-scroll-target="#choice-of-dissimilarity-measure"><span class="header-section-number">12.3.4</span> Choice of dissimilarity measure</a></li>
+  <li><a href="#choice-of-dissimilarity-measure-and-variable-scaling" id="toc-choice-of-dissimilarity-measure-and-variable-scaling" class="nav-link" data-scroll-target="#choice-of-dissimilarity-measure-and-variable-scaling"><span class="header-section-number">12.3.4</span> Choice of dissimilarity measure and variable scaling</a></li>
   </ul></li>
   <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">12.4</span> Homework:</a></li>
   <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">12.5</span> Code Snippet</a>
@@ -250,7 +250,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">12.5.4</span> Graphics</a></li>
   <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">12.5.5</span> ISLP and statsmodels</a></li>
   <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">12.5.6</span> sklearn</a></li>
-  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">12.5.7</span> Useful code snippets</a></li>
+  <li><a href="#k-clustering" id="toc-k-clustering" class="nav-link" data-scroll-target="#k-clustering"><span class="header-section-number">12.5.7</span> K-Clustering</a></li>
+  <li><a href="#hierarchical-clustering-1" id="toc-hierarchical-clustering-1" class="nav-link" data-scroll-target="#hierarchical-clustering-1"><span class="header-section-number">12.5.8</span> Hierarchical Clustering</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">12.5.9</span> Useful code snippets</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -300,7 +302,7 @@ Z_1 =\phi_{11}X_1 +\phi_{21}X_2+\cdots +\phi_{p1}X_p
 \tag{12.1}\]</span></span> that is, <span class="math inline">\(V=[v_1, \cdots, v_p]\)</span> is an <span class="math inline">\(p\times p\)</span> orthogonal matrix formed by the orthonormal eigenvectors of the matrix <span class="math inline">\({\bf X}^T{\bf X}\)</span> which is the sample covariance matrix (multiplied by <span class="math inline">\(N-1\)</span>) , and <span class="math inline">\(D\)</span> is a <span class="math inline">\(p\times p\)</span> diagonal matrix of singular values of <span class="math inline">\({\bf X}\)</span> (or equivalently, square roots of the eigenvalues of <span class="math inline">\({\bf X}^T{\bf X}\)</span>). The <span class="math inline">\(v_j\)</span>’s are called the <em>right singular vector</em> of <span class="math inline">\({\bf X}\)</span> and are ordered in decreasing order of the singular values <span class="math inline">\(d_j\)</span>.</p></li>
 <li><p>SVD: The construction of <span class="math inline">\(V\)</span> and <span class="math inline">\(D\)</span> in <a href="#eq-eigen-decom" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-eigen-decom</span></a> allows the further construction of the SVD of <span class="math inline">\({\bf X}\)</span> by <span id="eq-svd"><span class="math display">\[{\bf X}=UDV^T =\sum_{j=1}^p d_ju_jv_j^T = \sum_{j=1}^p {\bf X}v_jv_j^T.  \tag{12.2}\]</span></span> The <span class="math inline">\(N\times p\)</span> matrix <span class="math inline">\(U\)</span> consists of orthonormal vectors <span class="math inline">\(u_j=\frac{{\bf X}v_j}{d_j}\)</span>, and spans the column space of <span class="math inline">\({\bf X}\)</span>. The <span class="math inline">\(v_j\)</span> spans the row space of <span class="math inline">\({\bf X}\)</span>.</p></li>
 </ul>
-<p>Note with the SVD of <span class="math inline">\({\bf X}=UDV^T\)</span>, <span class="math inline">\({\bf Z}= [z_1, \cdots, z_p]={\bf X}V=UD\)</span>.</p>
+<p>Note with the SVD of <span class="math inline">\({\bf X}=UDV^T\)</span>, <span class="math inline">\({\bf Z}= [z_1, \cdots, z_p]={\bf X}V=UD\)</span>.Hence, <span class="math inline">\(z_i, z_j\)</span> are orthogonal.</p>
 <ul>
 <li>PCA can also be understood as the solution to the following optimization problem to find the best <span class="math inline">\(M\)</span>-dimensional approximation <span class="math inline">\(x_{ij}\approx \sum_{m=1}^M a_{im} b_{jm}\)</span>, assuming the data matrix is centered <span id="eq-pca-approx"><span class="math display">\[
 \min_{{\bf A}\in \mathbb{R}^{n\times M}, {\bf B}\in \mathbb{R}^{p\times M}} \left\{ \sum_{j=1}^p\sum_{i=1}^n \left(x_{ij} - \sum_{m=1}^M a_{im} b_{jm}   \right) \right\}.
@@ -355,6 +357,7 @@ PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p\sum_{i=1}^n x_{ij}^2}
 <p>Seek a partition of the data into distinct subgroups so that the observations are quite similar to each other within each subgroup. Clustering looks for <em>homogeneous subgroups</em> among the observations. Example: market segmentation, gene expressions</p>
 <p>similarity are domain-specifically defined.</p>
 <p>There are two types of clustering tasks: 1) cluster observations on the basis of the features in order to identify subgroups among observations. 2) Cluster the features on the basis of the observations in order to discover subgroups among features.</p>
+<p>Clustering often are not robust.</p>
 <section id="k-means-clustering" class="level3" data-number="12.3.1">
 <h3 data-number="12.3.1" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">12.3.1</span> K-means clustering</h3>
 <p>Partition data into a pre-specific number of disjoint clusters. Let <span class="math inline">\(C_k\)</span>, <span class="math inline">\(1\le k \le K\)</span> denotes the mutually <em>disjoint</em> sets of indices of the observations and their union is the entire data set. The goal is to find K-clusters such that the <em>within-cluster variation</em> (<span class="math inline">\(WCV(C_k)\)</span>) is least, i.e., we want to solve minimize the total WCV of all <span class="math inline">\(K\)</span> clusters <span id="eq-clustering-var"><span class="math display">\[
@@ -377,25 +380,29 @@ WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
 </section>
 <section id="hierarchical-clustering" class="level3" data-number="12.3.2">
 <h3 data-number="12.3.2" class="anchored" data-anchor-id="hierarchical-clustering"><span class="header-section-number">12.3.2</span> Hierarchical clustering</h3>
-<p>Ends up with a tree-like <em>dendrogram</em> of the observations, that allows us to view at once the clusterings obtained for each possible number of clusters, from 1 to <span class="math inline">\(n\)</span>.</p>
+<p>Ends up with a tree-like <em>dendrogram</em> of the observations, that allows us to view at once the clusterings obtained for each possible number of clusters, from 1 (no cut line) to <span class="math inline">\(n\)</span> (cut at height 0). After a horizontal cut line is drawn, the distinct sets of observations beneath the cut can be interpreted as clusters. The cut height serves the same role as <span class="math inline">\(K\)</span> in K-means clustering.</p>
 <p>The most common type of hierarchical clustering uses a <em>bottom-up</em> or <em>agglomerative</em> clustering: a dendrogram is built starting from the leaves and combining clusters up to the trunk.</p>
-<p><strong>Algorithm</strong>: 1. start with each point in its own cluster. 2. identify the <em>closest</em> two clusters and merge them. 3. repeat 4. Ends when all points are in a single cluster.</p>
+<p>The term <em>hierarchical</em> refers to the fact that clusters obtained by cutting the deprogram at a given height are necessarily nested within the clusters obtained by cutting at a greater height. However, this assumption may be unrealistic. for example, our observations correspond to a group of men and women, evenly split among Americans, Japanese, and French. We can imagine a scenario in which the best division into two groups might split these people by gender, and the best division into three groups might split them by nationality. In this case, the ture clusters are not nested, in the sense that the best divsion into three groups does not result from taking the best division into two groups and splitting up one of those groups.</p>
+<p>So hierarchical clustering can sometiems yield <em>worse</em> results than K-means clustering.</p>
+<p><strong>Algorithm</strong>: 1. start with each point in its own cluster. 2. identify the <em>closest</em> two clusters and merge them. The height of a fusion point of these two clusters, indicate how different they are. Note one can not conclude the similarity of two observations based on their horizontal proximity. 3. repeat 4. Ends when all points are in a single cluster.</p>
 <p>In general scaling is recommended.</p>
 </section>
 <section id="types-of-linkage" class="level3" data-number="12.3.3">
 <h3 data-number="12.3.3" class="anchored" data-anchor-id="types-of-linkage"><span class="header-section-number">12.3.3</span> Types of linkage</h3>
+<p>Linkage is used to calculate the dissimilarity between a pair of clusters with more than one observations. Average and complete linkages are generally preferred, as they tend to yield more balanced dendrograms.</p>
 <ul>
 <li>Complete: maximal inter-cluster dissimilarity: use the maximum pairwise dissimilarities between observations in two clusters.</li>
-<li>single: Minimal inter-cluster dissimilarity.</li>
+<li>single: Minimal inter-cluster dissimilarity. Single linkage can result in extended, trailing clusters in which single observations are fused one-at-a-time.</li>
 <li>Average: mean inter-cluster dissimilarity.</li>
-<li>Centroid: dissimilarity between the centroid of two classes. May result in undesirable <em>inversions</em>.</li>
+<li>Centroid: dissimilarity between the centroids of two classes. May result in undesirable <em>inversions</em>, where two clusters are fused at a height <em>below</em> either of the individual clusters.</li>
 </ul>
 </section>
-<section id="choice-of-dissimilarity-measure" class="level3" data-number="12.3.4">
-<h3 data-number="12.3.4" class="anchored" data-anchor-id="choice-of-dissimilarity-measure"><span class="header-section-number">12.3.4</span> Choice of dissimilarity measure</h3>
+<section id="choice-of-dissimilarity-measure-and-variable-scaling" class="level3" data-number="12.3.4">
+<h3 data-number="12.3.4" class="anchored" data-anchor-id="choice-of-dissimilarity-measure-and-variable-scaling"><span class="header-section-number">12.3.4</span> Choice of dissimilarity measure and variable scaling</h3>
 <ul>
 <li>Euclidean distance</li>
-<li>correlation-based distance: correlation between two observations (not the ususal correlation between variables)</li>
+<li>correlation-based distance: correlation between two observations (not the usual correlation between variables). Correlation-based distance focuses on the shapes of observation profiles rather than their magnitudes.</li>
+<li>one should carefully consider if the variables need to be scaled. If the variables are scaled to have standard deviation one before the inter-observation dissimilarities are computed, then each variable will in effect be given equal importance.</li>
 </ul>
 </section>
 </section>
@@ -415,16 +422,50 @@ WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
 </section>
 <section id="numpy" class="level3" data-number="12.5.2">
 <h3 data-number="12.5.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">12.5.2</span> Numpy</h3>
+<pre><code>pcaUS.explained_variance_ratio_.cumsum()
+
+U, D, V = np.linalg.svd(X, full_matrices=False)#note V is the V^T in the math formula
+
+np.linalg.norm(V, 2, axis=1)
+
+np.allclose(U.dot(np.diag(D)).dot(V)-X, 0)
+
+r_idx = np.random.choice(np.arange(X.shape[0]),
+                         n_omit,
+                         replace=False)
+
+Xbar = np.nanmean(Xhat, axis=0) # ignoring nan
+
+ismiss = np.isnan(Xna)
+
+np.corrcoef(Xapp[ismiss], X[ismiss])
+
+np.random.standard_normal((50,2));
+
+np.multiply.outer(np.ones(X.shape[0]), X[0]) #make X.shape[0] copies of the first row X[0]
+
+#computing pairwise distance between rows of X:
+D = np.zeros((X.shape[0], X.shape[0]));
+for i in range(X.shape[0]):
+    x_ = np.multiply.outer(np.ones(X.shape[0]), X[i]) # each row of X is one point (obs)
+    D[i] = np.sqrt(np.sum((X - x_)**2, 1)); # D[i]: ith row of D. distance from the i-th row of X.
+</code></pre>
 </section>
 <section id="pandas" class="level3" data-number="12.5.3">
 <h3 data-number="12.5.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">12.5.3</span> Pandas</h3>
-<pre><code>
+<pre><code>USArrests.mean() # column means
+USArrests.var() # colmn variance
 
+pd.crosstab(nci_labs['label'],
+            pd.Series(comp_cut.reshape(-1), name='Complete'))
 </code></pre>
 </section>
 <section id="graphics" class="level3" data-number="12.5.4">
 <h3 data-number="12.5.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">12.5.4</span> Graphics</h3>
-<pre><code>
+<pre><code>ax.set_xticks(ticks)
+
+
+ax.axhline(140, c='r', linewidth=4);
 </code></pre>
 </section>
 <section id="islp-and-statsmodels" class="level3" data-number="12.5.5">
@@ -433,9 +474,222 @@ WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
 </section>
 <section id="sklearn" class="level3" data-number="12.5.6">
 <h3 data-number="12.5.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">12.5.6</span> sklearn</h3>
+<section id="pca-1" class="level4" data-number="12.5.6.1">
+<h4 data-number="12.5.6.1" class="anchored" data-anchor-id="pca-1"><span class="header-section-number">12.5.6.1</span> PCA</h4>
+<pre><code>scaler = StandardScaler(with_std=True,
+                        with_mean=True)
+USArrests_scaled = scaler.fit_transform(USArrests)
+pcaUS = PCA()
+pcaUS.fit(USArrests_scaled)
+pcaUS.mean_
+scores = pcaUS.transform(USArrests_scaled)
+pcaUS.components_  # loadings
+scores.std(0, ddof=1) #axis=0, divided by N-ddof=N-1
+pcaUS.explained_variance_
+pcaUS.explained_variance_ratio_
+pcaUS.n_components_
+
+</code></pre>
 </section>
-<section id="useful-code-snippets" class="level3" data-number="12.5.7">
-<h3 data-number="12.5.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">12.5.7</span> Useful code snippets</h3>
+<section id="pca-plot" class="level4" data-number="12.5.6.2">
+<h4 data-number="12.5.6.2" class="anchored" data-anchor-id="pca-plot"><span class="header-section-number">12.5.6.2</span> PCA plot</h4>
+<pre><code>fig, axes = plt.subplots(1, 2, figsize=(15,6))
+ax = axes[0]
+ax.scatter(nci_scores[:,0],
+           nci_scores[:,1],
+           c=nci_groups,
+           marker='o',
+           s=50)
+ax.set_xlabel('PC1'); ax.set_ylabel('PC2')</code></pre>
+</section>
+<section id="pca-biplot" class="level4" data-number="12.5.6.3">
+<h4 data-number="12.5.6.3" class="anchored" data-anchor-id="pca-biplot"><span class="header-section-number">12.5.6.3</span> PCA biplot</h4>
+<pre><code>scale_arrow = s_ = 2
+scores[:,1] *= -1      #flip the scores and loadings at the same time. 
+pcaUS.components_[1] *= -1 # flip the y-axis
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+ax.scatter(scores[:,0], scores[:,1])
+ax.set_xlabel('PC%d' % (i+1))
+ax.set_ylabel('PC%d' % (j+1))
+for k in range(pcaUS.components_.shape[1]):
+    ax.arrow(0, 0, s_*pcaUS.components_[i,k], s_*pcaUS.components_[j,k])
+    ax.text(s_*pcaUS.components_[i,k],
+            s_*pcaUS.components_[j,k],
+            USArrests.columns[k])</code></pre>
+</section>
+<section id="pca-plot-for-variance-explained" class="level4" data-number="12.5.6.4">
+<h4 data-number="12.5.6.4" class="anchored" data-anchor-id="pca-plot-for-variance-explained"><span class="header-section-number">12.5.6.4</span> PCA plot for variance explained</h4>
+<pre><code>fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+ticks = np.arange(pcaUS.n_components_)+1
+ax = axes[0]
+ax.plot(ticks,
+        pcaUS.explained_variance_ratio_,
+        marker='o')
+ax.set_xlabel('Principal Component');
+ax.set_ylabel('Proportion of Variance Explained')
+ax.set_ylim([0,1])
+ax.set_xticks(ticks)
+
+ax = axes[1]
+ax.plot(ticks,
+        pcaUS.explained_variance_ratio_.cumsum(),
+        marker='o')
+ax.set_xlabel('Principal Component')
+ax.set_ylabel('Cumulative Proportion of Variance Explained')
+ax.set_ylim([0, 1])
+ax.set_xticks(ticks)
+fig</code></pre>
+</section>
+<section id="matrix-completion" class="level4" data-number="12.5.6.5">
+<h4 data-number="12.5.6.5" class="anchored" data-anchor-id="matrix-completion"><span class="header-section-number">12.5.6.5</span> Matrix completion</h4>
+<pre><code>def low_rank(X, M=1): #low rank approx to X
+    U, D, V = np.linalg.svd(X)
+    L = U[:,:M] * D[None,:M]
+    return L.dot(V[:M])
+    
+Xhat = Xna.copy()
+Xbar = np.nanmean(Xhat, axis=0) 
+Xhat[r_idx, c_idx] = Xbar[c_idx]
+
+thresh = 1e-7
+rel_err = 1
+count = 0
+ismiss = np.isnan(Xna)#Xna: original matrix with nan; Xhat: matrix completed with imputed values
+mssold = np.mean(Xhat[~ismiss]**2)
+mss0 = np.mean(Xna[~ismiss]**2)
+
+while rel_err &gt; thresh:
+    count += 1
+    # Step 2(a)
+    Xapp = low_rank(Xhat, M=1)
+    # Step 2(b)
+    Xhat[ismiss] = Xapp[ismiss]
+    # Step 2(c)
+    mss = np.mean(((Xna - Xapp)[~ismiss])**2)
+    rel_err = (mssold - mss) / mss0
+    mssold = mss
+    print("Iteration: {0}, MSS:{1:.3f}, Rel.Err {2:.2e}"
+          .format(count, mss, rel_err))
+          
+np.corrcoef(Xapp[ismiss], X[ismiss])</code></pre>
+</section>
+</section>
+<section id="k-clustering" class="level3" data-number="12.5.7">
+<h3 data-number="12.5.7" class="anchored" data-anchor-id="k-clustering"><span class="header-section-number">12.5.7</span> K-Clustering</h3>
+<pre><code>from sklearn.cluster import \
+     (KMeans,
+      AgglomerativeClustering)
+      
+kmeans = KMeans(n_clusters=2,
+                random_state=2,
+                n_init=20).fit(X)
+                
+kmeans.labels_  #cluster assignments                
+                </code></pre>
+</section>
+<section id="hierarchical-clustering-1" class="level3" data-number="12.5.8">
+<h3 data-number="12.5.8" class="anchored" data-anchor-id="hierarchical-clustering-1"><span class="header-section-number">12.5.8</span> Hierarchical Clustering</h3>
+<pre><code>from sklearn.cluster import \
+     (KMeans,
+      AgglomerativeClustering)
+from scipy.cluster.hierarchy import \
+     (dendrogram,
+      cut_tree)
+from ISLP.cluster import compute_linkage
+
+HClust = AgglomerativeClustering
+hc_comp = HClust(distance_threshold=0, # same as None. min. distance to not merge
+                 n_clusters=None,
+                 linkage='complete')
+hc_comp.fit(X)
+
+hc_avg = HClust(distance_threshold=0,
+                n_clusters=None,
+                linkage='average');
+hc_avg.fit(X)
+hc_sing = HClust(distance_threshold=0,
+                 n_clusters=None,
+                 linkage='single');
+hc_sing.fit(X);
+
+cut_tree(linkage_comp, n_clusters=4).T #linkage_comp is the linkage-matrix represenation
+
+cut_tree(linkage_comp, height=5).T
+</code></pre>
+<section id="use-precomputed-matrix-for-hierarchical-clustering" class="level4" data-number="12.5.8.1">
+<h4 data-number="12.5.8.1" class="anchored" data-anchor-id="use-precomputed-matrix-for-hierarchical-clustering"><span class="header-section-number">12.5.8.1</span> Use precomputed matrix for hierarchical clustering</h4>
+<pre><code>D = np.zeros((X.shape[0], X.shape[0]));
+for i in range(X.shape[0]):
+    x_ = np.multiply.outer(np.ones(X.shape[0]), X[i]) # each row of X is one point (obs)
+    D[i] = np.sqrt(np.sum((X - x_)**2, 1)); # D[i]: ith row of D. distance from the i-th row of X.
+    
+hc_sing_pre = HClust(distance_threshold=0,
+                     n_clusters=None,
+                     metric='precomputed',
+                     linkage='single')
+hc_sing_pre.fit(D) # use precomputed distance matrix
+    </code></pre>
+</section>
+<section id="plotting-dendrogram" class="level4" data-number="12.5.8.2">
+<h4 data-number="12.5.8.2" class="anchored" data-anchor-id="plotting-dendrogram"><span class="header-section-number">12.5.8.2</span> Plotting dendrogram</h4>
+<pre><code>cargs = {'color_threshold':-np.inf, # not using the default coloring method
+         'above_threshold_color':'black'}
+linkage_comp = compute_linkage(hc_comp) # compute teh linkage-matrix representation
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp,
+           ax=ax,
+           **cargs);
+# coloring           
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp,
+           ax=ax,
+           color_threshold=4,
+           above_threshold_color='black');
+
+
+dendrogram(linkage_pca,
+           labels=np.asarray(nci_labs),
+           leaf_font_size=10,
+           ax=ax,
+           **cargs)</code></pre>
+</section>
+<section id="a-function-to-plot-dendrogram" class="level4" data-number="12.5.8.3">
+<h4 data-number="12.5.8.3" class="anchored" data-anchor-id="a-function-to-plot-dendrogram"><span class="header-section-number">12.5.8.3</span> a function to plot dendrogram</h4>
+<pre><code>def plot_nci(linkage, ax, cut=-np.inf):
+    cargs = {'above_threshold_color':'black',
+             'color_threshold':cut}
+    hc = HClust(n_clusters=None,
+                distance_threshold=0,
+                linkage=linkage.lower()).fit(nci_scaled)
+    linkage_ = compute_linkage(hc)
+    dendrogram(linkage_,
+               ax=ax,
+               labels=np.asarray(nci_labs),
+               leaf_font_size=10,
+               **cargs)
+    ax.set_title('%s Linkage' % linkage)
+    return hc
+    
+plot_nci('Complete', ax, cut=140)
+ax.axhline(140, c='r', linewidth=4);
+    </code></pre>
+</section>
+<section id="use-scaled-features-for-hierarchical-clustering" class="level4" data-number="12.5.8.4">
+<h4 data-number="12.5.8.4" class="anchored" data-anchor-id="use-scaled-features-for-hierarchical-clustering"><span class="header-section-number">12.5.8.4</span> Use scaled features for hierarchical clustering</h4>
+<pre><code>scaler = StandardScaler()
+X_scale = scaler.fit_transform(X)
+hc_comp_scale = HClust(distance_threshold=0,
+                       n_clusters=None,
+                       linkage='complete').fit(X_scale)
+linkage_comp_scale = compute_linkage(hc_comp_scale)
+fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+dendrogram(linkage_comp_scale, ax=ax, **cargs)
+ax.set_title("Hierarchical Clustering with Scaled Features");
+</code></pre>
+</section>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="12.5.9">
+<h3 data-number="12.5.9" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">12.5.9</span> Useful code snippets</h3>
 
 
 </section>
