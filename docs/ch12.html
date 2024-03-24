@@ -295,7 +295,7 @@ Z_1 =\phi_{11}X_1 +\phi_{21}X_2+\cdots +\phi_{p1}X_p
 <li><p>Each loading vector and the corresponding PC are unique up to sign flips, this is because the after flipping the sign, the loading vector still defines the same direction.</p></li>
 <li><p>PCA <em>biplot</em>: display both PCA scores and loadings of the first two PCA for each data points. The middle point <span class="math inline">\((0,0)\)</span> indicate an observation with average levels of both principal components.</p></li>
 <li><p>Scaling the variables matters. If the variables are in different units, it is recommended to scale them to have s.d equal to one.</p></li>
-<li><p>PCA may be understood as converting the original (<strong>demeaned</strong>) variables <span class="math inline">\(X=(X_1, X_2, \cdots, X_p)^T\)</span> to new variables <span class="math inline">\(Z=(Z_1, \cdots, Z_p)^T=V^TX\)</span> via an orthogonal transformation matrix <span class="math inline">\(V\)</span>, in order to un-correlate the original variables, such that the new variables <span class="math inline">\(Z\)</span> are uncorrelated, that is ( Note that, <span class="math inline">\({\bf Z}\)</span> and <span class="math inline">\({\bf X}\)</span> are both data matrix of size <span class="math inline">\(N\times p\)</span>, and <span class="math inline">\({\bf Z}={\bf X}V\)</span> ) <span class="math display">\[
+<li><p>PCA may be understood as converting the original (<strong>demeaned</strong>) variables <span class="math inline">\(X=(X_1, X_2, \cdots, X_p)^T\)</span> to new variables <span class="math inline">\(Z=(Z_1, \cdots, Z_p)^T=V^TX\)</span> via an orthogonal transformation matrix <span class="math inline">\(V\)</span>, in order to un-correlate the original variables, such that the new variables <span class="math inline">\(Z\)</span> are uncorrelated. Note that, <span class="math inline">\({\bf Z}\)</span> and <span class="math inline">\({\bf X}\)</span> are both data matrix of size <span class="math inline">\(N\times p\)</span>, and <span class="math inline">\({\bf Z}={\bf X}V\)</span> <span class="math display">\[
 {\bf Z}^T{\bf Z} = V^T({\bf X}^T{\bf X})V= D^2.
 \]</span> where <span class="math inline">\(V\)</span> and <span class="math inline">\(D\)</span> are defined by the eigen-decomposition of <span id="eq-eigen-decom"><span class="math display">\[
 {\bf X}^T{\bf X}=VD^2V^T
@@ -409,7 +409,7 @@ WCV(C_k)=\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^p(x_{ij}-x_{i'j'})^2
 <section id="homework" class="level2" data-number="12.4">
 <h2 data-number="12.4" class="anchored" data-anchor-id="homework"><span class="header-section-number">12.4</span> Homework:</h2>
 <ul>
-<li>Conceptual: 1–</li>
+<li>Conceptual: 1–6</li>
 <li>Applied: At least one.</li>
 </ul>
 </section>

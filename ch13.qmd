@@ -1,0 +1,41 @@
+# Chapter 13: Multiple Testing 
+
+
+
+## Homework:
+- Conceptual: 1--
+- Applied: At least one. 
+
+## Code Snippet
+### Python
+```
+
+
+```
+
+### Numpy
+```
+
+```
+
+### Pandas
+```
+
+```
+
+### Graphics
+```
+
+```
+
+### ISLP and statsmodels
+```
+
+```
+
+
+### sklearn
+
+
+### Useful code snippets
+

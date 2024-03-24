@@ -31,7 +31,7 @@ has the largest variance, where the coefficients $\phi_{11}, \cdots, \phi_{p1}$ 
 
 - Scaling the variables matters. If the variables are in different units, it is recommended to scale them to have s.d equal to one. 
 
-- PCA may be understood as   converting the original (**demeaned**) variables   $X=(X_1, X_2, \cdots, X_p)^T$  to new variables $Z=(Z_1, \cdots, Z_p)^T=V^TX$ via an orthogonal transformation matrix $V$, in order to  un-correlate the original variables, such that the new variables $Z$ are uncorrelated, that is ( Note that,  ${\bf Z}$ and ${\bf X}$ are both data matrix of size $N\times p$, and  ${\bf Z}={\bf X}V$ )
+- PCA may be understood as   converting the original (**demeaned**) variables   $X=(X_1, X_2, \cdots, X_p)^T$  to new variables $Z=(Z_1, \cdots, Z_p)^T=V^TX$ via an orthogonal transformation matrix $V$, in order to  un-correlate the original variables, such that the new variables $Z$ are uncorrelated.   Note that,  ${\bf Z}$ and ${\bf X}$ are both data matrix of size $N\times p$, and  ${\bf Z}={\bf X}V$ 
 $$
 {\bf Z}^T{\bf Z} = V^T({\bf X}^T{\bf X})V= D^2. 
 $$
@@ -185,7 +185,7 @@ Linkage is used to calculate the dissimilarity between a pair of clusters with m
 
 
 ## Homework:
-- Conceptual: 1--
+- Conceptual: 1--6
 - Applied: At least one. 
 
 ## Code Snippet
