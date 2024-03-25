@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>stat4500notes - 5&nbsp; Chapter 5: Resampling Methods</title>
+<title>stat4500notes - 13&nbsp; Chapter 13: Multiple Testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch6.html" rel="next">
-<link href="./ch4.html" rel="prev">
+<link href="./class_project.html" rel="next">
+<link href="./ch12.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Chapter 13: Multiple Testing</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch5.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch5.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></span></a>
   </div>
 </li>
@@ -206,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch13.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch13.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Chapter 13: Multiple Testing</span></span></a>
   </div>
 </li>
@@ -238,17 +238,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#how-to-estimate-test-error" id="toc-how-to-estimate-test-error" class="nav-link active" data-scroll-target="#how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</a></li>
-  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">5.2</span> Homework</a></li>
-  <li><a href="#code-gist" id="toc-code-gist" class="nav-link" data-scroll-target="#code-gist"><span class="header-section-number">5.3</span> Code Gist</a>
+  <li><a href="#review-of-hypothesis-tesing" id="toc-review-of-hypothesis-tesing" class="nav-link active" data-scroll-target="#review-of-hypothesis-tesing"><span class="header-section-number">13.1</span> Review of Hypothesis Tesing</a></li>
+  <li><a href="#how-small-is-a-p-value-small-type-i-error" id="toc-how-small-is-a-p-value-small-type-i-error" class="nav-link" data-scroll-target="#how-small-is-a-p-value-small-type-i-error"><span class="header-section-number">13.2</span> How small is a <span class="math inline">\(p\)</span>-value small? Type I error</a></li>
+  <li><a href="#multiple-testing" id="toc-multiple-testing" class="nav-link" data-scroll-target="#multiple-testing"><span class="header-section-number">13.3</span> Multiple Testing</a>
   <ul class="collapse">
-  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">5.3.1</span> Python</a></li>
-  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">5.3.2</span> Numpy</a></li>
-  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">5.3.3</span> Pandas</a></li>
-  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">5.3.4</span> Graphics</a></li>
-  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">5.3.5</span> ISLP and statsmodels</a></li>
-  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">5.3.6</span> sklearn</a></li>
-  <li><a href="#useful-code-snippet" id="toc-useful-code-snippet" class="nav-link" data-scroll-target="#useful-code-snippet"><span class="header-section-number">5.3.7</span> Useful code snippet</a></li>
+  <li><a href="#the-familiy-wise-error-rate-fwer" id="toc-the-familiy-wise-error-rate-fwer" class="nav-link" data-scroll-target="#the-familiy-wise-error-rate-fwer"><span class="header-section-number">13.3.1</span> The Familiy-wise Error Rate (FWER)</a></li>
+  </ul></li>
+  <li><a href="#other-methods" id="toc-other-methods" class="nav-link" data-scroll-target="#other-methods"><span class="header-section-number">13.4</span> Other Methods</a></li>
+  <li><a href="#control-false-discovery-rate-fdr" id="toc-control-false-discovery-rate-fdr" class="nav-link" data-scroll-target="#control-false-discovery-rate-fdr"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR)</a></li>
+  <li><a href="#resampling-approach" id="toc-resampling-approach" class="nav-link" data-scroll-target="#resampling-approach"><span class="header-section-number">13.6</span> Resampling Approach</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">13.7</span> Homework:</a></li>
+  <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">13.8</span> Code Snippet</a>
+  <ul class="collapse">
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">13.8.1</span> Python</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy"><span class="header-section-number">13.8.2</span> Numpy</a></li>
+  <li><a href="#pandas" id="toc-pandas" class="nav-link" data-scroll-target="#pandas"><span class="header-section-number">13.8.3</span> Pandas</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics"><span class="header-section-number">13.8.4</span> Graphics</a></li>
+  <li><a href="#islp-and-statsmodels" id="toc-islp-and-statsmodels" class="nav-link" data-scroll-target="#islp-and-statsmodels"><span class="header-section-number">13.8.5</span> ISLP and statsmodels</a></li>
+  <li><a href="#sklearn" id="toc-sklearn" class="nav-link" data-scroll-target="#sklearn"><span class="header-section-number">13.8.6</span> sklearn</a></li>
+  <li><a href="#useful-code-snippets" id="toc-useful-code-snippets" class="nav-link" data-scroll-target="#useful-code-snippets"><span class="header-section-number">13.8.7</span> Useful code snippets</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -258,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5: Resampling Methods</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Chapter 13: Multiple Testing</span></h1>
 </div>
 
 
@@ -275,195 +283,191 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Resampling methods are mainly used to estimate the test error by resampling the training set. Two methods: cross-validation and bootstrap. Theses methods refit a model to samples from the training set, in order to obtain additional information (eg. prediction error on the test set, standard deviation and bias of estimated parameters) about the fitted model.</p>
-<p>Recall training error in general <em>dramatically underestimate</em> the test error, and in general, training error decreases as the model flexibility increases, but the test error shows a characteristic U-curve due to the bias-variance trade-off of the test error.</p>
-<p><em>Model Assessment</em>: evaluating a model’s performance <em>Model selection</em>: selecting the proper level of flexibility.</p>
-<section id="how-to-estimate-test-error" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="how-to-estimate-test-error"><span class="header-section-number">5.1</span> how to estimate test error</h2>
+<p>When consider <span class="math inline">\(m\)</span> null hypotheses: <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>, need to be careful to avoid incorrectly rejecting too many null hypotheses, i.e., having too many false postives.</p>
+<section id="review-of-hypothesis-tesing" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="review-of-hypothesis-tesing"><span class="header-section-number">13.1</span> Review of Hypothesis Tesing</h2>
+<p>Divide the world into <em>null</em> and <em>alternative</em> hypotheses</p>
 <ul>
-<li>use a large designated test set, but often not available.</li>
-<li>make adjustment to the training error to estimate the test error, e.g., Cp statistic, AIC and BIC.</li>
-<li>validation set approach: estimate the test error by <em>holding out</em> a subset of the training set, also called a <em>validation set</em>.
-<ul>
-<li>the estimate of the test error can be highly variable, depending on the random train-validation split.</li>
-<li>Only a subset of the training set is used to fit the model. Since statistical methods tend to perform worse when trained on a smaler data set, which suggests the validation error tends to <em>overestimate</em> the test error compared to the model that uses the entire training set.</li>
-</ul></li>
-<li>K-fold Cross-Validation: randomly divide the data into <span class="math inline">\(K\)</span> equal-sized parts <span class="math inline">\(C_1, C_2, \cdots, C_K\)</span>. For each <span class="math inline">\(k\)</span>, leave out part <span class="math inline">\(k\)</span>, fit the model on the remaining <span class="math inline">\(K-1\)</span> parts (combined, <span class="math inline">\((K-1)/K\)</span> of the original traning set), and then evaluate the model on the part <span class="math inline">\(k\)</span>. Then repeat this for each <span class="math inline">\(k\)</span>, and weighted average of the errors is computed: <span class="math display">\[
-CV_{(K)} = \sum_{k=1}^K \frac{n_k}{n}\text{MSE}_k
-\]</span> where <span class="math inline">\(\text{MSE}_k=\sum_{i\in C_k}(y_i\ne \hat{y}_i)/n_k\)</span>.</li>
+<li>Define the null (<span class="math inline">\(H_0\)</span>, the default state of belief about the world ) and alternative (<span class="math inline">\(H_a\)</span>, or <span class="math inline">\(H_a\)</span>, something different and unexpected) hypotheses</li>
+<li>Construct the test statistic under <span class="math inline">\(H_0\)</span>: the test statistic summarizes the extent to which our data are consistent with <span class="math inline">\(H_0\)</span>. For example, to test <span class="math inline">\(H_0: \ \mu_t =\mu_c\)</span>, use the <span class="math inline">\(t\)</span>-statistic <span id="eq-two-sample-test"><span class="math display">\[
+T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
+\tag{13.1}\]</span></span></li>
 </ul>
-<p>For classification problem, simply replace <span class="math inline">\(\text{MSE}_k\)</span> with the misclassificaiton rate <span class="math inline">\(\text{Err}_k =\sum_{i\in C_k}I(y_i\ne \hat{y}_i)/n_k\)</span>.</p>
-<p>The estimated standard error of <span class="math inline">\(CV_k\)</span> can be calculated by <span class="math display">\[
-\hat{\text{SE}}(CV_k)=\sqrt{\frac{1}{K}\sum_{k=1}^K\frac{(\text{Err}_k-\overline{\text{Err}_k})^2}{K-1}}
+<p>if <span class="math inline">\(n_c\)</span> and <span class="math inline">\(n_t\)</span> are large, then <span class="math inline">\(T\)</span> is approximately <span class="math inline">\(\mathcal{N}(0,1)\)</span>. - Computer the <span class="math inline">\(p\)</span>-value: is the probability of observing a test statistic at least as extreme as the observed test statistic, <em>under the assumption that <span class="math inline">\(H_0\)</span> is true</em>. A <em>small</em> <span class="math inline">\(p\)</span>-value provides evidence <em>against</em> <span class="math inline">\(H_0\)</span>.</p>
+<ul>
+<li>Decide whether to reject <span class="math inline">\(H_0\)</span>. if <span class="math inline">\(p\)</span>-value is small, we will want to <em>reject</em> <span class="math inline">\(H_0\)</span> (and therefore make a potential “discovery”).</li>
+</ul>
+</section>
+<section id="how-small-is-a-p-value-small-type-i-error" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="how-small-is-a-p-value-small-type-i-error"><span class="header-section-number">13.2</span> How small is a <span class="math inline">\(p\)</span>-value small? Type I error</h2>
+<table class="table-striped table-hover table-bordered table">
+<caption></caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Truth</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(H_a\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Decision</td>
+<td style="text-align: center;">Reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Type I Error (FP)</td>
+<td style="text-align: center;">Correct</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">Do Not Reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;">Correct</td>
+<td style="text-align: center;">Type II error (FN)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Type I error rate: the probability of making a Type I error: if we only reject <span class="math inline">\(H_0\)</span> when the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha\)</span>, the type I error rate is at most <span class="math inline">\(\alpha\)</span>.</li>
+</ul>
+</section>
+<section id="multiple-testing" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="multiple-testing"><span class="header-section-number">13.3</span> Multiple Testing</h2>
+<p>suppose we wish to test <span class="math inline">\(m\)</span> null hypotheses: <span class="math inline">\(H_{01}, \cdots, H_{0m\)</span>. Can we reject all null hypotheses for which the corresponding <span class="math inline">\(p\)</span>-value falls below <span class="math inline">\(\alpha\)</span>, say 0.01? The answer is “No”, because we are almost certain to get one very small <span class="math inline">\(p\)</span>-value by chance.</p>
+<p>Example, we wish to test <span class="math inline">\(H_0\)</span>: the coin is fair. If we flip 1024 <em>fair</em> coins ten times each. since the probability of having all tails for a coin is <span class="math inline">\(\left(\frac{1}{2}\right)^{10}\)</span>, therefore we’d expect on average to have one coin to come up all tails (even if it is a fair coin). For this coin, the <span class="math inline">\(p\)</span>-value is less than 0.002! we would conclude it is <strong>not fair</strong>, i.e., we <em>reject <span class="math inline">\(H_0\)</span></em>, even though it is a fair coin.</p>
+<p>For <span class="math inline">\(m\)</span> multiple <span class="math inline">\(H_0\)</span>, and <span class="math inline">\(\alpha=0.01\)</span>, we are expecting to falsely reject <span class="math inline">\(m\alpha=0.01m\)</span> null hypotheses.</p>
+<section id="the-familiy-wise-error-rate-fwer" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="the-familiy-wise-error-rate-fwer"><span class="header-section-number">13.3.1</span> The Familiy-wise Error Rate (FWER)</h3>
+<p>FWER is the probability of making <em>at least one</em> Type I error when conducting <span class="math inline">\(m\)</span> hypothesis tests.</p>
+<p>FWER = Pr(<span class="math inline">\(V\ge 1\)</span>)</p>
+<table class="table-striped table-hover table-bordered table">
+<caption></caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is True</th>
+<th style="text-align: center;"><span class="math inline">\(H_0\)</span> is False</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(V\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(S\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(R\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Do Not Reject <span class="math inline">\(H_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(U\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(W\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(m-R\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Total</td>
+<td style="text-align: center;"><span class="math inline">\(m_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(m-m_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(m\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[
+\begin{array}{l l l}
+   \text{FWER}
+&amp;=&amp; 1-\text{Pr(do not falsely reject any null hypotheses)} \\
+&amp;= &amp; 1- \text{Pr}\left( \cap_{j=1}^m \left\{\text{do not falsely reject} H_{0j} \right\} \right).
+\end{array}
+\]</span> If the tests are independent and all <span class="math inline">\(H_{0j}\)</span> are true then <span class="math display">\[
+\text{FWER} = 1- \prod_{j=1}^m (1-\alpha) 1- (1-\alpha)^m.
+\]</span> From the above formula, when <span class="math inline">\(\alpha =0.05\)</span>, <span class="math inline">\(m=50\)</span>, <span class="math inline">\(\text{FWER}\approx 1.0\)</span>.</p>
+<p>When <span class="math inline">\(m\)</span> is large, FWER may cause us to be super conservative (to very rarely reject) ### The Bonferoni Correction Let <span class="math inline">\(A_j\)</span> be the event that the <span class="math inline">\(j\)</span>-th null hypothesis is falsely rejected. Then <span class="math display">\[
+\begin{array}{l l l}
+\text{FWER} &amp;=&amp; 1-\text{Pr(falsely reject at least one null hypotheses)} \\
+&amp;= &amp; \text{Pr}\left( \cup_{j=1}^m A_j \right)\\
+&amp; \le &amp; \sum_{j=1}^m \text{Pr}(A_j)
+\end{array}
+\]</span> If we only reject hypotheses when the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha/m\)</span>, then <span class="math display">\[
+\text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
+\]</span> ## Holm’s Method for Controlling the FWER More complex than Bonferroni, lead to more rejections while controlling FWER! <em>Homm is a better choice</em>. 1. Compute the <span class="math inline">\(p\)</span>-values, <span class="math inline">\(p_1, \cdots, p_m\)</span> for the <span class="math inline">\(m\)</span>-null hypotheses <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>. 2. Order the <span class="math inline">\(m\)</span> <span class="math inline">\(p\)</span>-values so that <span class="math inline">\(p_{(1)\)</span> p_{(2)}p_{(m)}$. 3. Define <span class="math display">\[
+L=\min\left\{ j: p_{(j)}&gt;\frac{\alpha}{m+1-j}  \right\}
+\]</span> 4. Reject all null hypotheses <span class="math inline">\(H_{0j}\)</span> for which <span class="math inline">\(p_j &lt;p_{(L)}\)</span>. 5. Holm’s method controls the FWER at level <span class="math inline">\(\alpha\)</span>.</p>
+</section>
+</section>
+<section id="other-methods" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="other-methods"><span class="header-section-number">13.4</span> Other Methods</h2>
+<p>Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections whil maintaining FWER control. - Turkey’s Method: for pairwise comparisons of the difference in expected means among a number of groups. - Scheffe’s Method: for testing arbitrary linear combinations of a set of expected means, e.g.. <span class="math display">\[
+H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
 \]</span></p>
-<p>The estimated error tends bias upward because it uses only <span class="math inline">\((K-1)/K\)</span> of the training set. This <em>bias is minimized with <span class="math inline">\(K=n\)</span> (LOOCV)</em>, but LOOCV estimate has <em>high variance</em> due to the high correlation between folds.</p>
+</section>
+<section id="control-false-discovery-rate-fdr" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="control-false-discovery-rate-fdr"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR)</h2>
+<p><span class="math display">\[
+\text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
+\]</span> FWER controls Pr(at least one falsely rejected <span class="math inline">\(H_0\)</span>), may be too conservative. FDR controls the fraction of candidates in the smaller set that are really false rejections. E.g., A scientist tests on <span class="math inline">\(m=20,000\)</span> drug candidates. She wants to identify a smaller set of promising candidates to investigate further. She wants reassurance that this smaller set is really “promising”, i.e., not too many falsely rejected <span class="math inline">\(H_0\)</span>’s. She can control FDR. This may be achieved by <em>Benjamini-Hochberg Procedure</em>.</p>
+<ol type="1">
+<li>Specify <span class="math inline">\(q\)</span>, the level at which to control the FDR.</li>
+<li>Compute the <span class="math inline">\(p\)</span>-values, <span class="math inline">\(p_1, \cdots, p_m\)</span> for the <span class="math inline">\(m\)</span>-null hypotheses <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>.</li>
+<li>Order the <span class="math inline">\(m\)</span> <span class="math inline">\(p\)</span>-values so that <span class="math inline">\(p_{(1)\)</span> p_{(2)}p_{(m)}$.</li>
+<li>Define <span class="math display">\[
+L=\max\left\{ j: p_{(j)}&lt;\frac{qj}{m}  \right\}
+\]</span></li>
+<li>Reject all null hypotheses <span class="math inline">\(H_{0j}\)</span> for which <span class="math inline">\(p_j \le p_{(L)}\)</span>.</li>
+</ol>
+<p>Then <span class="math inline">\(FDR \le q\)</span>.</p>
+</section>
+<section id="resampling-approach" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="resampling-approach"><span class="header-section-number">13.6</span> Resampling Approach</h2>
+<p>When the <em>theoretical null distribution</em> is unknown or requires stringent assumptions, one can use <em>resampling</em> or <em>permulaton</em> approach to approximate it.</p>
+<p>For example, suppose that <span class="math inline">\(H_0: E(X)= E(Y)\)</span>, and <span class="math inline">\(H_a: E(X)\ne E(Y)\)</span>, and number of independent samples <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span>. The <span class="math inline">\(t\)</span>-statistic as in <a href="#eq-two-sample-test" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-two-sample-test</span></a>, rewritten as <span class="math display">\[
+T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
+\]</span> When <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are small. The theoretical distribution is not necessarily <span class="math inline">\(\mathcal{N}(0,1)\)</span>. In this case the <span class="math inline">\(p\)</span>-value can be approximated using the following <em>resampling approach</em>:</p>
+<ol type="1">
+<li><p>Computer the two sample <span class="math inline">\(t\)</span>-statistic <span class="math inline">\(T\)</span> on the original data <span class="math inline">\(x_1, \cdots, x_{n_X}\)</span>, and <span class="math inline">\(y_1, \cdots, y_{n_Y}\)</span>.</p></li>
+<li><p>For <span class="math inline">\(b=1, \cdots, B\)</span> (where <span class="math inline">\(B\)</span> is large, e.g., 1000): 2.1 Randomly shuffle the <span class="math inline">\(n_X+n_Y\)</span> observations. 2.2 Call the first <span class="math inline">\(n_X\)</span> shuffled observations <span class="math inline">\(x_1^*, \cdots, x_{n_X}^*\)</span> and call the remaining observations <span class="math inline">\(y_1^*, \cdots, y_{n_Y}^*\)</span>. 2.3 Computer the two-sample <span class="math inline">\(t\)</span>-statistic on the shuffled data, and call it <span class="math inline">\(T^{*b}\)</span>.</p></li>
+<li><p>The <span class="math inline">\(p\)</span>-value is given by <span class="math display">\[
+\frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
+\]</span></p></li>
+</ol>
+</section>
+<section id="homework" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="homework"><span class="header-section-number">13.7</span> Homework:</h2>
 <ul>
-<li><p>LOOCV: it’s a special case of K-fold CV with <span class="math inline">\(K=n\)</span>. For least squares linear or polynomial regression, the LOOCV error can be computed by <span class="math display">\[
-\text{CV}_{(n)}=\frac{1}{n}\sum_{i=1}^n \left(\frac{y_i-\hat{y}_i}{1-h_i} \right)^2
-\]</span> Where <span class="math inline">\(h_i\)</span> is the leverage statistic of <span class="math inline">\(x_i\)</span>. There is no randomness in the error. The leverage <span class="math inline">\(1/n\le h_i\le 1\)</span>, reflects the amount an observation influences its own fit. The above formula doesn’t hold in genearl, in which case the model has to refit <span class="math inline">\(n\)</span> times to estimate the test error.</p></li>
-<li><p>for LOOCV, the estimate from each fold are highly correlated, hence their average can have high variance.</p></li>
-<li><p>better choice is <span class="math inline">\(K=5\)</span> or <span class="math inline">\(K=10\)</span> for bias-variance trade-off, because large <span class="math inline">\(k\)</span> leads to low bias but high variance due to the increased correlation between models. Despite the estimated test error sometimes <em>underestimate</em> the true test error, they then to be close to identify the correct flexibility where the test error is minimum.</p></li>
-<li><p>Bootstrap: Primarily used to estimate the standard error, or a CI (called <em>bootstrap percentile</em>) of an estimate . Repeatedly sampling the training set with replacement and obtain a <em>bootstrap set</em> of the <em>the same size</em> as the original training set. One can fit a model and estimate a parameter with each bootstrap data set, and then estimate the <em>standard error</em> using the estimated parameters by the bootstrap model, assuming there are <span class="math inline">\(B\)</span> bootstrap data sets: <span class="math display">\[
-SE_B(\hat{\alpha})=\sqrt{\frac{1}{B-1}\sum_{r=1}^B (\hat{\alpha}^{*r}-\bar{\hat{\alpha}}^*)^2   }
-\]</span></p>
-<ul>
-<li><p>Note sometimes sampling with replacement must take caution, for example, one can’t simply sample a time series with replacement because the data are sequential.</p></li>
-<li><p>Estimate prediction error: Each bootstrap sample has significant overlap with the original data, in fact, about 2/3 of the original data points appear in each bootstrap sample. If we use the original data set as the validation set, This will cause the bootstrap to seriously <em>underestimate</em> the true prediction error. To fix this, one can only use predictions on those samples that do not occur (by chance) in a bootstrap sample.</p></li>
-<li><p>Bootstrap vs.&nbsp;Permutation test: permutation methods sample from an estimated <em>null</em> distribution for the data, and use this to estimate <span class="math inline">\(p\)</span>-values and <em>False Discovery Rates</em> for hypothesis tests.</p>
-<p>The bootstrap can be used to test a null hypothesis in simple situation. Eg. If <span class="math inline">\(H_0: \theta=0\)</span>, we can check whether the confidence interval for <span class="math inline">\(\theta\)</span> contains zero.</p></li>
-</ul></li>
+<li>Conceptual: 1–</li>
+<li>Applied: At least one.</li>
 </ul>
 </section>
-<section id="homework" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="homework"><span class="header-section-number">5.2</span> Homework</h2>
-<ul>
-<li>Conceptual: 1,2,3,4</li>
-<li>Applied: 5–9, at least one.</li>
-</ul>
-</section>
-<section id="code-gist" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="code-gist"><span class="header-section-number">5.3</span> Code Gist</h2>
-<section id="python" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="python"><span class="header-section-number">5.3.1</span> Python</h3>
-<pre><code>np.empty(1000) #create an array without initializing
-quartiles = np.percentile(arr, [25, 50, 75])</code></pre>
-</section>
-<section id="numpy" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">5.3.2</span> Numpy</h3>
-<pre><code>c = np.power.outer(row, col) # mesh of row[i]^col[j] power. 
-# random choice 
-rng = np.random.default_rng(0)
-alpha_func(Portfolio,
-           rng.choice(100, # random numbers are selected from arange(100)
-                      100, #size
-                      replace=True))
-
-    </code></pre>
-</section>
-<section id="pandas" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">5.3.3</span> Pandas</h3>
-<pre><code>np.cov(D[['X','Y']].loc[idx], rowvar=False) #cov compute corr of variables. rowvar-False: cols are vars.</code></pre>
-</section>
-<section id="graphics" class="level3" data-number="5.3.4">
-<h3 data-number="5.3.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">5.3.4</span> Graphics</h3>
-</section>
-<section id="islp-and-statsmodels" class="level3" data-number="5.3.5">
-<h3 data-number="5.3.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">5.3.5</span> ISLP and statsmodels</h3>
-<pre><code># function that evalues MSE for training a model
-def evalMSE(terms,    #predictor variables
-            response, #response variable
-            train,
-            test):
-
-   mm = MS(terms)
-   X_train = mm.fit_transform(train)
-   y_train = train[response]
-
-   X_test = mm.transform(test)
-   y_test = test[response]
-
-   results = sm.OLS(y_train, X_train).fit()
-   test_pred = results.predict(X_test)
-
-   return np.mean((y_test - test_pred)**2)
-
-# Compare polynomial models of different degrees
-MSE = np.zeros(3)
-for idx, degree in enumerate(range(1, 4)):
-    MSE[idx] = evalMSE([poly('horsepower', degree)],
-                       'mpg',
-                       Auto_train,
-                       Auto_valid)
-MSE
-
-# Estimating the accuracy of a LR model using bootstrap
-
-# Compute the SE of the boostraped values computed by func                      
-def boot_SE(func,
-            D,
-            n=None,
-            B=1000,
-            seed=0):
-    rng = np.random.default_rng(seed)
-    first_, second_ = 0, 0
-    n = n or D.shape[0]
-    for _ in range(B):
-        idx = rng.choice(D.index,
-                         n,
-                         replace=True)
-        value = func(D, idx)
-        first_ += value
-        second_ += value**2
-    return np.sqrt(second_ / B - (first_ / B)**2) #compute var. 
-def boot_OLS(model_matrix, response, D, idx):
-    D_ = D.loc[idx]
-    Y_ = D_[response]
-    X_ = clone(model_matrix).fit_transform(D_) #clone create a deep copy. 
-    return sm.OLS(Y_, X_).fit().params
-    
-quad_model = MS([poly('horsepower', 2, raw=True)]) #raw=True: not normalize the feature
-quad_func = partial(boot_OLS,
-                    quad_model,
-                    'mpg')
-boot_SE(quad_func, Auto, B=1000)
-</code></pre>
-</section>
-<section id="sklearn" class="level3" data-number="5.3.6">
-<h3 data-number="5.3.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">5.3.6</span> sklearn</h3>
-<pre><code>from functools import partial
-from sklearn.model_selection import \
-     (cross_validate,
-      KFold,
-      ShuffleSplit)
-from sklearn.base import clone
-from ISLP.models import sklearn_sm #wrapper to feed a sm model to sklearn
-
-#Cross Validation
-hp_model = sklearn_sm(sm.OLS,
-                      MS(['horsepower']))
-X, Y = Auto.drop(columns=['mpg']), Auto['mpg']
-cv_results = cross_validate(hp_model,
-                            X,
-                            Y,
-                            cv=Auto.shape[0]) #cv=K.loocv. Can use cv=KFold()object
-cv_err = np.mean(cv_results['test_score']) # test_score: MSE
-cv_err
-
-# Use KFold to partition instead of using an integer. 
-cv_error = np.zeros(5)
-cv = KFold(n_splits=10,
-           shuffle=True,#shuffle before splitting
-           random_state=0) # use same splits for each degree
-for i, d in enumerate(range(1,6)):
-    X = np.power.outer(H, np.arange(d+1))
-    M_CV = cross_validate(M,
-                          X,
-                          Y,
-                          cv=cv)
-    cv_error[i] = np.mean(M_CV['test_score'])
-cv_error
-
-# using ShuffleSplit() method 
-validation = ShuffleSplit(n_splits=10,
-                          test_size=196,
-                          random_state=0)
-results = cross_validate(hp_model,
-                         Auto.drop(['mpg'], axis=1),
-                         Auto['mpg'],
-                         cv=validation)
-results['test_score'].mean(), results['test_score'].std()
-
-
-#View skleanrn fitting results using model.results_
-hp_model.fit(Auto, Auto['mpg']) # hp_model is a sklearn model sk_model.fit(X, Y) for trainning
-model_se = summarize(hp_model.results_)['std err'] #summarize is an ISLP function
-model_se
-</code></pre>
-</section>
-<section id="useful-code-snippet" class="level3" data-number="5.3.7">
-<h3 data-number="5.3.7" class="anchored" data-anchor-id="useful-code-snippet"><span class="header-section-number">5.3.7</span> Useful code snippet</h3>
+<section id="code-snippet" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="code-snippet"><span class="header-section-number">13.8</span> Code Snippet</h2>
+<section id="python" class="level3" data-number="13.8.1">
+<h3 data-number="13.8.1" class="anchored" data-anchor-id="python"><span class="header-section-number">13.8.1</span> Python</h3>
 <pre><code>
 </code></pre>
+</section>
+<section id="numpy" class="level3" data-number="13.8.2">
+<h3 data-number="13.8.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">13.8.2</span> Numpy</h3>
+<pre><code></code></pre>
+</section>
+<section id="pandas" class="level3" data-number="13.8.3">
+<h3 data-number="13.8.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">13.8.3</span> Pandas</h3>
+<pre><code></code></pre>
+</section>
+<section id="graphics" class="level3" data-number="13.8.4">
+<h3 data-number="13.8.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">13.8.4</span> Graphics</h3>
+<pre><code></code></pre>
+</section>
+<section id="islp-and-statsmodels" class="level3" data-number="13.8.5">
+<h3 data-number="13.8.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">13.8.5</span> ISLP and statsmodels</h3>
+<pre><code></code></pre>
+</section>
+<section id="sklearn" class="level3" data-number="13.8.6">
+<h3 data-number="13.8.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">13.8.6</span> sklearn</h3>
+</section>
+<section id="useful-code-snippets" class="level3" data-number="13.8.7">
+<h3 data-number="13.8.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">13.8.7</span> Useful code snippets</h3>
 
 
 </section>
@@ -862,13 +866,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch4.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4: Classification</span></span>
+      <a href="./ch12.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Chapter 12: Unsupervised Learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch6.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6: Linear Model Selection and Regrularization</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./class_project.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Class Project</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

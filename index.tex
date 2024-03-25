@@ -1592,7 +1592,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, opacitybacktitle=0.6, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, toprule=.15mm, left=2mm, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, arc=.35mm, opacityback=0, toptitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, titlerule=0mm, bottomrule=.15mm, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, left=2mm]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1659,7 +1659,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, opacitybacktitle=0.6, toptitle=1mm, coltitle=black, breakable, rightrule=.15mm, toprule=.15mm, left=2mm, titlerule=0mm, bottomtitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, arc=.35mm, opacityback=0, toptitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, titlerule=0mm, bottomrule=.15mm, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, left=2mm]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.
@@ -6529,6 +6529,263 @@ ax.set_title("Hierarchical Clustering with Scaled Features");
 \end{verbatim}
 
 \subsection{Useful code snippets}\label{useful-code-snippets-5}
+
+\bookmarksetup{startatroot}
+
+\chapter{Chapter 13: Multiple
+Testing}\label{chapter-13-multiple-testing}
+
+When consider \(m\) null hypotheses: \(H_{01}, \cdots, H_{0m}\), need to
+be careful to avoid incorrectly rejecting too many null hypotheses,
+i.e., having too many false postives.
+
+\section{Review of Hypothesis Tesing}\label{review-of-hypothesis-tesing}
+
+Divide the world into \emph{null} and \emph{alternative} hypotheses
+
+\begin{itemize}
+\tightlist
+\item
+  Define the null (\(H_0\), the default state of belief about the world
+  ) and alternative (\(H_a\), or \(H_a\), something different and
+  unexpected) hypotheses
+\item
+  Construct the test statistic under \(H_0\): the test statistic
+  summarizes the extent to which our data are consistent with \(H_0\).
+  For example, to test \(H_0: \ \mu_t =\mu_c\), use the \(t\)-statistic
+  \begin{equation}\phantomsection\label{eq-two-sample-test}{
+  T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
+  }\end{equation}
+\end{itemize}
+
+if \(n_c\) and \(n_t\) are large, then \(T\) is approximately
+\(\mathcal{N}(0,1)\). - Computer the \(p\)-value: is the probability of
+observing a test statistic at least as extreme as the observed test
+statistic, \emph{under the assumption that \(H_0\) is true}. A
+\emph{small} \(p\)-value provides evidence \emph{against} \(H_0\).
+
+\begin{itemize}
+\tightlist
+\item
+  Decide whether to reject \(H_0\). if \(p\)-value is small, we will
+  want to \emph{reject} \(H_0\) (and therefore make a potential
+  ``discovery'').
+\end{itemize}
+
+\section{\texorpdfstring{How small is a \(p\)-value small? Type I
+error}{How small is a p-value small? Type I error}}\label{how-small-is-a-p-value-small-type-i-error}
+
+\begin{longtable}[]{@{}lccc@{}}
+\toprule\noalign{}
+& & Truth & \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+& & \(H_0\) & \(H_a\) \\
+Decision & Reject \(H_0\) & Type I Error (FP) & Correct \\
+& Do Not Reject \(H_0\) & Correct & Type II error (FN) \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Type I error rate: the probability of making a Type I error: if we
+  only reject \(H_0\) when the \(p\)-value is less than \(\alpha\), the
+  type I error rate is at most \(\alpha\).
+\end{itemize}
+
+\section{Multiple Testing}\label{multiple-testing}
+
+suppose we wish to test \(m\) null hypotheses:
+\(H_{01}, \cdots, H_{0m\). Can we reject all null hypotheses for which
+the corresponding \(p\)-value falls below \(\alpha\), say 0.01? The
+answer is ``No'', because we are almost certain to get one very small
+\(p\)-value by chance.
+
+Example, we wish to test \(H_0\): the coin is fair. If we flip 1024
+\emph{fair} coins ten times each. since the probability of having all
+tails for a coin is \(\left(\frac{1}{2}\right)^{10}\), therefore we'd
+expect on average to have one coin to come up all tails (even if it is a
+fair coin). For this coin, the \(p\)-value is less than 0.002! we would
+conclude it is \textbf{not fair}, i.e., we \emph{reject \(H_0\)}, even
+though it is a fair coin.
+
+For \(m\) multiple \(H_0\), and \(\alpha=0.01\), we are expecting to
+falsely reject \(m\alpha=0.01m\) null hypotheses.
+
+\subsection{The Familiy-wise Error Rate
+(FWER)}\label{the-familiy-wise-error-rate-fwer}
+
+FWER is the probability of making \emph{at least one} Type I error when
+conducting \(m\) hypothesis tests.
+
+FWER = Pr(\(V\ge 1\))
+
+\begin{longtable}[]{@{}cccc@{}}
+\toprule\noalign{}
+& \(H_0\) is True & \(H_0\) is False & Total \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Reject \(H_0\) & \(V\) & \(S\) & \(R\) \\
+Do Not Reject \(H_0\) & \(U\) & \(W\) & \(m-R\) \\
+Total & \(m_0\) & \(m-m_0\) & \(m\) \\
+\end{longtable}
+
+\[
+\begin{array}{l l l}
+   \text{FWER}
+&=& 1-\text{Pr(do not falsely reject any null hypotheses)} \\
+&= & 1- \text{Pr}\left( \cap_{j=1}^m \left\{\text{do not falsely reject} H_{0j} \right\} \right).
+\end{array}
+\] If the tests are independent and all \(H_{0j}\) are true then \[
+\text{FWER} = 1- \prod_{j=1}^m (1-\alpha) 1- (1-\alpha)^m.
+\] From the above formula, when \(\alpha =0.05\), \(m=50\),
+\(\text{FWER}\approx 1.0\).
+
+When \(m\) is large, FWER may cause us to be super conservative (to very
+rarely reject) \#\#\# The Bonferoni Correction Let \(A_j\) be the event
+that the \(j\)-th null hypothesis is falsely rejected. Then \[
+\begin{array}{l l l}
+\text{FWER} &=& 1-\text{Pr(falsely reject at least one null hypotheses)} \\
+&= & \text{Pr}\left( \cup_{j=1}^m A_j \right)\\
+& \le & \sum_{j=1}^m \text{Pr}(A_j)
+\end{array}
+\] If we only reject hypotheses when the \(p\)-value is less than
+\(\alpha/m\), then \[
+\text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
+\] \#\# Holm's Method for Controlling the FWER More complex than
+Bonferroni, lead to more rejections while controlling FWER! \emph{Homm
+is a better choice}. 1. Compute the \(p\)-values, \(p_1, \cdots, p_m\)
+for the \(m\)-null hypotheses \(H_{01}, \cdots, H_{0m}\). 2. Order the
+\(m\) \(p\)-values so that \(p_{(1)\)
+\le p\_\{(2)\}\le \cdots p\_\{(m)\}\$. 3. Define \[
+L=\min\left\{ j: p_{(j)}>\frac{\alpha}{m+1-j}  \right\}
+\] 4. Reject all null hypotheses \(H_{0j}\) for which \(p_j <p_{(L)}\).
+5. Holm's method controls the FWER at level \(\alpha\).
+
+\section{Other Methods}\label{other-methods}
+
+Bonferroni and Hold are general procedures that will work in most
+settings. In certain special cases, the following method may give better
+results: more rejections whil maintaining FWER control. - Turkey's
+Method: for pairwise comparisons of the difference in expected means
+among a number of groups. - Scheffe's Method: for testing arbitrary
+linear combinations of a set of expected means, e.g.. \[
+H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
+\]
+
+\section{\texorpdfstring{Control \emph{False Discovery Rate}
+(FDR)}{Control False Discovery Rate (FDR)}}\label{control-false-discovery-rate-fdr}
+
+\[
+\text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
+\] FWER controls Pr(at least one falsely rejected \(H_0\)), may be too
+conservative. FDR controls the fraction of candidates in the smaller set
+that are really false rejections. E.g., A scientist tests on
+\(m=20,000\) drug candidates. She wants to identify a smaller set of
+promising candidates to investigate further. She wants reassurance that
+this smaller set is really ``promising'', i.e., not too many falsely
+rejected \(H_0\)'s. She can control FDR. This may be achieved by
+\emph{Benjamini-Hochberg Procedure}.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Specify \(q\), the level at which to control the FDR.
+\item
+  Compute the \(p\)-values, \(p_1, \cdots, p_m\) for the \(m\)-null
+  hypotheses \(H_{01}, \cdots, H_{0m}\).
+\item
+  Order the \(m\) \(p\)-values so that \(p_{(1)\)
+  \le p\_\{(2)\}\le \cdots p\_\{(m)\}\$.
+\item
+  Define \[
+  L=\max\left\{ j: p_{(j)}<\frac{qj}{m}  \right\}
+  \]
+\item
+  Reject all null hypotheses \(H_{0j}\) for which \(p_j \le p_{(L)}\).
+\end{enumerate}
+
+Then \(FDR \le q\).
+
+\section{Resampling Approach}\label{resampling-approach}
+
+When the \emph{theoretical null distribution} is unknown or requires
+stringent assumptions, one can use \emph{resampling} or
+\emph{permulaton} approach to approximate it.
+
+For example, suppose that \(H_0: E(X)= E(Y)\), and
+\(H_a: E(X)\ne E(Y)\), and number of independent samples \(n_X\) and
+\(n_Y\). The \(t\)-statistic as in Equation~\ref{eq-two-sample-test},
+rewritten as \[
+T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
+\] When \(n_X\) and \(n_Y\) are small. The theoretical distribution is
+not necessarily \(\mathcal{N}(0,1)\). In this case the \(p\)-value can
+be approximated using the following \emph{resampling approach}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Computer the two sample \(t\)-statistic \(T\) on the original data
+  \(x_1, \cdots, x_{n_X}\), and \(y_1, \cdots, y_{n_Y}\).
+\item
+  For \(b=1, \cdots, B\) (where \(B\) is large, e.g., 1000): 2.1
+  Randomly shuffle the \(n_X+n_Y\) observations. 2.2 Call the first
+  \(n_X\) shuffled observations \(x_1^*, \cdots, x_{n_X}^*\) and call
+  the remaining observations \(y_1^*, \cdots, y_{n_Y}^*\). 2.3 Computer
+  the two-sample \(t\)-statistic on the shuffled data, and call it
+  \(T^{*b}\).
+\item
+  The \(p\)-value is given by \[
+  \frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
+  \]
+\end{enumerate}
+
+\section{Homework:}\label{homework-9}
+
+\begin{itemize}
+\tightlist
+\item
+  Conceptual: 1--
+\item
+  Applied: At least one.
+\end{itemize}
+
+\section{Code Snippet}\label{code-snippet-7}
+
+\subsection{Python}\label{python-11}
+
+\begin{verbatim}
+
+\end{verbatim}
+
+\subsection{Numpy}\label{numpy-11}
+
+\begin{verbatim}
+\end{verbatim}
+
+\subsection{Pandas}\label{pandas-11}
+
+\begin{verbatim}
+\end{verbatim}
+
+\subsection{Graphics}\label{graphics-11}
+
+\begin{verbatim}
+\end{verbatim}
+
+\subsection{ISLP and statsmodels}\label{islp-and-statsmodels-9}
+
+\begin{verbatim}
+\end{verbatim}
+
+\subsection{sklearn}\label{sklearn-9}
+
+\subsection{Useful code snippets}\label{useful-code-snippets-6}
 
 \bookmarksetup{startatroot}
 

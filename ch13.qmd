@@ -1,6 +1,141 @@
 # Chapter 13: Multiple Testing 
+When consider $m$ null hypotheses: $H_{01}, \cdots, H_{0m}$, need to be careful to avoid incorrectly rejecting too many null hypotheses, i.e., having too many false postives. 
+
+## Review of Hypothesis Tesing
+Divide the world into *null* and *alternative* hypotheses
+
+- Define the null ($H_0$, the default state of belief about the world ) and alternative ($H_a$, or $H_a$, something different and unexpected) hypotheses
+- Construct the test statistic under $H_0$: the test statistic summarizes the extent to which our data are consistent with $H_0$.
+  For example, to test $H_0: \ \mu_t =\mu_c$, use the $t$-statistic
+  $$
+  T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
+  $${#eq-two-sample-test}
+  
+if $n_c$ and $n_t$ are large, then $T$ is approximately $\mathcal{N}(0,1)$.
+- Computer the $p$-value: is the probability of observing  a test statistic at least as extreme as the observed test statistic, *under the assumption that $H_0$ is true*. A *small* $p$-value provides evidence *against* $H_0$. 
+  
+- Decide whether to reject $H_0$.
+  if $p$-value is small, we will want to *reject* $H_0$ (and therefore make a potential "discovery"). 
+  
+## How small is a $p$-value small? Type I error
+
+ |    |   |  Truth |
+ :------|:----------------:|:------------------:|:-----------:
+ |        |                |   $H_0$    | $H_a$
+ Decision | Reject $H_0$   | Type I Error (FP)| Correct 
+  |        | Do Not Reject $H_0$| Correct  | Type II error (FN)
+  
+: {.striped .hover .bordered}
+ 
+
+-  Type I error rate: the probability of making a Type I error: if we only reject $H_0$ when the $p$-value is less than $\alpha$, the type I error rate is at most $\alpha$. 
+
+## Multiple Testing
+suppose we wish to test $m$ null hypotheses: $H_{01}, \cdots, H_{0m$. Can we reject all null hypotheses for which the corresponding $p$-value falls below $\alpha$, say 0.01?
+The answer is "No", because we are almost certain to get one very small $p$-value by chance. 
+
+Example, we wish to test $H_0$: the coin is fair. If we flip 1024 *fair* coins ten times each. since the probability of having all tails for a coin is $\left(\frac{1}{2}\right)^{10}$, therefore we'd expect on average to have one coin to come up all tails (even if it is a fair coin). For this coin, the $p$-value is less than 0.002! we would conclude it is **not fair**, i.e., we *reject $H_0$*, even though it is a fair coin. 
+
+For $m$ multiple $H_0$, and $\alpha=0.01$, we are expecting to falsely reject $m\alpha=0.01m$ null hypotheses. 
+
+### The Familiy-wise Error Rate (FWER)
+FWER is the probability of making *at least one* Type I error when conducting $m$ hypothesis tests. 
+
+FWER = Pr($V\ge 1$)
+
+|                  |$H_0$  is True|$H_0$  is False|Total|
+|:----------------:|:--------------:|:-------------:|:------:|    
+Reject $H_0$   | $V$| $S$ |$R$
+Do Not Reject $H_0$| $U$  | $W$ |$m-R$
+Total | $m_0$ | $m-m_0$ | $m$ 
+  
+: {.striped .hover .bordered}
+
+$$
+\begin{array}{l l l}
+   \text{FWER}
+&=& 1-\text{Pr(do not falsely reject any null hypotheses)} \\
+&= & 1- \text{Pr}\left( \cap_{j=1}^m \left\{\text{do not falsely reject} H_{0j} \right\} \right).
+\end{array}
+$$
+If the tests are independent and all $H_{0j}$ are true then
+$$
+\text{FWER} = 1- \prod_{j=1}^m (1-\alpha) 1- (1-\alpha)^m.
+$$
+From the above formula, when $\alpha =0.05$, $m=50$, $\text{FWER}\approx 1.0$. 
+
+When $m$ is large, FWER may cause us to be super conservative (to very rarely reject)
+### The Bonferoni Correction
+Let $A_j$ be the event that the $j$-th null hypothesis is falsely rejected.  Then 
+$$
+\begin{array}{l l l}
+\text{FWER} &=& 1-\text{Pr(falsely reject at least one null hypotheses)} \\
+&= & \text{Pr}\left( \cup_{j=1}^m A_j \right)\\
+& \le & \sum_{j=1}^m \text{Pr}(A_j)
+\end{array}
+$$
+If we only reject hypotheses when the $p$-value is less than $\alpha/m$, then 
+$$
+\text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
+$$
+## Holm's Method for Controlling the FWER
+More complex than Bonferroni,  lead to more rejections while controlling FWER! *Homm is a better choice*. 
+1. Compute the $p$-values, $p_1, \cdots, p_m$ for the $m$-null hypotheses $H_{01}, \cdots, H_{0m}$. 
+2. Order the $m$ $p$-values so that $p_{(1)$ \le p_{(2)}\le \cdots p_{(m)}$. 
+3. Define 
+$$
+L=\min\left\{ j: p_{(j)}>\frac{\alpha}{m+1-j}  \right\}
+$$
+4. Reject all null hypotheses $H_{0j}$ for which $p_j <p_{(L)}$.
+5. Holm's method controls the FWER at level $\alpha$. 
+
+## Other Methods
+Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections whil maintaining FWER control. 
+- Turkey's Method: for pairwise comparisons of the difference in expected means among a number of groups. 
+- Scheffe's Method: for testing arbitrary linear combinations of a set of expected means, e.g..
+$$
+H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
+$$
+
+## Control *False Discovery Rate* (FDR)
+
+$$
+\text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
+$$
+FWER controls Pr(at least one falsely rejected $H_0$), may be too conservative. FDR controls the fraction of candidates in the smaller set that are really false rejections. E.g., A scientist tests on $m=20,000$ drug candidates. She wants to identify a smaller set of promising candidates to investigate further. She wants reassurance that this smaller set is really "promising", i.e., not too many falsely rejected $H_0$'s. She can control FDR. This may be achieved by *Benjamini-Hochberg Procedure*. 
+
+1. Specify $q$, the level at which to control the FDR. 
+2. Compute the $p$-values, $p_1, \cdots, p_m$ for the $m$-null hypotheses $H_{01}, \cdots, H_{0m}$. 
+3. Order the $m$ $p$-values so that $p_{(1)$ \le p_{(2)}\le \cdots p_{(m)}$. 
+4. Define 
+$$
+L=\max\left\{ j: p_{(j)}<\frac{qj}{m}  \right\}
+$$
+5. Reject all null hypotheses $H_{0j}$ for which $p_j \le p_{(L)}$.
+
+Then  $FDR \le q$. 
+
+## Resampling Approach
+When the *theoretical null distribution* is unknown or requires stringent assumptions, one can use *resampling* or *permulaton*  approach to approximate it. 
 
 
+For example, suppose that 
+$H_0: E(X)= E(Y)$, and $H_a: E(X)\ne E(Y)$, and number of independent samples $n_X$ and $n_Y$. The $t$-statistic as in @eq-two-sample-test, rewritten as 
+$$
+T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
+$$
+When $n_X$ and $n_Y$ are small. The theoretical distribution is not necessarily $\mathcal{N}(0,1)$. In this case the $p$-value can be approximated using the following *resampling approach*:
+
+1. Computer the two sample $t$-statistic $T$ on the original data $x_1, \cdots, x_{n_X}$, and $y_1, \cdots, y_{n_Y}$. 
+2. For $b=1, \cdots, B$ (where $B$ is large, e.g., 1000):
+  2.1 Randomly shuffle the $n_X+n_Y$ observations.
+  2.2 Call the first $n_X$ shuffled observations $x_1^*, \cdots, x_{n_X}^*$ and call the remaining observations $y_1^*, \cdots, y_{n_Y}^*$.
+  2.3 Computer the two-sample $t$-statistic on the shuffled data, and call it $T^{*b}$.
+  
+3. The $p$-value is given by 
+$$
+\frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
+$$
 
 ## Homework:
 - Conceptual: 1--
