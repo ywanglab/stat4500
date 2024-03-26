@@ -11,7 +11,7 @@ Divide the world into *null* and *alternative* hypotheses
   T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
   $${#eq-two-sample-test}
   
-if $n_c$ and $n_t$ are large, then $T$ is approximately $\mathcal{N}(0,1)$.
+Where, $s$ is a *pooled standard deviation*, assumed to be common to both groups. If the two groups have different s.d., then the formula is slightly different.   if $n_c$ and $n_t$ are large. e.g. larger than 40, then $T$ is approximately $\mathcal{N}(0,1)$.
 - Computer the $p$-value: is the probability of observing  a test statistic at least as extreme as the observed test statistic, *under the assumption that $H_0$ is true*. A *small* $p$-value provides evidence *against* $H_0$. 
   
 - Decide whether to reject $H_0$.
@@ -27,8 +27,13 @@ if $n_c$ and $n_t$ are large, then $T$ is approximately $\mathcal{N}(0,1)$.
   
 : {.striped .hover .bordered}
  
+The *power* of a hypothesis test  is the the probability of not making Type II error given that $H_a$ is correct, i.e., power = 1- Type II Error = True positive rate=recall=sensitivity. 
 
 -  Type I error rate: the probability of making a Type I error: if we only reject $H_0$ when the $p$-value is less than $\alpha$, the type I error rate is at most $\alpha$. 
+
+- Type I error and Type II error move in opposite direction. We can make the Type I error small by only rejecting $H_0$ of we are quite sure it doesn't hold, that is, with smaller probability $\alpha$; But this will result in *increase*  in Type II  error because we we do not reject $H_0$ with a higher probability. On the other hand, we can make the Type II error small by rejecting $H_0$ even with modest evidence that it does not hold, but this will cause the Type I error to be large. 
+
+- In practice we view Type I error more *serious* than Type II error, as the former involves declaring a scientific finding that is not correct. Hence we typically require a low Type I error rate at most $\alpha$, and try to make Type II error as small as possible. 
 
 ## Multiple Testing
 suppose we wish to test $m$ null hypotheses: $H_{01}, \cdots, H_{0m$. Can we reject all null hypotheses for which the corresponding $p$-value falls below $\alpha$, say 0.01?
@@ -50,6 +55,9 @@ Do Not Reject $H_0$| $U$  | $W$ |$m-R$
 Total | $m_0$ | $m-m_0$ | $m$ 
   
 : {.striped .hover .bordered}
+
+Note power $=\frac{S}{m-m_0}$. and Type I error rate = FPR = $\frac{V}{V+U}$ 
+
 
 $$
 \begin{array}{l l l}
@@ -78,30 +86,33 @@ If we only reject hypotheses when the $p$-value is less than $\alpha/m$, then
 $$
 \text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
 $$
-## Holm's Method for Controlling the FWER
-More complex than Bonferroni,  lead to more rejections while controlling FWER! *Homm is a better choice*. 
+Bonferroni corrections makes sure not too many null hypotheses are rejected falsely and hence small Type I error,  but may be too conservative and  lead to higher Type II error.
+## Holm's Step-down Method for Controlling the FWER
+More complex than Bonferroni,  lead to more rejections while controlling FWER! Holm's method always rejects at least as many null hypotheses as Bonferroni, results in fewer Type II error, hence greater power.  *Homm is a better choice* as it is uniformly more powerful than the Bonferroni method. 
 1. Compute the $p$-values, $p_1, \cdots, p_m$ for the $m$-null hypotheses $H_{01}, \cdots, H_{0m}$. 
 2. Order the $m$ $p$-values so that $p_{(1)$ \le p_{(2)}\le \cdots p_{(m)}$. 
 3. Define 
 $$
 L=\min\left\{ j: p_{(j)}>\frac{\alpha}{m+1-j}  \right\}
 $$
-4. Reject all null hypotheses $H_{0j}$ for which $p_j <p_{(L)}$.
+4. Reject all null hypotheses $H_{0j}$ for which $p_j <p_{(L)}$. Note $p_{(L)}$ depends on the values of all $m$ $p$-values. 
 5. Holm's method controls the FWER at level $\alpha$. 
 
 ## Other Methods
-Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections whil maintaining FWER control. 
-- Turkey's Method: for pairwise comparisons of the difference in expected means among a number of groups. 
+Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections (higher power) while maintaining FWER control. 
+- Turkey's Method: for pairwise comparisons of the difference in expected means among a number of groups. Turkey's method rejects at least as many rejections as Bonferroni's method, hence with greater power. 
 - Scheffe's Method: for testing arbitrary linear combinations of a set of expected means, e.g..
 $$
 H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
 $$
 
-## Control *False Discovery Rate* (FDR)
+## Control *False Discovery Rate* (FDR) (Contemporary Approach)
 
 $$
 \text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
 $$
+FDR = $1-\frac{S}{V+S} $ = 1- precision
+
 FWER controls Pr(at least one falsely rejected $H_0$), may be too conservative. FDR controls the fraction of candidates in the smaller set that are really false rejections. E.g., A scientist tests on $m=20,000$ drug candidates. She wants to identify a smaller set of promising candidates to investigate further. She wants reassurance that this smaller set is really "promising", i.e., not too many falsely rejected $H_0$'s. She can control FDR. This may be achieved by *Benjamini-Hochberg Procedure*. 
 
 1. Specify $q$, the level at which to control the FDR. 
@@ -115,8 +126,8 @@ $$
 
 Then  $FDR \le q$. 
 
-## Resampling Approach
-When the *theoretical null distribution* is unknown or requires stringent assumptions, one can use *resampling* or *permulaton*  approach to approximate it. 
+## Resampling Approach (Contemporary Approach)
+When the *theoretical null distribution* is unknown or requires stringent assumptions, one can use *resampling* or *permutation*  approach to approximate it. 
 
 
 For example, suppose that 
@@ -124,18 +135,25 @@ $H_0: E(X)= E(Y)$, and $H_a: E(X)\ne E(Y)$, and number of independent samples $n
 $$
 T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
 $$
-When $n_X$ and $n_Y$ are small. The theoretical distribution is not necessarily $\mathcal{N}(0,1)$. In this case the $p$-value can be approximated using the following *resampling approach*:
+When $n_X$ and $n_Y$ are small. If $X$ and $Y$ are normally distributed, then $T$ follows a $t$-distribution with dof $n_X+n_Y-2$. $T$ follows a normal $\mathcal{N}(0,1)$ when $n_X$ and $n_Y$ are large.  The theoretical distribution is not necessarily $\mathcal{N}(0,1)$. In this case the $p$-value can be approximated using the following *resampling approach*.  The idea is that under $H_0$: $E(X)=E(Y)$ and we make a strong assumption that the distributions of $X$ is the same as that of $Y$, then the distributon of $T$ is **invariant** if we swap some observations of $X$ with those of $Y$. 
 
 1. Computer the two sample $t$-statistic $T$ on the original data $x_1, \cdots, x_{n_X}$, and $y_1, \cdots, y_{n_Y}$. 
 2. For $b=1, \cdots, B$ (where $B$ is large, e.g., 1000):
-  2.1 Randomly shuffle the $n_X+n_Y$ observations.
+  2.1 Randomly shuffle (permute) the $n_X+n_Y$ observations.
   2.2 Call the first $n_X$ shuffled observations $x_1^*, \cdots, x_{n_X}^*$ and call the remaining observations $y_1^*, \cdots, y_{n_Y}^*$.
-  2.3 Computer the two-sample $t$-statistic on the shuffled data, and call it $T^{*b}$.
+  2.3 Computer the two-sample $t$-statistic on the shuffled data, and call it $T^{*b}$. 
   
-3. The $p$-value is given by 
+3. The $T^{*b}$'s may be considered as an approximaiton to the distribution of $T$ under $H_0$. The $p$-value is given by 
 $$
 \frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
 $$
+## Resampling approach for FDR
+First note 
+$$
+FDR =E\left( \frac{V}{R} \right) \approx \frac{E(V)}{R}.
+$$
+Suppose we reject a null hypothesis for which the test statistic exceeds $c$, then 
+$R=\sum_{j=1}^m 1_{|T_j|\ge c}.$ $E(V)$ is the expected number of false positive associated with rejecting a null hypothesis for which the test statistic exceeds $c$. Since we do not know which $H_{0j}, j=1, \cdots,   m$ is true, we do not know which rejected $H_{0j}$ is false positive.  The resampling approach simulates the data under $H_{0j}, j=1, \cdots,   m$, and then compute the resulting test statistics. The number of re-sampled test statistics that exceeds $c$ provides an estimate of $V$. 
 
 ## Homework:
 - Conceptual: 1--

@@ -1592,7 +1592,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, arc=.35mm, opacityback=0, toptitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, titlerule=0mm, bottomrule=.15mm, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, left=2mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1659,7 +1659,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, arc=.35mm, opacityback=0, toptitle=1mm, breakable, toprule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, titlerule=0mm, bottomrule=.15mm, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame, opacitybacktitle=0.6, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, left=2mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.
@@ -6558,11 +6558,14 @@ Divide the world into \emph{null} and \emph{alternative} hypotheses
   }\end{equation}
 \end{itemize}
 
-if \(n_c\) and \(n_t\) are large, then \(T\) is approximately
-\(\mathcal{N}(0,1)\). - Computer the \(p\)-value: is the probability of
-observing a test statistic at least as extreme as the observed test
-statistic, \emph{under the assumption that \(H_0\) is true}. A
-\emph{small} \(p\)-value provides evidence \emph{against} \(H_0\).
+Where, \(s\) is a \emph{pooled standard deviation}, assumed to be common
+to both groups. If the two groups have different s.d., then the formula
+is slightly different. if \(n_c\) and \(n_t\) are large. e.g.~larger
+than 40, then \(T\) is approximately \(\mathcal{N}(0,1)\). - Computer
+the \(p\)-value: is the probability of observing a test statistic at
+least as extreme as the observed test statistic, \emph{under the
+assumption that \(H_0\) is true}. A \emph{small} \(p\)-value provides
+evidence \emph{against} \(H_0\).
 
 \begin{itemize}
 \tightlist
@@ -6587,12 +6590,29 @@ Decision & Reject \(H_0\) & Type I Error (FP) & Correct \\
 & Do Not Reject \(H_0\) & Correct & Type II error (FN) \\
 \end{longtable}
 
+The \emph{power} of a hypothesis test is the the probability of not
+making Type II error given that \(H_a\) is correct, i.e., power = 1-
+Type II Error = True positive rate=recall=sensitivity.
+
 \begin{itemize}
-\tightlist
 \item
   Type I error rate: the probability of making a Type I error: if we
   only reject \(H_0\) when the \(p\)-value is less than \(\alpha\), the
   type I error rate is at most \(\alpha\).
+\item
+  Type I error and Type II error move in opposite direction. We can make
+  the Type I error small by only rejecting \(H_0\) of we are quite sure
+  it doesn't hold, that is, with smaller probability \(\alpha\); But
+  this will result in \emph{increase} in Type II error because we we do
+  not reject \(H_0\) with a higher probability. On the other hand, we
+  can make the Type II error small by rejecting \(H_0\) even with modest
+  evidence that it does not hold, but this will cause the Type I error
+  to be large.
+\item
+  In practice we view Type I error more \emph{serious} than Type II
+  error, as the former involves declaring a scientific finding that is
+  not correct. Hence we typically require a low Type I error rate at
+  most \(\alpha\), and try to make Type II error as small as possible.
 \end{itemize}
 
 \section{Multiple Testing}\label{multiple-testing}
@@ -6634,6 +6654,9 @@ Do Not Reject \(H_0\) & \(U\) & \(W\) & \(m-R\) \\
 Total & \(m_0\) & \(m-m_0\) & \(m\) \\
 \end{longtable}
 
+Note power \(=\frac{S}{m-m_0}\). and Type I error rate = FPR =
+\(\frac{V}{V+U}\)
+
 \[
 \begin{array}{l l l}
    \text{FWER}
@@ -6656,33 +6679,44 @@ that the \(j\)-th null hypothesis is falsely rejected. Then \[
 \] If we only reject hypotheses when the \(p\)-value is less than
 \(\alpha/m\), then \[
 \text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
-\] \#\# Holm's Method for Controlling the FWER More complex than
-Bonferroni, lead to more rejections while controlling FWER! \emph{Homm
-is a better choice}. 1. Compute the \(p\)-values, \(p_1, \cdots, p_m\)
-for the \(m\)-null hypotheses \(H_{01}, \cdots, H_{0m}\). 2. Order the
-\(m\) \(p\)-values so that \(p_{(1)\)
-\le p\_\{(2)\}\le \cdots p\_\{(m)\}\$. 3. Define \[
+\] Bonferroni corrections makes sure not too many null hypotheses are
+rejected falsely and hence small Type I error, but may be too
+conservative and lead to higher Type II error. \#\# Holm's Step-down
+Method for Controlling the FWER More complex than Bonferroni, lead to
+more rejections while controlling FWER! Holm's method always rejects at
+least as many null hypotheses as Bonferroni, results in fewer Type II
+error, hence greater power. \emph{Homm is a better choice} as it is
+uniformly more powerful than the Bonferroni method. 1. Compute the
+\(p\)-values, \(p_1, \cdots, p_m\) for the \(m\)-null hypotheses
+\(H_{01}, \cdots, H_{0m}\). 2. Order the \(m\) \(p\)-values so that
+\(p_{(1)\) \le p\_\{(2)\}\le \cdots p\_\{(m)\}\$. 3. Define \[
 L=\min\left\{ j: p_{(j)}>\frac{\alpha}{m+1-j}  \right\}
 \] 4. Reject all null hypotheses \(H_{0j}\) for which \(p_j <p_{(L)}\).
-5. Holm's method controls the FWER at level \(\alpha\).
+Note \(p_{(L)}\) depends on the values of all \(m\) \(p\)-values. 5.
+Holm's method controls the FWER at level \(\alpha\).
 
 \section{Other Methods}\label{other-methods}
 
 Bonferroni and Hold are general procedures that will work in most
 settings. In certain special cases, the following method may give better
-results: more rejections whil maintaining FWER control. - Turkey's
-Method: for pairwise comparisons of the difference in expected means
-among a number of groups. - Scheffe's Method: for testing arbitrary
-linear combinations of a set of expected means, e.g.. \[
+results: more rejections (higher power) while maintaining FWER control.
+- Turkey's Method: for pairwise comparisons of the difference in
+expected means among a number of groups. Turkey's method rejects at
+least as many rejections as Bonferroni's method, hence with greater
+power. - Scheffe's Method: for testing arbitrary linear combinations of
+a set of expected means, e.g.. \[
 H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
 \]
 
-\section{\texorpdfstring{Control \emph{False Discovery Rate}
-(FDR)}{Control False Discovery Rate (FDR)}}\label{control-false-discovery-rate-fdr}
+\section{\texorpdfstring{Control \emph{False Discovery Rate} (FDR)
+(Contemporary
+Approach)}{Control False Discovery Rate (FDR) (Contemporary Approach)}}\label{control-false-discovery-rate-fdr-contemporary-approach}
 
 \[
 \text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
-\] FWER controls Pr(at least one falsely rejected \(H_0\)), may be too
+\] FDR = \$1-\frac{S}{V+S} \$ = 1- precision
+
+FWER controls Pr(at least one falsely rejected \(H_0\)), may be too
 conservative. FDR controls the fraction of candidates in the smaller set
 that are really false rejections. E.g., A scientist tests on
 \(m=20,000\) drug candidates. She wants to identify a smaller set of
@@ -6712,20 +6746,28 @@ rejected \(H_0\)'s. She can control FDR. This may be achieved by
 
 Then \(FDR \le q\).
 
-\section{Resampling Approach}\label{resampling-approach}
+\section{Resampling Approach (Contemporary
+Approach)}\label{resampling-approach-contemporary-approach}
 
 When the \emph{theoretical null distribution} is unknown or requires
 stringent assumptions, one can use \emph{resampling} or
-\emph{permulaton} approach to approximate it.
+\emph{permutation} approach to approximate it.
 
 For example, suppose that \(H_0: E(X)= E(Y)\), and
 \(H_a: E(X)\ne E(Y)\), and number of independent samples \(n_X\) and
 \(n_Y\). The \(t\)-statistic as in Equation~\ref{eq-two-sample-test},
 rewritten as \[
 T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
-\] When \(n_X\) and \(n_Y\) are small. The theoretical distribution is
-not necessarily \(\mathcal{N}(0,1)\). In this case the \(p\)-value can
-be approximated using the following \emph{resampling approach}:
+\] When \(n_X\) and \(n_Y\) are small. If \(X\) and \(Y\) are normally
+distributed, then \(T\) follows a \(t\)-distribution with dof
+\(n_X+n_Y-2\). \(T\) follows a normal \(\mathcal{N}(0,1)\) when \(n_X\)
+and \(n_Y\) are large. The theoretical distribution is not necessarily
+\(\mathcal{N}(0,1)\). In this case the \(p\)-value can be approximated
+using the following \emph{resampling approach}. The idea is that under
+\(H_0\): \(E(X)=E(Y)\) and we make a strong assumption that the
+distributions of \(X\) is the same as that of \(Y\), then the
+distributon of \(T\) is \textbf{invariant} if we swap some observations
+of \(X\) with those of \(Y\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6734,15 +6776,26 @@ be approximated using the following \emph{resampling approach}:
   \(x_1, \cdots, x_{n_X}\), and \(y_1, \cdots, y_{n_Y}\).
 \item
   For \(b=1, \cdots, B\) (where \(B\) is large, e.g., 1000): 2.1
-  Randomly shuffle the \(n_X+n_Y\) observations. 2.2 Call the first
-  \(n_X\) shuffled observations \(x_1^*, \cdots, x_{n_X}^*\) and call
-  the remaining observations \(y_1^*, \cdots, y_{n_Y}^*\). 2.3 Computer
-  the two-sample \(t\)-statistic on the shuffled data, and call it
-  \(T^{*b}\).
+  Randomly shuffle (permute) the \(n_X+n_Y\) observations. 2.2 Call the
+  first \(n_X\) shuffled observations \(x_1^*, \cdots, x_{n_X}^*\) and
+  call the remaining observations \(y_1^*, \cdots, y_{n_Y}^*\). 2.3
+  Computer the two-sample \(t\)-statistic on the shuffled data, and call
+  it \(T^{*b}\).
 \item
-  The \(p\)-value is given by \[
+  The \(T^{*b}\)'s may be considered as an approximaiton to the
+  distribution of \(T\) under \(H_0\). The \(p\)-value is given by \[
   \frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
-  \]
+  \] \#\# Resampling approach for FDR First note \[
+  FDR =E\left( \frac{V}{R} \right) \approx \frac{E(V)}{R}.
+  \] Suppose we reject a null hypothesis for which the test statistic
+  exceeds \(c\), then \(R=\sum_{j=1}^m 1_{|T_j|\ge c}.\) \(E(V)\) is the
+  expected number of false positive associated with rejecting a null
+  hypothesis for which the test statistic exceeds \(c\). Since we do not
+  know which \(H_{0j}, j=1, \cdots, m\) is true, we do not know which
+  rejected \(H_{0j}\) is false positive. The resampling approach
+  simulates the data under \(H_{0j}, j=1, \cdots, m\), and then compute
+  the resulting test statistics. The number of re-sampled test
+  statistics that exceeds \(c\) provides an estimate of \(V\).
 \end{enumerate}
 
 \section{Homework:}\label{homework-9}

@@ -245,8 +245,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-familiy-wise-error-rate-fwer" id="toc-the-familiy-wise-error-rate-fwer" class="nav-link" data-scroll-target="#the-familiy-wise-error-rate-fwer"><span class="header-section-number">13.3.1</span> The Familiy-wise Error Rate (FWER)</a></li>
   </ul></li>
   <li><a href="#other-methods" id="toc-other-methods" class="nav-link" data-scroll-target="#other-methods"><span class="header-section-number">13.4</span> Other Methods</a></li>
-  <li><a href="#control-false-discovery-rate-fdr" id="toc-control-false-discovery-rate-fdr" class="nav-link" data-scroll-target="#control-false-discovery-rate-fdr"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR)</a></li>
-  <li><a href="#resampling-approach" id="toc-resampling-approach" class="nav-link" data-scroll-target="#resampling-approach"><span class="header-section-number">13.6</span> Resampling Approach</a></li>
+  <li><a href="#control-false-discovery-rate-fdr-contemporary-approach" id="toc-control-false-discovery-rate-fdr-contemporary-approach" class="nav-link" data-scroll-target="#control-false-discovery-rate-fdr-contemporary-approach"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR) (Contemporary Approach)</a></li>
+  <li><a href="#resampling-approach-contemporary-approach" id="toc-resampling-approach-contemporary-approach" class="nav-link" data-scroll-target="#resampling-approach-contemporary-approach"><span class="header-section-number">13.6</span> Resampling Approach (Contemporary Approach)</a></li>
   <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework"><span class="header-section-number">13.7</span> Homework:</a></li>
   <li><a href="#code-snippet" id="toc-code-snippet" class="nav-link" data-scroll-target="#code-snippet"><span class="header-section-number">13.8</span> Code Snippet</a>
   <ul class="collapse">
@@ -293,7 +293,7 @@ ul.task-list li input[type="checkbox"] {
 T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
 \tag{13.1}\]</span></span></li>
 </ul>
-<p>if <span class="math inline">\(n_c\)</span> and <span class="math inline">\(n_t\)</span> are large, then <span class="math inline">\(T\)</span> is approximately <span class="math inline">\(\mathcal{N}(0,1)\)</span>. - Computer the <span class="math inline">\(p\)</span>-value: is the probability of observing a test statistic at least as extreme as the observed test statistic, <em>under the assumption that <span class="math inline">\(H_0\)</span> is true</em>. A <em>small</em> <span class="math inline">\(p\)</span>-value provides evidence <em>against</em> <span class="math inline">\(H_0\)</span>.</p>
+<p>Where, <span class="math inline">\(s\)</span> is a <em>pooled standard deviation</em>, assumed to be common to both groups. If the two groups have different s.d., then the formula is slightly different. if <span class="math inline">\(n_c\)</span> and <span class="math inline">\(n_t\)</span> are large. e.g.&nbsp;larger than 40, then <span class="math inline">\(T\)</span> is approximately <span class="math inline">\(\mathcal{N}(0,1)\)</span>. - Computer the <span class="math inline">\(p\)</span>-value: is the probability of observing a test statistic at least as extreme as the observed test statistic, <em>under the assumption that <span class="math inline">\(H_0\)</span> is true</em>. A <em>small</em> <span class="math inline">\(p\)</span>-value provides evidence <em>against</em> <span class="math inline">\(H_0\)</span>.</p>
 <ul>
 <li>Decide whether to reject <span class="math inline">\(H_0\)</span>. if <span class="math inline">\(p\)</span>-value is small, we will want to <em>reject</em> <span class="math inline">\(H_0\)</span> (and therefore make a potential “discovery”).</li>
 </ul>
@@ -331,8 +331,11 @@ T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
 </tr>
 </tbody>
 </table>
+<p>The <em>power</em> of a hypothesis test is the the probability of not making Type II error given that <span class="math inline">\(H_a\)</span> is correct, i.e., power = 1- Type II Error = True positive rate=recall=sensitivity.</p>
 <ul>
-<li>Type I error rate: the probability of making a Type I error: if we only reject <span class="math inline">\(H_0\)</span> when the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha\)</span>, the type I error rate is at most <span class="math inline">\(\alpha\)</span>.</li>
+<li><p>Type I error rate: the probability of making a Type I error: if we only reject <span class="math inline">\(H_0\)</span> when the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha\)</span>, the type I error rate is at most <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p>Type I error and Type II error move in opposite direction. We can make the Type I error small by only rejecting <span class="math inline">\(H_0\)</span> of we are quite sure it doesn’t hold, that is, with smaller probability <span class="math inline">\(\alpha\)</span>; But this will result in <em>increase</em> in Type II error because we we do not reject <span class="math inline">\(H_0\)</span> with a higher probability. On the other hand, we can make the Type II error small by rejecting <span class="math inline">\(H_0\)</span> even with modest evidence that it does not hold, but this will cause the Type I error to be large.</p></li>
+<li><p>In practice we view Type I error more <em>serious</em> than Type II error, as the former involves declaring a scientific finding that is not correct. Hence we typically require a low Type I error rate at most <span class="math inline">\(\alpha\)</span>, and try to make Type II error as small as possible.</p></li>
 </ul>
 </section>
 <section id="multiple-testing" class="level2" data-number="13.3">
@@ -375,6 +378,7 @@ T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
 </tr>
 </tbody>
 </table>
+<p>Note power <span class="math inline">\(=\frac{S}{m-m_0}\)</span>. and Type I error rate = FPR = <span class="math inline">\(\frac{V}{V+U}\)</span></p>
 <p><span class="math display">\[
 \begin{array}{l l l}
    \text{FWER}
@@ -392,22 +396,23 @@ T=\frac{\hat{\mu}_t - \hat{\mu}_c}{s\sqrt{\frac{1}{n_c}+ \frac{1}{n_t}}}
 \end{array}
 \]</span> If we only reject hypotheses when the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha/m\)</span>, then <span class="math display">\[
 \text{FWER} \le \sum_{j=1}^m \text{Pr}(A_j) \le \sum_{j=1}^m \frac{\alpha}{m} = \alpha.
-\]</span> ## Holm’s Method for Controlling the FWER More complex than Bonferroni, lead to more rejections while controlling FWER! <em>Homm is a better choice</em>. 1. Compute the <span class="math inline">\(p\)</span>-values, <span class="math inline">\(p_1, \cdots, p_m\)</span> for the <span class="math inline">\(m\)</span>-null hypotheses <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>. 2. Order the <span class="math inline">\(m\)</span> <span class="math inline">\(p\)</span>-values so that <span class="math inline">\(p_{(1)\)</span> p_{(2)}p_{(m)}$. 3. Define <span class="math display">\[
+\]</span> Bonferroni corrections makes sure not too many null hypotheses are rejected falsely and hence small Type I error, but may be too conservative and lead to higher Type II error. ## Holm’s Step-down Method for Controlling the FWER More complex than Bonferroni, lead to more rejections while controlling FWER! Holm’s method always rejects at least as many null hypotheses as Bonferroni, results in fewer Type II error, hence greater power. <em>Homm is a better choice</em> as it is uniformly more powerful than the Bonferroni method. 1. Compute the <span class="math inline">\(p\)</span>-values, <span class="math inline">\(p_1, \cdots, p_m\)</span> for the <span class="math inline">\(m\)</span>-null hypotheses <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>. 2. Order the <span class="math inline">\(m\)</span> <span class="math inline">\(p\)</span>-values so that <span class="math inline">\(p_{(1)\)</span> p_{(2)}p_{(m)}$. 3. Define <span class="math display">\[
 L=\min\left\{ j: p_{(j)}&gt;\frac{\alpha}{m+1-j}  \right\}
-\]</span> 4. Reject all null hypotheses <span class="math inline">\(H_{0j}\)</span> for which <span class="math inline">\(p_j &lt;p_{(L)}\)</span>. 5. Holm’s method controls the FWER at level <span class="math inline">\(\alpha\)</span>.</p>
+\]</span> 4. Reject all null hypotheses <span class="math inline">\(H_{0j}\)</span> for which <span class="math inline">\(p_j &lt;p_{(L)}\)</span>. Note <span class="math inline">\(p_{(L)}\)</span> depends on the values of all <span class="math inline">\(m\)</span> <span class="math inline">\(p\)</span>-values. 5. Holm’s method controls the FWER at level <span class="math inline">\(\alpha\)</span>.</p>
 </section>
 </section>
 <section id="other-methods" class="level2" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="other-methods"><span class="header-section-number">13.4</span> Other Methods</h2>
-<p>Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections whil maintaining FWER control. - Turkey’s Method: for pairwise comparisons of the difference in expected means among a number of groups. - Scheffe’s Method: for testing arbitrary linear combinations of a set of expected means, e.g.. <span class="math display">\[
+<p>Bonferroni and Hold are general procedures that will work in most settings. In certain special cases, the following method may give better results: more rejections (higher power) while maintaining FWER control. - Turkey’s Method: for pairwise comparisons of the difference in expected means among a number of groups. Turkey’s method rejects at least as many rejections as Bonferroni’s method, hence with greater power. - Scheffe’s Method: for testing arbitrary linear combinations of a set of expected means, e.g.. <span class="math display">\[
 H_0: \frac{1}{2}(\mu_1+\mu_3) =\frac{1}{3}(\mu_2+\mu_4+\mu_5)
 \]</span></p>
 </section>
-<section id="control-false-discovery-rate-fdr" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="control-false-discovery-rate-fdr"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR)</h2>
+<section id="control-false-discovery-rate-fdr-contemporary-approach" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="control-false-discovery-rate-fdr-contemporary-approach"><span class="header-section-number">13.5</span> Control <em>False Discovery Rate</em> (FDR) (Contemporary Approach)</h2>
 <p><span class="math display">\[
 \text{FDR} = E(V/R)=E\left(\frac{\text{number of false rejections}}{\text{total number of rejections}}\right)
-\]</span> FWER controls Pr(at least one falsely rejected <span class="math inline">\(H_0\)</span>), may be too conservative. FDR controls the fraction of candidates in the smaller set that are really false rejections. E.g., A scientist tests on <span class="math inline">\(m=20,000\)</span> drug candidates. She wants to identify a smaller set of promising candidates to investigate further. She wants reassurance that this smaller set is really “promising”, i.e., not too many falsely rejected <span class="math inline">\(H_0\)</span>’s. She can control FDR. This may be achieved by <em>Benjamini-Hochberg Procedure</em>.</p>
+\]</span> FDR = $1- $ = 1- precision</p>
+<p>FWER controls Pr(at least one falsely rejected <span class="math inline">\(H_0\)</span>), may be too conservative. FDR controls the fraction of candidates in the smaller set that are really false rejections. E.g., A scientist tests on <span class="math inline">\(m=20,000\)</span> drug candidates. She wants to identify a smaller set of promising candidates to investigate further. She wants reassurance that this smaller set is really “promising”, i.e., not too many falsely rejected <span class="math inline">\(H_0\)</span>’s. She can control FDR. This may be achieved by <em>Benjamini-Hochberg Procedure</em>.</p>
 <ol type="1">
 <li>Specify <span class="math inline">\(q\)</span>, the level at which to control the FDR.</li>
 <li>Compute the <span class="math inline">\(p\)</span>-values, <span class="math inline">\(p_1, \cdots, p_m\)</span> for the <span class="math inline">\(m\)</span>-null hypotheses <span class="math inline">\(H_{01}, \cdots, H_{0m}\)</span>.</li>
@@ -419,18 +424,20 @@ L=\max\left\{ j: p_{(j)}&lt;\frac{qj}{m}  \right\}
 </ol>
 <p>Then <span class="math inline">\(FDR \le q\)</span>.</p>
 </section>
-<section id="resampling-approach" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="resampling-approach"><span class="header-section-number">13.6</span> Resampling Approach</h2>
-<p>When the <em>theoretical null distribution</em> is unknown or requires stringent assumptions, one can use <em>resampling</em> or <em>permulaton</em> approach to approximate it.</p>
+<section id="resampling-approach-contemporary-approach" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="resampling-approach-contemporary-approach"><span class="header-section-number">13.6</span> Resampling Approach (Contemporary Approach)</h2>
+<p>When the <em>theoretical null distribution</em> is unknown or requires stringent assumptions, one can use <em>resampling</em> or <em>permutation</em> approach to approximate it.</p>
 <p>For example, suppose that <span class="math inline">\(H_0: E(X)= E(Y)\)</span>, and <span class="math inline">\(H_a: E(X)\ne E(Y)\)</span>, and number of independent samples <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span>. The <span class="math inline">\(t\)</span>-statistic as in <a href="#eq-two-sample-test" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-two-sample-test</span></a>, rewritten as <span class="math display">\[
 T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
-\]</span> When <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are small. The theoretical distribution is not necessarily <span class="math inline">\(\mathcal{N}(0,1)\)</span>. In this case the <span class="math inline">\(p\)</span>-value can be approximated using the following <em>resampling approach</em>:</p>
+\]</span> When <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are small. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are normally distributed, then <span class="math inline">\(T\)</span> follows a <span class="math inline">\(t\)</span>-distribution with dof <span class="math inline">\(n_X+n_Y-2\)</span>. <span class="math inline">\(T\)</span> follows a normal <span class="math inline">\(\mathcal{N}(0,1)\)</span> when <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are large. The theoretical distribution is not necessarily <span class="math inline">\(\mathcal{N}(0,1)\)</span>. In this case the <span class="math inline">\(p\)</span>-value can be approximated using the following <em>resampling approach</em>. The idea is that under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(E(X)=E(Y)\)</span> and we make a strong assumption that the distributions of <span class="math inline">\(X\)</span> is the same as that of <span class="math inline">\(Y\)</span>, then the distributon of <span class="math inline">\(T\)</span> is <strong>invariant</strong> if we swap some observations of <span class="math inline">\(X\)</span> with those of <span class="math inline">\(Y\)</span>.</p>
 <ol type="1">
 <li><p>Computer the two sample <span class="math inline">\(t\)</span>-statistic <span class="math inline">\(T\)</span> on the original data <span class="math inline">\(x_1, \cdots, x_{n_X}\)</span>, and <span class="math inline">\(y_1, \cdots, y_{n_Y}\)</span>.</p></li>
-<li><p>For <span class="math inline">\(b=1, \cdots, B\)</span> (where <span class="math inline">\(B\)</span> is large, e.g., 1000): 2.1 Randomly shuffle the <span class="math inline">\(n_X+n_Y\)</span> observations. 2.2 Call the first <span class="math inline">\(n_X\)</span> shuffled observations <span class="math inline">\(x_1^*, \cdots, x_{n_X}^*\)</span> and call the remaining observations <span class="math inline">\(y_1^*, \cdots, y_{n_Y}^*\)</span>. 2.3 Computer the two-sample <span class="math inline">\(t\)</span>-statistic on the shuffled data, and call it <span class="math inline">\(T^{*b}\)</span>.</p></li>
-<li><p>The <span class="math inline">\(p\)</span>-value is given by <span class="math display">\[
+<li><p>For <span class="math inline">\(b=1, \cdots, B\)</span> (where <span class="math inline">\(B\)</span> is large, e.g., 1000): 2.1 Randomly shuffle (permute) the <span class="math inline">\(n_X+n_Y\)</span> observations. 2.2 Call the first <span class="math inline">\(n_X\)</span> shuffled observations <span class="math inline">\(x_1^*, \cdots, x_{n_X}^*\)</span> and call the remaining observations <span class="math inline">\(y_1^*, \cdots, y_{n_Y}^*\)</span>. 2.3 Computer the two-sample <span class="math inline">\(t\)</span>-statistic on the shuffled data, and call it <span class="math inline">\(T^{*b}\)</span>.</p></li>
+<li><p>The <span class="math inline">\(T^{*b}\)</span>’s may be considered as an approximaiton to the distribution of <span class="math inline">\(T\)</span> under <span class="math inline">\(H_0\)</span>. The <span class="math inline">\(p\)</span>-value is given by <span class="math display">\[
 \frac{\sum_{b=1}^B 1_{|T^{*b}|\ge |T|}}{B}
-\]</span></p></li>
+\]</span> ## Resampling approach for FDR First note <span class="math display">\[
+FDR =E\left( \frac{V}{R} \right) \approx \frac{E(V)}{R}.
+\]</span> Suppose we reject a null hypothesis for which the test statistic exceeds <span class="math inline">\(c\)</span>, then <span class="math inline">\(R=\sum_{j=1}^m 1_{|T_j|\ge c}.\)</span> <span class="math inline">\(E(V)\)</span> is the expected number of false positive associated with rejecting a null hypothesis for which the test statistic exceeds <span class="math inline">\(c\)</span>. Since we do not know which <span class="math inline">\(H_{0j}, j=1, \cdots, m\)</span> is true, we do not know which rejected <span class="math inline">\(H_{0j}\)</span> is false positive. The resampling approach simulates the data under <span class="math inline">\(H_{0j}, j=1, \cdots, m\)</span>, and then compute the resulting test statistics. The number of re-sampled test statistics that exceeds <span class="math inline">\(c\)</span> provides an estimate of <span class="math inline">\(V\)</span>.</p></li>
 </ol>
 </section>
 <section id="homework" class="level2" data-number="13.7">
