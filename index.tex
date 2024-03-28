@@ -1592,7 +1592,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, left=2mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, opacityback=0, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, opacitybacktitle=0.6, coltitle=black, toptitle=1mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, toprule=.15mm, breakable, rightrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1659,7 +1659,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, coltitle=black, opacitybacktitle=0.6, opacityback=0, bottomtitle=1mm, toptitle=1mm, titlerule=0mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colframe=quarto-callout-note-color-frame, leftrule=.75mm, arc=.35mm, colback=white, left=2mm, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, opacityback=0, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, opacitybacktitle=0.6, coltitle=black, toptitle=1mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, toprule=.15mm, breakable, rightrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.
@@ -6766,7 +6766,7 @@ and \(n_Y\) are large. The theoretical distribution is not necessarily
 using the following \emph{resampling approach}. The idea is that under
 \(H_0\): \(E(X)=E(Y)\) and we make a strong assumption that the
 distributions of \(X\) is the same as that of \(Y\), then the
-distributon of \(T\) is \textbf{invariant} if we swap some observations
+distribution of \(T\) is \textbf{invariant} if we swap some observations
 of \(X\) with those of \(Y\).
 
 \begin{enumerate}
@@ -6819,26 +6819,186 @@ of \(X\) with those of \(Y\).
 \subsection{Numpy}\label{numpy-11}
 
 \begin{verbatim}
+np.where(sorted_ < q * np.linspace(1, m, m) / m)[0]
 \end{verbatim}
 
 \subsection{Pandas}\label{pandas-11}
 
 \begin{verbatim}
+decision = pd.cut(p_values,
+                  [0, 0.05, 1],
+                  labels=['Reject H0',
+                          'Do not reject H0'])
+truth = pd.Categorical(true_mean == 0,
+                       categories=[True, False], # specify ordre. True=0, False=1
+                       ordered=True)
+                       
+pd.crosstab(decision, #row
+            truth, # col
+     rownames=['Decision'],
+     colnames=['H0'])    
+     
+pd.concat([Khan['xtrain'], Khan['xtest']]) # concat vertically along rows
 \end{verbatim}
 
 \subsection{Graphics}\label{graphics-11}
 
 \begin{verbatim}
+[ax.plot(m,
+         1 - (1 - alpha)**m,
+         label=r'$\alpha=%s$' % str(alpha))
+         for alpha in [0.05, 0.01, 0.001]]   #plot multiple curves
+ax.set_xscale('log')
+
+ax.axhline(0.05, c='k', ls='--');
+
+x.axline((0, 0), (1,q/m), c='k', ls='--', linewidth=3); #line through (0,0), (1,q/m)
 \end{verbatim}
 
 \subsection{ISLP and statsmodels}\label{islp-and-statsmodels-9}
 
+\subsubsection{\texorpdfstring{1-sample
+\(t\)-test}{1-sample t-test}}\label{sample-t-test}
+
 \begin{verbatim}
+from scipy.stats import \
+    (ttest_1samp,
+     ttest_rel,
+     ttest_ind,
+     t as t_dbn)
+from statsmodels.stats.multicomp import \
+     pairwise_tukeyhsd
+from statsmodels.stats.multitest import \
+     multipletests as mult_test
+
+result = ttest_1samp(X[:,0], 0)
+result.pvalue     
+     
+\end{verbatim}
+
+\subsubsection{Two-sample t-test}\label{two-sample-t-test}
+
+\begin{verbatim}
+ttest_rel(fund_mini['Manager1'],
+          fund_mini['Manager2']).pvalue #ttest_rel requires two vectors of the same length
+          
+observedT, pvalue = ttest_ind(D2[gene_11],
+                              D4[gene_11],
+                              equal_var=True) #ttest_ind allows two vectors with different lengths  
+ttest_ind(D2[gene_11],
+                              D4[gene_11],
+                              equal_var=True).statistic                              
+          
+\end{verbatim}
+
+\subsubsection{Multiple test}\label{multiple-test}
+
+\begin{verbatim}
+# obtain invidual p_values
+fund_mini = Fund.iloc[:,:5]
+fund_mini_pvals = np.empty(5)
+for i in range(5):
+    fund_mini_pvals[i] = ttest_1samp(fund_mini.iloc[:,i], 0).pvalue
+
+reject, bonf = mult_test(fund_mini_pvals, method = "bonferroni")[:2]   
+
+mult_test(fund_mini_pvals, method = "holm", alpha=0.05)[:2]
+
+mult_test(fund_pvalues, method = "fdr_bh") #for controling FDR
+fund_qvalues = mult_test(fund_pvalues, method = "fdr_bh")[1]
+(fund_qvalues <= 0.1).sum()
+\end{verbatim}
+
+\subsubsection{Turkey HSD Test}\label{turkey-hsd-test}
+
+\begin{verbatim}
+returns = np.hstack([fund_mini.iloc[:,i] for i in range(5)])
+managers = np.hstack([[i+1]*50 for i in range(5)])
+tukey = pairwise_tukeyhsd(returns, managers)
+print(tukey.summary())
+
+fig, ax = plt.subplots(figsize=(8,8))
+tukey.plot_simultaneous(ax=ax);
+
+
+\end{verbatim}
+
+\subsubsection{Plug-in Resamplng FDR}\label{plug-in-resamplng-fdr}
+
+\begin{verbatim}
+m, B = 100, 10000
+idx = rng.choice(Khan['xtest'].columns, m, replace=False)
+T_vals = np.empty(m)
+Tnull_vals = np.empty((m, B))
+
+for j in range(m):
+    col = idx[j]
+    T_vals[j] = ttest_ind(D2[col],
+                          D4[col],
+                          equal_var=True).statistic #observed t-statistic
+    D_ = np.hstack([D2[col], D4[col]])
+    D_null = D_.copy()
+    for b in range(B):
+        rng.shuffle(D_null)
+        ttest_ = ttest_ind(D_null[:n_],
+                           D_null[n_:],
+                           equal_var=True)
+        Tnull_vals[j,b] = ttest_.statistic
+        
+cutoffs = np.sort(np.abs(T_vals)) 
+FDRs, Rs, Vs = np.empty((3, m))
+
+for j in range(m):
+   R = np.sum(np.abs(T_vals) >= cutoffs[j]) # Note cufoffs is sorted and increasing
+   V = np.sum(np.abs(Tnull_vals) >= cutoffs[j]) / B # sum over all elements in Tnull_vals >= cutoffs[j]
+   Rs[j] = R
+   Vs[j] = V
+   FDRs[j] = V / R
+        
+fig, ax = plt.subplots()
+ax.plot(Rs, FDRs, 'b', linewidth=3)
+ax.set_xlabel("Number of Rejections")
+ax.set_ylabel("False Discovery Rate");        
 \end{verbatim}
 
 \subsection{sklearn}\label{sklearn-9}
 
 \subsection{Useful code snippets}\label{useful-code-snippets-6}
+
+\subsubsection{Fisher-Yates reshuffling
+Algorithm}\label{fisher-yates-reshuffling-algorithm}
+
+\begin{verbatim}
+D_null = D_.copy()
+for b in range(B):
+    rng.shuffle(D_null)
+    ttest_ = ttest_ind(D_null[:n_],
+                       D_null[n_:],
+                       equal_var=True)
+    Tnull[b] = ttest_.statistic  # test statistic
+(np.abs(Tnull) > np.abs(observedT)).mean()
+\end{verbatim}
+
+\subsubsection{Plot histogram and theoretical
+pdf}\label{plot-histogram-and-theoretical-pdf}
+
+\begin{verbatim}
+fig, ax = plt.subplots(figsize=(8,8))
+ax.hist(Tnull,
+        bins=100,
+        density=True, # show probability density rather than the raw count
+        facecolor='y',
+        label='Null')
+xval = np.linspace(-4.2, 4.2, 1001)
+ax.plot(xval,
+        t_dbn.pdf(xval, D_.shape[0]-2), #theoretical null disbribution: t-distr: 
+        c='r')
+ax.axvline(observedT,
+           c='b',
+           label='Observed')
+ax.legend()
+ax.set_xlabel("Null Distribution of Test Statistic");
+\end{verbatim}
 
 \bookmarksetup{startatroot}
 

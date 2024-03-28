@@ -429,7 +429,7 @@ L=\max\left\{ j: p_{(j)}&lt;\frac{qj}{m}  \right\}
 <p>When the <em>theoretical null distribution</em> is unknown or requires stringent assumptions, one can use <em>resampling</em> or <em>permutation</em> approach to approximate it.</p>
 <p>For example, suppose that <span class="math inline">\(H_0: E(X)= E(Y)\)</span>, and <span class="math inline">\(H_a: E(X)\ne E(Y)\)</span>, and number of independent samples <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span>. The <span class="math inline">\(t\)</span>-statistic as in <a href="#eq-two-sample-test" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-two-sample-test</span></a>, rewritten as <span class="math display">\[
 T=\frac{\hat{\mu}_X - \hat{\mu}_Y}{s\sqrt{\frac{1}{n_X}+ \frac{1}{n_Y}}}
-\]</span> When <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are small. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are normally distributed, then <span class="math inline">\(T\)</span> follows a <span class="math inline">\(t\)</span>-distribution with dof <span class="math inline">\(n_X+n_Y-2\)</span>. <span class="math inline">\(T\)</span> follows a normal <span class="math inline">\(\mathcal{N}(0,1)\)</span> when <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are large. The theoretical distribution is not necessarily <span class="math inline">\(\mathcal{N}(0,1)\)</span>. In this case the <span class="math inline">\(p\)</span>-value can be approximated using the following <em>resampling approach</em>. The idea is that under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(E(X)=E(Y)\)</span> and we make a strong assumption that the distributions of <span class="math inline">\(X\)</span> is the same as that of <span class="math inline">\(Y\)</span>, then the distributon of <span class="math inline">\(T\)</span> is <strong>invariant</strong> if we swap some observations of <span class="math inline">\(X\)</span> with those of <span class="math inline">\(Y\)</span>.</p>
+\]</span> When <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are small. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are normally distributed, then <span class="math inline">\(T\)</span> follows a <span class="math inline">\(t\)</span>-distribution with dof <span class="math inline">\(n_X+n_Y-2\)</span>. <span class="math inline">\(T\)</span> follows a normal <span class="math inline">\(\mathcal{N}(0,1)\)</span> when <span class="math inline">\(n_X\)</span> and <span class="math inline">\(n_Y\)</span> are large. The theoretical distribution is not necessarily <span class="math inline">\(\mathcal{N}(0,1)\)</span>. In this case the <span class="math inline">\(p\)</span>-value can be approximated using the following <em>resampling approach</em>. The idea is that under <span class="math inline">\(H_0\)</span>: <span class="math inline">\(E(X)=E(Y)\)</span> and we make a strong assumption that the distributions of <span class="math inline">\(X\)</span> is the same as that of <span class="math inline">\(Y\)</span>, then the distribution of <span class="math inline">\(T\)</span> is <strong>invariant</strong> if we swap some observations of <span class="math inline">\(X\)</span> with those of <span class="math inline">\(Y\)</span>.</p>
 <ol type="1">
 <li><p>Computer the two sample <span class="math inline">\(t\)</span>-statistic <span class="math inline">\(T\)</span> on the original data <span class="math inline">\(x_1, \cdots, x_{n_X}\)</span>, and <span class="math inline">\(y_1, \cdots, y_{n_Y}\)</span>.</p></li>
 <li><p>For <span class="math inline">\(b=1, \cdots, B\)</span> (where <span class="math inline">\(B\)</span> is large, e.g., 1000): 2.1 Randomly shuffle (permute) the <span class="math inline">\(n_X+n_Y\)</span> observations. 2.2 Call the first <span class="math inline">\(n_X\)</span> shuffled observations <span class="math inline">\(x_1^*, \cdots, x_{n_X}^*\)</span> and call the remaining observations <span class="math inline">\(y_1^*, \cdots, y_{n_Y}^*\)</span>. 2.3 Computer the two-sample <span class="math inline">\(t\)</span>-statistic on the shuffled data, and call it <span class="math inline">\(T^{*b}\)</span>.</p></li>
@@ -456,27 +456,174 @@ FDR =E\left( \frac{V}{R} \right) \approx \frac{E(V)}{R}.
 </section>
 <section id="numpy" class="level3" data-number="13.8.2">
 <h3 data-number="13.8.2" class="anchored" data-anchor-id="numpy"><span class="header-section-number">13.8.2</span> Numpy</h3>
-<pre><code></code></pre>
+<pre><code>np.where(sorted_ &lt; q * np.linspace(1, m, m) / m)[0]
+</code></pre>
 </section>
 <section id="pandas" class="level3" data-number="13.8.3">
 <h3 data-number="13.8.3" class="anchored" data-anchor-id="pandas"><span class="header-section-number">13.8.3</span> Pandas</h3>
-<pre><code></code></pre>
+<pre><code>decision = pd.cut(p_values,
+                  [0, 0.05, 1],
+                  labels=['Reject H0',
+                          'Do not reject H0'])
+truth = pd.Categorical(true_mean == 0,
+                       categories=[True, False], # specify ordre. True=0, False=1
+                       ordered=True)
+                       
+pd.crosstab(decision, #row
+            truth, # col
+     rownames=['Decision'],
+     colnames=['H0'])    
+     
+pd.concat([Khan['xtrain'], Khan['xtest']]) # concat vertically along rows
+</code></pre>
 </section>
 <section id="graphics" class="level3" data-number="13.8.4">
 <h3 data-number="13.8.4" class="anchored" data-anchor-id="graphics"><span class="header-section-number">13.8.4</span> Graphics</h3>
-<pre><code></code></pre>
+<pre><code>[ax.plot(m,
+         1 - (1 - alpha)**m,
+         label=r'$\alpha=%s$' % str(alpha))
+         for alpha in [0.05, 0.01, 0.001]]   #plot multiple curves
+ax.set_xscale('log')
+
+ax.axhline(0.05, c='k', ls='--');
+
+x.axline((0, 0), (1,q/m), c='k', ls='--', linewidth=3); #line through (0,0), (1,q/m)</code></pre>
 </section>
 <section id="islp-and-statsmodels" class="level3" data-number="13.8.5">
 <h3 data-number="13.8.5" class="anchored" data-anchor-id="islp-and-statsmodels"><span class="header-section-number">13.8.5</span> ISLP and statsmodels</h3>
-<pre><code></code></pre>
+<section id="sample-t-test" class="level4" data-number="13.8.5.1">
+<h4 data-number="13.8.5.1" class="anchored" data-anchor-id="sample-t-test"><span class="header-section-number">13.8.5.1</span> 1-sample <span class="math inline">\(t\)</span>-test</h4>
+<pre><code>from scipy.stats import \
+    (ttest_1samp,
+     ttest_rel,
+     ttest_ind,
+     t as t_dbn)
+from statsmodels.stats.multicomp import \
+     pairwise_tukeyhsd
+from statsmodels.stats.multitest import \
+     multipletests as mult_test
+
+result = ttest_1samp(X[:,0], 0)
+result.pvalue     
+     
+</code></pre>
+</section>
+<section id="two-sample-t-test" class="level4" data-number="13.8.5.2">
+<h4 data-number="13.8.5.2" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">13.8.5.2</span> Two-sample t-test</h4>
+<pre><code>ttest_rel(fund_mini['Manager1'],
+          fund_mini['Manager2']).pvalue #ttest_rel requires two vectors of the same length
+          
+observedT, pvalue = ttest_ind(D2[gene_11],
+                              D4[gene_11],
+                              equal_var=True) #ttest_ind allows two vectors with different lengths  
+ttest_ind(D2[gene_11],
+                              D4[gene_11],
+                              equal_var=True).statistic                              
+          </code></pre>
+</section>
+<section id="multiple-test" class="level4" data-number="13.8.5.3">
+<h4 data-number="13.8.5.3" class="anchored" data-anchor-id="multiple-test"><span class="header-section-number">13.8.5.3</span> Multiple test</h4>
+<pre><code># obtain invidual p_values
+fund_mini = Fund.iloc[:,:5]
+fund_mini_pvals = np.empty(5)
+for i in range(5):
+    fund_mini_pvals[i] = ttest_1samp(fund_mini.iloc[:,i], 0).pvalue
+
+reject, bonf = mult_test(fund_mini_pvals, method = "bonferroni")[:2]   
+
+mult_test(fund_mini_pvals, method = "holm", alpha=0.05)[:2]
+
+mult_test(fund_pvalues, method = "fdr_bh") #for controling FDR
+fund_qvalues = mult_test(fund_pvalues, method = "fdr_bh")[1]
+(fund_qvalues &lt;= 0.1).sum()
+</code></pre>
+</section>
+<section id="turkey-hsd-test" class="level4" data-number="13.8.5.4">
+<h4 data-number="13.8.5.4" class="anchored" data-anchor-id="turkey-hsd-test"><span class="header-section-number">13.8.5.4</span> Turkey HSD Test</h4>
+<pre><code>returns = np.hstack([fund_mini.iloc[:,i] for i in range(5)])
+managers = np.hstack([[i+1]*50 for i in range(5)])
+tukey = pairwise_tukeyhsd(returns, managers)
+print(tukey.summary())
+
+fig, ax = plt.subplots(figsize=(8,8))
+tukey.plot_simultaneous(ax=ax);
+
+
+</code></pre>
+</section>
+<section id="plug-in-resamplng-fdr" class="level4" data-number="13.8.5.5">
+<h4 data-number="13.8.5.5" class="anchored" data-anchor-id="plug-in-resamplng-fdr"><span class="header-section-number">13.8.5.5</span> Plug-in Resamplng FDR</h4>
+<pre><code>m, B = 100, 10000
+idx = rng.choice(Khan['xtest'].columns, m, replace=False)
+T_vals = np.empty(m)
+Tnull_vals = np.empty((m, B))
+
+for j in range(m):
+    col = idx[j]
+    T_vals[j] = ttest_ind(D2[col],
+                          D4[col],
+                          equal_var=True).statistic #observed t-statistic
+    D_ = np.hstack([D2[col], D4[col]])
+    D_null = D_.copy()
+    for b in range(B):
+        rng.shuffle(D_null)
+        ttest_ = ttest_ind(D_null[:n_],
+                           D_null[n_:],
+                           equal_var=True)
+        Tnull_vals[j,b] = ttest_.statistic
+        
+cutoffs = np.sort(np.abs(T_vals)) 
+FDRs, Rs, Vs = np.empty((3, m))
+
+for j in range(m):
+   R = np.sum(np.abs(T_vals) &gt;= cutoffs[j]) # Note cufoffs is sorted and increasing
+   V = np.sum(np.abs(Tnull_vals) &gt;= cutoffs[j]) / B # sum over all elements in Tnull_vals &gt;= cutoffs[j]
+   Rs[j] = R
+   Vs[j] = V
+   FDRs[j] = V / R
+        
+fig, ax = plt.subplots()
+ax.plot(Rs, FDRs, 'b', linewidth=3)
+ax.set_xlabel("Number of Rejections")
+ax.set_ylabel("False Discovery Rate");        </code></pre>
+</section>
 </section>
 <section id="sklearn" class="level3" data-number="13.8.6">
 <h3 data-number="13.8.6" class="anchored" data-anchor-id="sklearn"><span class="header-section-number">13.8.6</span> sklearn</h3>
 </section>
 <section id="useful-code-snippets" class="level3" data-number="13.8.7">
 <h3 data-number="13.8.7" class="anchored" data-anchor-id="useful-code-snippets"><span class="header-section-number">13.8.7</span> Useful code snippets</h3>
+<section id="fisher-yates-reshuffling-algorithm" class="level4" data-number="13.8.7.1">
+<h4 data-number="13.8.7.1" class="anchored" data-anchor-id="fisher-yates-reshuffling-algorithm"><span class="header-section-number">13.8.7.1</span> Fisher-Yates reshuffling Algorithm</h4>
+<pre><code>D_null = D_.copy()
+for b in range(B):
+    rng.shuffle(D_null)
+    ttest_ = ttest_ind(D_null[:n_],
+                       D_null[n_:],
+                       equal_var=True)
+    Tnull[b] = ttest_.statistic  # test statistic
+(np.abs(Tnull) &gt; np.abs(observedT)).mean()</code></pre>
+</section>
+<section id="plot-histogram-and-theoretical-pdf" class="level4" data-number="13.8.7.2">
+<h4 data-number="13.8.7.2" class="anchored" data-anchor-id="plot-histogram-and-theoretical-pdf"><span class="header-section-number">13.8.7.2</span> Plot histogram and theoretical pdf</h4>
+<pre><code>fig, ax = plt.subplots(figsize=(8,8))
+ax.hist(Tnull,
+        bins=100,
+        density=True, # show probability density rather than the raw count
+        facecolor='y',
+        label='Null')
+xval = np.linspace(-4.2, 4.2, 1001)
+ax.plot(xval,
+        t_dbn.pdf(xval, D_.shape[0]-2), #theoretical null disbribution: t-distr: 
+        c='r')
+ax.axvline(observedT,
+           c='b',
+           label='Observed')
+ax.legend()
+ax.set_xlabel("Null Distribution of Test Statistic");</code></pre>
 
 
+</section>
 </section>
 </section>
 
