@@ -168,7 +168,7 @@ for value, weight in zip([2,3,19],
 
 `np.multiply.outer(row,col)` # calculate the product over the mesh with vectors `row` and `col`.
 
-`np.zeros(shape or int, dtype)` #eg: `np.zeros(5,bool)`
+`np.zeros(shape or int, dtype)` #eg: `np.zeros(5,bool)` #[False, False, False, False, False]
 
 `np.ones(Boston.shape[0])`
 
@@ -184,10 +184,10 @@ for value, weight in zip([2,3,19],
 `x[slice(3:6)]` # equivalent to `x[3:6]`
 
 
-Indexing an array using `[row, col]` format. If `col` is missing, then index the entire rows. `len(row)` must be equal to `len(col)`. Otherwise use iterative indexing or use `np.ix_(x_idx, y_idx)` function, or use Boolean indexing, see below. 
+Indexing an array using `[row, col]` format. If `col` is missing, then index the entire rows. `len(row)` must be equal to `len(col)`. Otherwise use *iterative indexing* or use `np.ix_(x_idx, y_idx)` function, or use Boolean indexing, see below. 
 ```
-A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
-A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
+A[1,2] # index entry at row 1 and col 2 (recall Python index start from 0)
+A[[1,3]] # rows 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
 A[:,[0,2]] # cols 0 and 2
 A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
 A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2

@@ -631,7 +631,7 @@ points 50
 mesh with vectors \texttt{row} and \texttt{col}.
 
 \texttt{np.zeros(shape\ or\ int,\ dtype)} \#eg:
-\texttt{np.zeros(5,bool)}
+\texttt{np.zeros(5,bool)} \#{[}False, False, False, False, False{]}
 
 \texttt{np.ones(Boston.shape{[}0{]})}
 
@@ -652,13 +652,13 @@ indexing}\label{array-slicing-and-indexing}
 
 Indexing an array using \texttt{{[}row,\ col{]}} format. If \texttt{col}
 is missing, then index the entire rows. \texttt{len(row)} must be equal
-to \texttt{len(col)}. Otherwise use iterative indexing or use
+to \texttt{len(col)}. Otherwise use \emph{iterative indexing} or use
 \texttt{np.ix\_(x\_idx,\ y\_idx)} function, or use Boolean indexing, see
 below.
 
 \begin{verbatim}
-A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
-A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
+A[1,2] # index entry at row 1 and col 2 (recall Python index start from 0)
+A[[1,3]] # rows 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
 A[:,[0,2]] # cols 0 and 2
 A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
 A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
@@ -1592,7 +1592,7 @@ reflects the effect when other variables are hold constant, how the
 variable affects \(Y\), and this effect may be different than when only
 this variable is used in the model.
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, opacityback=0, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, opacitybacktitle=0.6, coltitle=black, toptitle=1mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, toprule=.15mm, breakable, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, rightrule=.15mm, leftrule=.75mm, titlerule=0mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toptitle=1mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm, colback=white, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the logit
 model, similar to a linear regression that includes a non-linear term.
@@ -1659,7 +1659,7 @@ to make a classification, so it's known as \emph{generative learning}.
   is the estimated variance for the \(k\)-th class.
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, left=2mm, opacityback=0, bottomrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, opacitybacktitle=0.6, coltitle=black, toptitle=1mm, bottomtitle=1mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm, toprule=.15mm, breakable, rightrule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, coltitle=black, breakable, rightrule=.15mm, leftrule=.75mm, titlerule=0mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, toptitle=1mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm, colback=white, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm]
 
 One can include a nonlinear term such as a quadratic term in the LDA
 model, similar to a linear regression that includes a non-linear term.

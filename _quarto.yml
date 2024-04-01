@@ -6,7 +6,7 @@ book:
   title: "stat4500notes"
   author: "Yi Wang"
   date: "9/19/2023"
-  downloads: [pdf, docx]
+  downloads: [pdf, docx, epub]
   chapters:
     - index.qmd
     - intro.qmd
@@ -35,6 +35,8 @@ format:
     documentclass: scrreprt
   docx:  
     reference-doc: custom-reference-doc.docx
+  epub:
+    css: epub-styles.css
 
 editor: visual
 

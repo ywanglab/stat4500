@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.3.12)  28 MAR 2024 16:42
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.3.12)  1 APR 2024 14:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1184,8 +1184,8 @@ chapter 2.
 [7
 
 ] [8] [9] [10] [11]
-Overfull \hbox (162.60733pt too wide) in paragraph at lines 661--661
-[]\TU/lmtt/m/n/10.95 A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided.[] 
+Overfull \hbox (168.35608pt too wide) in paragraph at lines 661--661
+[]\TU/lmtt/m/n/10.95 A[[1,3]] # rows 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided.[] 
  []
 
 
@@ -1198,12 +1198,12 @@ Overfull \hbox (110.86859pt too wide) in paragraph at lines 670--670
 []\TU/lmtt/m/n/10.95 A[np.ix_([1,3],keep_cols)] # np.ix_()can be applied to mixture of integer array and boolean array[] 
  []
 
-
+[12]
 Overfull \hbox (30.38611pt too wide) in paragraph at lines 677--677
 []\TU/lmtt/m/n/10.95 np.random.normal(loc=0.0, scale=1.0,size=None) # size can be an integer or a tuple.[] 
  []
 
-[12]
+
 Overfull \hbox (7.39111pt too wide) in paragraph at lines 706--706
 []\TU/lmtt/m/n/10.95 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(nrows=2, ncols=2, figsize=(10,10))[] 
  []
@@ -1218,7 +1218,7 @@ Overfull \hbox (13.13986pt too wide) in paragraph at lines 709--709
 []\TU/lmtt/m/n/10.95 ax.plot([min(fitted),max(fitted)],[0,0],color = []k[],linestyle = []:[], alpha = .3)[] 
  []
 
-
+[13]
 Overfull \hbox (36.13484pt too wide) in paragraph at lines 718--718
 []\TU/lmtt/m/n/10.95 fig.set_size_inches(12,3) # access the fig object to change fig size (width, height)[] 
  []
@@ -1228,7 +1228,7 @@ Overfull \hbox (76.3761pt too wide) in paragraph at lines 720--720
 []\TU/lmtt/m/n/10.95 fig.savefig("Figure.pdf", dpi=200); #save a figure into pdf. Other formats: .jpg, .png, etc[] 
  []
 
-[13]
+
 Overfull \hbox (30.38611pt too wide) in paragraph at lines 730--730
 []\TU/lmtt/m/n/10.95 ax.contour(x, y, f, levels=None); # numbre of levels. if None, automatically choose[] 
  []

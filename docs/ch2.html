@@ -114,6 +114,12 @@ ul.task-list li input[type="checkbox"] {
             Download Docx
             </a>
           </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./stat4500notes.epub">
+              <i class="bi bi-bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
       </ul>
     </div>
 </div>
@@ -404,7 +410,7 @@ os.chdir(path) # change dir</code></pre>
 <p><code>np.var(x, ddof=0)</code>, <code>np.std(x, ddof=0)</code>, # Note both <code>np.var</code> and <code>np.std</code> accepts an argument <code>ddof</code>, the divisor is <code>N-ddof</code>.</p>
 <p><code>np.linspace(-np.pi, np.pi, 50)</code> # start, end, number of points 50</p>
 <p><code>np.multiply.outer(row,col)</code> # calculate the product over the mesh with vectors <code>row</code> and <code>col</code>.</p>
-<p><code>np.zeros(shape or int, dtype)</code> #eg: <code>np.zeros(5,bool)</code></p>
+<p><code>np.zeros(shape or int, dtype)</code> #eg: <code>np.zeros(5,bool)</code> #[False, False, False, False, False]</p>
 <p><code>np.ones(Boston.shape[0])</code></p>
 <p><code>np.all(x)</code>, <code>np.any(x)</code>: check if all or any entry of <code>x</code> is true.</p>
 <p><code>np.unique(x)</code>: find unique values in <code>x</code>. <code>np.isnan(x)</code>: return a boolean array of <code>len(x)</code>. <code>np.isnan(x).mean()</code>: find the percentage of <code>np.nan</code> values in <code>x</code>.</p>
@@ -413,9 +419,9 @@ os.chdir(path) # change dir</code></pre>
 <h4 data-number="2.8.3.2" class="anchored" data-anchor-id="array-slicing-and-indexing"><span class="header-section-number">2.8.3.2</span> Array Slicing and indexing</h4>
 <p><code>np.arange</code>(start, stop, step) # numpy version of <code>range</code></p>
 <p><code>x[slice(3:6)]</code> # equivalent to <code>x[3:6]</code></p>
-<p>Indexing an array using <code>[row, col]</code> format. If <code>col</code> is missing, then index the entire rows. <code>len(row)</code> must be equal to <code>len(col)</code>. Otherwise use iterative indexing or use <code>np.ix_(x_idx, y_idx)</code> function, or use Boolean indexing, see below.</p>
-<pre><code>A[1,2]: index entry at row 1 and col 2 (recall Python index start from 0)
-A[[1,3]] # row 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
+<p>Indexing an array using <code>[row, col]</code> format. If <code>col</code> is missing, then index the entire rows. <code>len(row)</code> must be equal to <code>len(col)</code>. Otherwise use <em>iterative indexing</em> or use <code>np.ix_(x_idx, y_idx)</code> function, or use Boolean indexing, see below.</p>
+<pre><code>A[1,2] # index entry at row 1 and col 2 (recall Python index start from 0)
+A[[1,3]] # rows 1 and 3. Note the outer [] is considered as the operator, so only row indices are provided. 
 A[:,[0,2]] # cols 0 and 2
 A[[1,3], [0,2,3]] # entry A[1,0] and A[3,2]
 A[1:4:2, 0:3:2] # entries in rows 1 and 3, cols 0 and 2
